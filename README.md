@@ -2,10 +2,10 @@
 
 Simple MVC framework for PHP 5.2+ (lower not tested) used XSLT and PHP views.
 
-### What is this repository for? ###
+### Some info ###
 
-* For example use please look in application folder, more examples in future.
-* Version 0.1.1 beta
+* For example use please look in system folder, more examples in future.
+* Version 0.1.1 alfa
 
 ### Is done ###
 
@@ -25,7 +25,7 @@ Simple MVC framework for PHP 5.2+ (lower not tested) used XSLT and PHP views.
 * Files and directories helper, read write upload etc...
 * And many more
 
-### Some working Demo ### 
+### Some working Demo  
 
 Working test on server you can see here's  [YMVC testing](http://ymvc.ydk2.tk/). 
 Remember it is very early state of work.
