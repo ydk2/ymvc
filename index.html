@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <title>Ymvc by ydk2</title>
+    <title>Ymvc Framework by ydk2</title>
   </head>
 
   <body>
@@ -48,6 +48,8 @@
 
 <p>Working test on server you can see here's  <a href="http://ymvc.ydk2.tk/">YMVC testing</a>. 
 Remember it is very early state of work.</p>
+<p>Remember framework is in testing state but you can try if you want</p>
+<p>Any sugestions are welcome</p>
 
 <h3>
 <a id="is-done" class="anchor" href="#is-done" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Is done</h3>
@@ -57,7 +59,7 @@ Remember it is very early state of work.</p>
 <li>Same functions names in both mode</li>
 <li>App scheme , some helpers</li>
 <li>Easy change views, models </li>
-<li>Call PHP called class functions inside XSLT: 'php:function ($self,'function_name','arg1;arg2;...')' example: ´´</li>
+<li>Call PHP called class functions inside XSLT: 'php:function ($self,'function_name','arg1;arg2;...')' example: <code>&lt;xsl:value-of select=&quot;php:function ($self,'test_func','arg')&quot; xmlns:php=&quot;http://php.net/xsl&quot;/&gt;</code></li>
 <li>DB connector using PDO (Sqlite not memory, PoSQL class not included, MySQL)</li>
 <li>Errors support by "SystemExceptions" class </li>
 <li>Example testing controllers with views in "system/controllers", "system/views" and sample model in "system/models"</li>
