@@ -18,7 +18,7 @@ Remember it is very early state of work.
 * Same functions names in both mode
 * App scheme , some helpers
 * Easy change views, models 
-* Call PHP class functions 'php:function ($self,'function_name','arg1;arg2;...')'
+* Call PHP called class functions inside XSLT: 'php:function ($self,'function_name','arg1;arg2;...')'
 * DB connector using PDO (Sqlite not memory, PoSQL class not included, MySQL)
 * Errors support by "SystemExceptions" class 
 * Example testing controllers with views in "system/controllers", "system/views" and sample model in "system/models"
