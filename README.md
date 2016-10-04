@@ -18,7 +18,7 @@ Remember it is very early state of work.
 * Same functions names in both mode
 * App scheme , some helpers
 * Easy change views, models 
-* Call PHP class functions <!-- language: lang-xml --><xsl:value-of select="php:function ($self,'test')"  xmlns:php="http://php.net/xsl"/>
+* Call PHP class functions " &lt;xsl:value-of select=&quot;php:function ($self,'test')&quot; xmlns:php=&quot;http://php.net/xsl&quot;/&gt; "
 * DB connector using PDO (Sqlite not memory, PoSQL class not included, MySQL)
 * Errors support by "SystemExceptions" class 
 * Example testing controllers with views in "system/controllers", "system/views" and sample model in "system/models"
