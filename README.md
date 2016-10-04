@@ -1,4 +1,4 @@
-# YMVC Beta #
+# YMVC Framework #
 
 Simple MVC framework for PHP 5.2+ (lower not tested) used XSLT and PHP views.
 
