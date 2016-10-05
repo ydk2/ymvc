@@ -8,6 +8,8 @@ Simple MVC framework for PHP 5.2+ (lower not tested) used XSLT and PHP views.
 * For example use please look in system folder, more examples in future.
 * Version 0.1.1 alfa
 
+To use XSL mode in controller class "class Example extends XCoreRender" otherwise "class Example extends CoreRender".
+
 ### Some working Demo 
 
 Working test on server you can see here's  [YMVC testing](http://ymvc.ydk2.tk/). 
