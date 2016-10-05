@@ -50,6 +50,7 @@ public static $obj_name;
         }
 		$this->action = new stdClass;
 		$this->modules = new stdClass;
+		$this->action->init = $this->onInit();
 		if($this->error > 0) {
 		if(isset($this->exception)){
 			//$this->view = VIEWS.'empty';
@@ -89,15 +90,21 @@ public static $obj_name;
             return FALSE;
         }
     }
-
-	public function Init(){
+	public function onInit(){
 		return TRUE;
 	}
 
-	public function Run(){
+	public function onRun(){
 		return TRUE;
 	}
-	
+
+	public function onEnd(){
+		return TRUE;
+	}
+
+	public function onDestruct(){
+		return TRUE;
+	}
 	public final function CheckModel($model){
 		if (is_object($model)) {
 			$this->model = $model;
@@ -170,6 +177,7 @@ final public function CheckError() {
 		return json_decode(json_encode( $xml),TRUE);
 	}
 	public function __destruct() {
+		$this->action->destruct = $this->onDestruct();
 		self::$obj==NULL;
 		foreach ($this as $key => $value) {
 			$this -> $key = NULL;
@@ -188,8 +196,7 @@ final public function CheckError() {
         try {
 			self::$obj =& $this;
 			if($path!=NULL) $this->view=$path;
-			$this->action->init = $this->Init();
-			$this->action->run = $this->Run();
+			$this->action->run = $this->onRun();
 
 			if($this->model==NULL){
 				 throw new SystemException("App Model not Definied",304);
@@ -216,6 +223,7 @@ final public function CheckError() {
 				if ($this->CheckView($this -> view))
 				$retval = file_get_contents(APP.$this->view.EXT);
 			}
+			$this->action->end = $this->onEnd();
 			self::$obj=NULL;
             return $retval;
         } catch (SystemException $e){

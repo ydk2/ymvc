@@ -10,8 +10,16 @@ $view = 'index';
 if(isset($_GET['view']) && $_GET['view'] != ""){
 	$view = $_GET['view'] ;
 }
-$loader->sys('view',NULL,loader::PHP);
-$loader->sys('index',NULL);
+	function Inc($class){
+		if(file_exists(APP.$class.EXT)  && is_file(APP.$class.EXT)){	
+			require_once(APP.$class.EXT);
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+//echo $loader->app('index','index');
+echo $loader->sys('sys_layout','layout');
 //$next = $views->Controller(SYS_C.'view');
 //$start = $loader->Controller(SYS_C.'index');
 

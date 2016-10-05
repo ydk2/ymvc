@@ -1,7 +1,22 @@
 <?php
 class Errors extends CoreRender {
 
-	public function Init($model = NULL){
+	public function onInit(){
+		// call in __constructor
+		return TRUE;
+	}
+
+	public function onEnd(){
+		// call after render view
+		return TRUE;
+	}
+
+	public function onDestruct(){
+		// call in __destructor
+		return TRUE;
+	}
+
+	public function onRun($model = NULL){
 		//$this->error = 40100;
 		$this->registerPHPFunctions();
 		$this->ViewData('title', "kupa błędów");

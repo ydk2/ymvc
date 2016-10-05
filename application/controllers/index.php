@@ -1,11 +1,26 @@
 <?php
 class Index extends XCoreRender {
 
-	public function Init($model = NULL){
+	public function onInit(){
+		// call in __constructor
+		return TRUE;
+	}
 
+	public function onEnd(){
+		// call after render view
+		return TRUE;
+	}
+
+	public function onDestruct(){
+		// call in __destructor
+		return TRUE;
+	}
+
+	public function onRun($model = NULL){
+		// call before render view
 		$this->Model(SYS_M.'model');
 
-		$this->SetView(SYS_V.'index');
+		//$this->SetView(SYS_V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
 		if(isset($_GET['error']))
 		$this->error = $_GET['error'];
