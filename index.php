@@ -13,14 +13,6 @@ $view = 'index';
 if(isset($_GET['view']) && $_GET['view'] != ""){
 	$view = $_GET['view'] ;
 }
-	function Inc($class){
-		if(file_exists(APP.$class.EXT)  && is_file(APP.$class.EXT)){	
-			require_once(APP.$class.EXT);
-			return TRUE;
-		}
-		return FALSE;
-	}
-
 //echo $loader->app('index','index');
 echo $loader->showsys('sys_layout','layout');
 //$next = $views->Controller(SYS.C.'view');
