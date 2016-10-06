@@ -22,7 +22,7 @@ class Sys_Layout extends XCoreRender {
 
 	public function onEnd(){
 		// call after render view
-		if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+		//if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 		return TRUE;
 	}
 
@@ -30,6 +30,8 @@ class Sys_Layout extends XCoreRender {
 		// call in __destructor
 		$model = new StdClass;
 		$this->time[1]=get_time();
+		$model->cpu = abs(cpu_get_usage());
+		$model->mem = convert(memory_get_usage(TRUE));
 		$model->time = get_time_exec($this->time[0],$this->time[1]);
 
 		$time = $this->Loader($model,SYS.V.'time',SYS.C.'view');
@@ -46,14 +48,21 @@ class Sys_Layout extends XCoreRender {
 		$this->ViewData('title', "XSL");
 		$this->ViewData('content', $this->model->check());
 		$this->ViewData('message', " i leży " );
-		$a = round(4.0, 2);
+		$a = round(3.10, 2);
 		$b = round(cpu_get_usage(), 2); //0.17
 		if($a <= $b ){
     		$this->error = 2100;
-			$this->message = "To many CPU used";
+			$this->emessage = "To many CPU resource used";
 		}
-		$this->setParameter('', 'test', convert(memory_get_usage(TRUE))." ".abs(cpu_get_usage()));
-		//if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+		if($this->error == 2100){
+
+			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+
+			$this->exception->ViewData('title', "Error!!! ".$this->error);
+			$this->exception->ViewData('header', "To many CPU resource used");
+			$this->exception->ViewData('alert',"Server is to busy, catch error:  ");
+			$this->exception->ViewData('error', $this->error);
+		}	
 	}
 	protected function test(){
 		$retarr = "";

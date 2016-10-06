@@ -28,9 +28,6 @@
 			</xsl:for-each>
 		</div>
 		<div>
-			<xsl:value-of select="$test"/>
-		</div>
-		<div>
 		<xsl:value-of select="data/message"/>
 		
 		<xsl:value-of select="php:function ($self,'test')"  xmlns:php="http://php.net/xsl" disable-output-escaping="yes"/>

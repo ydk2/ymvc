@@ -12,5 +12,9 @@
 		<xsl:value-of select="data/message"/>
 		<xsl:value-of select="data/time"/>
 		</div>
+		<div>
+		<xsl:value-of select="data/cpu"/>
+		<xsl:value-of select="data/memory"/>
+		</div>
 </xsl:template>
 </xsl:stylesheet>
