@@ -14,4 +14,11 @@
 	var_dump($var);
     return ob_get_clean();
 	}
+	function get_time(){
+		# code...
+		return microtime(true);
+	}
+	function get_time_exec($start,$end){
+		return ($end - $start)/60;
+	}
 ?>

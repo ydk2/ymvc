@@ -3,11 +3,17 @@ class Index extends XCoreRender {
 
 	public function onInit(){
 		// call in __constructor
+		$this->Model(SYS_M.'model');
+		if(isset($_GET['error']))
+		$this->error = $_GET['error'];
+		if($this->error > 0) $this->Exceptions($this->model,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
+	
 		return TRUE;
 	}
 
 	public function onEnd(){
 		// call after render view
+		if($this->error > 0) $this->Exceptions($this->model,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
 		return TRUE;
 	}
 
@@ -16,14 +22,12 @@ class Index extends XCoreRender {
 		return TRUE;
 	}
 
-	public function onRun($model = NULL){
+	public function onRun(){
 		// call before render view
-		$this->Model(SYS_M.'model');
 
 		//$this->SetView(SYS_V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
-		if(isset($_GET['error']))
-		$this->error = $_GET['error'];
+		
 		$this->message = memory_get_usage(TRUE);
 		$this->registerPHPFunctions();
 		$this->ViewData('title', "XSL");
@@ -31,7 +35,6 @@ class Index extends XCoreRender {
 		$this->ViewData('message', " i leży " );
 		
 		$this->setParameter('', 'test', convert(memory_get_usage(TRUE))." ".cpu_get_usage());
-		if($this->error > 0) $this->Exceptions($this->model,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
 	}
 	protected function test(){
 		$retarr = "";

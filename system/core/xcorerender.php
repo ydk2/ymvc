@@ -283,6 +283,19 @@ final public function CheckError() {
 		} 
 		}
 	}
+	public final function Viewer($view,$controller){
+	
+		if (is_object($controller)) {
+			return $controller;
+		} else {
+		if($this->Inc($controller)){
+			$stack = explode(DS,$controller);
+			$end = end($stack);
+			if(!class_exists($end)) return FALSE;
+				return new $end($view);
+		} 
+		}
+	}
 	public final function Model($model){
 		$this->CheckModel($model);
 	}
