@@ -4,6 +4,7 @@ class Sys_Layout extends XCoreRender {
 	public function onInit(){
 		// call in __constructor
 		$this->time[0]=get_time();
+		Config::$data['default']['database']['type'] = 'sqlite';
 		$this->SetModel(SYS.M.'model');
 		$this->registerPHPFunctions();
 		if(isset($_GET['error']))
@@ -14,7 +15,7 @@ class Sys_Layout extends XCoreRender {
 
 			$this->exception->ViewData('title', "Error!!! ".$this->error);
 			$this->exception->ViewData('header', "Error on Site!!!");
-			$this->exception->ViewData('alert',"System catch error: ");
+			$this->exception->ViewData('alert',"Catch system error: ");
 			$this->exception->ViewData('error', $this->error);
 		}
 		return TRUE;
@@ -30,8 +31,8 @@ class Sys_Layout extends XCoreRender {
 		// call in __destructor
 		$model = new StdClass;
 		$this->time[1]=get_time();
-		$model->cpu = abs(cpu_get_usage());
-		$model->mem = convert(memory_get_usage(TRUE));
+		$model->cpu = round(cpu_get_usage(),2);
+		$model->mem = convert(memory_get_usage());
 		$model->time = get_time_exec($this->time[0],$this->time[1]);
 
 		$time = $this->Loader($model,SYS.V.'time',SYS.C.'view');
@@ -42,11 +43,14 @@ class Sys_Layout extends XCoreRender {
 	public function onRun($model = NULL){
 
 
+		foreach ($this->model->get() as $key => $value) {
+			$this->ViewData($value['name'], $value['string']);
+		}
 		//$this->SetView(SYS.V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 		
 		$this->ViewData('title', "XSL");
-		$this->ViewData('content', $this->model->check());
+		$this->ViewData('content', dump($this->data));
 		$this->ViewData('message', " i leży " );
 		$a = round(3.10, 2);
 		$b = round(cpu_get_usage(), 2); //0.17
