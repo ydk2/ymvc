@@ -11,7 +11,7 @@ class model extends DBConnect {
 		$data['type'] = 'sqlite';
 		//var_dump($data);
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
-		$queries = file_get_contents(APP.LIB.'cache'.DS.'database.sql');
+		$queries = file_get_contents(ROOT.CACHE.'database.sql');
 		$queries = explode(";", $queries);
     	foreach ($queries as $query) {
         	$this->db->query($query);

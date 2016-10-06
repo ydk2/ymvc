@@ -1,5 +1,5 @@
 <?php
-require_once(APP.CORE.'systemexception'.EXT);
+require_once(ROOT.CORE.'systemexception'.EXT);
 class CoreRender {
 	const ACCESS_ANY = 1000;
 	const ACCESS_USER = 500;
@@ -120,13 +120,13 @@ public static $obj_name;
 		}
 	}
 final public function SetView($view) {
-	if(file_exists(APP.$view.EXT)  && is_file(APP.$view.EXT)) {
+	if(file_exists(ROOT.$view.EXT)  && is_file(ROOT.$view.EXT)) {
 		$this->view = $view;
 	}
 }
 
 final public function CheckView($view) {
-	if(file_exists(APP.$view.EXT)  && is_file(APP.$view.EXT)) {
+	if(file_exists(ROOT.$view.EXT)  && is_file(ROOT.$view.EXT)) {
 		return TRUE;
 	}
 	$this->error = 404;
@@ -216,12 +216,12 @@ final public function CheckError() {
 			ob_start();
 			echo "";
 			if ($this->CheckView($this -> view))
-			require_once(APP.$this->view.EXT);
+			require_once(ROOT.$this->view.EXT);
 			$retval = ob_get_clean();
 			} else {
 				$retval = "";
 				if ($this->CheckView($this -> view))
-				$retval = file_get_contents(APP.$this->view.EXT);
+				$retval = file_get_contents(ROOT.$this->view.EXT);
 			}
 			$this->action->end = $this->onEnd();
 			self::$obj=NULL;
@@ -319,9 +319,9 @@ final public function CheckError() {
     }
 	
 	public final function Inc($class){
-		//echo APP.$class.EXT;
-		if(file_exists(APP.$class.EXT) && is_file(APP.$class.EXT)){	
-			require_once(APP.$class.EXT);
+		//echo ROOT.$class.EXT;
+		if(file_exists(ROOT.$class.EXT) && is_file(ROOT.$class.EXT)){	
+			require_once(ROOT.$class.EXT);
 			return TRUE;
 		}
 		return FALSE;

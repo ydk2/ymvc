@@ -3,6 +3,7 @@ class Errors extends CoreRender {
 
 	public function onInit(){
 		// call in __constructor
+		$this->registerPHPFunctions();
 		return TRUE;
 	}
 
@@ -18,7 +19,6 @@ class Errors extends CoreRender {
 
 	public function onRun($model = NULL){
 		//$this->error = 40100;
-		$this->registerPHPFunctions();
 		$this->ViewData('title', "kupa błędów");
 		$this->ViewData('content', "kupa tak ogromna i śmierdzi");
 		$this->ViewData('message', " i leży");

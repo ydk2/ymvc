@@ -3,17 +3,17 @@ class Index extends XCoreRender {
 
 	public function onInit(){
 		// call in __constructor
-		$this->Model(SYS_M.'model');
+		$this->Model(SYS.M.'model');
 		if(isset($_GET['error']))
 		$this->error = $_GET['error'];
-		if($this->error > 0) $this->Exceptions($this->model,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
+		if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 	
 		return TRUE;
 	}
 
 	public function onEnd(){
 		// call after render view
-		if($this->error > 0) $this->Exceptions($this->model,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
+		if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 		return TRUE;
 	}
 
@@ -25,8 +25,8 @@ class Index extends XCoreRender {
 	public function onRun(){
 		// call before render view
 
-		//$this->SetView(SYS_V.'index');
-		//if($this->error == 404) $this->Exceptions(NULL,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'error');
+		//$this->SetView(SYS.V.'index');
+		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 		
 		$this->message = memory_get_usage(TRUE);
 		$this->registerPHPFunctions();

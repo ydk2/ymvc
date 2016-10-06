@@ -143,8 +143,8 @@ class Helper {
 	}
 	public static function Inc($class){
 		//echo APP.$class.EXT;
-		if(file_exists(APP.$class.EXT)  && is_file(APP.$class.EXT)){	
-			require_once(APP.$class.EXT);
+		if(file_exists(ROOT.$class.EXT)  && is_file(ROOT.$class.EXT)){	
+			require_once(ROOT.$class.EXT);
 			return TRUE;
 		}
 		return FALSE;

@@ -1,5 +1,5 @@
 <?php
-require_once(APP.CORE.'systemexception'.EXT);
+require_once(ROOT.CORE.'systemexception'.EXT);
 class XCoreRender extends XSLTProcessor {
 	const ACCESS_ANY = 1000;
 	const ACCESS_USER = 500;
@@ -119,12 +119,12 @@ public static $obj_name;
 	}
 
 final public function SetView($view) {
-	if(file_exists(APP.$view.XSL) && is_file(APP.$view.XSL)) {
+	if(file_exists(ROOT.$view.XSL) && is_file(ROOT.$view.XSL)) {
 		$this->view = $view;
 	}
 }	
 final public function CheckView($view) {
-	if(file_exists(APP.$view.XSL) && is_file(APP.$view.XSL)) {
+	if(file_exists(ROOT.$view.XSL) && is_file(ROOT.$view.XSL)) {
 		return TRUE;
 	}
 	$this->error = 404;
@@ -210,7 +210,7 @@ final public function CheckError() {
                 }
             }
 			$view = new DOMDocument();
-			$view->loadXML(file_get_contents(APP.$this->view. XSL));
+			$view->loadXML(file_get_contents(ROOT.$this->view. XSL));
 			$this->setParameter('', 'self', $this->name.'::Call');
             $this->importStylesheet($view);
 			$retval = $this->transformToXML($this->data); 
@@ -309,9 +309,9 @@ final public function CheckError() {
     }
 	
 	public final function Inc($class){
-		//echo APP.$class.EXT;
-		if(file_exists(APP.$class.EXT) && is_file(APP.$class.EXT)){	
-			require_once(APP.$class.EXT);
+		//echo ROOT.$class.EXT;
+		if(file_exists(ROOT.$class.EXT) && is_file(ROOT.$class.EXT)){	
+			require_once(ROOT.$class.EXT);
 			return TRUE;
 		}
 		return FALSE;

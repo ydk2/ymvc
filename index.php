@@ -19,9 +19,9 @@ if(isset($_GET['view']) && $_GET['view'] != ""){
 	}
 
 //echo $loader->app('index','index');
-echo $loader->sys('sys_layout','layout');
-//$next = $views->Controller(SYS_C.'view');
-//$start = $loader->Controller(SYS_C.'index');
+echo $loader->showsys('sys_layout','layout');
+//$next = $views->Controller(SYS.C.'view');
+//$start = $loader->Controller(SYS.C.'index');
 
 //$next->show();
 //$start->show();

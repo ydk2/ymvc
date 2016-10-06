@@ -17,10 +17,10 @@ class view extends XCoreRender {
 	}
 
 	public function onRun($model = NULL){
-		$this->SetView(SYS_V.'time');
+		$this->SetView(SYS.V.'time');
 		$this->ViewData('time', $this->model->time);
 		$this->ViewData('message', " Exec script time: " );
-//	if($this->error > 0) $this->Exceptions($this->model,SYS_V.'errors'.DS.'error',SYS_C.'errors'.DS.'errors');
+//	if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'errors');
 	}	
 }
 ?>

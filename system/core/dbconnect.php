@@ -10,8 +10,8 @@ class DBConnect {
 	final public function Connect($engin, $database, $host = 'localhost', $user = NULL, $pass = NULL) {
 		try {
 			if ($engin == 'posql') {
-				require_once APP.VENDORS.'posql.php';
-				$database_name = APP . '/libriares/data/database/' . $database . '.db';
+				require_once ROOT.VENDORS.'posql.php';
+				$database_name = ROOT.DATA.'database'.DS.$database . '.db';
 				//echo $database_name;
 				if (!file_exists($database_name.'.php')) {
 					throw new SystemException('Database not exist.',420404);
@@ -32,7 +32,7 @@ class DBConnect {
 			if ($engin == 'sqlite') {
 			try {
 				
-				$database_name = APP . '/libriares/data/database/' . $database . '.db';
+				$database_name = ROOT.DATA.'database'.DS. $database . '.db';
 				$this->db = new PDO($engin.':'. $database_name);
 				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
