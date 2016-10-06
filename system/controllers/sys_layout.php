@@ -60,7 +60,7 @@ class Sys_Layout extends XCoreRender {
 
 			$this->exception->ViewData('title', "Error!!! ".$this->error);
 			$this->exception->ViewData('header', "To many CPU resource used");
-			$this->exception->ViewData('alert',"Server is to busy, catch error:  ");
+			$this->exception->ViewData('alert',"<b>Server is to busy, is limited to 3.10.</b> Catch error:  ");
 			$this->exception->ViewData('error', $this->error);
 		}	
 	}

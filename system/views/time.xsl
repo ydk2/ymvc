@@ -8,13 +8,18 @@
 	<xsl:param name="langs">Polski</xsl:param>
 
 <xsl:template match="/">
+<div>
+		<h3>Used resources</h3>
 		<div>
 		<xsl:value-of select="data/message"/>
 		<xsl:value-of select="data/time"/>
 		</div>
 		<div>
 		<xsl:value-of select="data/cpu"/>
+		</div>
+		<div>
 		<xsl:value-of select="data/memory"/>
 		</div>
+</div>
 </xsl:template>
 </xsl:stylesheet>

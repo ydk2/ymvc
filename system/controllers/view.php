@@ -21,7 +21,7 @@ class view extends XCoreRender {
 		$this->setParameter('', 'test', convert(memory_get_usage(TRUE))." ".abs(cpu_get_usage()));
 		$this->ViewData('time', $this->model->time);
 		$this->ViewData('message', " Exec script time: " );
-		$this->ViewData('cpu', " Used memory: " .$this->model->cpu);
+		$this->ViewData('cpu', " Used CPU: " .$this->model->cpu);
 		$this->ViewData('memory', " Used memory: " .$this->model->mem);
 //	if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'errors');
 	}	
