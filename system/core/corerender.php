@@ -17,7 +17,7 @@ public $view;
 public $action;
 public $modules;
 
-public $message;
+public $emessage;
 public $error;
 
 public static $obj;
@@ -52,12 +52,12 @@ public static $obj_name;
 		if($this->error > 0) {
 		if(isset($this->exception)){
 			//$this->view = VIEWS.'empty';
-			throw new SystemException($this->message,$this->error);
+			throw new SystemException($this->emessage,$this->error);
 		}
 		}
         } catch (SystemException $e){
             $this->error = $e->Code();
-            $this->message = $e->Message();
+            $this->emessage= $e->Message();
             return FALSE;
         }
     }
@@ -68,7 +68,7 @@ public static $obj_name;
         $this->view = $view;
 		} catch (SystemException $e){
             $this->error = $e->Code();
-            $this->message = $e->Message();
+            $this->emessage= $e->Message();
             return FALSE;
         }
     }
@@ -84,7 +84,7 @@ public static $obj_name;
 		}
 		} catch (SystemException $e){
             $this->error = $e->Code();
-            $this->message = $e->Message();
+            $this->emessage= $e->Message();
             return FALSE;
         }
     }
@@ -201,7 +201,7 @@ final public function CheckError() {
 			}		
             if($this->error > 0) {
             if(isset($this->exception)){
-                    throw new SystemException($this->message,$this->error);
+                    throw new SystemException($this->emessage,$this->error);
                 }
             }
 			if($this->registerPHPFunctions){
@@ -220,10 +220,10 @@ final public function CheckError() {
             return $retval;
         } catch (SystemException $e){
             $this->error = $e->Code();
-            $this->message = $e->Message();
+            $this->emessage= $e->Message();
 			if(isset($this->exception)){
             	$this->exception->ViewData('error' ,$e->Code());
-            	$this->exception->ViewData('message' ,$e->Message());
+            	$this->exception->ViewData('emessage' ,$e->Message());
 				return $this->exception->view();
 			}
             return FALSE;
@@ -294,7 +294,7 @@ final public function CheckError() {
 		} 
 		}
 	}
-	public final function Model($model){
+	public final function SetModel($model){
 		if (is_object($model)) {
 			$this->model = $model;
 		} else {

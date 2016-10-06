@@ -4,7 +4,7 @@ class Sys_Layout extends XCoreRender {
 	public function onInit(){
 		// call in __constructor
 		$this->time[0]=get_time();
-		$this->Model(SYS.M.'model');
+		$this->SetModel(SYS.M.'model');
 		$this->registerPHPFunctions();
 		if(isset($_GET['error']))
 		$this->error = $_GET['error'];

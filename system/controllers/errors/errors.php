@@ -18,15 +18,9 @@ class Errors extends CoreRender {
 	}
 
 	public function onRun($model = NULL){
-		//$this->error = 40100;
-		$this->ViewData('title', "kupa błędów");
-		$this->ViewData('content', "kupa tak ogromna i śmierdzi");
-		$this->ViewData('message', " i leży");
-		$this->ViewData('message', " i leży tu");
-		$this->message = dump($this);
-		//if($this->error == 40100) $this->Exceptions($this->model,SYS_V.'error',SYS_C.'error');
-		//$this->setParameter('', 'test', convert(memory_get_usage(TRUE))." ".cpu_get_usage());
-		//$this->setParameter('', 'dump', $this->message);
+		$this->ViewData('title', "Error!!! ".$this->ViewData('error'));
+		$this->ViewData('header', "Error on site!!!");
+		$this->ViewData('alert', "System catch error: ");
 	}
 	public function xxx(){
 		//echo 'chuj';

@@ -7,8 +7,7 @@
 <body>
 <div>
 <h3><?=$this->ViewData('header');?></h3>
-<div><?=$this->ViewData('content');?></div>
-<div><?=$this->ViewData('message');?> <?=$this->ViewData('error');?></div>
+<div><?=$this->ViewData('alert');?> <?=$this->ViewData('error');?></div>
 </div>
 </body>
 </html>

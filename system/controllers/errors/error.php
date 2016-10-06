@@ -21,7 +21,7 @@ class Error extends XCoreRender {
 		//$this->error = 40100;
 		//$this->ViewData('title', "Error!!! ".$this->ViewData('error'));
 		//$this->ViewData('header', "Error on site!!!");
-		//$this->ViewData('message', " i leży");
+		//$this->ViewData('alert', "System catch error: ");
 	}
 	public function xxx(){
 		//echo 'chuj';
