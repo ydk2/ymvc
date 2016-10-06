@@ -6,9 +6,9 @@
 </head>
 <body>
 <div>
-<h3>Error: <?=$this->ViewData('title');?></h3>
+<h3><?=$this->ViewData('header');?></h3>
 <div><?=$this->ViewData('content');?></div>
-<div><?=$this->ViewData('message');?></div>
+<div><?=$this->ViewData('message');?> <?=$this->ViewData('error');?></div>
 </div>
 </body>
 </html>

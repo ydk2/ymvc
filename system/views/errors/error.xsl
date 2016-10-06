@@ -16,23 +16,9 @@
         <title><xsl:value-of select="data/title"/></title>
     </head>
 	<body>
+	<h3><xsl:value-of select="data/header"  disable-output-escaping="yes"/></h3>
 		<div>
-			<xsl:for-each select="data">
-
-					<h3>
-						<xsl:value-of select="title"/>
-					</h3>
-					<div>
-						<xsl:value-of select="content"  disable-output-escaping="yes"/>
-					</div>
-			</xsl:for-each>
-		</div>
-		<div>
-			<xsl:value-of select="$test"/>
-		</div>
-		<div>
-		<xsl:value-of select="$dump"  disable-output-escaping="yes"/>
-		<hr/>
+		<xsl:value-of select="data/alert"  disable-output-escaping="yes"/>
 		<xsl:value-of select="data/error"/>
 		</div>
 	</body>

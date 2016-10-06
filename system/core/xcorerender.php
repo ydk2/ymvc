@@ -16,6 +16,7 @@ public $modules;
 
 public $name;
 public $access;
+
 public $message;
 public $error;
 
@@ -104,17 +105,11 @@ public static $obj_name;
 	}
 	
 	public final function CheckModel($model){
-		if (is_object($model)) {
-			$this->model = $model;
-		} else {
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
 			$end = end($stack);
-			if(!class_exists($end)) return NULL;
-				$this->model = new $end;
-			} else {
-				return NULL;
-			}
+			if(!class_exists($end)) return FALSE;
+			if(class_exists($end)) return TRUE;
 		}
 	}
 
@@ -232,16 +227,12 @@ final public function CheckError() {
 	final public function Exceptions($model,$view,$controller) {
 		if (is_object($controller)) {
 			$this->exception = $controller;
-			$this->exception->ViewData('message', $this->message);
-			$this->exception->ViewData('error', $this->error);
 		} else {
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
 			if(!class_exists($end)) return FALSE;
 			$this->exception = new $end($model,$view);
-			$this->exception->ViewData('message', $this->message);
-			$this->exception->ViewData('error', $this->error);
 		} 
 		}
 	}	
@@ -297,7 +288,18 @@ final public function CheckError() {
 		}
 	}
 	public final function Model($model){
-		$this->CheckModel($model);
+		if (is_object($model)) {
+			$this->model = $model;
+		} else {
+		if($this->Inc($model)){
+			$stack = explode(DS,$model);
+			$end = end($stack);
+			if(!class_exists($end)) return NULL;
+				$this->model = new $end;
+			} else {
+				return NULL;
+			}
+		}
 	}
 	
     final public static function Call($method, $parameters=""){

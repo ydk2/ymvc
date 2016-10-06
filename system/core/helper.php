@@ -149,5 +149,20 @@ class Helper {
 		}
 		return FALSE;
 	}
+
+	public static function Load($controller, $a=NULL, $b=NULL, $c=NULL, $d=NULL, $e=NULL){
+
+		if (is_object($controller)) {
+			return $controller;
+		} else {
+		if($this->Inc($controller)){
+			$stack = explode(DS,$controller);
+			$end = end($stack);
+			if(!class_exists($end)) return FALSE;
+				$viewer = new $end($a,$b,$c,$d,$e);
+				return	$viewer;
+		} 
+		}
+	}
 }
 ?>

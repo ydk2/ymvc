@@ -8,7 +8,15 @@ class Sys_Layout extends XCoreRender {
 		$this->registerPHPFunctions();
 		if(isset($_GET['error']))
 		$this->error = $_GET['error'];
-		if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+		if($this->error > 0) {
+
+			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+
+			$this->exception->ViewData('title', "Error!!! ".$this->error);
+			$this->exception->ViewData('header', "Error on Site!!!");
+			$this->exception->ViewData('alert',"System catch error: ");
+			$this->exception->ViewData('error', $this->error);
+		}
 		return TRUE;
 	}
 
@@ -35,11 +43,10 @@ class Sys_Layout extends XCoreRender {
 		//$this->SetView(SYS.V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 		
-		$this->message = memory_get_usage(TRUE);
 		$this->ViewData('title', "XSL");
 		$this->ViewData('content', $this->model->check());
 		$this->ViewData('message', " i leży " );
-		$a = round(4.70, 2);
+		$a = round(4.0, 2);
 		$b = round(cpu_get_usage(), 2); //0.17
 		if($a <= $b ){
     		$this->error = 2100;
