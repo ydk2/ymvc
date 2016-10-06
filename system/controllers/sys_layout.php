@@ -50,7 +50,7 @@ class Sys_Layout extends XCoreRender {
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 		
 		$this->ViewData('title', "XSL");
-		$this->ViewData('content', dump($this->data));
+		$this->ViewData('content', '<div>Temporary site content</div>');
 		$this->ViewData('message', " i leży " );
 		$a = round(3.10, 2);
 		$b = round(cpu_get_usage(), 2); //0.17
