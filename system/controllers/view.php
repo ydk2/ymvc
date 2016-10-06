@@ -18,7 +18,6 @@ class view extends XCoreRender {
 
 	public function onRun($model = NULL){
 		$this->SetView(SYS.V.'time');
-		$this->setParameter('', 'test', convert(memory_get_usage(TRUE))." ".abs(cpu_get_usage()));
 		$this->ViewData('time', $this->model->time.' us');
 		$this->ViewData('message', " Exec script time: " );
 		$this->ViewData('cpu', " Used CPU: " .$this->model->cpu);

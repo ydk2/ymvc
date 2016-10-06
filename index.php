@@ -3,7 +3,10 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'bootstrap.php');
 ?>
 <?php
 Config::Init();
-$model = new stdClass;
+
+Config::$data['default']['database']['type'] = 'sqlite';
+Config::$data['default']['cpu_limit'] = 3.90;
+//$model = new stdClass;
 //$views = new CoreRender;
 $loader = new Loader;
 $view = 'index';

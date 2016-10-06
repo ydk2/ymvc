@@ -4,7 +4,6 @@ class Sys_Layout extends XCoreRender {
 	public function onInit(){
 		// call in __constructor
 		$this->time[0]=get_time();
-		Config::$data['default']['database']['type'] = 'sqlite';
 		$this->SetModel(SYS.M.'model');
 		$this->registerPHPFunctions();
 		if(isset($_GET['error']))
@@ -52,7 +51,7 @@ class Sys_Layout extends XCoreRender {
 		$this->ViewData('title', "XSL");
 		$this->ViewData('content', '<div>Temporary site content</div>');
 		$this->ViewData('message', " i leży " );
-		$a = round(3.10, 2);
+		$a = round(Config::$data['default']['cpu_limit'], 2);
 		$b = round(cpu_get_usage(), 2); //0.17
 		if($a <= $b ){
     		$this->error = 2100;
@@ -64,7 +63,7 @@ class Sys_Layout extends XCoreRender {
 
 			$this->exception->ViewData('title', "Error!!! ".$this->error);
 			$this->exception->ViewData('header', "To many CPU resource used");
-			$this->exception->ViewData('alert',"<b>Server is to busy, is limited to 3.10.</b> Catch error:  ");
+			$this->exception->ViewData('alert',"<b>Server is to busy, is limited to ".Config::$data['default']['cpu_limit'] .".</b> Catch error:  ");
 			$this->exception->ViewData('error', $this->error);
 		}	
 	}
