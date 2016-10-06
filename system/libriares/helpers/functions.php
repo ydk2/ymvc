@@ -19,7 +19,7 @@
 		return microtime(true);
 	}
 	function get_time_exec($start,$end){
-		return ($end - $start);
+		return round(($end - $start),9);
 	}
 	function format_time($duration) {
 
