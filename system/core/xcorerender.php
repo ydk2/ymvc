@@ -225,12 +225,14 @@ final public function CheckError() {
 
 	final public function Exceptions($model,$view,$controller) {
 		if (is_object($controller)) {
+			unset($this->exception);
 			$this->exception = $controller;
 		} else {
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
 			if(!class_exists($end)) return FALSE;
+			unset($this->exception);
 			$this->exception = new $end($model,$view);
 		} 
 		}
@@ -310,7 +312,6 @@ final public function CheckError() {
     }
 	
 	public final function Inc($class){
-		//echo ROOT.$class.EXT;
 		if(file_exists(ROOT.$class.EXT) && is_file(ROOT.$class.EXT)){	
 			require_once(ROOT.$class.EXT);
 			return TRUE;

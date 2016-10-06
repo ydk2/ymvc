@@ -6,11 +6,11 @@ class Layout extends XCoreRender {
 		$this->time[0]=get_time();
 		$this->SetModel(SYS.M.'model');
 		$this->registerPHPFunctions();
-		if(isset($_GET['error']))
-		$this->error = $_GET['error'];
+		if(isset($_GET['errors']))
+		$this->error = $_GET['errors'];
 		if($this->error > 0) {
 
-			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 
 			$this->exception->ViewData('title', "Error!!! ".$this->error);
 			$this->exception->ViewData('header', "Error on Site!!!");
@@ -59,7 +59,7 @@ class Layout extends XCoreRender {
 		}
 		if($this->error == 2100){
 
-			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 
 			$this->exception->ViewData('title', "Error!!! ".$this->error);
 			$this->exception->ViewData('header', "To many CPU resource used");

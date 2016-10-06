@@ -1,5 +1,5 @@
 <?php
-class Error extends XCoreRender {
+class SystemError extends XCoreRender {
 
 	public function onInit(){
 		// call in __constructor
