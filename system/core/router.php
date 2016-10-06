@@ -5,146 +5,63 @@
  */
 
 class Router {
+	private static $loader;
+	private static $data;
 
 	static function app_from_get($array = array()) {
 		if ($_GET != NULL) {
-			try {
-				$core = NULL;
-				$retstr = "";
-				foreach ($_GET as $key => $value) {
-					$p = "\\application\\controller\\" . str_replace(',', '\\', $key);
-					if (class_exists($p) && !in_array($key, $array)) {
-						$core = new $p(MODEL, VIEW . str_replace(',', '/', $value));
-						$retstr .= $core -> showin();
-					}
-				}
-				unset($core);
-				return $retstr;
-			} catch (Exception $e) {
-				echo 'Caught exception: ', $e -> getMessage(), "\n";
+			self::$data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
+			//$retval = 
+			self::$loader = new loader;
+			foreach ($_GET as $controller => $view) {
+				self::DataSet(self::$data,'section',self::$loader->returnapp($controller, $view));
+				//echo self::$loader->returnapp($controller, $view);
 			}
-			//return $_GET[$val];
+			return self::$data->asXML();
 		} else {
 			return false;
 		}
 	}
 
 	static function app_from_array($array) {
-		if ($array != NULL) {
-			try {
-				$core = NULL;
-				$retstr = "";
-				foreach ($array as $key => $value) {
-					$p = "\\application\\controller\\$key";
-					if (class_exists($p)) {
-						$core = new $p(MODEL, VIEW . $value);
-						$retstr .= $core -> showin();
-					}
-				}
-				unset($core);
-				return $retstr;
-			} catch (Exception $e) {
-				echo 'Caught exception: ', $e -> getMessage(), "\n";
-			}
-			//return $_GET[$val];
-		} else {
-			return false;
-		}
+
 	}
 
 	static function sys_from_get($array = array()) {
 		if ($_GET != NULL) {
-			try {
-				$core = NULL;
-				$retstr = "";
-				foreach ($_GET as $key => $value) {
-					$p = "\\system\\controller\\" . str_replace(',', '\\', $key);
-					//echo "$p<br>";
-					if (class_exists($p) && !in_array($key, $array)) {
-						$core = new $p(SMODEL, SVIEW . str_replace(',', '/', $value));
-						$retstr .= $core -> showin();
-					}
-				}
-				unset($core);
-				return $retstr;
-			} catch (Exception $e) {
-				echo 'Caught exception: ', $e -> getMessage(), "\n";
+			libxml_disable_entity_loader(true);
+			self::$data = new SimpleXMLElement('<data/>', LIBXML_NOCDATA || LIBXML_NOENT );
+			//$retval = 
+			self::$loader = new loader;
+			foreach ($_GET as $controller => $view) {
+				self::DataSet(self::$data,'section', self::$loader->returnsys($controller, $view)) ;
+				//echo self::$loader->returnapp($controller, $view);
 			}
+			return self::$data;
 		} else {
 			return false;
 		}
 	}
 
 	static function sys_from_array($array) {
-		if ($array != NULL) {
-			try {
-				$core = NULL;
-				$retstr = '';
-				foreach ($array as $key => $value) {
-					$p = "\\system\\controller\\$key";
-					if (class_exists($p)) {
-						$core = new $p(SMODEL, SVIEW . $value);
-						$retstr .= $core -> showin();
-					}
-				}
-				unset($core);
-				return $retstr;
-			} catch (Exception $e) {
-				echo 'Caught exception: ', $e -> getMessage(), "\n";
-			}
-		} else {
-			return false;
-		}
+
 	}
 
 	static function from_array($array) {
-		if ($array != NULL) {
-			try {
-				$retstr = '';
-				$core = NULL;
-				foreach ($array as $key => $value) {
-					$p = str_replace('/', '\\', $value[0]);
-					$m = str_replace('/', '\\', $value[1]);
-					if (class_exists($p) && class_exists($m)) {
-						$core = new $p($m, $value[2]);
-						$retstr .= $core -> showin();
-					}
-				}
-				unset($core);
-				return $retstr;
-			} catch (Exception $e) {
-				echo 'Caught exception: ', $e -> getMessage(), "\n";
-			}
-		} else {
-			return false;
-		}
+
 	}
 
 	static function from_get($array = array()) {
-		if ($_GET != NULL) {
-			try {
-				$core = NULL;
-				$retstr = "";
-				foreach ($_GET as $key => $value) {
-					$p = "\\application\\controller\\" . str_replace(',', '\\', $key);
-					$s = "\\System\\controller\\" . str_replace(',', '\\', $key);
-					if (class_exists($p) && !in_array($key, $array)) {
-						$core = new $p(MODEL, VIEW . str_replace(',', '/', $value));
-						$retstr .= $core -> showin();
-					} elseif (class_exists($s) && !in_array($key, $array)) {
-						$core = new $s(SMODEL, SVIEW . str_replace(',', '/', $value));
-						$retstr .= $core -> showin();
-					}
-				}
-				unset($core);
-				return $retstr;
-			} catch (Exception $e) {
-				echo 'Caught exception: ', $e -> getMessage(), "\n";
-			}
-		} else {
-			return false;
-		}
-	}
 
+	}
+	final private static  function DataSet($obj,$name, $value = '') {
+		if($obj instanceof SimpleXMLElement){
+		//	unset($obj->$name);
+			$obj->addChild($name,$value);
+		} else {
+			$obj->$name = $newvalue;
+		}
+		//return (isset($obj->$name)) ? $obj->$name: '';
+	}
 }
 ?>

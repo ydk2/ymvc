@@ -1,5 +1,5 @@
 <?php
-class Sys_Layout extends XCoreRender {
+class Layout extends XCoreRender {
 	private $time;
 	public function onInit(){
 		// call in __constructor
