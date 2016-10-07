@@ -10,10 +10,9 @@ Config::$data['default']['cpu_limit'] = 3.90;
 //$model = new stdClass;
 //$views = new CoreRender;
 $loader = new Loader;
-$view = 'index';
 
-echo htmlspecialchars_decode( Router::sys_from_get()->asXml());
-//echo $loader->showsys('layout','layout');
+//echo htmlspecialchars_decode( Router::sys_routed($array,$disabled)->asXml());
+echo $loader->showsys('layout','layout');
 
 //$next = $views->Controller(SYS.C.'view');
 //$start = $loader->Controller(SYS.C.'index');

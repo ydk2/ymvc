@@ -47,10 +47,7 @@ class Layout extends XCoreRender {
 		}
 		//$this->SetView(SYS.V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
-		
-		$this->ViewData('title', "XSL");
-		$this->ViewData('content', '<div>Temporary site content</div>');
-		$this->ViewData('message', " i leży " );
+		$this->routing();
 		$a = round(Config::$data['default']['cpu_limit'], 2);
 		$b = round(cpu_get_usage(), 2); //0.17
 		if($a <= $b ){
@@ -75,6 +72,21 @@ class Layout extends XCoreRender {
        }
 		$this->ViewData('message', " i leży tam" );
 	   return $retarr;
+	}
+	public function routing(){
+		$loader = new Loader;
+		$disabled = array('error','errors','data','item','action','layout');
+		$controller = 'one';
+		$view = 'one';
+
+		$array = $_GET;
+		
+		foreach ($array as $key => $value) {
+			if(!in_array($key,$disabled))
+			$this->data->addChild('content',$this->Viewer(SYS.V.$value,SYS.C.$key)->View());
+		}
+		if(!isset($this->data->content))
+		$this->ViewData('content', $this->Viewer(SYS.V.$view,SYS.C.$controller)->View());
 	}
 	
 }

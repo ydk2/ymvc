@@ -23,12 +23,12 @@
 		</h1>
 	</div>
 		<div>
-			<xsl:for-each select="data">
-					<h3>
-						<xsl:value-of select="page_subtitle_str"/>
-					</h3>
+		<h3>
+			<xsl:value-of select="data/page_subtitle_str"/>
+		</h3>
+			<xsl:for-each select="data/content">
 					<div>
-						<xsl:value-of select="content" disable-output-escaping="yes"/>
+						<xsl:value-of select="node()" disable-output-escaping="yes"/>
 					</div>
 			</xsl:for-each>
 		</div>
