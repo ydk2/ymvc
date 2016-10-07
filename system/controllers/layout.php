@@ -82,11 +82,17 @@ class Layout extends XCoreRender {
 		$array = $_GET;
 		
 		foreach ($array as $key => $value) {
-			if(!in_array($key,$disabled))
-			$this->data->addChild('content',$this->Viewer(SYS.V.$value,SYS.C.$key)->View());
+			if(!in_array($key,$disabled)){
+				$viewer = $this->Viewer(SYS.V.$value,SYS.C.$key);
+				if(is_object($viewer))
+				$this->data->addChild('content',$viewer->View());
+			}
 		}
-		if(!isset($this->data->content))
-		$this->ViewData('content', $this->Viewer(SYS.V.$view,SYS.C.$controller)->View());
+		if(!isset($this->data->content)){
+			$viewer = $this->Viewer(SYS.V.$view,SYS.C.$controller);
+			if(is_object($viewer))
+			$this->ViewData('content', $viewer->View());
+		}
 	}
 	
 }

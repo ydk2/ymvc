@@ -11,6 +11,11 @@
 <div>
 		<h3><xsl:value-of select="data/title"/></h3>
 		<div>
+		<xsl:for-each select="data/links/a">
+				<p><a href="{@href}"><xsl:value-of select="node()"/></a></p>
+		</xsl:for-each>
+		</div>
+		<div>
 		<xsl:value-of select="data/message"/>
 		</div>
 </div>

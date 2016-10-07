@@ -2,8 +2,22 @@
 class Loader {
 	const XSL = 0;
 	const PHP = 1;
-
-	public final function load($controller,$view){
+	
+	public final function load($view,$controller){
+		$this->Inc(CORE.'corerender');
+		$this->Inc(CORE.'xcorerender');
+		if (is_object($controller)) {
+			return $controller;
+		} else {
+		if($this->Inc($controller)){
+			$stack = explode(DS,$controller);
+			$end = end($stack);
+			if(!class_exists($end)) return FALSE;
+				return new $end($view);
+		} 
+		}
+	}
+	public final function view($controller,$view){
 		if (is_object($controller)) {
 			return $controller;
 		} else {
