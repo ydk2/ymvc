@@ -2,9 +2,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" indent="yes"/>
 	<xsl:param name="content"/>
-	<xsl:param name="test"/>
-	<xsl:param name="dump"/>
-	<xsl:param name="call"/>
+	<xsl:param name="show_link"/>
 	<xsl:param name="langs">Polski</xsl:param>
 
 <xsl:template match="/">

@@ -80,12 +80,21 @@ class Layout extends XCoreRender {
 		$view = 'one';
 
 		$array = $_GET;
-		
+		$i = 0;
+		foreach ($array as $key => $value) {
+			if(!in_array($key,$disabled)){
+					if($key != 'two')
+					$i++;
+			}
+		}
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
 				$viewer = $this->Viewer(SYS.V.$value,SYS.C.$key);
-				if(is_object($viewer))
-				$this->data->addChild('content',$viewer->View());
+				if(is_object($viewer)){
+					if($i == 0)
+					$viewer->setParameter('','show_link','yes');
+					$this->data->addChild('content',$viewer->View());
+				}
 			}
 		}
 		if(!isset($this->data->content)){

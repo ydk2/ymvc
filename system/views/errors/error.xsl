@@ -21,6 +21,9 @@
 		<xsl:value-of select="data/alert"  disable-output-escaping="yes"/>
 		<xsl:value-of select="data/error"/>
 		</div>
+		<div>
+				<p><a href="{data/links/a/@href}"><xsl:value-of select="data/links/a/node()"/></a></p>
+		</div>
 	</body>
 </html>
 </xsl:template>

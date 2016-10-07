@@ -22,6 +22,9 @@ class SystemError extends XCoreRender {
 		//$this->ViewData('title', "Error!!! ".$this->ViewData('error'));
 		//$this->ViewData('header', "Error on site!!!");
 		//$this->ViewData('alert', "System catch error: ");
+		$this->ViewData('links', "" );
+		$links = $this->data->links->addChild('a','Back to Index');
+		$links->addAttribute('href', HOST_URL);
 	}
 	public function xxx(){
 		//echo 'chuj';
