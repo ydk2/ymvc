@@ -8,7 +8,7 @@ class Router {
 	private static $loader;
 	private static $data;
 
-	public function routing($array=array(),$disabled=array(),$default=array(),$mode=SYS){
+	public static function routing($array=array(),$disabled=array(),$default=array(),$mode=SYS){
 		$loader = new Loader;
 		//$disabled = array('error','errors','data','item','action','layout');
 		$controller = $default[0];
