@@ -182,11 +182,11 @@ final public function CheckError() {
 		clearstatcache();
 	}
 	
-	final static function RegisterView($view) {
+	final protected function RegisterView($view) {
 		array_push($this->registered_views, $view);
 	}
 	
-	final public function UnRegisterView($view) {
+	final protected function UnRegisterView($view) {
 		foreach ($this->registered_views as $key => $value) {
 			if ($value==$view) {
 				unset($this->registered_views[$key]);

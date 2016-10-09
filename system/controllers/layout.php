@@ -6,6 +6,8 @@ class Layout extends XCoreRender {
 		$this->time[0]=get_time();
 		$this->SetModel(SYS.M.'model');
 		$this->registerPHPFunctions();
+		$this->only_registered_views = TRUE;
+		$this->RegisterView(SYS.V.strtolower($this->name));
 		if(isset($_GET['errors']))
 		$this->error = $_GET['errors'];
 		if($this->error > 0) {
