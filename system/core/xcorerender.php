@@ -10,8 +10,8 @@ class XCoreRender extends XSLTProcessor {
 	
 
 private $action;
-private $modules;
 
+protected $modules;
 protected $only_registered_views;
 protected $registered_views;
 
@@ -29,7 +29,7 @@ private static $obj;
 		try {
 		$retval = NULL;
 		if (!$this->hasExsltSupport()) {
-            throw new SystemException('EXSLT not supported',510);
+            throw new SystemException('EXSLT not supported',20510);
         }
 		$this->name=get_class($this);
 		$this->only_registered_views = FALSE;
@@ -44,14 +44,17 @@ private static $obj;
 			$this -> error = 0;
 		endif;
 
+		$this->action = new stdClass;
+		$this->modules = array();
+
         $argsv = func_get_args();
         $argsc = func_num_args();
         if (method_exists($this, $f = 'load_' . $argsc)) {
             $retval = call_user_func_array(array($this, $f), $argsv);
         }
-		$this->action = new stdClass;
-		$this->modules = new stdClass;
+		$this->_check();
 		$this->action->init = $this->onInit();
+		$this->_check();
 		if($this->error > 0) {
 		if(isset($this->exception)){
 			throw new SystemException($this->emessage,$this->error);
@@ -66,7 +69,7 @@ private static $obj;
     
     final private function load_1($view = '') {
 		try {
-		if (!$this->CheckView($view)) throw new SystemException("View not exists",404);
+		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
         $this->view = $view;
 		} catch (SystemException $e){
             $this->error = $e->Code();
@@ -77,7 +80,7 @@ private static $obj;
     
     final private function load_2($model,$view) {
         try {
-		if (!$this->CheckView($view)) throw new SystemException("View not exists",404);
+		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
         $this->view = $view;
 		if (is_object($model)) {
 			$this->model = $model;
@@ -193,7 +196,24 @@ final public function CheckError() {
 			}
 		}
 	}  
-
+	final private function _check(){
+			if(!in_array($this->view,$this->registered_views) && $this->only_registered_views){
+				 $this->message = "View not registered";
+				 $this->error = 20402;
+			}
+			if($this->model==NULL){
+				 $this->message = "App Model not Definied";
+				 $this->error = 20304;
+			}
+			if($this->view==NULL){
+				 $this->message = "View not Definied";
+				 $this->error = 20401;
+			}
+			if (!$this->CheckView($this->view)){
+				 $this->message = "View not exists";
+				 $this->error = 20403;
+			}	
+	}
     final public function Show($view = NULL) {
         echo $this->view($view);
     }
@@ -203,19 +223,9 @@ final public function CheckError() {
         try {
 			self::$obj =& $this;
 			if($path!=NULL) $this->view=$path;
+			$this->_check();
 			$this->action->run = $this->onRun();
-			if($this->model==NULL){
-				 throw new SystemException("App Model not Definied",304);
-			}
-			if($this->view==NULL){
-				 throw new SystemException("View not Definied",401);
-			}
-			if (!$this->CheckView($this -> view)){
-				 throw new SystemException("View not exists",404);
-			}	
-			if(!in_array($this->view,$this->registered_views) && $this->only_registered_views){
-				 throw new SystemException("View not registered",402);
-			}
+			$this->_check();
             if($this->error > 0) {
             if(isset($this->exception)){
                     throw new SystemException($this->emessage,$this->error);
@@ -256,15 +266,11 @@ final public function CheckError() {
 		}
 	}	
 	public final function Register($model, $view, $controller){
-		if (is_object($controller)) {
-			$this->modules->$controller = $controller;
-		} else {
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
 			if(!class_exists($end)) return FALSE;
-				$this->modules->$end = new $end($model,$view);
-			}
+				$this->modules[$end] = new $end($model,$view);
 		}
 	}	
 	public final function Loader($model, $view, $controller){
@@ -309,12 +315,18 @@ final public function CheckError() {
 	public final function SetModel($model){
 		if (is_object($model)) {
 			$this->model = $model;
+			if($this->error == 20304){
+				$this->error = 0;
+			}
 		} else {
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
 			$end = end($stack);
 			if(!class_exists($end)) return NULL;
 				$this->model = new $end;
+				if($this->error == 20304){
+				$this->error = 0;
+				}
 			} else {
 				return NULL;
 			}

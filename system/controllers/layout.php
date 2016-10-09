@@ -8,6 +8,7 @@ class Layout extends XCoreRender {
 		$this->registerPHPFunctions();
 		$this->only_registered_views = TRUE;
 		$this->RegisterView(SYS.V.strtolower($this->name));
+		$this->RegisterView(SYS.V.'errors'.DS.'error');
 		if(isset($_GET['errors']))
 		$this->error = $_GET['errors'];
 		if($this->error > 0) {
@@ -44,6 +45,20 @@ class Layout extends XCoreRender {
 	public function onRun($model = NULL){
 
 
+		if($this->error == 20402){
+
+			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+
+			$this->exception->ViewData('title', "Error!!! ".$this->error);
+			$this->exception->ViewData('header', "View not register");
+			$this->exception->ViewData('alert',"<b>Please register view in onInit function or set only_registered_views to FALSE </b> Catch error:  ");
+			$this->exception->ViewData('error', $this->error);
+		} 
+
+		$this->Register(NULL,SYS.V.'index',SYS.C.'index');
+		//var_dump($this->modules);
+		$this->ViewData('php_view', $this->modules['index']->View());
+		
 		foreach ($this->model->get() as $key => $value) {
 			$this->ViewData($value['name'], $value['string']);
 		}

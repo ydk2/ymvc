@@ -30,7 +30,7 @@ class Index extends XCoreRender {
 		
 		$this->message = memory_get_usage(TRUE);
 		$this->registerPHPFunctions();
-		$this->ViewData('title', "XSL");
+		$this->ViewData('title', "PHP");
 		$this->ViewData('content', $this->model->check());
 		$this->ViewData('message', " i leży " );
 		

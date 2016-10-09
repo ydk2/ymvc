@@ -33,6 +33,9 @@
 			</xsl:for-each>
 		</div>
 		<div>
+				<xsl:value-of select="data/php_view" disable-output-escaping="yes"/>
+		</div>
+		<div>
 			<h3>
 				<xsl:value-of select="data/footer_title_str"/>
 			</h3>
