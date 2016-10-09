@@ -21,11 +21,13 @@ Remember it is very early state of work.
 * Same functions names in both mode
 * App scheme , some helpers
 * Easy change views, models 
-* Call PHP called class functions inside XSLT: 'php:function ($self,'function_name','arg1;arg2;...')'
+* Call PHP called class functions inside XSLT: 'php:function($self,'function_name','arg1','arg2'...)', param "$self" represent "$this" work only with current class
 * DB connector using PDO (Sqlite not memory, PoSQL class not included, MySQL)
 * Errors support by "SystemExceptions" class, get and set by $this->error
 * Example testing controllers with views in "system/controllers", "system/views" and sample model in "system/models"
 * Added virtual functions: "onInit" called in constructor, "onRun" called in view, "onEnd“ called after view and "onDestruct" called in destructor.
+* Register views for controller with property "registered_views" as array of strings, will enable with property controller 'only_registered_views' default FALSE
+* add controllers functions "UnRegisterView($view)", "RegisterView($view)"
 
 ### Now working on
 

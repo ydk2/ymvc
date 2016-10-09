@@ -8,20 +8,22 @@ class XCoreRender extends XSLTProcessor {
 	const ACCESS_SYSTEM = 1;
 	const ACCESS_ADMIN = 0;
 	
-public $model;
-public $data;
-public $view;
-public $action;
-public $modules;
+
+private $action;
+private $modules;
+
+protected $only_registered_views;
+protected $registered_views;
 
 public $name;
 public $access;
-
+public $model;
+public $data;
+public $view;
 public $emessage;
 public $error;
 
-public static $obj;
-public static $obj_name;
+private static $obj;
 
    final public function __construct() {
 		try {
@@ -30,7 +32,8 @@ public static $obj_name;
             throw new SystemException('EXSLT not supported',510);
         }
 		$this->name=get_class($this);
-		
+		$this->only_registered_views = FALSE;
+		$this->registered_views = array();
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
 
 		if (!isset($this -> access)):
@@ -178,7 +181,19 @@ final public function CheckError() {
 		unset($this);
 		clearstatcache();
 	}
-        
+	
+	final static function RegisterView($view) {
+		array_push($this->registered_views, $view);
+	}
+	
+	final public function UnRegisterView($view) {
+		foreach ($this->registered_views as $key => $value) {
+			if ($value==$view) {
+				unset($this->registered_views[$key]);
+			}
+		}
+	}  
+
     final public function Show($view = NULL) {
         echo $this->view($view);
     }
@@ -198,6 +213,9 @@ final public function CheckError() {
 			if (!$this->CheckView($this -> view)){
 				 throw new SystemException("View not exists",404);
 			}	
+			if(!in_array($this->view,$this->registered_views) && $this->only_registered_views){
+				 throw new SystemException("View not registered",402);
+			}
             if($this->error > 0) {
             if(isset($this->exception)){
                     throw new SystemException($this->emessage,$this->error);
@@ -303,12 +321,12 @@ final public function CheckError() {
 		}
 	}
 	
-    final public static function Call($method, $parameters=""){
-		
+    final public static function Call($method){
+		$parameters = func_get_args(); 
+		array_shift($parameters);
 		$a = self::$obj->name."::".$method;
 		if(self::$obj !== NULL && method_exists(self::$obj, $method))
-        return call_user_func_array(array(self::$obj, $method), explode(";", $parameters));
-		//return FALSE;
+        return call_user_func_array(array(self::$obj, $method), $parameters);
     }
 	
 	public final function Inc($class){

@@ -3,7 +3,7 @@
 	<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" indent="yes"/>
 	<xsl:param name="content"/>
 	<xsl:param name="show_link"/>
-	<xsl:param name="langs">Polski</xsl:param>
+	<xsl:param name="langs">, Second argument from XSLT param</xsl:param>
 
 <xsl:template match="/">
 <div>
@@ -17,6 +17,9 @@
 		</div>
 		</xsl:if>
 		<div>
+		<!---->
+		<xsl:value-of select="php:function ($self, 'test', 'called function of this class controller from XSLT',$langs)"  xmlns:php="http://php.net/xsl" disable-output-escaping="yes"/>
+		<!---->
 		<xsl:value-of select="data/message"/>
 		</div>
 </div>

@@ -10,24 +10,29 @@ class CoreRender {
 
 private $registerPHPFunctions;
 private $parameters;
-	
+private $action;
+private $modules;
+
+protected $only_registered_views;
+protected $registered_views;
+
+public $name;
+public $access;
 public $model;
 public $data;
 public $view;
-public $action;
-public $modules;
-
 public $emessage;
 public $error;
 
-public static $obj;
-public static $obj_name;
+private static $obj;
 
    final public function __construct() {
 		try {
 		$retval = NULL;
-		$this->registerPHPFunctions = FALSE;
+		$this->registerPHPFunctions = TRUE;
 		$this->name=get_class($this);
+		$this->only_registered_views = FALSE;
+		$this->registered_views = array();
 		
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
 		
@@ -178,7 +183,19 @@ final public function CheckError() {
 		unset($this);
 		clearstatcache();
 	}
-        
+	
+	final static function RegisterView($view) {
+		array_push($this->registered_views, $view);
+	}
+	
+	final public function UnRegisterView($view) {
+		foreach ($this->registered_views as $key => $value) {
+			if ($value==$view) {
+				unset($this->registered_views[$key]);
+			}
+		}
+	} 
+
     final public function Show($view = NULL) {
         echo $this->view($view);
     }
@@ -198,7 +215,10 @@ final public function CheckError() {
 			}
 			if (!$this->CheckView($this -> view)){
 				 throw new SystemException("View not exists",404);
-			}		
+			}	
+			if(!in_array($this->view,$this->registered_views) && $this->only_registered_views){
+				 throw new SystemException("View not registered",402);
+			}	
             if($this->error > 0) {
             if(isset($this->exception)){
                     throw new SystemException($this->emessage,$this->error);

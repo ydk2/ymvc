@@ -3,6 +3,7 @@ class Two extends XCoreRender {
 
 	public function onInit(){
 		// call in __constructor
+		$this->registerPHPFunctions();
 		$this->model = new stdclass;
 		return TRUE;
 	}
@@ -26,5 +27,8 @@ class Two extends XCoreRender {
 		$links->addAttribute('href', HOST_URL);
 //	if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'errors');
 	}	
+	public function test($a='a test', $b='b test'){
+		$this->ViewData('message', " Content for Two &amp; ".$a." ".$b );
+	}
 }
 ?>
