@@ -232,6 +232,7 @@ final public function CheckError() {
                 }
             }
 			$view = new DOMDocument();
+			$view->substituteEntities = TRUE;
 			$view->loadXML(file_get_contents(ROOT.$this->view. XSL));
 			$this->setParameter('', 'self', $this->name.'::Call');
             $this->importStylesheet($view);

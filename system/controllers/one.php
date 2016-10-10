@@ -12,7 +12,7 @@ class One extends XCoreRender {
 		$links->addAttribute('href', HOST_URL);
 		$links = $this->data->links->addChild('a','Two');
 		$links->addAttribute('href', HOST_URL.'?two=two');
-		$links = $this->data->links->addChild('a','Two and One');
+		$links = $this->data->links->addChild('a','Two &amp; One');
 		$links->addAttribute('href', HOST_URL.'?two=two&one=one');
 		$links = $this->data->links->addChild('a','Two and One and php view');
 		$links->addAttribute('href', HOST_URL.'?two=two&one=one&index=index');

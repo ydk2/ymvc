@@ -54,17 +54,17 @@ class Layout extends XCoreRender {
 			$this->exception->ViewData('alert',"<b>Please register view in onInit function or set only_registered_views to FALSE </b> Catch error:  ");
 			$this->exception->ViewData('error', $this->error);
 		} 
-		if(Helper::Get('phpview')=="yes"){
-		$this->Register(NULL,SYS.V.'index',SYS.C.'index');
-		//var_dump($this->modules);
-		$this->ViewData('php_view', $this->modules['index']->View());
-		} else {
 		foreach ($this->model->get() as $key => $value) {
 			$this->ViewData($value['name'], $value['string']);
 		} 
+		if(Helper::Get('phpview')=="yes"){
+			$this->Register(NULL,SYS.V.'index',SYS.C.'index');
+			//var_dump($this->modules);
+			$this->ViewData('php_view', $this->modules['index']->View());
+		} else {
 		//$this->SetView(SYS.V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
-		$this->routing();
+			$this->routing();
 		}
 		$a = round(Config::$data['default']['cpu_limit'], 2);
 		$b = round(cpu_get_usage(), 2); //0.17
