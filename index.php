@@ -6,7 +6,7 @@ Helper::Inc(CORE.'router');
 Config::Init();
 
 Config::$data['default']['database']['type'] = 'sqlite';
-Config::$data['default']['cpu_limit'] = 10;
+Config::$data['default']['cpu_limit'] = 15;
 //$model = new stdClass;
 //$views = new CoreRender;
 $loader = new Loader;

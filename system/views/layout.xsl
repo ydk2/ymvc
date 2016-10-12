@@ -26,15 +26,17 @@
 		<h3>
 			<xsl:value-of select="data/page_subtitle_str"/>
 		</h3>
-			<xsl:for-each select="data/content">
+			<xsl:for-each select="data/items/item">
 					<div>
 						<xsl:value-of select="node()" disable-output-escaping="yes"/>
 					</div>
 			</xsl:for-each>
 		</div>
+		<xsl:if test="data/php_view != ''">
 		<div>
-				<xsl:value-of select="data/php_view" disable-output-escaping="yes"/>
+				<div><xsl:value-of select="data/php_view" disable-output-escaping="yes"/></div>
 		</div>
+		</xsl:if>
 		<div>
 			<h3>
 				<xsl:value-of select="data/footer_title_str"/>

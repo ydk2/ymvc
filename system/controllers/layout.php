@@ -64,6 +64,7 @@ class Layout extends XCoreRender {
 		} else {
 		//$this->SetView(SYS.V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+		//	$this->Inc(CORE.'');
 			$this->routing();
 		}
 		$a = round(Config::$data['default']['cpu_limit'], 2);
@@ -91,6 +92,12 @@ class Layout extends XCoreRender {
 		$this->ViewData('message', " i leży tam" );
 	   return $retarr;
 	}
+	public function routings(){
+		$disabled = array('error','errors','data','item','action','layout');
+		$default = array('one'=>'one');
+		$array = $_GET;
+		simplexml_import_xml($this->data,Router::routing($array,$disabled,$default,SYS));
+	}
 	public function routing(){
 		$loader = new Loader;
 		$disabled = array('error','errors','data','item','action','layout');
@@ -105,20 +112,21 @@ class Layout extends XCoreRender {
 					$i++;
 			}
 		}
+		$this->ViewData('items', '');
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
 				$viewer = $this->Viewer(SYS.V.$value,SYS.C.$key);
 				if(is_object($viewer)){
 					if($i == 0)
 					$viewer->setParameter('','show_link','yes');
-					$this->data->addChild('content',$viewer->View());
+					$this->data->items->addChild('item',$viewer->View());
 				}
 			}
 		}
-		if(!isset($this->data->content)){
+		if(!isset($this->data->items->item)){
 			$viewer = $this->Viewer(SYS.V.$view,SYS.C.$controller);
 			if(is_object($viewer))
-			$this->ViewData('content', $viewer->View());
+				$this->data->items->addChild('item',$viewer->View());
 		}
 	}
 	
