@@ -1,5 +1,5 @@
 <?php
-class Index extends CoreRender {
+class PHPCall extends CoreRender {
 
 	public function onInit(){
 		// call in __constructor

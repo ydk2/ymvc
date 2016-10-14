@@ -58,9 +58,13 @@ class Layout extends XCoreRender {
 			$this->ViewData($value['name'], $value['string']);
 		} 
 		if(Helper::Get('phpview')=="yes"){
-			$this->Register(NULL,SYS.V.'index',SYS.C.'index');
+			$this->Register(NULL,SYS.V.'phpcall',SYS.C.'phpcall');
 			//var_dump($this->modules);
-			$this->ViewData('php_view', $this->modules['index']->View());
+			$this->ViewData('php_view', $this->modules['phpcall']->View());
+		} elseif(Helper::Get('test')=="yes"){
+			$this->Register(NULL,APP.V.'test',APP.C.'test');
+			//var_dump($this->modules);
+			$this->ViewData('php_view', $this->modules['test']->View());
 		} else {
 		//$this->SetView(SYS.V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');

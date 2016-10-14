@@ -108,6 +108,10 @@ private static $obj;
 	public function onDestruct(){
 		return TRUE;
 	}
+
+	public function onException(){
+		return TRUE;
+	}
 	
 	public final function CheckModel($model){
 		if($this->Inc($model)){
@@ -127,7 +131,7 @@ final public function CheckView($view) {
 	if(file_exists(ROOT.$view.XSL) && is_file(ROOT.$view.XSL)) {
 		return TRUE;
 	}
-	$this->error = 404;
+	$this->error = 20404;
 	return FALSE;
 }
 
@@ -251,7 +255,7 @@ final public function CheckError() {
             	$this->exception->ViewData('emessage' ,$e->Message());
 				return $this->exception->view();
 			}
-			$this->action->end = $this->onEnd();
+			$this->action->end = $this->onException();
 			self::$obj=NULL;
             return FALSE;
         }

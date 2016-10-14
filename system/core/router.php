@@ -26,15 +26,22 @@ class Router {
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
 				$viewer = $loader->Load($mode.V.$value,$mode.C.$key);
-				if(is_object($viewer))
-				$data->items->addChild('item',$viewer->View());
+				if(is_object($viewer)){
+				$style = $data->items->addChild('section','');
+
+				simplexml_import_xml($style,$viewer->View());
+
+				$style->div->addAttribute('style', "display:inline; float:left;");
+				//var_dump($style);
+				}
 			}
 		}
-		if(!isset($data->items->item)){
+		if(!isset($data->items->section)){
 			$viewer = $loader->Load($mode.V.$view,$mode.C.$controller);
 			if(is_object($viewer)){
-				unset($data->items->item);
-				$data->items->addChild('item',$viewer->View());
+				unset($data->items->section);
+				$data->items->addChild('section','');
+				simplexml_import_xml($data->items->section,$viewer->View());
 			}
 		}
 		//var_dump($data);

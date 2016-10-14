@@ -15,9 +15,11 @@ class One extends XCoreRender {
 		$links = $this->data->links->addChild('a','Two &amp; One');
 		$links->addAttribute('href', HOST_URL.'?two=two&one=one');
 		$links = $this->data->links->addChild('a','Two and One and php view');
-		$links->addAttribute('href', HOST_URL.'?two=two&one=one&index=index');
+		$links->addAttribute('href', HOST_URL.'?two=two&one=one&phpcall=phpcall');
 		$links = $this->data->links->addChild('a','Load only PHP view');
 		$links->addAttribute('href', HOST_URL.'?phpview=yes');
+		$links = $this->data->links->addChild('a','Load Test view');
+		$links->addAttribute('href', HOST_URL.'?test=yes');
 		$links = $this->data->links->addChild('a','Throw Error');
 		$links->addAttribute('href', HOST_URL.'?errors=110');
 		$links = $this->data->links->addChild('a','Throw Error inside controller');

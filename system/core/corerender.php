@@ -96,6 +96,7 @@ private static $obj;
             return FALSE;
         }
     }
+
 	public function onInit(){
 		return TRUE;
 	}
@@ -111,6 +112,11 @@ private static $obj;
 	public function onDestruct(){
 		return TRUE;
 	}
+
+	public function onException(){
+		return TRUE;
+	}
+
 	public final function CheckModel($model){
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
@@ -129,7 +135,7 @@ final public function CheckView($view) {
 	if(file_exists(ROOT.$view.EXT)  && is_file(ROOT.$view.EXT)) {
 		return TRUE;
 	}
-	$this->error = 404;
+	$this->error = 20404;
 	return FALSE;
 }
 
@@ -202,7 +208,7 @@ final public function CheckError() {
 			if(!in_array($this->view,$this->registered_views) && $this->only_registered_views){
 				 $this->message = "View not registered";
 				 $this->error = 20402;
-			}
+			} 
 			if($this->model==NULL){
 				 $this->message = "App Model not Definied";
 				 $this->error = 20304;
@@ -258,7 +264,7 @@ final public function CheckError() {
             	$this->exception->ViewData('emessage' ,$e->Message());
 				return $this->exception->view();
 			}
-			$this->action->end = $this->onEnd();
+			$this->action->end = $this->onException();
 			self::$obj=NULL;
             return FALSE;
         }
