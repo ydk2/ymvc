@@ -1,5 +1,5 @@
 <?php
-class Two extends XCoreRender {
+class Two extends XSLRender {
 
 	public function onInit(){
 		// call in __constructor
@@ -16,6 +16,10 @@ class Two extends XCoreRender {
 	public function onDestruct(){
 		// call in __destructor
 		return TRUE;
+	}
+
+	public function onException(){
+		
 	}
 
 	public function onRun($model = NULL){

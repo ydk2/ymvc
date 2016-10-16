@@ -1,5 +1,5 @@
 <?php
-class PHPCall extends CoreRender {
+class PHPCall extends PHPRender {
 
 	public function onInit(){
 		// call in __constructor
@@ -17,6 +17,11 @@ class PHPCall extends CoreRender {
 		return TRUE;
 	}
 
+
+	public function onException(){
+		return TRUE;
+	}
+	
 	public function onRun($model = NULL){
 		$this->ViewData('title', "PHP View");
 		$this->ViewData('header', "Controller with PHP View");

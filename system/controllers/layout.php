@@ -1,5 +1,5 @@
 <?php
-class Layout extends XCoreRender {
+class Layout extends XSLRender {
 	private $time;
 	public function onInit(){
 		// call in __constructor
@@ -87,6 +87,11 @@ class Layout extends XCoreRender {
 			$this->exception->ViewData('error', $this->error);
 		}	
 	}
+
+	public function onException(){
+		return TRUE;
+	}
+	
 	protected function test(){
 		$retarr = "";
 		foreach(PDO::getAvailableDrivers() as $driver)

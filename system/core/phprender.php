@@ -1,6 +1,6 @@
 <?php
 require_once(ROOT.CORE.'systemexception'.EXT);
-class CoreRender {
+class PHPRender {
 	const ACCESS_ANY = 1000;
 	const ACCESS_USER = 500;
 	const ACCESS_EDITOR = 300;
@@ -259,12 +259,12 @@ final public function CheckError() {
         } catch (SystemException $e){
             $this->error = $e->Code();
             $this->emessage= $e->Message();
+			$this->action->end = $this->onException();
 			if(isset($this->exception)){
             	$this->exception->ViewData('error' ,$e->Code());
             	$this->exception->ViewData('emessage' ,$e->Message());
 				return $this->exception->view();
 			}
-			$this->action->end = $this->onException();
 			self::$obj=NULL;
             return FALSE;
         }

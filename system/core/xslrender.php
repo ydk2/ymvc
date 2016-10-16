@@ -1,6 +1,6 @@
 <?php
 require_once(ROOT.CORE.'systemexception'.EXT);
-class XCoreRender extends XSLTProcessor {
+class XSLRender extends XSLTProcessor {
 	const ACCESS_ANY = 1000;
 	const ACCESS_USER = 500;
 	const ACCESS_EDITOR = 300;
@@ -250,12 +250,12 @@ final public function CheckError() {
         } catch (SystemException $e){
             $this->error = $e->Code();
             $this->emessage= $e->Message();
+			$this->action->end = $this->onException();
 			if(isset($this->exception)){
             	$this->exception->ViewData('error' ,$e->Code());
             	$this->exception->ViewData('emessage' ,$e->Message());
 				return $this->exception->view();
 			}
-			$this->action->end = $this->onException();
 			self::$obj=NULL;
             return FALSE;
         }
@@ -358,25 +358,5 @@ final public function CheckError() {
 		}
 		return FALSE;
 	}
-	
-   public static function Trace(){
-	if(defined('TRACE')){
-    $e = new SystemException();
-    $trace = explode("\n", $e->getTraceAsString());
-    // reverse array to make steps line up chronologically
-    $trace = array_reverse($trace);
-    array_shift($trace); // remove {main}
-    array_pop($trace); // remove call to this method
-    $length = count($trace);
-    $result = array();
-   
-    for ($i = 0; $i < $length; $i++)
-    {
-        $result[] = ($i + 1)  . ')' . substr($trace[$i], strpos($trace[$i], ' ')); // replace '#someNum' with '$i)', set the right ordering
-    }
-   
-    return nl2br("\t" . implode("\n\t", $result));
-	}
-}  
 }
 ?>

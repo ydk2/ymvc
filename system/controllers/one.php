@@ -1,5 +1,5 @@
 <?php
-class One extends XCoreRender {
+class One extends XSLRender {
 
 	public function onInit(){
 		// call in __constructor
@@ -57,5 +57,9 @@ class One extends XCoreRender {
 		//echo $this->data->links->asXml();
 //	if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'errors');
 	}	
+
+	public function onException(){
+		return TRUE;
+	}
 }
 ?>

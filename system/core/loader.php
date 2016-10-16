@@ -4,8 +4,8 @@ class Loader {
 	const PHP = 1;
 	
 	public final function load($view,$controller){
-		$this->Inc(CORE.'corerender');
-		$this->Inc(CORE.'xcorerender');
+		$this->Inc(CORE.'phprender');
+		$this->Inc(CORE.'xslrender');
 		if (is_object($controller)) {
 			return $controller;
 		} else {
@@ -21,8 +21,8 @@ class Loader {
 		if (is_object($controller)) {
 			return $controller;
 		} else {
-		$this->Inc(CORE.'corerender');
-		$this->Inc(CORE.'xcorerender');
+		$this->Inc(CORE.'phprender');
+		$this->Inc(CORE.'xslrender');
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -36,8 +36,8 @@ class Loader {
 		if (is_object($controller)) {
 			return $controller;
 		} else {
-		$this->Inc(CORE.'corerender');
-		$this->Inc(CORE.'xcorerender');
+		$this->Inc(CORE.'phprender');
+		$this->Inc(CORE.'xslrender');
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);

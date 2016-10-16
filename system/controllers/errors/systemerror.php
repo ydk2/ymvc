@@ -1,5 +1,5 @@
 <?php
-class SystemError extends XCoreRender {
+class SystemError extends XSLRender {
 
 	public function onInit(){
 		// call in __constructor
@@ -26,10 +26,5 @@ class SystemError extends XCoreRender {
 		$links = $this->data->links->addChild('a','Back to Index');
 		$links->addAttribute('href', HOST_URL);
 	}
-	public function xxx(){
-		//echo 'chuj';
-		$this->data->message = " i mocniej wali";
-	}
-
 }
 ?>

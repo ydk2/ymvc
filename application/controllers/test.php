@@ -1,5 +1,5 @@
 <?php
-class Test extends XCoreRender {
+class Test extends XSLRender {
 
 	public function onInit(){
 		// call in __constructor
