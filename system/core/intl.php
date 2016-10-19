@@ -26,14 +26,20 @@ class Intl {
     }
     
     public static function _f($string,$array=array(),$strings=array()){
+		$_strings=array();
 		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
-		$strings = self::$strings[strtolower($strings)];
+		$_strings = self::$strings[strtolower($strings)];
+		if(is_array($strings))
+		$_strings = $strings;
         return (isset($strings[$string]) && $strings[$string]!='')?self::format($strings[$string],$array):self::format($string,$array);
     }
     public static function _($string,$strings=array()){
+		$_strings=array();
 		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
-		$strings = self::$strings[strtolower($strings)];
-        return (isset($strings[$string]) && $strings[$string]!='')?$strings[$string]:$string;
+		$_strings = self::$strings[strtolower($strings)];
+		if(is_array($strings))
+		$_strings = $strings;
+        return (isset($_strings[$string]) && $_strings[$string]!='')?$_strings[$string]:$string;
     }
     
     
@@ -111,7 +117,9 @@ class Intl {
         } elseif (file_exists($lang)) {
 			if(is_string($name)) $keys = strtolower($name);
             require_once $lang;
-        }
+        } else {
+			self::$msgstr = $strings;
+		}
 		if(isset($keys))
 		self::$strings[$keys] = self::$msgstr;
 		else
