@@ -4,7 +4,7 @@ self::$msgstr = array(
 	' us'=>' milisec',
 	' Exec script time: '=>' Czas wykonania skryptu: ',
 	' Used CPU: '=>' Użycie CPU: ',
-	'Used memory: '=>'Użycie pamięci'
+	' Used memory: '=>' Użycie pamięci: '
 );
 
 ?>
