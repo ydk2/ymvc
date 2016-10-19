@@ -36,8 +36,7 @@ class Intl {
     
     
     public static function get_browser_lang($lang=array(),$default_language_code = 'en'){
-        $supported_languages = $lang;
-        $supported_languages = array_flip($supported_languages);
+        $supported_languages = array_flip($lang);
         $http_accept_language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
         preg_match_all('~([\w-]+)(?:[^,\d]+([\d.]+))?~', strtolower($http_accept_language), $matches, PREG_SET_ORDER);
         $available_languages = array();
@@ -63,7 +62,7 @@ class Intl {
 		if(!isset(self::$mode)) self::$mode='php';
         $array = array();
         foreach (glob(self::$path.DIRECTORY_SEPARATOR.'*.'.self::$mode) as $filename) {
-            if(is_file($filename)) $array[] = strstr(basename($filename), '.', true);
+            if(is_file($filename)) $array[] = basename($filename,'.'.self::$mode);
         }
         return $array;
     }

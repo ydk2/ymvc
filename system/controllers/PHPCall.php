@@ -9,15 +9,11 @@ class PHPCall extends PHPRender {
 		$this->langs = $langs;
 		//var_dump($langs);
 		//Intl::set_mode(Intl::PO);
-		
-		if(Helper::Get('setlocale')){
-			Helper::Session_Set('locale',Helper::Get('setlocale'));
-			Intl::load_locale(Helper::Session('locale'),'po_phpcall');
-		} else {
+
 			if(!Helper::Session('locale'))
 				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
 				Intl::load_locale(Helper::Session('locale'),'po_phpcall');
-		}
+		
 	//	Intl::load_locale(Helper::Session('locale'),'po_phpcall');
 		//var_dump(Intl::$strings);
 		return TRUE;
