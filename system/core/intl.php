@@ -9,6 +9,8 @@ class Intl {
     public static $lang;
     private static $path;
     private static $mode;
+
+    private static $msgstr;
     
     public static function format($string='', $vars=array())
     {
@@ -111,9 +113,9 @@ class Intl {
             require_once $lang;
         }
 		if(isset($keys))
-		self::$strings[$keys] = $strings;
+		self::$strings[$keys] = self::$msgstr;
 		else
-        return $strings;
+        return self::$msgstr;
     }
     
     public static function json_locale($lang,$name=FALSE){

@@ -9,7 +9,9 @@
 
 <xsl:template match="/">
 <div>
-		<h3>Used resources</h3>
+		<h3>
+		<xsl:value-of select="php:function ('Intl::_', 'Used resources', 'time')"  xmlns:php="http://php.net/xsl" />
+		</h3>
 		<div>
 		<xsl:value-of select="data/message"/>
 		<xsl:value-of select="data/time"/>
