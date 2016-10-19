@@ -238,9 +238,6 @@ final public function CheckError() {
             	if(isset($this->exception)){
                     throw new SystemException($this->emessage,$this->error);
                 }
-				if($this->error == 20404) {
-                	throw new SystemException($this->emessage,$this->error);
-            	}
             }
 			if($this->registerPHPFunctions){
 			ob_start();

@@ -216,7 +216,7 @@ final public function CheckError() {
 			if (!$this->CheckView($this->view)){
 				 $this->message = "View not exists";
 				 $this->error = 20404;
-			}	
+			}
 	}
     final public function Show($view = NULL) {
         echo $this->view($view);
@@ -231,12 +231,9 @@ final public function CheckError() {
 			$this->action->run = $this->onRun();
 			$this->_check();
             if($this->error > 0) {
-            	if(isset($this->exception)){
+            	if(isset($this->exception) || $this->error == 20404){
                     throw new SystemException($this->emessage,$this->error);
                 }
-				if($this->error == 20404) {
-                	throw new SystemException($this->emessage,$this->error);
-            	}
             }
 			$view = new DOMDocument();
 			$view->substituteEntities = TRUE;
