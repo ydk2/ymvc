@@ -3,6 +3,12 @@ class Layout extends XSLRender {
 	private $time;
 	public function onInit(){
 		// call in __constructor
+		Intl::set_path(SYS.LANGS);
+		$langs = Intl::available_locales(Intl::PO);
+			if(!Helper::Session('locale'))
+				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
+				Intl::load_locale(Helper::Session('locale'),$this->name);
+				//var_dump(Intl::$strings);
 		$this->time[0]=get_time();
 		$this->SetModel(SYS.M.'model');
 		$this->registerPHPFunctions();
@@ -14,10 +20,10 @@ class Layout extends XSLRender {
 		if($this->error > 0) {
 
 			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
-
-			$this->exception->ViewData('title', "Error!!! ".$this->error);
-			$this->exception->ViewData('header', "Error on Site!!!");
-			$this->exception->ViewData('alert',"Catch system error: ");
+// This is embarassing. We can't find what you were looking for.
+			$this->exception->ViewData('title', Intl::_('Epic 404 - Article Not Found',$this->name));
+			$this->exception->ViewData('header', Intl::_('Epic 404 - Article Not Found',$this->name));
+			$this->exception->ViewData('alert',Intl::_("This is embarassing. We can't find what you were looking for.",$this->name));
 			$this->exception->ViewData('error', $this->error);
 		}
 		return TRUE;

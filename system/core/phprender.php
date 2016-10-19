@@ -350,12 +350,13 @@ final public function CheckError() {
 		}
 	}
 
-    final public static function Call($method, $parameters=""){
-		
+	
+    final public static function Call($method){
+		$parameters = func_get_args(); 
+		array_shift($parameters);
 		$a = self::$obj->name."::".$method;
 		if(self::$obj !== NULL && method_exists(self::$obj, $method))
-        return call_user_func_array(array(self::$obj, $method), explode(";", $parameters));
-		//return FALSE;
+        return call_user_func_array(array(self::$obj, $method), $parameters);
     }
 	
 	public final function Inc($class){
@@ -385,6 +386,6 @@ final public function CheckError() {
    final public function registerPHPFunctions(){
 		$this->registerPHPFunctions = TRUE;
 	}
- 
+
 }
 ?>

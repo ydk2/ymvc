@@ -4,6 +4,22 @@ class PHPCall extends PHPRender {
 	public function onInit(){
 		// call in __constructor
 		$this->registerPHPFunctions();
+		Intl::set_path(SYS.LANGS);
+		$langs = Intl::available_locales(Intl::PO);
+		$this->langs = $langs;
+		//var_dump($langs);
+		//Intl::set_mode(Intl::PO);
+		
+		if(Helper::Get('setlocale')){
+			Helper::Session_Set('locale',Helper::Get('setlocale'));
+			Intl::load_locale(Helper::Session('locale'),'po_phpcall');
+		} else {
+			if(!Helper::Session('locale'))
+				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
+				Intl::load_locale(Helper::Session('locale'),'po_phpcall');
+		}
+	//	Intl::load_locale(Helper::Session('locale'),'po_phpcall');
+		//var_dump(Intl::$strings);
 		return TRUE;
 	}
 
@@ -31,9 +47,9 @@ class PHPCall extends PHPRender {
 	public function onRun($model = NULL){
 		if($this->error == 20404)
 			throw new SystemException("View not exists",$this->error);
-		$this->ViewData('title', "PHP View");
-		$this->ViewData('header', "Controller with PHP View");
-		$this->ViewData('alert', "Content for  this module");
+
+		$this->ViewData('title', Intl::_("Whatever you were looking for was not found, but maybe try looking again or search using the form below.",'po_phpcall'));
+		$this->ViewData('header', str_replace('\n','<br>',Intl::_('Posts Tagged:','po_phpcall')));
 	}
 
 }

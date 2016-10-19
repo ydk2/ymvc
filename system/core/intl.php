@@ -1,131 +1,174 @@
 <?php
 class Intl {
-	
-public static $strings;
-public static $langlen;
-public static $lang;
-public static $langdirpath;
+	const PHP = 'php';
+	const PO = 'po';
+	const JSON = 'json';
 
-public static function format($string='', $vars=array())
-{
-    if (!$string) return '';
-    if (count($vars) > 0)
+    public static $strings;
+    public static $langlen;
+    public static $lang;
+    private static $path;
+    private static $mode;
+    
+    public static function format($string='', $vars=array())
     {
-        foreach ($vars as $subs)
+        if (!$string) return '';
+        if (count($vars) > 0)
         {
-            $string = str_replace('%'.$subs, self::_($subs), $string);
+            foreach ($vars as $k=>$subs)
+            {
+                $string = str_replace('%'.$k, self::_($subs), $string);
+            }
         }
+        return $string;
     }
-    return $string;
-}
+    
+    public static function _f($string,$array=array(),$strings=array()){
+		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
+		$strings = self::$strings[strtolower($strings)];
+        return (isset($strings[$string]) && $strings[$string]!='')?self::format($strings[$string],$array):self::format($string,$array);
+    }
+    public static function _($string,$strings=array()){
+		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
+		$strings = self::$strings[strtolower($strings)];
+        return (isset($strings[$string]) && $strings[$string]!='')?$strings[$string]:$string;
+    }
+    
+    
+    public static function get_browser_lang($lang=array(),$default_language_code = 'en'){
+        $supported_languages = $lang;
+        $supported_languages = array_flip($supported_languages);
+        $http_accept_language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
+        preg_match_all('~([\w-]+)(?:[^,\d]+([\d.]+))?~', strtolower($http_accept_language), $matches, PREG_SET_ORDER);
+        $available_languages = array();
+        foreach ($matches as $match) {
+            $language = explode('-', $match[1]) + array('', '');
+            $priority = isset($match[2]) ? (float) $match[2] : 1.0;
+            $available_languages[][$language[0]] = $priority;
+        }
+        $default_priority = (float) 0;
+        foreach ($available_languages as $key => $value) {
+            $language_code = key($value);
+            $priority = $value[$language[0]];
+            if ($priority > $default_priority && array_key_exists($language[0],$supported_languages)) {
+                $default_priority = $priority;
+                $default_language_code = $language[0];
+            }
+        }
+        return $default_language_code;
+    }
+    
+    public static function available_locales($mode=NULL){
+		if(isset($mode)) self::$mode=$mode;
+		if(!isset(self::$mode)) self::$mode='php';
+        $array = array();
+        foreach (glob(self::$path.DIRECTORY_SEPARATOR.'*.'.self::$mode) as $filename) {
+            if(is_file($filename)) $array[] = strstr(basename($filename), '.', true);
+        }
+        return $array;
+    }
+    
+    public static function set_lang($lang){
+        self::$lang = $lang;
+    }
 
-public static function getlocales($current_lang='',$lang_lists=NULL) {
-    if($lang_lists==NULL) $lang_lists=self::availablelocales();
-    $browser_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, (self::$langlen==null)?2:self::$langlen);
-    foreach($lang_lists as $i => $lang_code){
-		if($lang_code == $current_lang){
-            return $current_lang;
+    public static function set_mode($mode){
+        self::$mode = $mode;
+    }
+
+    public static function set_path($path){
+        self::$path = $path;
+    }
+    
+    public static function po_locale($lang,$name=FALSE){
+        $strings = array();
+        if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.po')) {
+            $file = file_get_contents(self::$path.DIRECTORY_SEPARATOR.$lang.'.po');
+			$keys = (is_string($name))?strtolower($name):basename(self::$path);
+        } elseif(file_exists($lang)){
+            $file = file_get_contents($lang);
+			if(is_string($name)) $keys = strtolower($name);
+        }
+        if(isset($file)){
+			$file = str_replace(array("\"\"\n","\"\n\"",'\n"'),array('',"",'\n'),$file);
+            preg_match_all ("/msgid \"(.*)\"\nmsgstr \"(.*)\"\n/U", $file, $array);
+            foreach ($array[1] as $key => $value) {
+                $strings[$value] = $array[2][$key];
+            }
+        }
+		if(isset($keys))
+		self::$strings[$keys] = $strings;
+		else
+        return $strings;
+    }
+    
+    public static function php_locale($lang,$name=FALSE){
+        $strings=array();
+        if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.php')) {
+			$keys = (is_string($name))?strtolower($name):basename(self::$path);
+            require_once self::$path.DIRECTORY_SEPARATOR.$lang.'.php';
+        } elseif (file_exists($lang)) {
+			if(is_string($name)) $keys = strtolower($name);
+            require_once $lang;
+        }
+		if(isset($keys))
+		self::$strings[$keys] = $strings;
+		else
+        return $strings;
+    }
+    
+    public static function json_locale($lang,$name=FALSE){
+		$strings=array();
+        if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.json')) {
+			$keys = (is_string($name))?strtolower($name):basename(self::$path);
+           $strings= json_decode(file_get_contents(self::$path.DIRECTORY_SEPARATOR.$lang.'.json'), TRUE);
+        } elseif (file_exists($lang)) {
+			if(is_string($name)) $keys = strtolower($name);
+            $strings= json_decode(file_get_contents($lang), TRUE);
         } 
+		if(isset($keys))
+		self::$strings[$keys] = $strings;
+		else
+		return $strings;
     }
-	return FALSE;
-}
+    
+    public static function load_locale($lang,$keys=FALSE){
+		if(is_file($lang)) self::$mode = pathinfo($lang, PATHINFO_EXTENSION);
+        switch (self::$mode) {
+			case 'php':
+				return self::php_locale($lang,$keys);
+				break;
+			case 'po':
+				return self::po_locale($lang,$keys);
+				break;
+			case 'json':
+				return self::json_locale($lang,$keys);
+				break;
+			
+			default:
+				return self::php_locale($lang);
+				break;
+		}
+    }
 
-public static function browserlocale($lang='',$long = 2) {
-    $browser_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, (self::$langlen==null)?$łong:self::$langlen);
-        if($lang != '' || $lang == $browser_lang){
-            return $lang;
+    private static function mergestrings() {
+        $out=array();
+        $arg_list = func_get_args();
+        foreach((array)$arg_list as $arg){
+            foreach((array)$arg as $k => $v){
+                $out[$k]=$v;
+            }
         }
-	return $browser_lang;
-}
-
-public static function availablelocalesdir(){
-//echo basename($_SERVER['SCRIPT_FILENAME'])."<br>";
-$array = array();
-foreach (glob(self::$langdirpath.DIRECTORY_SEPARATOR.'*') as $filename) {
-	if(is_dir($filename)): 
-	$array[] = basename($filename).DIRECTORY_SEPARATOR.strstr(basename($_SERVER['SCRIPT_FILENAME']), '.', true);
-	endif;   
-}
-return $array;	
-}
-
-
-
-public static function availablelocales(){
-$array = array();
-foreach (glob(self::$langdirpath.DIRECTORY_SEPARATOR.'*') as $filename) {
-	if(is_file($filename)) $array[] = strstr(basename($filename), '.', true);   
-}
-return $array;	
-}
-
-public static function setlangcode($lang){
-	self::$lang = $lang;		
-}
-
-public static function phplocale($lang){
-	$strings=array();
-	if (file_exists(self::$langdirpath.DIRECTORY_SEPARATOR.$lang.'.php')) {
-		require_once self::$langdirpath.DIRECTORY_SEPARATOR.$lang.'.php';
-	} elseif (file_exists($lang)) {
-		require_once $lang;
-	} 
-	self::$strings = $strings;
-}
-
-public static function jsonlocale($lang){
-	if (file_exists(self::$langdirpath.DIRECTORY_SEPARATOR.$lang.'.json')) {
-		self::$strings = json_decode(file_get_contents(self::$langdirpath.DIRECTORY_SEPARATOR.$lang.'.json'), TRUE);
-	} elseif (file_exists($lang)) {
-		self::$strings = json_decode(file_get_contents($lang), TRUE);
-	} else {
-		self::$strings = array();
-	}
-}
-
-public static function loadlocale($lang){
-	$a = self::$strings;
-	self::phplocale($lang);
-	$b = self::$strings;
-	self::jsonlocale($lang);
-	$c = self::$strings;
-	self::$strings = self::mergestrings($a,$b,$c);
-}
-
-public static function autoloadlocale($lang=''){
-	self::loadlocale(self::getlocales(self::defaultlocale($lang)));
-}
-
-private static Function mergestrings() {
-	$out=array();
-      $arg_list = func_get_args();
-      foreach((array)$arg_list as $arg){
-          foreach((array)$arg as $k => $v){
-              $out[$k]=$v;
-          }
-      }
-    return $out;
-}
-
-public static function jsonsave($jsonstring,$file) {
-	if (file_put_contents($file, json_encode($jsonstring))) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-public static function _($string,$array=array(),$strings=array()){
-	if (empty(self::$strings)) {
-		self::$strings=$strings;
-	}
-    return (isset(self::$strings[$string]) && self::$strings[$string]!='')?self::format(self::$strings[$string],$array):self::format($string,$array);
-}
-public static function __($string,$strings=array()){
-	if (empty(self::$strings)) {
-		self::$strings=$strings;
-	}
-	return (isset(self::$strings[$string]) && self::$strings[$string]!='')?self::$strings[$string]:$string;
-}
+        return $out;
+    }
+    
+    public static function json_save($jsonstring,$file) {
+        if (file_put_contents($file, json_encode($jsonstring))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
 ?>
