@@ -17,7 +17,7 @@ class Router {
  * @return Xml String tree
  */
 	public static function routing($array=array(),$disabled=array(),$default=array(),$mode=APP){
-		$loader = new Loader;
+		//$loader = new Loader;
 		//$disabled = array('error','errors','data','item','action','layout');
 		$controller = key($default);
 		$view = $default[key($default)];
@@ -25,7 +25,7 @@ class Router {
 		
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
-				$viewer = $loader->Load($mode.V.$value,$mode.C.$key);
+				$viewer = Loader::get_module($mode.C.$value,$mode.V.$key);
 				if(is_object($viewer)){
 				$style = $data->items->addChild('section','');
 
@@ -37,7 +37,7 @@ class Router {
 			}
 		}
 		if(!isset($data->items->section)){
-			$viewer = $loader->Load($mode.V.$view,$mode.C.$controller);
+			$viewer = Loader::get_module($mode.C.$view,$mode.V.$controller);
 			if(is_object($viewer)){
 				unset($data->items->section);
 				$data->items->addChild('section','');

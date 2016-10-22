@@ -67,9 +67,11 @@ private static $obj;
             $this->error = $e->Code();
             $this->emessage= $e->Message();
             return FALSE;
-        }
+        } finally {
+			$this->action->onfinallyinit = $this->onFinallyInit();
+		}
     }
-    
+
     final private function load_1($view = '') {
 		try {
 		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
@@ -117,6 +119,14 @@ private static $obj;
 		return TRUE;
 	}
 
+	public function onFinallyInit(){
+		return TRUE;
+	}
+
+	public function onFinallyView(){
+		return TRUE;
+	}
+
 	public final function CheckModel($model){
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
@@ -128,11 +138,17 @@ private static $obj;
 final public function SetView($view) {
 	if(file_exists(ROOT.$view.EXT)  && is_file(ROOT.$view.EXT)) {
 		$this->view = $view;
+		if ($this->error == 20404) {
+			$this->error = 0;
+		}
 	}
 }
 
 final public function CheckView($view) {
 	if(file_exists(ROOT.$view.EXT)  && is_file(ROOT.$view.EXT)) {
+		if ($this->error == 20404) {
+			$this->error = 0;
+		}
 		return TRUE;
 	}
 	$this->error = 20404;
@@ -264,7 +280,9 @@ final public function CheckError() {
 			}
 			self::$obj=NULL;
             return FALSE;
-        }
+        } finally {
+			$this->action->onfinallyview = $this->onFinallyView();
+		}
     }
 
 	final public function Exceptions($model,$view,$controller) {
@@ -280,7 +298,6 @@ final public function CheckError() {
 			$this->exception = new $end($model,$view);
 		} 
 		}
-	//	$this->exception->Init();
 	}	
 	public final function Register($model, $view, $controller){
 		if($this->Inc($controller)){

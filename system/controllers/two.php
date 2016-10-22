@@ -19,7 +19,7 @@ class Two extends XSLRender {
 	}
 
 	public function onException(){
-		
+		//echo "";
 	}
 
 	public function onRun($model = NULL){

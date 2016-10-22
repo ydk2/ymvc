@@ -68,7 +68,7 @@ class Layout extends XSLRender {
 			//var_dump($this->modules);
 			$this->ViewData('php_view', $this->modules['phpcall']->View());
 		} elseif(Helper::Get('test')=="yes"){
-			$this->Register(NULL,APP.V.'test',APP.C.'test');
+			$this->Register(NULL,NULL,APP.C.'test');
 			//var_dump($this->modules);
 			$this->ViewData('php_view', $this->modules['test']->View());
 		} else {

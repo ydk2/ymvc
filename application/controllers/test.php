@@ -4,6 +4,8 @@ class Test extends XSLRender {
 	public function onInit(){
 		// call in __constructor
 		$this->SetModel(SYS.M.'model');
+		$this->SetView(APP.V.strtolower($this->name));
+		//echo $this->view;
 		if(isset($_GET['error']))
 		$this->error = $_GET['error'];
 		if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
