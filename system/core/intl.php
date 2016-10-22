@@ -98,7 +98,7 @@ class Intl {
         }
         if(isset($file)){
 			$file = str_replace(array("\"\"\n","\"\n\"",'\n"'),array('',"",'\n'),$file);
-            preg_match_all ("/msgid \"(.*)\"\nmsgstr \"(.*)\"\n/U", $file, $array);
+            preg_match_all ("/msgid \"(.*)\".*\nmsgstr \"(.*)\".*\n/", $file, $array);
             foreach ($array[1] as $key => $value) {
                 $strings[$value] = $array[2][$key];
             }

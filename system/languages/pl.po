@@ -10,10 +10,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-KeywordsList: __;_f\n"
 "X-Poedit-Basepath: .\n"
 "Language: polski\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 
 #: 404.php:13
 msgid "Epic 404 - Article Not Found"
@@ -32,10 +33,10 @@ msgid "This is embarassing. We can't find what you were looking for."
 msgstr "Nie odnaleziono tego czego szukasz."
 
 #: 404.php:22
-msgid ""
+msgid " \n"
 "Whatever you were looking for was not found, but maybe try looking again or "
 "search using the form below."
-msgstr ""
+msgstr " \n"
 "Nie odnaleziono tego czego szukasz. Spróbuj ponownie korzystając z "
 "formularza poniżej"
 
@@ -308,6 +309,13 @@ msgstr "Aktywuj Widgety"
 msgid "Edit post"
 msgstr "Edytuj wpis"
 
+#: phpcall.php:336
+msgid "choice: "
+msgid_plural "choices: "
+msgstr[0] "wybór: "                                          
+msgstr[1] "wybory: "
+msgstr[2] "wyborów: "
+
 #: admin/options-framework.php:230
 msgid "Click OK to reset. Any theme settings will be lost!"
 msgstr "Kliknij OK aby zresetować, wszystkie ustawienia przepadną "
@@ -331,6 +339,12 @@ msgstr "Options Framework Internal Container"
 #: admin/options-medialibrary-uploader.php:128
 msgid "Upload"
 msgstr "Wgraj"
+
+#: phpcall.php:33
+msgid "You have ones choice: "
+msgid_plural "You have choices: "
+msgstr[0] "Masz jeden wybór: "
+msgstr[1] "Masz do wyboru: "
 
 #: admin/options-medialibrary-uploader.php:151
 msgid "View File"

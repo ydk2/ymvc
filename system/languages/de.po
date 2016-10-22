@@ -18,14 +18,6 @@ msgstr ""
 msgid "Epic 404 - Article Not Found"
 msgstr "Grandios. 404 - Artikel nicht gefunden."
 
-#: 404.php:14
-msgid "This is embarassing. We can't find what you were looking for."
-msgstr "Das ist peinlich. Wir können nicht finden, was du suchst. "
-
-#: 404.php:22
-msgid "Whatever you were looking for was not found, but maybe try looking again or search using the form below."
-msgstr "Was du suchst, konnten wir nicht finden. Versuche es noch einmal oder benutze das Suchformular unten."
-
 #: archive.php:10
 msgid "Posts Categorized:"
 msgstr "Posts nach Kategorien:"
@@ -139,9 +131,6 @@ msgstr "Nicht gefunden"
 msgid "Sorry, but the requested resource was not found on this site."
 msgstr "Entschuldigung, die angeforderte Ressource konnten wir nicht finden"
 
-#: comments.php:11
-msgid "This post is password protected. Enter the password to view comments."
-msgstr "Dieser Post ist passwortgeschützt. Gib dein Passwort ein, um die Kommentare zu sehen."
 
 #: comments.php:21
 msgid "No"
@@ -253,17 +242,9 @@ msgstr "Kommentar abschicken"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: functions.php:151
-msgid "Your comment is awaiting moderation."
-msgstr "Dein Kommentar wird geprüft."
-
 #: functions.php:193
 msgid "Search for:"
 msgstr "Suche nach:"
-
-#: functions.php:208
-msgid "This post is password protected. To view it please enter your password below:"
-msgstr "Dieser Post ist passwortgeschützt. Um ihn zu sehen, gib bitte dein Passwort ein:"
 
 #: functions.php:209
 msgid "Password:"
