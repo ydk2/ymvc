@@ -64,9 +64,7 @@ private static $obj;
             $this->error = $e->Code();
             $this->emessage= $e->Message();
             return FALSE;
-        } finally {
-			$this->action->onfinallyview = $this->onFinallyInit();
-		}
+        } 
     }
     
     final private function load_1($view = '') {
@@ -271,9 +269,7 @@ final public function CheckError() {
 			}
 			self::$obj=NULL;
             return FALSE;
-        } finally {
-			$this->action->onfinallyview = $this->onFinallyView();
-		}
+        } 
     }
 
 	final public function Exceptions($model,$view,$controller) {
