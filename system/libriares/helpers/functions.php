@@ -205,7 +205,142 @@ function _n_search($msgid, array $domain, $nplurals = 2, $plural = 1){
 * @param integer $plural
 * @return string Translated string
 **/
-function _n_search_plural($msgid, $msgid_plural, $n, array $domain, $nplurals = 2, $plural = 1){
+function _n_search_plural($msgid, $msgid_plural, $n, array $domain, $nplurals = 1, $plural = 0){
     return ($n == 1) ? _n_search($msgid, $domain, $nplurals, $plural) : _n_search($msgid_plural, $domain, $nplurals, $plural);
+}
+
+/**
+*  Return plural by language code and numeric value
+* @info work in process missing logic for some langs
+* @param integer $n
+* @param string $lang
+* @return array('plural'=>$plural,'nplurals'=>$nplurals)
+**/
+function get_plural_by_lang($n, $lang = NULL){
+
+switch ($lang) {
+    case 'ar':
+        // nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);
+        $nplurals = 6;
+        $plural = ($n == 0) ? 0 : (($n == 1) ? 1 : (($n == 2) ? 2 : (($n % 100 >= 3 && $n% 100<= 10) ? 3 : (($n % 100 >= 11) ? 4 : 5))));
+        break;
+
+    case 'cs':
+    case 'sk':
+        // nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;
+        $nplurals = 3;
+        $plural = ($n == 1) ? 0 : (($n % 10 >= 2 && $n % 10 <=4) ? 1 : 2 );
+        break;
+  
+    case 'pl': 
+    case 'csb':
+        // polski pl nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);$nplurals = 3;
+        $nplurals = 3;
+        $plural = ($n == 1) ? 0 : ((($n % 10 >= 2 && $n % 10 <=4) && ($n % 100<=10 || $n % 100 >= 20)) ? 1 : 2 );
+        break;
+
+    case 'ach':
+    case 'ak':
+    case 'am':
+    case 'arn':
+    case 'br':
+    case 'fr':
+    case 'gun':
+    case 'ln':
+    case 'mfe':
+    case 'mi':
+    case 'oc':
+    case 'pt_BR':
+    case 'uz':
+    case 'wa':
+    case 'zh':
+    //  nplurals=2; plural=(n > 1);
+        $nplurals = 2;
+        $plural = ($n > 1) ? 1 : 0;
+        break;
+    case 'af':
+    case 'an':
+    case 'anp':
+    case 'as':
+    case 'ast':
+    case 'az':
+    case 'bg':
+    case 'bn':
+    case 'brx':
+    case 'ca':
+    case 'da':
+    case 'de':
+    case 'doi':
+    case 'el':
+    case 'en':
+    case 'eo':
+    case 'es':
+    case 'et':
+    case 'eu':
+    case 'ff':
+    case 'fi':
+    case 'fo':
+    case 'fur':
+    case 'fy':
+    case 'gl':
+    case 'gu':
+    case 'ha':
+    case 'he':
+    case 'hi':
+    case 'hne':
+    case 'hu':
+    case 'hy':
+    case 'ia':
+    case 'it':
+    case 'kl':
+    case 'kn':
+    case 'ku':
+    case 'lb':
+    case 'mai':
+    case 'mn':
+    case 'mni':
+    case 'mr':
+    case 'nah':
+    case 'nap':
+    case 'nb':
+    case 'ne':
+    case 'nl':
+    case 'nn':
+    case 'no':
+    case 'nso':
+    case 'or':
+    case 'pa':
+    case 'pap':
+    case 'pms':
+    case 'ps':
+    case 'pt':
+    case 'rm':
+    case 'rw':
+    case 'sat':
+    case 'sco':
+    case 'sd':
+    case 'se':
+    case 'si':
+    case 'so':
+    case 'son':
+    case 'sq':
+    case 'sv':
+    case 'sw':
+    case 'ta':
+    case 'te':
+    case 'tk':
+    case 'ur':
+    case 'yo':
+    // default english en nplurals=2; plural=(n != 1);
+        $nplurals = 2;
+        $plural = ($n != 1) ? 1 : 0;
+        break;
+    default:
+    // default nplurals=1; plural=0;
+        $nplurals = 1;
+        $plural = 0;
+        break;
+}
+return array('plural'=>$plural,'nplurals'=>$nplurals);
 }
 ?>

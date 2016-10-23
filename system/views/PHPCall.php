@@ -23,34 +23,20 @@
   </div>
   <div>
     <?php
-$lang = 'pl';
-$n = 30030;
+$lang = 'csb';
+$n = 3003;
 $searcho = "choice: ";
 $searchp = "choices: ";
+//$searchp = NULL;
 
-
-
-switch ($lang) {
-    case 'pl':
-        // polski pl nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);$nplurals = 3;
-        $nplurals = 3;
-        $plural = ($n == 1) ? 0 : ((($n % 10 >= 2 && $n % 10 <=4) && ($n % 100<=10 || $n % 100 >= 20))? 1 : 2 );
-        break;
-    
-    default:
-    // default english en nplurals=2; plural=(n != 1);
-        $nplurals = 2;
-        $plural = ($n != 1) ? 1 : 0;
-        break;
-}
 //global $po;
 $po = parse_po_file(SYS.LANGS.basename($this->name,EXT).DS.'pl.po');
 //var_dump($po);
-
+$plural = get_plural_by_lang($n,$lang);
 
 
 echo Loader::get_module_view(APP.C.'test');
-echo "<p>".$n." "._n_search_plural($searcho,$searchp,$n,$po,$nplurals,$plural)."</p>";
+echo "<p>".$n." "._n_search_plural($searcho,$searchp,$n,$po,$plural['nplurals'],$plural['plural'])."</p>";
 ?>
   </div>
 </div>
