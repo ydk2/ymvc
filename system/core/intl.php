@@ -88,6 +88,7 @@ class Intl {
     }
     
     public static function po_locale($lang,$name=FALSE){
+        $string = '';
         $strings = array();
         if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.po')) {
             $file = file_get_contents(self::$path.DIRECTORY_SEPARATOR.$lang.'.po');

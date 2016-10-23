@@ -34,8 +34,8 @@ $po = parse_po_file(SYS.LANGS.basename($this->name,EXT).DS.'pl.po');
 //var_dump($po);
 $plural = get_plural_by_lang($n,$lang);
 
-
-echo Loader::get_module_view(APP.C.'test');
+$module = Loader::get_module(APP.C.'test');
+echo Loader::get_module_view($module);
 echo "<p>".$n." "._n_search_plural($searcho,$searchp,$n,$po,$plural['nplurals'],$plural['plural'])."</p>";
 ?>
   </div>
