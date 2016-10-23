@@ -31,7 +31,7 @@
 	function  get_root_url(){
 		return HOST_URL;
 	}
-	/**
+/**
  * Insert XML into a SimpleXMLElement
  * @from http://stackoverflow.com/questions/767327/in-simplexml-how-can-i-add-an-existing-simplexmlelement-as-a-child-element
  * @param SimpleXMLElement $parent
@@ -182,16 +182,30 @@ function _n_search($msgid, array $domain, $nplurals = 2, $plural = 1){
         if(isset($value['msgid']) && isset($value['msgstr']) && !isset($value['msgid_plural']) && !is_array($value['msgstr']))
         	if($value['msgid']==$msgid)
         		$retstr = $value['msgstr'];
-        		if(isset($value['msgid']) && isset($value['msgid_plural']) && is_array($value['msgstr']))
-        			foreach($value['msgstr'] as $i=>$values):
-       					if($i == 0)
-        					if($value['msgid']==$msgid)
-        						$retstr = $value['msgstr'][0];
-        				else
-            				if($value['msgid_plural']==$msgid)
-        						$retstr = $value['msgstr'][$plural];
-    				endforeach;
+        if(isset($value['msgid']) && isset($value['msgid_plural']) && is_array($value['msgstr']))
+        		foreach($value['msgstr'] as $i=>$values):
+       				if($i == 0)
+        				if($value['msgid']==$msgid)
+        					$retstr = $value['msgstr'][0];
+    				else
+        				if($value['msgid_plural']==$msgid)
+                            $retstr = $value['msgstr'][$plural];
+    			endforeach;
     }
 	return $retstr;
+}
+
+/**
+*  Return translated plural string from parsed po array
+* @param string $msgid
+* @param string $msgid_plural
+* @param integer $n
+* @param array $domain
+* @param integer $nplurals
+* @param integer $plural
+* @return string Translated string
+**/
+function _n_search_plural($msgid, $msgid_plural, $n, array $domain, $nplurals = 2, $plural = 1){
+    return ($n == 1) ? _n_search($msgid, $domain, $nplurals, $plural) : _n_search($msgid_plural, $domain, $nplurals, $plural);
 }
 ?>

@@ -23,20 +23,34 @@
   </div>
   <div>
     <?php
+$lang = 'pl';
+$n = 30030;
+$searcho = "choice: ";
+$searchp = "choices: ";
 
 
 
+switch ($lang) {
+    case 'pl':
+        // polski pl nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);$nplurals = 3;
+        $nplurals = 3;
+        $plural = ($n == 1) ? 0 : ((($n % 10 >= 2 && $n % 10 <=4) && ($n % 100<=10 || $n % 100 >= 20))? 1 : 2 );
+        break;
+    
+    default:
+    // default english en nplurals=2; plural=(n != 1);
+        $nplurals = 2;
+        $plural = ($n != 1) ? 1 : 0;
+        break;
+}
 //global $po;
 $po = parse_po_file(SYS.LANGS.basename($this->name,EXT).DS.'pl.po');
 //var_dump($po);
-$n = 3003;
-$search = "choices: ";
-$nplurals = 3;
-// polski pl nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);
-$plural = ($n == 1) ? 0 : ((($n % 10 >= 2 && $n % 10 <=4) && ($n % 100<=10 || $n % 100 >= 20))? 1 : 2 );
+
+
 
 echo Loader::get_module_view(APP.C.'test');
-echo "<p>".$n." "._n_search($search,$po,$nplurals,$plural)."</p>";
+echo "<p>".$n." "._n_search_plural($searcho,$searchp,$n,$po,$nplurals,$plural)."</p>";
 ?>
   </div>
 </div>
