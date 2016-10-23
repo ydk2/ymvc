@@ -42,7 +42,7 @@ $module = Loader::get_module(APP.C.'test');
 //echo "<p>".$n." "._n_search_plural($searcho,$searchp,$n,$po,$plural['nplurals'],$plural['plural'])."</p>";
 echo "<p>".$n." ".Intl::_n($searcho,$searchp,$n,'plurals')."</p>";
 echo "<p>".$n." ".Intl::_p($searchp,'plurals',array('plural'=>$plural,'nplurals'=>$nplurals))."</p>";
-echo "<p>1. ".Intl::_p($searcho,'plurals',1)."</p>";
+echo "<p>1. ".Intl::_p($searcho,'plurals')."</p>";
 ?>
   </div>
 </div>

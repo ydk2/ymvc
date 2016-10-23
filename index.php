@@ -11,7 +11,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
     Config::$data['default']['cpu_limit'] = 15;
         //$model = new stdClass;
         //$views = new CoreRender;
-        Intl::set_default_lang('ru');
+        Intl::set_default_lang('pl');
 		Intl::set_path(SYS.LANGS);
 		$langs = Intl::available_locales(Intl::PO);
 		if(Helper::Get('setlocale')){
