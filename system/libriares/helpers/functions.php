@@ -93,4 +93,106 @@ function simplexml_import_simplexml(SimpleXMLElement $parent, SimpleXMLElement $
 
     return simplexml_import_xml($parent, $xml, $before);
 }
+
+/**
+* Parse Gettext po file into array
+* @param string $path
+* @return array of strings from po file
+**/
+function parse_po_file($path){
+    $oarray = array();
+    if(is_file($path)){
+        $postring = file_get_contents($path);
+        $oarray = parse_po_string($postring);
+    }
+    return $oarray;
+}
+/**
+* Parse Gettext po string into array
+* @param string $postring
+* @return array of strings from po file
+**/
+function parse_po_string($postring){
+    $oarray = array();
+    if(!empty($postring)){
+        $strings =  preg_replace(array("/\t+\n/"), "\n", $postring);
+        $strings =  preg_replace(array("/\s+\n/"), "\n", $strings);
+        $strings = str_replace(array("msgid \"\"\nmsgstr","\"\n\""),array("msgid \"_PO_HEADER_\"\nmsgstr",''),$strings);
+        $narray = explode("\n",$strings);
+        $ikey = 0; $pkey = 0;$skey = 0; $ckey = 0;$sikey = 0;$cmkey = 0;$cikey = 0;
+        $n = 0;
+        for ($i=0; $i < count($narray); $i++) {
+            $cmsgid = preg_match("/^msgid \"(.*)\"/",$narray[$i],$msgid);
+            $cmsgidp = preg_match("/^msgid_plural \"(.*)\"/",$narray[$i],$msgidp);
+            $cmsgstr = preg_match("/^msgstr \"(.*)\"/",$narray[$i],$msgstr);
+            $cmsgstri = preg_match("/^msgstr\[([0-9]+)\] \"(.*)\"/",$narray[$i],$msgstri);
+            //$cstr = preg_match("/^\"(.*)\"/",$narray[$i],$str);
+            if($cmsgid){
+                $ikey = $i;
+                $n++;
+            }
+            if($cmsgidp){
+                $pkey = $i;
+            }
+            if($cmsgstr){
+                $skey = $i;
+            }
+            if($cmsgstri){
+                $sikey = $i;
+            }
+            
+            if($ikey <= $i){
+                if($ikey == $i){
+                    if($n == 1){
+                        $oarray[$n]['HEADER']=$msgid[1];
+                    } else {
+                        $oarray[$n]['msgid']=$msgid[1];
+                    }
+                }
+                if($ikey < $pkey && $pkey == $i){
+                    $oarray[$n]['msgid_plural']=$msgidp[1];
+                }
+                if($ikey < $skey && $skey == $i){
+                    if($n == 1){
+                        $oarray[$n]['HEADER_STR']=explode('\n',$msgstr[1]);
+                    } else {
+                        $oarray[$n]['msgstr']=$msgstr[1];
+                    }
+                }
+                if($ikey < $sikey && $sikey == $i){
+                    $oarray[$n]['msgstr'][$msgstri[1]]=$msgstri[2];
+                }
+            }
+        }
+    }
+    return $oarray;
+}
+
+/**
+*  Return translated string from parsed po array
+* @param string $msgid
+* @param array $domain
+* @param integer $n
+* @param integer $nplurals
+* @param integer $plural
+* @return string Translated string or $msgid
+**/
+function _n_search($msgid, array $domain, $n = 1 , $nplurals = 2, $plural = 0){
+    $retstr = $msgid;
+    foreach ($domain as $value) {
+        if(isset($value['msgid']) && isset($value['msgstr']) && !isset($value['msgid_plural']) && !is_array($value['msgstr']))
+        	if($value['msgid']==$msgid)
+        		$retstr = $value['msgstr'];
+        		if(isset($value['msgid']) && isset($value['msgid_plural']) && is_array($value['msgstr']))
+        			foreach($value['msgstr'] as $i=>$values):
+       					if($i == 0)
+        					if($value['msgid']==$msgid)
+        						$retstr = $value['msgstr'][0];
+        				else
+            				if($value['msgid_plural']==$msgid)
+        						$retstr = $value['msgstr'][$plural];
+    				endforeach;
+    }
+	return $retstr;
+}
 ?>
