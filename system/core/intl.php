@@ -1,17 +1,103 @@
 <?php
+/**
+ * Intl like Gettext 
+ *
+ *
+ * This class can translate application texts from arrays or JSON or Gettext PO files with plurals.
+ *
+ * It can auto-detect the user preferred languages and load translation files in JSON format or PHP scripts with arrays of strings
+ * can to work with Gettext PO files with plurals.
+ * It can also format strings with placeholders %named_value to translated string 'named_value'.
+ *
+ * PHP version 5
+ *
+ * LICENSE: This source file is subject to version 3.01 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   Localization
+ * @package    Intl like Gettext 
+ * @author     ydk2 <me@ydk2.tk>
+ * @copyright  1997-2016 ydk2.tk
+ * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @version    1.5.0.0
+ * @link       none
+ * @see        not yet
+ * @since      File available since Release 1.5.0.0
+ * @deprecated No
+ */
+
 class Intl {
+// {{{ constants
+
+/**
+ * Constants used for $mode and Intl::$mode
+ */
 	const PHP = 'php';
 	const PO = 'po';
 	const JSON = 'json';
+// }}}
+// {{{ properties
 
+    /**
+    * Array with translated strings
+    * @access public
+    * @static
+    * @var array
+    */
     public static $strings;
-    public static $default_lang;
-    public static $lang;
-    private static $path;
-    private static $mode;
-
-    private static $msgstr;
     
+    /**
+    * Default lang code
+    * @access public
+    * @static
+    * @var string
+    */
+    public static $default_lang;
+    
+    /**
+    * lang code
+    * @access public
+    * @static
+    * @var string
+    */
+    public static $lang;
+        
+    /**
+    * Path for locales dir
+    * @access public
+    * @static
+    * @var string
+    */
+    private static $path;
+        
+    /**
+    * mode for Intl work with Intl::PHP/PO/JSON
+    * @access public
+    * @static
+    * @var string
+    */
+    private static $mode;
+    
+    /**
+    * function helper property
+    * @access private
+    * @static
+    * @var array of strings
+    */
+    private static $msgstr;
+// }}}
+
+/**
+* Get formated string with array values
+* @access public
+* @static
+* @param string $string
+* @param array $vars
+* @return string 
+**/    
     public static function format($string='', $vars=array())
     {
         if (!$string) return '';
@@ -24,7 +110,16 @@ class Intl {
         }
         return $string;
     }
-    
+
+ /**
+* Get formated translated string with array values
+* @access public
+* @static
+* @param string $string
+* @param array $array
+* @param mixed $strings
+* @return string 
+**/     
     public static function _f($string,$array=array(),$strings=array()){
 		$_strings=array();
 		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
@@ -33,6 +128,15 @@ class Intl {
 		$_strings = $strings;
         return (isset($_strings[$string]) && $_strings[$string]!='')?self::format($_strings[$string],$array):self::format($_string,$array);
     }
+
+ /**
+* Get translated string with array values
+* @access public
+* @static
+* @param string $string
+* @param mixed $strings
+* @return string 
+**/ 
     public static function _($string,$strings=array()){
 		$_strings=array();
 		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
@@ -42,7 +146,14 @@ class Intl {
         return (isset($_strings[$string]) && $_strings[$string]!='')?$_strings[$string]:$string;
     }
     
-    
+ /**
+* Get available locales from browser
+* @access public
+* @static
+* @param string $lang
+* @param array $short
+* @return string 
+**/     
     public static function get_browser_lang($lang=array(),$short = 'en'){
         $default_language_code = (self::$default_lang == NULL)? $short : self::$default_lang;
         $http_accept_language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
@@ -54,6 +165,8 @@ class Intl {
         }
         arsort($available_languages);
         foreach ($available_languages as $key => $value) {
+            if(in_array($default_language_code,$lang))
+                return $default_language_code;
             if(in_array($key,$lang))
                 return $key;
             $opt = explode('-', $key);
@@ -62,12 +175,17 @@ class Intl {
             $opt = explode('_', $key);
             if(in_array($opt[0],$lang))
                 return $opt[0];
-                
-           
         }
         return $default_language_code;
     }
-    
+
+ /**
+* Get available locales from dir with mode Intl::PHP/PO/JSON
+* @access public
+* @static
+* @param string $mode
+* @return array of strings
+**/       
     public static function available_locales($mode=NULL){
 		if(isset($mode)) self::$mode=$mode;
 		if(!isset(self::$mode)) self::$mode='php';
@@ -77,23 +195,55 @@ class Intl {
         }
         return $array;
     }
-    
+
+ /**
+* Set lang code
+* @access public
+* @static
+* @param string $lang
+**/        
     public static function set_lang($lang){
         self::$lang = $lang;
     }
 
+ /**
+* Set default lang code
+* @access public
+* @static
+* @param string $lang
+**/  
     public static function set_default_lang($lang){
         self::$default_lang = $lang;
     }
 
+/**
+* Set default mode Intl::PHP/PO/JSON
+* @access public
+* @static
+* @param string $mode
+**/  
     public static function set_mode($mode){
         self::$mode = $mode;
     }
 
+/**
+* Set path for langs files
+* @access public
+* @static
+* @param string $path
+**/  
     public static function set_path($path){
         self::$path = $path;
     }
-    
+
+/**
+* Load simple po lang files
+* @access public
+* @static
+* @param string $lang
+* @param string $name 
+* @return array
+**/      
     public static function po_locale_simple($lang,$name=FALSE){
         $string = '';
         $strings = array();
@@ -120,7 +270,15 @@ class Intl {
 		else
         return $string;
     }
-    
+
+/**
+* Load php lang files
+* @access public
+* @static
+* @param string $lang
+* @param string $name 
+* @return array
+**/     
     public static function php_locale($lang,$name=FALSE){
         $strings=array();
         if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.php')) {
@@ -138,7 +296,15 @@ class Intl {
 		else
         return self::$msgstr;
     }
-    
+
+/**
+* Load json lang files
+* @access public
+* @static
+* @param string $lang
+* @param string $name 
+* @return array
+**/     
     public static function json_locale($lang,$name=FALSE){
 		$strings=array();
         if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.json')) {
@@ -154,7 +320,15 @@ class Intl {
 		else
 		return $strings;
     }
-    
+
+/**
+* Load simple lang files not for plural
+* @access public
+* @static
+* @param string $lang
+* @param string $name 
+* @return array
+**/     
     public static function load_locale_simple($lang,$keys=FALSE){
 		if(is_file($lang)) self::$mode = pathinfo($lang, PATHINFO_EXTENSION);
         switch (self::$mode) {
@@ -174,6 +348,13 @@ class Intl {
 		}
     }
 
+/**
+* Merge arrays
+* @access public
+* @static
+* @param array , array ...
+* @return array
+**/ 
     private static function mergestrings() {
         $out=array();
         $arg_list = func_get_args();
@@ -515,14 +696,31 @@ switch ($lang) {
         break;
 }
 return array('plural'=>$plural,'nplurals'=>$nplurals);
-}   
-    public static function json_save($jsonstring,$file) {
-        if (file_put_contents($file, json_encode($jsonstring))) {
+}
+
+
+/**
+* Save as json lang files
+* @access public
+* @static
+* @param array $array
+* @param string $file
+* @return boolean
+**/    
+    public static function json_save($array,$file) {
+        if (file_put_contents($file, json_encode($array))) {
             return true;
         } else {
             return false;
         }
     }
-    
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */    
 }
 ?>
