@@ -6,13 +6,15 @@ class PHPCall extends PHPRender {
 		$this->registerPHPFunctions();
 		Intl::set_path(SYS.LANGS);
 		$langs = Intl::available_locales(Intl::PO);
+		$lang_ = array('pl-PL','en-US');
+		//echo Intl::get_browser_lang($lang_);
 		$this->langs = $langs;
 		if(!Helper::Session('locale'))
 			Helper::Session_Set('locale',Intl::get_browser_lang($langs));
 			Intl::load_locale_simple(Helper::Session('locale'),$this->name);
 		
 	//	Intl::load_locale(Helper::Session('locale'),'po_phpcall');
-		//var_dump(Intl::$strings);
+		
 		return TRUE;
 	}
 

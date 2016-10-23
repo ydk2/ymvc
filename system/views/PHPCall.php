@@ -23,7 +23,7 @@
   </div>
   <div>
     <?php
-$lang = 'pl';
+$lang = Helper::Session('locale');
 $n = 30030;
 $searcho = "choice: ";
 $searchp = "choices: ";

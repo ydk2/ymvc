@@ -11,6 +11,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
     Config::$data['default']['cpu_limit'] = 15;
         //$model = new stdClass;
         //$views = new CoreRender;
+        Intl::set_default_lang('ru');
 		Intl::set_path(SYS.LANGS);
 		$langs = Intl::available_locales(Intl::PO);
 		if(Helper::Get('setlocale')){
@@ -20,7 +21,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
 		if(!Helper::Session('locale'))
 				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
 				Intl::load_locale_simple(Helper::Session('locale'),'main_index');
-		
+        //echo Helper::Session('locale');
 		//var_dump($strings);
 		//echo Intl::_('Comments are closed','main_index');
         $loader = new Loader;

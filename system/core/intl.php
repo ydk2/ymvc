@@ -5,7 +5,7 @@ class Intl {
 	const JSON = 'json';
 
     public static $strings;
-    public static $langlen;
+    public static $default_lang;
     public static $lang;
     private static $path;
     private static $mode;
@@ -43,24 +43,27 @@ class Intl {
     }
     
     
-    public static function get_browser_lang($lang=array(),$default_language_code = 'en'){
-        $supported_languages = array_flip($lang);
+    public static function get_browser_lang($lang=array(),$short = 'en'){
+        $default_language_code = (self::$default_lang == NULL)? $short : self::$default_lang;
         $http_accept_language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
         preg_match_all('~([\w-]+)(?:[^,\d]+([\d.]+))?~', strtolower($http_accept_language), $matches, PREG_SET_ORDER);
         $available_languages = array();
         foreach ($matches as $match) {
-            $language = explode('-', $match[1]) + array('', '');
             $priority = isset($match[2]) ? (float) $match[2] : 1.0;
-            $available_languages[][$language[0]] = $priority;
+            $available_languages[$match[1]] = $priority;
         }
-        $default_priority = (float) 0;
+        arsort($available_languages);
         foreach ($available_languages as $key => $value) {
-            $language_code = key($value);
-            $priority = $value[$language[0]];
-            if ($priority > $default_priority && array_key_exists($language[0],$supported_languages)) {
-                $default_priority = $priority;
-                $default_language_code = $language[0];
-            }
+            if(in_array($key,$lang))
+                return $key;
+            $opt = explode('-', $key);
+            if(in_array($opt[0],$lang))
+                return $opt[0];
+            $opt = explode('_', $key);
+            if(in_array($opt[0],$lang))
+                return $opt[0];
+                
+           
         }
         return $default_language_code;
     }
@@ -77,6 +80,10 @@ class Intl {
     
     public static function set_lang($lang){
         self::$lang = $lang;
+    }
+
+    public static function set_default_lang($lang){
+        self::$default_lang = $lang;
     }
 
     public static function set_mode($mode){
