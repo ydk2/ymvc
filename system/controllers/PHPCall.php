@@ -39,9 +39,9 @@ class PHPCall extends PHPRender {
 	
 	public function onRun($model = NULL){
 		if($this->error == 20404)
-			throw new SystemException("Sorry, What you were looking for is not here. ",$this->error);
+			throw new SystemException(Intl::_("Not Found",'main_index'),$this->error);
 
-		$this->ViewData('title', Intl::_("Whatever you were looking for was not found, but maybe try looking again or search using the form below.",$this->name));
+		$this->ViewData('title', Intl::_("No",$this->name));
 		$this->ViewData('header', str_replace('\n','<br>',Intl::_('Posts Tagged:',$this->name)));
 	}
 

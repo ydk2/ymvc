@@ -97,16 +97,19 @@ class Intl {
 			if(is_string($name)) $keys = strtolower($name);
         }
         if(isset($file)){
-			$file = str_replace(array("\"\"\n","\"\n\"",'\n"'),array('',"",'\n'),$file);
-            preg_match_all ("/msgid \"(.*)\".*\nmsgstr \"(.*)\".*\n/", $file, $array);
+        $strings =  preg_replace(array("/\t+\n/"), "\n", $file);
+        $strings =  preg_replace(array("/\s+\n/"), "\n", $strings);
+        $strings = str_replace(array("msgid \"\"\nmsgstr","\"\n\""),array("msgid \"_PO_HEADER_\"\nmsgstr",''),$strings);
+            preg_match_all ("/msgid \"(.*)\".*\nmsgstr \"(.*)\".*\n/", $strings, $array);
+            //var_dump($array);
             foreach ($array[1] as $key => $value) {
-                $strings[$value] = $array[2][$key];
+                $string[$value] = $array[2][$key];
             }
         }
 		if(isset($keys))
-		self::$strings[$keys] = $strings;
+		self::$strings[$keys] = $string;
 		else
-        return $strings;
+        return $string;
     }
     
     public static function php_locale($lang,$name=FALSE){

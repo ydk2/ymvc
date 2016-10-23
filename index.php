@@ -26,7 +26,8 @@ Config::$data['default']['database']['type'] = 'sqlite';
         $loader = new Loader;
         
         //echo htmlspecialchars_decode( Router::sys_routed($array,$disabled)->asXml());
-        echo $loader->showsys('layout','layout');
+        //echo $loader->showsys('layout','layout');
+        echo $loader->showsys('phpcall','phpcall');
         
         //$model = new stdClass;
         //$views = new Core();

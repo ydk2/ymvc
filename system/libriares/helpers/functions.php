@@ -172,12 +172,11 @@ function parse_po_string($postring){
 *  Return translated string from parsed po array
 * @param string $msgid
 * @param array $domain
-* @param integer $n
 * @param integer $nplurals
 * @param integer $plural
 * @return string Translated string or $msgid
 **/
-function _n_search($msgid, array $domain, $n = 1 , $nplurals = 2, $plural = 0){
+function _n_search($msgid, array $domain, $nplurals = 2, $plural = 1){
     $retstr = $msgid;
     foreach ($domain as $value) {
         if(isset($value['msgid']) && isset($value['msgstr']) && !isset($value['msgid_plural']) && !is_array($value['msgstr']))
