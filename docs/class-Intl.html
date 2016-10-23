@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Intl</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-None.html">
+						None					</a>
+
+						</li>
+				<li>
+					<a href="namespace-System.html">
+						System<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-System.helpers.html">
+						helpers					</a>
+
+						</li>
+							</ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-Config.html">Config</a></li>
+				<li><a href="class-DBConnect.html">DBConnect</a></li>
+				<li><a href="class-Errors.html">Errors</a></li>
+				<li><a href="class-Helper.html">Helper</a></li>
+				<li class="active"><a href="class-Intl.html">Intl</a></li>
+				<li><a href="class-Layout.html">Layout</a></li>
+				<li><a href="class-Loader.html">Loader</a></li>
+				<li><a href="class-model.html">model</a></li>
+				<li><a href="class-One.html">One</a></li>
+				<li><a href="class-PHPCall.html">PHPCall</a></li>
+				<li><a href="class-PHPRender.html">PHPRender</a></li>
+				<li><a href="class-Router.html">Router</a></li>
+				<li><a href="class-SystemError.html">SystemError</a></li>
+				<li><a href="class-Test.html">Test</a></li>
+				<li><a href="class-Two.html">Two</a></li>
+				<li><a href="class-view.html">view</a></li>
+				<li><a href="class-XSLRender.html">XSLRender</a></li>
+			</ul>
+
+
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-SystemException.html">SystemException</a></li>
+			</ul>
+
+
+			<h3>Functions</h3>
+			<ul>
+				<li><a href="function-_n_search.html">_n_search</a></li>
+				<li><a href="function-_n_search_plural.html">_n_search_plural</a></li>
+				<li><a href="function-convert.html">convert</a></li>
+				<li><a href="function-cpu_get_usage.html">cpu_get_usage</a></li>
+				<li><a href="function-dump.html">dump</a></li>
+				<li><a href="function-format_time.html">format_time</a></li>
+				<li><a href="function-get_plural_by_lang.html">get_plural_by_lang</a></li>
+				<li><a href="function-get_root_url.html">get_root_url</a></li>
+				<li><a href="function-get_time.html">get_time</a></li>
+				<li><a href="function-get_time_exec.html">get_time_exec</a></li>
+				<li><a href="function-parse_po_file.html">parse_po_file</a></li>
+				<li><a href="function-parse_po_string.html">parse_po_string</a></li>
+				<li><a href="function-simplexml_import_simplexml.html">simplexml_import_simplexml</a></li>
+				<li><a href="function-simplexml_import_xml.html">simplexml_import_xml</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-None.html" title="Summary of None"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Intl</h1>
+
+
+	<div class="description">
+	<p>Intl like Gettext</p>
+
+<p>This class can translate application texts from arrays or JSON or Gettext PO files with plurals.</p>
+
+<p>It can auto-detect the user preferred languages and load translation files in JSON format or PHP scripts with arrays of strings
+can to work with Gettext PO files with plurals.
+It can also format strings with placeholders %named_value to translated string 'named_value'.</p>
+
+<p>PHP version 5</p>
+
+<p>LICENSE: This source file is subject to version 3.01 of the PHP license
+that is available through the world-wide-web at the following URI:
+http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+the PHP License and are unable to obtain it through the web, please
+send a note to license@php.net so we can mail you a copy immediately.</p>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		
+		<b>Package:</b> Intl<br>
+
+				<b>Category:</b>
+				Localization<br>
+				<b>Copyright:</b>
+				1997-2016 ydk2.tk<br>
+				<b>License:</b>
+				<a href="http://www.php.net/license/3_01.txt">PHP License 3.01</a><br>
+				<b>Author:</b>
+				ydk2 <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;">&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;</a><br>
+				<b>Version:</b>
+				1.5.0.0<br>
+				<b>Since:</b>
+				File available since Release 1.5.0.0<br>
+				<b>See:</b>
+				not yet<br>
+				<b>Link:</b>
+				none<br>
+			<b>Located at</b> <a href="source-class-Intl.html#3-725" title="Go to source code">system/core/intl.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="format" id="_format">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_format">#</a>
+		<code><a href="source-class-Intl.html#93-112" title="Go to source code">format</a>( <span>string <var>$string</var> = <span class="php-quote">''</span></span>, <span>array <var>$vars</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Get formated string with array values</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get formated string with array values</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$string</var></dt>
+					<dd></dd>
+					<dt><var>$vars</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_f" id="__f">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__f">#</a>
+		<code><a href="source-class-Intl.html#114-130" title="Go to source code">_f</a>( <span>string <var>$string</var></span>, <span>array <var>$array</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Get formated translated string with array values</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get formated translated string with array values</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$string</var></dt>
+					<dd></dd>
+					<dt><var>$array</var></dt>
+					<dd></dd>
+					<dt><var>$strings</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_" id="__">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__">#</a>
+		<code><a href="source-class-Intl.html#132-147" title="Go to source code">_</a>( <span>string <var>$string</var></span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Get translated string with array values</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get translated string with array values</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$string</var></dt>
+					<dd></dd>
+					<dt><var>$strings</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="get_browser_lang" id="_get_browser_lang">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_get_browser_lang">#</a>
+		<code><a href="source-class-Intl.html#149-180" title="Go to source code">get_browser_lang</a>( <span>string <var>$lang</var> = <span class="php-keyword1">array</span>()</span>, <span>array <var>$short</var> = <span class="php-quote">'en'</span></span> )</code>
+
+		<div class="description short">
+			<p>Get available locales from browser</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get available locales from browser</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+					<dt><var>$short</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="available_locales" id="_available_locales">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_available_locales">#</a>
+		<code><a href="source-class-Intl.html#182-197" title="Go to source code">available_locales</a>( <span>string <var>$mode</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Get available locales from dir with mode Intl::PHP/PO/JSON</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get available locales from dir with mode Intl::PHP/PO/JSON</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$mode</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>of strings
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="set_lang" id="_set_lang">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_set_lang">#</a>
+		<code><a href="source-class-Intl.html#199-207" title="Go to source code">set_lang</a>( <span>string <var>$lang</var></span> )</code>
+
+		<div class="description short">
+			<p>Set lang code</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set lang code</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="set_default_lang" id="_set_default_lang">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_set_default_lang">#</a>
+		<code><a href="source-class-Intl.html#209-217" title="Go to source code">set_default_lang</a>( <span>string <var>$lang</var></span> )</code>
+
+		<div class="description short">
+			<p>Set default lang code</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set default lang code</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="set_mode" id="_set_mode">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_set_mode">#</a>
+		<code><a href="source-class-Intl.html#219-227" title="Go to source code">set_mode</a>( <span>string <var>$mode</var></span> )</code>
+
+		<div class="description short">
+			<p>Set default mode Intl::PHP/PO/JSON</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set default mode Intl::PHP/PO/JSON</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$mode</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="set_path" id="_set_path">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_set_path">#</a>
+		<code><a href="source-class-Intl.html#229-237" title="Go to source code">set_path</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Set path for langs files</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set path for langs files</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="po_locale_simple" id="_po_locale_simple">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_po_locale_simple">#</a>
+		<code><a href="source-class-Intl.html#239-272" title="Go to source code">po_locale_simple</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+
+		<div class="description short">
+			<p>Load simple po lang files</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Load simple po lang files</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+					<dt><var>$name</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="php_locale" id="_php_locale">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_php_locale">#</a>
+		<code><a href="source-class-Intl.html#274-298" title="Go to source code">php_locale</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+
+		<div class="description short">
+			<p>Load php lang files</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Load php lang files</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+					<dt><var>$name</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="json_locale" id="_json_locale">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_json_locale">#</a>
+		<code><a href="source-class-Intl.html#300-322" title="Go to source code">json_locale</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+
+		<div class="description short">
+			<p>Load json lang files</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Load json lang files</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+					<dt><var>$name</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="load_locale_simple" id="_load_locale_simple">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_load_locale_simple">#</a>
+		<code><a href="source-class-Intl.html#324-349" title="Go to source code">load_locale_simple</a>( <span>string <var>$lang</var></span>, <span>string <var>$keys</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+
+		<div class="description short">
+			<p>Load simple lang files not for plural</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Load simple lang files not for plural</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+					<dt><var>$keys</var></dt>
+					<dd>$name</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="mergestrings" id="_mergestrings">
+
+		<td class="attributes"><code>
+			 private static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_mergestrings">#</a>
+		<code><a href="source-class-Intl.html#351-367" title="Go to source code">mergestrings</a>( )</code>
+
+		<div class="description short">
+			<p>Merge arrays</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Merge arrays</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="parse_po_file" id="_parse_po_file">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_parse_po_file">#</a>
+		<code><a href="source-class-Intl.html#369-383" title="Go to source code">parse_po_file</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Parse Gettext po file into array</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Parse Gettext po file into array</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>of strings from po file
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="po_locale_plural" id="_po_locale_plural">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_po_locale_plural">#</a>
+		<code><a href="source-class-Intl.html#385-410" title="Go to source code">po_locale_plural</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+
+		<div class="description short">
+			<p>Load and parse Gettext po file into array</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Load and parse Gettext po file into array</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+					<dt><var>$name</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>of strings from po file
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_p" id="__p">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__p">#</a>
+		<code><a href="source-class-Intl.html#412-431" title="Go to source code">_p</a>( <span>string <var>$msgid</var></span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$plural</var> = <span class="php-num">2</span></span> )</code>
+
+		<div class="description short">
+			<p>Get translated string from array with plurals</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get translated string from array with plurals</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$msgid</var></dt>
+					<dd></dd>
+					<dt><var>$strings</var></dt>
+					<dd></dd>
+					<dt><var>$plural</var></dt>
+					<dd>$plurals = array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Translated string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_n" id="__n">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__n">#</a>
+		<code><a href="source-class-Intl.html#433-454" title="Go to source code">_n</a>( <span>string <var>$msgid</var></span>, <span>string <var>$msgid_plural</var></span>, <span>integer <var>$n</var></span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span>, <span>array <var>$plurals</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Get translated plural string from array with plurals</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get translated plural string from array with plurals</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$msgid</var></dt>
+					<dd></dd>
+					<dt><var>$msgid_plural</var></dt>
+					<dd></dd>
+					<dt><var>$n</var></dt>
+					<dd></dd>
+					<dt><var>$strings</var></dt>
+					<dd></dd>
+					<dt><var>$plurals</var></dt>
+					<dd>= array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Translated string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="parse_po_string" id="_parse_po_string">
+
+		<td class="attributes"><code>
+			 public static
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_parse_po_string">#</a>
+		<code><a href="source-class-Intl.html#456-517" title="Go to source code">parse_po_string</a>( <span>string <var>$postring</var></span> )</code>
+
+		<div class="description short">
+			<p>Parse Gettext po string into array</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Parse Gettext po string into array</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$postring</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>of strings from po file
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_n_search" id="__n_search">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__n_search">#</a>
+		<code><a href="source-class-Intl.html#519-546" title="Go to source code">_n_search</a>( <span>string <var>$msgid</var></span>, <span>array <var>$domain</var></span>, <span>integer <var>$nplurals</var> = <span class="php-num">2</span></span>, <span>integer <var>$plural</var> = <span class="php-num">1</span></span> )</code>
+
+		<div class="description short">
+			<p>Return translated string from parsed po array*</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return translated string from parsed po array*</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$msgid</var></dt>
+					<dd></dd>
+					<dt><var>$domain</var></dt>
+					<dd></dd>
+					<dt><var>$nplurals</var></dt>
+					<dd></dd>
+					<dt><var>$plural</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Translated string or $msgid
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="_n_search_plural" id="__n_search_plural">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#__n_search_plural">#</a>
+		<code><a href="source-class-Intl.html#548-562" title="Go to source code">_n_search_plural</a>( <span>string <var>$msgid</var></span>, <span>string <var>$msgid_plural</var></span>, <span>integer <var>$n</var></span>, <span>array <var>$domain</var></span>, <span>integer <var>$nplurals</var> = <span class="php-num">1</span></span>, <span>integer <var>$plural</var> = <span class="php-num">0</span></span> )</code>
+
+		<div class="description short">
+			<p>Return translated plural string from parsed po array</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return translated plural string from parsed po array</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$msgid</var></dt>
+					<dd></dd>
+					<dt><var>$msgid_plural</var></dt>
+					<dd></dd>
+					<dt><var>$n</var></dt>
+					<dd></dd>
+					<dt><var>$domain</var></dt>
+					<dd></dd>
+					<dt><var>$nplurals</var></dt>
+					<dd></dd>
+					<dt><var>$plural</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>Translated string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="get_plural_by_lang" id="_get_plural_by_lang">
+
+		<td class="attributes"><code>
+			 public static
+
+			array(&#039;plural&#039;=&gt;$plural,&#039;nplurals&#039;=&gt;$nplurals)
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_get_plural_by_lang">#</a>
+		<code><a href="source-class-Intl.html#564-699" title="Go to source code">get_plural_by_lang</a>( <span>integer <var>$n</var></span>, <span>string <var>$lang</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Return plural by language code and numeric value</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return plural by language code and numeric value</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$n</var></dt>
+					<dd></dd>
+					<dt><var>$lang</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array(&#039;plural&#039;=&gt;$plural,&#039;nplurals&#039;=&gt;$nplurals)<br>$plural,'nplurals'=>$nplurals)
+				</div>
+
+
+				<h4>Info</h4>
+				<div class="list">
+						work in process missing logic for some langs<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="json_save" id="_json_save">
+
+		<td class="attributes"><code>
+			 public static
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_json_save">#</a>
+		<code><a href="source-class-Intl.html#702-716" title="Go to source code">json_save</a>( <span>array <var>$array</var></span>, <span>string <var>$file</var></span> )</code>
+
+		<div class="description short">
+			<p>Save as json lang files</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Save as json lang files</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$array</var></dt>
+					<dd></dd>
+					<dt><var>$file</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+	<table class="summary constants" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="PHP" id="PHP">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Intl.html#35-38" title="Go to source code"><b>PHP</b></a>
+			</code>
+
+			<div class="description short">
+				<p>Constants used for $mode and Intl::$mode</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Constants used for $mode and Intl::$mode</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#PHP" class="anchor">#</a>
+				<code><span class="php-quote">'php'</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="PO" id="PO">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Intl.html#39" title="Go to source code"><b>PO</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#PO" class="anchor">#</a>
+				<code><span class="php-quote">'po'</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="JSON" id="JSON">
+
+		<td class="attributes"><code>string</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-Intl.html#40" title="Go to source code"><b>JSON</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#JSON" class="anchor">#</a>
+				<code><span class="php-quote">'json'</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="strings" id="$strings">
+		<td class="attributes"><code>
+			public static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Intl.html#44-50" title="Go to source code"><var>$strings</var></a>
+
+			<div class="description short">
+				<p>Array with translated strings</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Array with translated strings</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$strings" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="default_lang" id="$default_lang">
+		<td class="attributes"><code>
+			public static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Intl.html#52-58" title="Go to source code"><var>$default_lang</var></a>
+
+			<div class="description short">
+				<p>Default lang code</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Default lang code</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$default_lang" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="lang" id="$lang">
+		<td class="attributes"><code>
+			public static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Intl.html#60-66" title="Go to source code"><var>$lang</var></a>
+
+			<div class="description short">
+				<p>lang code</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>lang code</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$lang" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="path" id="$path">
+		<td class="attributes"><code>
+			private static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Intl.html#68-74" title="Go to source code"><var>$path</var></a>
+
+			<div class="description short">
+				<p>Path for locales dir</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Path for locales dir</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$path" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="mode" id="$mode">
+		<td class="attributes"><code>
+			private static 
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Intl.html#76-82" title="Go to source code"><var>$mode</var></a>
+
+			<div class="description short">
+				<p>mode for Intl work with Intl::PHP/PO/JSON</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>mode for Intl work with Intl::PHP/PO/JSON</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$mode" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="msgstr" id="$msgstr">
+		<td class="attributes"><code>
+			private static 
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Intl.html#84-90" title="Go to source code"><var>$msgstr</var></a>
+
+			<div class="description short">
+				<p>function helper property</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>function helper property</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$msgstr" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

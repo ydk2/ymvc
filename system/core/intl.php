@@ -26,7 +26,7 @@
  * @link       none
  * @see        not yet
  * @since      File available since Release 1.5.0.0
- * @deprecated No
+ 
  */
 
 class Intl {
