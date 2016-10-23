@@ -7,7 +7,7 @@ class Layout extends XSLRender {
 		$langs = Intl::available_locales(Intl::PO);
 			if(!Helper::Session('locale'))
 				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
-				Intl::load_locale(Helper::Session('locale'),$this->name);
+				Intl::load_locale_simple(Helper::Session('locale'),$this->name);
 				//var_dump(Intl::$strings);
 		$this->time[0]=get_time();
 		$this->SetModel(SYS.M.'model');

@@ -9,7 +9,7 @@ class view extends XSLRender {
 		$this->langs = $langs;
 			if(!Helper::Session('locale'))
 				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
-				Intl::load_locale(Helper::Session('locale'),'time');
+				Intl::load_locale_simple(Helper::Session('locale'),'time');
 		return TRUE;
 	}
 
