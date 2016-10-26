@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class XSLRender</title>
+	<title>Class XSLRender | YMVC System</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -58,9 +58,12 @@
 				<li><a href="class-Router.html">Router</a></li>
 				<li><a href="class-SystemError.html">SystemError</a></li>
 				<li><a href="class-Test.html">Test</a></li>
+				<li><a href="class-toAscii.html">toAscii</a></li>
 				<li><a href="class-Two.html">Two</a></li>
 				<li><a href="class-view.html">view</a></li>
+				<li><a href="class-X2A.html">X2A</a></li>
 				<li class="active"><a href="class-XSLRender.html">XSLRender</a></li>
+				<li><a href="class-XtoA.html">XtoA</a></li>
 			</ul>
 
 
@@ -114,6 +117,11 @@
 <span>Class</span>			</li>
 		</ul>
 		<ul>
+				<li>
+					<a href="annotation-group-ymvc.html" title="List of elements with ymvc annotation">
+						<span>Ymvc</span>
+					</a>
+				</li>
 		</ul>
 		<ul>
 		</ul>
@@ -123,6 +131,20 @@
 	<h1>Class XSLRender</h1>
 
 
+	<div class="description">
+	<p>XSLRender fast and simple to use PHP MVC framework</p>
+
+<p>MVC Framework for PHP 5.2 + with XSLT files views part of YMVC System
+Also available as PHPRender with work on php files</p>
+
+<p>PHP version 5</p>
+
+<p>LICENSE: This source file is subject to version 3.01 of the PHP license
+that is available through the world-wide-web at the following URI:
+http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+the PHP License and are unable to obtain it through the web, please
+send a note to license@php.net so we can mail you a copy immediately.</p>
+	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
@@ -158,9 +180,25 @@ XSLTProcessor
 		
 		
 		
-		
+		<b>Package:</b> YMVC\XSLRender<br>
 
-			<b>Located at</b> <a href="source-class-XSLRender.html#3-376" title="Go to source code">system/core/xslrender.php</a>
+				<b>Category:</b>
+				Framework, MVC<br>
+				<b>Copyright:</b>
+				1997-2016 ydk2.tk<br>
+				<b>License:</b>
+				<a href="http://www.php.net/license/3_01.txt">PHP License 3.01</a><br>
+				<b>Author:</b>
+				ydk2 <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;">&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;</a><br>
+				<b>Version:</b>
+				2.0.0<br>
+				<b>Since:</b>
+				File available since Release 1.0.0<br>
+				<b>See:</b>
+				<code><a href="class-PHPRender.html">PHPRender</a></code><br>
+				<b>Link:</b>
+				<a href="http://ymvc.ydk2.tk">http://ymvc.ydk2.tk</a><br>
+			<b>Located at</b> <a href="source-class-XSLRender.html#4-509" title="Go to source code">system/core/xslrender.php</a>
 		<br>
 	</div>
 
@@ -173,86 +211,133 @@ XSLTProcessor
 		<td class="attributes"><code>
 			final public 
 
-			
+			<code><a href="class-XSLRender.html">XSLRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-XSLRender.html#28-70" title="Go to source code">__construct</a>( )</code>
+		<code><a href="source-class-XSLRender.html#56-107" title="Go to source code">__construct</a>( <span>mixed <var>$model</var>,…</span>, <span>string <var>$view</var>,…</span> )</code>
 
 		<div class="description short">
-			
+			<p>XSLRender Class constructor can have options $model,$view or $view
+$model and $view can be definied in onInit method</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>XSLRender Class constructor can have options $model,$view or $view
+$model and $view can be definied in onInit method</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$model</var>,…</dt>
+					<dd>optional can set later, can be object or path</dd>
+					<dt><var>$view</var>,…</dt>
+					<dd>optional can set later</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-XSLRender.html">XSLRender</a></code><br>object or boolean
+				</div>
 
 
-
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-XSLRender.html#___construct_1">XSLRender::__construct_1()</a></code><br>
+						<code><a href="class-XSLRender.html#___construct_2">XSLRender::__construct_2()</a></code><br>
+						<code><a href="class-XSLRender.html#_onInit">XSLRender::onInit()</a></code><br>
+				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="load_1" id="_load_1">
+	<tr data-order="__construct_1" id="___construct_1">
 
 		<td class="attributes"><code>
 			final private 
 
-			
+			<code><a href="class-XSLRender.html">XSLRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_load_1">#</a>
-		<code><a href="source-class-XSLRender.html#72-81" title="Go to source code">load_1</a>( <span> <var>$view</var> = <span class="php-quote">''</span></span> )</code>
+		<a class="anchor" href="#___construct_1">#</a>
+		<code><a href="source-class-XSLRender.html#109-125" title="Go to source code">__construct_1</a>( <span>string <var>$view</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
-			
+			<p>XSLRender Class sub constructor it have option $view</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>XSLRender Class sub constructor it have option $view</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$view</var></dt>
+					<dd>optional can set later</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-XSLRender.html">XSLRender</a></code><br>object or boolean
+				</div>
 
 
-
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-XSLRender.html#_onInit">XSLRender::onInit()</a></code><br>
+				</div>
 
 
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="load_2" id="_load_2">
+	<tr data-order="__construct_2" id="___construct_2">
 
 		<td class="attributes"><code>
 			final private 
 
-			
+			<code><a href="class-XSLRender.html">XSLRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_load_2">#</a>
-		<code><a href="source-class-XSLRender.html#83-97" title="Go to source code">load_2</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span> )</code>
+		<a class="anchor" href="#___construct_2">#</a>
+		<code><a href="source-class-XSLRender.html#127-149" title="Go to source code">__construct_2</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>XSLRender Class sub constructor it have options $model &amp; $view</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>XSLRender Class sub constructor it have options $model &amp; $view</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$model</var></dt>
+					<dd>optional can set later, can be object or path</dd>
+					<dt><var>$view</var></dt>
+					<dd>optional can set later</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-XSLRender.html">XSLRender</a></code><br>object or boolean
+				</div>
 
 
-
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-XSLRender.html#_onInit">XSLRender::onInit()</a></code><br>
+				</div>
 
 
 		</div>
@@ -263,24 +348,30 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onInit">#</a>
-		<code><a href="source-class-XSLRender.html#98-100" title="Go to source code">onInit</a>( )</code>
+		<code><a href="source-class-XSLRender.html#151-160" title="Go to source code">onInit</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called in parent(this) class constructor
+Used as child constructor before render views</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called in parent(this) class constructor
+Used as child constructor before render views</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -293,24 +384,30 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onRun">#</a>
-		<code><a href="source-class-XSLRender.html#102-104" title="Go to source code">onRun</a>( )</code>
+		<code><a href="source-class-XSLRender.html#162-171" title="Go to source code">onRun</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called when view is show or return
+Used as runtime method</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called when view is show or return
+Used as runtime method</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -323,24 +420,28 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onEnd">#</a>
-		<code><a href="source-class-XSLRender.html#106-108" title="Go to source code">onEnd</a>( )</code>
+		<code><a href="source-class-XSLRender.html#173-181" title="Go to source code">onEnd</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called when view is returned without error</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called when view is returned without error</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -353,24 +454,30 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onDestruct">#</a>
-		<code><a href="source-class-XSLRender.html#110-112" title="Go to source code">onDestruct</a>( )</code>
+		<code><a href="source-class-XSLRender.html#183-192" title="Go to source code">onDestruct</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called in parent(this) class destructor
+Used as child destructor not required</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called in parent(this) class destructor
+Used as child destructor not required</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -383,84 +490,30 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onException">#</a>
-		<code><a href="source-class-XSLRender.html#114-116" title="Go to source code">onException</a>( )</code>
+		<code><a href="source-class-XSLRender.html#194-203" title="Go to source code">onException</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called on exception is throwed
+Used as child destructor not required</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called on exception is throwed
+Used as child destructor not required</p>
 
 
 
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="onFinallyInit" id="_onFinallyInit">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_onFinallyInit">#</a>
-		<code><a href="source-class-XSLRender.html#118-120" title="Go to source code">onFinallyInit</a>( )</code>
-
-		<div class="description short">
-			
-		</div>
-
-		<div class="description detailed hidden">
-			
-
-
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="onFinallyView" id="_onFinallyView">
-
-		<td class="attributes"><code>
-			 public 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_onFinallyView">#</a>
-		<code><a href="source-class-XSLRender.html#122-124" title="Go to source code">onFinallyView</a>( )</code>
-
-		<div class="description short">
-			
-		</div>
-
-		<div class="description detailed hidden">
-			
-
-
-
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -473,24 +526,33 @@ XSLTProcessor
 		<td class="attributes"><code>
 			final public 
 
-			
+			boolean
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckModel">#</a>
-		<code><a href="source-class-XSLRender.html#126-133" title="Go to source code">CheckModel</a>( <span> <var>$model</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#205-218" title="Go to source code">CheckModel</a>( <span>mixed <var>$model</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>Check Model class/object is definied</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Check Model class/object is definied</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$model</var></dt>
+					<dd>Can be object or string of path to class</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
 
 
 
@@ -510,16 +572,21 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_SetView">#</a>
-		<code><a href="source-class-XSLRender.html#135-142" title="Go to source code">SetView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#220-232" title="Go to source code">SetView</a>( <span>string <var>$view</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>Set new View file path value if exists</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Set new View file path value if exists</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$view</var></dt>
+					<dd></dd>
+				</dl></div>
 
 
 
@@ -533,24 +600,33 @@ XSLTProcessor
 		<td class="attributes"><code>
 			final public 
 
-			
+			boolean
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckView">#</a>
-		<code><a href="source-class-XSLRender.html#143-152" title="Go to source code">CheckView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#234-249" title="Go to source code">CheckView</a>( <span>string <var>$view</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>Check View is exists and set error code 20404</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Check View is exists and set error code 20404</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$view</var></dt>
+					<dd></dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
 
 
 
@@ -563,24 +639,33 @@ XSLTProcessor
 		<td class="attributes"><code>
 			final public 
 
-			
+			boolean
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckController">#</a>
-		<code><a href="source-class-XSLRender.html#154-161" title="Go to source code">CheckController</a>( <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#251-264" title="Go to source code">CheckController</a>( <span>mixed <var>$controller</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>Check Child controller class/object is exists</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Check Child controller class/object is exists</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$controller</var></dt>
+					<dd>Can be object or string of path to class</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
 
 
 
@@ -588,29 +673,37 @@ XSLTProcessor
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="CheckError" id="_CheckError">
+	<tr data-order="CheckError" id="_CheckError" class="deprecated">
 
 		<td class="attributes"><code>
 			final public 
 
-			
+			boolean
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckError">#</a>
-		<code><a href="source-class-XSLRender.html#162-171" title="Go to source code">CheckError</a>( )</code>
+		<code><a href="source-class-XSLRender.html#266-281" title="Go to source code">CheckError</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Check errors</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Check errors</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						0.3<br>
+				</div>
 
 
-
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
 
 
 
@@ -630,7 +723,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_ViewData">#</a>
-		<code><a href="source-class-XSLRender.html#172-178" title="Go to source code">ViewData</a>( )</code>
+		<code><a href="source-class-XSLRender.html#284-290" title="Go to source code">ViewData</a>( )</code>
 
 		<div class="description short">
 			
@@ -660,7 +753,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Data_1">#</a>
-		<code><a href="source-class-XSLRender.html#180-182" title="Go to source code">Data_1</a>( <span> <var>$value</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-XSLRender.html#292-294" title="Go to source code">Data_1</a>( <span> <var>$value</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			
@@ -690,7 +783,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Data_2">#</a>
-		<code><a href="source-class-XSLRender.html#184-192" title="Go to source code">Data_2</a>( <span> <var>$name</var></span>, <span> <var>$newvalue</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-XSLRender.html#296-304" title="Go to source code">Data_2</a>( <span> <var>$name</var></span>, <span> <var>$newvalue</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			
@@ -720,7 +813,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_toArray">#</a>
-		<code><a href="source-class-XSLRender.html#194-196" title="Go to source code">toArray</a>( <span>SimpleXMLElement <var>$xml</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#306-308" title="Go to source code">toArray</a>( <span>SimpleXMLElement <var>$xml</var></span> )</code>
 
 		<div class="description short">
 			
@@ -750,14 +843,14 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#___destruct">#</a>
-		<code><a href="source-class-XSLRender.html#197-206" title="Go to source code">__destruct</a>( )</code>
+		<code><a href="source-class-XSLRender.html#310-323" title="Go to source code">__destruct</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Class destructor</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Class destructor</p>
 
 
 
@@ -780,7 +873,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_RegisterView">#</a>
-		<code><a href="source-class-XSLRender.html#208-210" title="Go to source code">RegisterView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#325-327" title="Go to source code">RegisterView</a>( <span> <var>$view</var></span> )</code>
 
 		<div class="description short">
 			
@@ -810,7 +903,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_UnRegisterView">#</a>
-		<code><a href="source-class-XSLRender.html#212-218" title="Go to source code">UnRegisterView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#329-335" title="Go to source code">UnRegisterView</a>( <span> <var>$view</var></span> )</code>
 
 		<div class="description short">
 			
@@ -840,7 +933,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#__check">#</a>
-		<code><a href="source-class-XSLRender.html#219-236" title="Go to source code">_check</a>( )</code>
+		<code><a href="source-class-XSLRender.html#336-370" title="Go to source code">_check</a>( )</code>
 
 		<div class="description short">
 			
@@ -870,7 +963,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Show">#</a>
-		<code><a href="source-class-XSLRender.html#237-239" title="Go to source code">Show</a>( <span> <var>$view</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-XSLRender.html#372-374" title="Go to source code">Show</a>( <span> <var>$view</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -900,7 +993,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_View">#</a>
-		<code><a href="source-class-XSLRender.html#241-277" title="Go to source code">View</a>( <span> <var>$path</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-XSLRender.html#376-410" title="Go to source code">View</a>( <span> <var>$path</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -930,7 +1023,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Exceptions">#</a>
-		<code><a href="source-class-XSLRender.html#279-292" title="Go to source code">Exceptions</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#412-425" title="Go to source code">Exceptions</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -960,7 +1053,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Register">#</a>
-		<code><a href="source-class-XSLRender.html#293-300" title="Go to source code">Register</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#426-433" title="Go to source code">Register</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -990,7 +1083,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Loader">#</a>
-		<code><a href="source-class-XSLRender.html#301-313" title="Go to source code">Loader</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#434-446" title="Go to source code">Loader</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1020,7 +1113,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Controller">#</a>
-		<code><a href="source-class-XSLRender.html#314-326" title="Go to source code">Controller</a>( <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#447-459" title="Go to source code">Controller</a>( <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1050,7 +1143,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Viewer">#</a>
-		<code><a href="source-class-XSLRender.html#327-339" title="Go to source code">Viewer</a>( <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#460-472" title="Go to source code">Viewer</a>( <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1080,7 +1173,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_SetModel">#</a>
-		<code><a href="source-class-XSLRender.html#340-359" title="Go to source code">SetModel</a>( <span> <var>$model</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#473-492" title="Go to source code">SetModel</a>( <span> <var>$model</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1110,7 +1203,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Call">#</a>
-		<code><a href="source-class-XSLRender.html#361-367" title="Go to source code">Call</a>( <span> <var>$method</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#494-500" title="Go to source code">Call</a>( <span> <var>$method</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1140,7 +1233,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Inc">#</a>
-		<code><a href="source-class-XSLRender.html#369-375" title="Go to source code">Inc</a>( <span> <var>$class</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#502-508" title="Go to source code">Inc</a>( <span> <var>$class</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1193,7 +1286,7 @@ transformToXml()
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-XSLRender.html#4" title="Go to source code"><b>ACCESS_ANY</b></a>
+				<a href="source-class-XSLRender.html#32" title="Go to source code"><b>ACCESS_ANY</b></a>
 			</code>
 
 			<div class="description short">
@@ -1217,7 +1310,7 @@ transformToXml()
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-XSLRender.html#5" title="Go to source code"><b>ACCESS_USER</b></a>
+				<a href="source-class-XSLRender.html#33" title="Go to source code"><b>ACCESS_USER</b></a>
 			</code>
 
 			<div class="description short">
@@ -1241,7 +1334,7 @@ transformToXml()
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-XSLRender.html#6" title="Go to source code"><b>ACCESS_EDITOR</b></a>
+				<a href="source-class-XSLRender.html#34" title="Go to source code"><b>ACCESS_EDITOR</b></a>
 			</code>
 
 			<div class="description short">
@@ -1265,7 +1358,7 @@ transformToXml()
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-XSLRender.html#7" title="Go to source code"><b>ACCESS_MODERATOR</b></a>
+				<a href="source-class-XSLRender.html#35" title="Go to source code"><b>ACCESS_MODERATOR</b></a>
 			</code>
 
 			<div class="description short">
@@ -1289,7 +1382,7 @@ transformToXml()
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-XSLRender.html#8" title="Go to source code"><b>ACCESS_SYSTEM</b></a>
+				<a href="source-class-XSLRender.html#36" title="Go to source code"><b>ACCESS_SYSTEM</b></a>
 			</code>
 
 			<div class="description short">
@@ -1313,7 +1406,7 @@ transformToXml()
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-XSLRender.html#9" title="Go to source code"><b>ACCESS_ADMIN</b></a>
+				<a href="source-class-XSLRender.html#37" title="Go to source code"><b>ACCESS_ADMIN</b></a>
 			</code>
 
 			<div class="description short">
@@ -1346,7 +1439,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#12" title="Go to source code"><var>$action</var></a>
+				<a href="source-class-XSLRender.html#40" title="Go to source code"><var>$action</var></a>
 
 			<div class="description short">
 				
@@ -1371,7 +1464,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#14" title="Go to source code"><var>$modules</var></a>
+				<a href="source-class-XSLRender.html#42" title="Go to source code"><var>$modules</var></a>
 
 			<div class="description short">
 				
@@ -1396,7 +1489,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#15" title="Go to source code"><var>$only_registered_views</var></a>
+				<a href="source-class-XSLRender.html#43" title="Go to source code"><var>$only_registered_views</var></a>
 
 			<div class="description short">
 				
@@ -1421,7 +1514,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#16" title="Go to source code"><var>$registered_views</var></a>
+				<a href="source-class-XSLRender.html#44" title="Go to source code"><var>$registered_views</var></a>
 
 			<div class="description short">
 				
@@ -1446,7 +1539,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#18" title="Go to source code"><var>$name</var></a>
+				<a href="source-class-XSLRender.html#46" title="Go to source code"><var>$name</var></a>
 
 			<div class="description short">
 				
@@ -1471,7 +1564,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#19" title="Go to source code"><var>$access</var></a>
+				<a href="source-class-XSLRender.html#47" title="Go to source code"><var>$access</var></a>
 
 			<div class="description short">
 				
@@ -1496,7 +1589,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#20" title="Go to source code"><var>$model</var></a>
+				<a href="source-class-XSLRender.html#48" title="Go to source code"><var>$model</var></a>
 
 			<div class="description short">
 				
@@ -1521,7 +1614,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#21" title="Go to source code"><var>$data</var></a>
+				<a href="source-class-XSLRender.html#49" title="Go to source code"><var>$data</var></a>
 
 			<div class="description short">
 				
@@ -1546,7 +1639,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#22" title="Go to source code"><var>$view</var></a>
+				<a href="source-class-XSLRender.html#50" title="Go to source code"><var>$view</var></a>
 
 			<div class="description short">
 				
@@ -1571,7 +1664,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#23" title="Go to source code"><var>$emessage</var></a>
+				<a href="source-class-XSLRender.html#51" title="Go to source code"><var>$emessage</var></a>
 
 			<div class="description short">
 				
@@ -1596,7 +1689,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#24" title="Go to source code"><var>$error</var></a>
+				<a href="source-class-XSLRender.html#52" title="Go to source code"><var>$error</var></a>
 
 			<div class="description short">
 				
@@ -1621,7 +1714,7 @@ transformToXml()
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-XSLRender.html#26" title="Go to source code"><var>$obj</var></a>
+				<a href="source-class-XSLRender.html#54" title="Go to source code"><var>$obj</var></a>
 
 			<div class="description short">
 				
@@ -1649,7 +1742,7 @@ transformToXml()
 </div>
 
 	<div id="footer">
-		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+		YMVC System API documentation generated by <a href="http://apigen.org">ApiGen</a>
 	</div>
 </div>
 </div>

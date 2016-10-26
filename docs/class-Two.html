@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class Two</title>
+	<title>Class Two | YMVC System</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -58,9 +58,12 @@
 				<li><a href="class-Router.html">Router</a></li>
 				<li><a href="class-SystemError.html">SystemError</a></li>
 				<li><a href="class-Test.html">Test</a></li>
+				<li><a href="class-toAscii.html">toAscii</a></li>
 				<li class="active"><a href="class-Two.html">Two</a></li>
 				<li><a href="class-view.html">view</a></li>
+				<li><a href="class-X2A.html">X2A</a></li>
 				<li><a href="class-XSLRender.html">XSLRender</a></li>
+				<li><a href="class-XtoA.html">XtoA</a></li>
 			</ul>
 
 
@@ -114,6 +117,11 @@
 <span>Class</span>			</li>
 		</ul>
 		<ul>
+				<li>
+					<a href="annotation-group-ymvc.html" title="List of elements with ymvc annotation">
+						<span>Ymvc</span>
+					</a>
+				</li>
 		</ul>
 		<ul>
 		</ul>
@@ -123,6 +131,20 @@
 	<h1>Class Two</h1>
 
 
+	<div class="description">
+	<p>XSLRender fast and simple to use PHP MVC framework</p>
+
+<p>MVC Framework for PHP 5.2 + with XSLT files views part of YMVC System
+Also available as PHPRender with work on php files</p>
+
+<p>PHP version 5</p>
+
+<p>LICENSE: This source file is subject to version 3.01 of the PHP license
+that is available through the world-wide-web at the following URI:
+http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+the PHP License and are unable to obtain it through the web, please
+send a note to license@php.net so we can mail you a copy immediately.</p>
+	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
@@ -156,8 +178,24 @@ XSLTProcessor
 		
 		
 		
-		
+		<b>Package:</b> YMVC\XSLRender<br>
 
+				<b>Category:</b>
+				Framework, MVC<br>
+				<b>Copyright:</b>
+				1997-2016 ydk2.tk<br>
+				<b>License:</b>
+				<a href="http://www.php.net/license/3_01.txt">PHP License 3.01</a><br>
+				<b>Author:</b>
+				ydk2 <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;">&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;</a><br>
+				<b>Version:</b>
+				2.0.0<br>
+				<b>Since:</b>
+				File available since Release 1.0.0<br>
+				<b>See:</b>
+				<code><a href="class-PHPRender.html">PHPRender</a></code><br>
+				<b>Link:</b>
+				<a href="http://ymvc.ydk2.tk">http://ymvc.ydk2.tk</a><br>
 			<b>Located at</b> <a href="source-class-Two.html#2-37" title="Go to source code">system/controllers/two.php</a>
 		<br>
 	</div>
@@ -171,7 +209,7 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
@@ -181,14 +219,20 @@ XSLTProcessor
 		<code><a href="source-class-Two.html#4-9" title="Go to source code">onInit</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called in parent(this) class constructor
+Used as child constructor before render views</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called in parent(this) class constructor
+Used as child constructor before render views</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -203,7 +247,7 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
@@ -213,14 +257,18 @@ XSLTProcessor
 		<code><a href="source-class-Two.html#11-14" title="Go to source code">onEnd</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called when view is returned without error</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called when view is returned without error</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -235,7 +283,7 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
@@ -245,14 +293,20 @@ XSLTProcessor
 		<code><a href="source-class-Two.html#16-19" title="Go to source code">onDestruct</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called in parent(this) class destructor
+Used as child destructor not required</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called in parent(this) class destructor
+Used as child destructor not required</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -267,7 +321,7 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
@@ -277,14 +331,20 @@ XSLTProcessor
 		<code><a href="source-class-Two.html#21-23" title="Go to source code">onException</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called on exception is throwed
+Used as child destructor not required</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called on exception is throwed
+Used as child destructor not required</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -299,24 +359,35 @@ XSLTProcessor
 		<td class="attributes"><code>
 			 public 
 
-			
+			optional
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onRun">#</a>
-		<code><a href="source-class-Two.html#25-33" title="Go to source code">onRun</a>( <span> <var>$model</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-Two.html#25-33" title="Go to source code">onRun</a>( <span>mixed <var>$model</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
-			
+			<p>Virtual method used in childs classes called when view is show or return
+Used as runtime method</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Virtual method used in childs classes called when view is show or return
+Used as runtime method</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$model</var></dt>
+					<dd>optional</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
 
 
 
@@ -364,7 +435,7 @@ XSLTProcessor
 		<td><code>
 			<a href="class-XSLRender.html#_Call">Call()</a>, 
 			<a href="class-XSLRender.html#_CheckController">CheckController()</a>, 
-			<a href="class-XSLRender.html#_CheckError">CheckError()</a>, 
+			<a href="class-XSLRender.html#_CheckError"><span class="deprecated">CheckError()</span></a>, 
 			<a href="class-XSLRender.html#_CheckModel">CheckModel()</a>, 
 			<a href="class-XSLRender.html#_CheckView">CheckView()</a>, 
 			<a href="class-XSLRender.html#_Controller">Controller()</a>, 
@@ -382,8 +453,6 @@ XSLTProcessor
 			<a href="class-XSLRender.html#_Viewer">Viewer()</a>, 
 			<a href="class-XSLRender.html#___construct">__construct()</a>, 
 			<a href="class-XSLRender.html#___destruct">__destruct()</a>, 
-			<a href="class-XSLRender.html#_onFinallyInit">onFinallyInit()</a>, 
-			<a href="class-XSLRender.html#_onFinallyView">onFinallyView()</a>, 
 			<a href="class-XSLRender.html#_toArray">toArray()</a>
 		</code></td>
 	</tr>
@@ -457,7 +526,7 @@ transformToXml()
 </div>
 
 	<div id="footer">
-		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+		YMVC System API documentation generated by <a href="http://apigen.org">ApiGen</a>
 	</div>
 </div>
 </div>

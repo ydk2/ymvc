@@ -1,5 +1,5 @@
 <?php
-namespace System\Helpers;
+
 /**
  * @author ydk2
  */

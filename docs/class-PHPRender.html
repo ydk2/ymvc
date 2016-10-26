@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class PHPRender</title>
+	<title>Class PHPRender | YMVC System</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -58,9 +58,12 @@
 				<li><a href="class-Router.html">Router</a></li>
 				<li><a href="class-SystemError.html">SystemError</a></li>
 				<li><a href="class-Test.html">Test</a></li>
+				<li><a href="class-toAscii.html">toAscii</a></li>
 				<li><a href="class-Two.html">Two</a></li>
 				<li><a href="class-view.html">view</a></li>
+				<li><a href="class-X2A.html">X2A</a></li>
 				<li><a href="class-XSLRender.html">XSLRender</a></li>
+				<li><a href="class-XtoA.html">XtoA</a></li>
 			</ul>
 
 
@@ -114,6 +117,11 @@
 <span>Class</span>			</li>
 		</ul>
 		<ul>
+				<li>
+					<a href="annotation-group-ymvc.html" title="List of elements with ymvc annotation">
+						<span>Ymvc</span>
+					</a>
+				</li>
 		</ul>
 		<ul>
 		</ul>
@@ -123,6 +131,20 @@
 	<h1>Class PHPRender</h1>
 
 
+	<div class="description">
+	<p>PHPRender fast and simple to use PHP MVC framework</p>
+
+<p>MVC Framework for PHP 5.2 + with PHP files views part of YMVC System
+Also available as XSLRender with work on xslt files</p>
+
+<p>PHP version 5</p>
+
+<p>LICENSE: This source file is subject to version 3.01 of the PHP license
+that is available through the world-wide-web at the following URI:
+http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+the PHP License and are unable to obtain it through the web, please
+send a note to license@php.net so we can mail you a copy immediately.</p>
+	</div>
 
 
 
@@ -140,9 +162,25 @@
 		
 		
 		
-		
+		<b>Package:</b> YMVC\PHPRender<br>
 
-			<b>Located at</b> <a href="source-class-PHPRender.html#3-407" title="Go to source code">system/core/phprender.php</a>
+				<b>Category:</b>
+				Framework, MVC<br>
+				<b>Copyright:</b>
+				1997-2016 ydk2.tk<br>
+				<b>License:</b>
+				<a href="http://www.php.net/license/3_01.txt">PHP License 3.01</a><br>
+				<b>Author:</b>
+				ydk2 <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;">&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;</a><br>
+				<b>Version:</b>
+				2.0.0<br>
+				<b>Since:</b>
+				File available since Release 1.0.0<br>
+				<b>See:</b>
+				<code><a href="class-XSLRender.html">XSLRender</a></code><br>
+				<b>Link:</b>
+				<a href="http://ymvc.ydk2.tk">http://ymvc.ydk2.tk</a><br>
+			<b>Located at</b> <a href="source-class-PHPRender.html#4-471" title="Go to source code">system/core/phprender.php</a>
 		<br>
 	</div>
 
@@ -155,24 +193,82 @@
 		<td class="attributes"><code>
 			final public 
 
-			
+			<code><a href="class-PHPRender.html">PHPRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-PHPRender.html#29-73" title="Go to source code">__construct</a>( )</code>
+		<code><a href="source-class-PHPRender.html#57-110" title="Go to source code">__construct</a>( <span>mixed <var>$model</var>,…</span>, <span>string <var>$view</var>,…</span> )</code>
 
 		<div class="description short">
-			
+			<p>PHPRender Class constructor can have options $model,$view or $view
+$model and $view can be definied in onInit method</p>
 		</div>
 
 		<div class="description detailed hidden">
+			<p>PHPRender Class constructor can have options $model,$view or $view
+$model and $view can be definied in onInit method</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$model</var>,…</dt>
+					<dd>optional can set later, can be object or path</dd>
+					<dt><var>$view</var>,…</dt>
+					<dd>optional can set later</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-PHPRender.html">PHPRender</a></code><br>object or boolean
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-PHPRender.html#___construct_1">PHPRender::__construct_1()</a></code><br>
+						<code><a href="class-PHPRender.html#___construct_2">PHPRender::__construct_2()</a></code><br>
+						<code><a href="class-PHPRender.html#_onInit">PHPRender::onInit()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__construct_1" id="___construct_1">
+
+		<td class="attributes"><code>
+			final private 
+
+			<code><a href="class-PHPRender.html">PHPRender</a></code>
 			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct_1">#</a>
+		<code><a href="source-class-PHPRender.html#112-126" title="Go to source code">__construct_1</a>( <span>string <var>$view</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>PHPRender Class sub constructor it have option $view</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>PHPRender Class sub constructor it have option $view</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$view</var></dt>
+					<dd>optional can set later</dd>
+				</dl></div>
 
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-PHPRender.html">PHPRender</a></code><br>object or boolean
+				</div>
 
 
 
@@ -180,59 +276,40 @@
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="load_1" id="_load_1">
+	<tr data-order="__construct_2" id="___construct_2">
 
 		<td class="attributes"><code>
 			final private 
 
-			
+			<code><a href="class-PHPRender.html">PHPRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_load_1">#</a>
-		<code><a href="source-class-PHPRender.html#75-84" title="Go to source code">load_1</a>( <span> <var>$view</var> = <span class="php-quote">''</span></span> )</code>
+		<a class="anchor" href="#___construct_2">#</a>
+		<code><a href="source-class-PHPRender.html#128-149" title="Go to source code">__construct_2</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span> )</code>
 
 		<div class="description short">
-			
+			<p>PHPRender Class sub constructor it have options $model &amp; $view</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>PHPRender Class sub constructor it have options $model &amp; $view</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$model</var></dt>
+					<dd>optional can set later, can be object or path</dd>
+					<dt><var>$view</var></dt>
+					<dd>optional can set later</dd>
+				</dl></div>
 
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="load_2" id="_load_2">
-
-		<td class="attributes"><code>
-			final private 
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_load_2">#</a>
-		<code><a href="source-class-PHPRender.html#86-100" title="Go to source code">load_2</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span> )</code>
-
-		<div class="description short">
-			
-		</div>
-
-		<div class="description detailed hidden">
-			
-
-
-
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-PHPRender.html">PHPRender</a></code><br>object or boolean
+				</div>
 
 
 
@@ -252,7 +329,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onInit">#</a>
-		<code><a href="source-class-PHPRender.html#102-104" title="Go to source code">onInit</a>( )</code>
+		<code><a href="source-class-PHPRender.html#151-153" title="Go to source code">onInit</a>( )</code>
 
 		<div class="description short">
 			
@@ -282,7 +359,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onRun">#</a>
-		<code><a href="source-class-PHPRender.html#106-108" title="Go to source code">onRun</a>( )</code>
+		<code><a href="source-class-PHPRender.html#155-157" title="Go to source code">onRun</a>( )</code>
 
 		<div class="description short">
 			
@@ -312,7 +389,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onEnd">#</a>
-		<code><a href="source-class-PHPRender.html#110-112" title="Go to source code">onEnd</a>( )</code>
+		<code><a href="source-class-PHPRender.html#159-161" title="Go to source code">onEnd</a>( )</code>
 
 		<div class="description short">
 			
@@ -342,7 +419,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onDestruct">#</a>
-		<code><a href="source-class-PHPRender.html#114-116" title="Go to source code">onDestruct</a>( )</code>
+		<code><a href="source-class-PHPRender.html#163-165" title="Go to source code">onDestruct</a>( )</code>
 
 		<div class="description short">
 			
@@ -372,7 +449,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onException">#</a>
-		<code><a href="source-class-PHPRender.html#118-120" title="Go to source code">onException</a>( )</code>
+		<code><a href="source-class-PHPRender.html#167-169" title="Go to source code">onException</a>( )</code>
 
 		<div class="description short">
 			
@@ -402,7 +479,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onFinallyInit">#</a>
-		<code><a href="source-class-PHPRender.html#122-124" title="Go to source code">onFinallyInit</a>( )</code>
+		<code><a href="source-class-PHPRender.html#171-173" title="Go to source code">onFinallyInit</a>( )</code>
 
 		<div class="description short">
 			
@@ -432,7 +509,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onFinallyView">#</a>
-		<code><a href="source-class-PHPRender.html#126-128" title="Go to source code">onFinallyView</a>( )</code>
+		<code><a href="source-class-PHPRender.html#175-177" title="Go to source code">onFinallyView</a>( )</code>
 
 		<div class="description short">
 			
@@ -462,7 +539,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckModel">#</a>
-		<code><a href="source-class-PHPRender.html#130-137" title="Go to source code">CheckModel</a>( <span> <var>$model</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#179-186" title="Go to source code">CheckModel</a>( <span> <var>$model</var></span> )</code>
 
 		<div class="description short">
 			
@@ -492,7 +569,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_SetView">#</a>
-		<code><a href="source-class-PHPRender.html#138-145" title="Go to source code">SetView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#187-194" title="Go to source code">SetView</a>( <span> <var>$view</var></span> )</code>
 
 		<div class="description short">
 			
@@ -522,7 +599,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckView">#</a>
-		<code><a href="source-class-PHPRender.html#147-156" title="Go to source code">CheckView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#196-205" title="Go to source code">CheckView</a>( <span> <var>$view</var></span> )</code>
 
 		<div class="description short">
 			
@@ -552,7 +629,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckController">#</a>
-		<code><a href="source-class-PHPRender.html#158-165" title="Go to source code">CheckController</a>( <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#207-214" title="Go to source code">CheckController</a>( <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -582,7 +659,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_CheckError">#</a>
-		<code><a href="source-class-PHPRender.html#166-175" title="Go to source code">CheckError</a>( )</code>
+		<code><a href="source-class-PHPRender.html#215-224" title="Go to source code">CheckError</a>( )</code>
 
 		<div class="description short">
 			
@@ -612,7 +689,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_ViewData">#</a>
-		<code><a href="source-class-PHPRender.html#176-182" title="Go to source code">ViewData</a>( )</code>
+		<code><a href="source-class-PHPRender.html#225-231" title="Go to source code">ViewData</a>( )</code>
 
 		<div class="description short">
 			
@@ -642,7 +719,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Data_1">#</a>
-		<code><a href="source-class-PHPRender.html#184-186" title="Go to source code">Data_1</a>( <span> <var>$value</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-PHPRender.html#233-235" title="Go to source code">Data_1</a>( <span> <var>$value</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			
@@ -672,7 +749,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Data_2">#</a>
-		<code><a href="source-class-PHPRender.html#188-196" title="Go to source code">Data_2</a>( <span> <var>$name</var></span>, <span> <var>$newvalue</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-PHPRender.html#237-245" title="Go to source code">Data_2</a>( <span> <var>$name</var></span>, <span> <var>$newvalue</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			
@@ -702,7 +779,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_toArray">#</a>
-		<code><a href="source-class-PHPRender.html#198-200" title="Go to source code">toArray</a>( <span>SimpleXMLElement <var>$xml</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#247-249" title="Go to source code">toArray</a>( <span>SimpleXMLElement <var>$xml</var></span> )</code>
 
 		<div class="description short">
 			
@@ -732,7 +809,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___destruct">#</a>
-		<code><a href="source-class-PHPRender.html#201-210" title="Go to source code">__destruct</a>( )</code>
+		<code><a href="source-class-PHPRender.html#250-259" title="Go to source code">__destruct</a>( )</code>
 
 		<div class="description short">
 			
@@ -762,7 +839,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_RegisterView">#</a>
-		<code><a href="source-class-PHPRender.html#212-214" title="Go to source code">RegisterView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#261-263" title="Go to source code">RegisterView</a>( <span> <var>$view</var></span> )</code>
 
 		<div class="description short">
 			
@@ -792,7 +869,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_UnRegisterView">#</a>
-		<code><a href="source-class-PHPRender.html#216-222" title="Go to source code">UnRegisterView</a>( <span> <var>$view</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#265-271" title="Go to source code">UnRegisterView</a>( <span> <var>$view</var></span> )</code>
 
 		<div class="description short">
 			
@@ -822,7 +899,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#__check">#</a>
-		<code><a href="source-class-PHPRender.html#223-240" title="Go to source code">_check</a>( )</code>
+		<code><a href="source-class-PHPRender.html#272-306" title="Go to source code">_check</a>( )</code>
 
 		<div class="description short">
 			
@@ -852,7 +929,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Show">#</a>
-		<code><a href="source-class-PHPRender.html#241-243" title="Go to source code">Show</a>( <span> <var>$view</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PHPRender.html#307-309" title="Go to source code">Show</a>( <span> <var>$view</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -882,7 +959,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_View">#</a>
-		<code><a href="source-class-PHPRender.html#245-286" title="Go to source code">View</a>( <span> <var>$path</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-PHPRender.html#311-350" title="Go to source code">View</a>( <span> <var>$path</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -912,7 +989,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Exceptions">#</a>
-		<code><a href="source-class-PHPRender.html#288-301" title="Go to source code">Exceptions</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#352-365" title="Go to source code">Exceptions</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -942,7 +1019,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Register">#</a>
-		<code><a href="source-class-PHPRender.html#302-309" title="Go to source code">Register</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#366-373" title="Go to source code">Register</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -972,7 +1049,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Loader">#</a>
-		<code><a href="source-class-PHPRender.html#310-322" title="Go to source code">Loader</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#374-386" title="Go to source code">Loader</a>( <span> <var>$model</var></span>, <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1002,7 +1079,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Controller">#</a>
-		<code><a href="source-class-PHPRender.html#323-335" title="Go to source code">Controller</a>( <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#387-399" title="Go to source code">Controller</a>( <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1032,7 +1109,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Viewer">#</a>
-		<code><a href="source-class-PHPRender.html#336-348" title="Go to source code">Viewer</a>( <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#400-412" title="Go to source code">Viewer</a>( <span> <var>$view</var></span>, <span> <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1062,7 +1139,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_SetModel">#</a>
-		<code><a href="source-class-PHPRender.html#349-368" title="Go to source code">SetModel</a>( <span> <var>$model</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#413-432" title="Go to source code">SetModel</a>( <span> <var>$model</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1092,7 +1169,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Call">#</a>
-		<code><a href="source-class-PHPRender.html#371-377" title="Go to source code">Call</a>( <span> <var>$method</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#435-441" title="Go to source code">Call</a>( <span> <var>$method</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1122,7 +1199,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Inc">#</a>
-		<code><a href="source-class-PHPRender.html#379-386" title="Go to source code">Inc</a>( <span> <var>$class</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#443-450" title="Go to source code">Inc</a>( <span> <var>$class</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1152,7 +1229,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setParameter">#</a>
-		<code><a href="source-class-PHPRender.html#388-394" title="Go to source code">setParameter</a>( <span> <var>$namespace</var></span>, <span> <var>$key</var></span>, <span> <var>$value</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#452-458" title="Go to source code">setParameter</a>( <span> <var>$namespace</var></span>, <span> <var>$key</var></span>, <span> <var>$value</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1182,7 +1259,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getParameter">#</a>
-		<code><a href="source-class-PHPRender.html#395-401" title="Go to source code">getParameter</a>( <span> <var>$namespace</var></span>, <span> <var>$key</var></span> )</code>
+		<code><a href="source-class-PHPRender.html#459-465" title="Go to source code">getParameter</a>( <span> <var>$namespace</var></span>, <span> <var>$key</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1212,7 +1289,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_registerPHPFunctions">#</a>
-		<code><a href="source-class-PHPRender.html#403-405" title="Go to source code">registerPHPFunctions</a>( )</code>
+		<code><a href="source-class-PHPRender.html#467-469" title="Go to source code">registerPHPFunctions</a>( )</code>
 
 		<div class="description short">
 			
@@ -1246,7 +1323,7 @@
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-PHPRender.html#4" title="Go to source code"><b>ACCESS_ANY</b></a>
+				<a href="source-class-PHPRender.html#32" title="Go to source code"><b>ACCESS_ANY</b></a>
 			</code>
 
 			<div class="description short">
@@ -1270,7 +1347,7 @@
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-PHPRender.html#5" title="Go to source code"><b>ACCESS_USER</b></a>
+				<a href="source-class-PHPRender.html#33" title="Go to source code"><b>ACCESS_USER</b></a>
 			</code>
 
 			<div class="description short">
@@ -1294,7 +1371,7 @@
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-PHPRender.html#6" title="Go to source code"><b>ACCESS_EDITOR</b></a>
+				<a href="source-class-PHPRender.html#34" title="Go to source code"><b>ACCESS_EDITOR</b></a>
 			</code>
 
 			<div class="description short">
@@ -1318,7 +1395,7 @@
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-PHPRender.html#7" title="Go to source code"><b>ACCESS_MODERATOR</b></a>
+				<a href="source-class-PHPRender.html#35" title="Go to source code"><b>ACCESS_MODERATOR</b></a>
 			</code>
 
 			<div class="description short">
@@ -1342,7 +1419,7 @@
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-PHPRender.html#8" title="Go to source code"><b>ACCESS_SYSTEM</b></a>
+				<a href="source-class-PHPRender.html#36" title="Go to source code"><b>ACCESS_SYSTEM</b></a>
 			</code>
 
 			<div class="description short">
@@ -1366,7 +1443,7 @@
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-PHPRender.html#9" title="Go to source code"><b>ACCESS_ADMIN</b></a>
+				<a href="source-class-PHPRender.html#37" title="Go to source code"><b>ACCESS_ADMIN</b></a>
 			</code>
 
 			<div class="description short">
@@ -1399,7 +1476,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#11" title="Go to source code"><var>$registerPHPFunctions</var></a>
+				<a href="source-class-PHPRender.html#39" title="Go to source code"><var>$registerPHPFunctions</var></a>
 
 			<div class="description short">
 				
@@ -1424,7 +1501,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#12" title="Go to source code"><var>$parameters</var></a>
+				<a href="source-class-PHPRender.html#40" title="Go to source code"><var>$parameters</var></a>
 
 			<div class="description short">
 				
@@ -1449,7 +1526,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#13" title="Go to source code"><var>$action</var></a>
+				<a href="source-class-PHPRender.html#41" title="Go to source code"><var>$action</var></a>
 
 			<div class="description short">
 				
@@ -1474,7 +1551,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#15" title="Go to source code"><var>$modules</var></a>
+				<a href="source-class-PHPRender.html#43" title="Go to source code"><var>$modules</var></a>
 
 			<div class="description short">
 				
@@ -1499,7 +1576,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#16" title="Go to source code"><var>$only_registered_views</var></a>
+				<a href="source-class-PHPRender.html#44" title="Go to source code"><var>$only_registered_views</var></a>
 
 			<div class="description short">
 				
@@ -1524,7 +1601,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#17" title="Go to source code"><var>$registered_views</var></a>
+				<a href="source-class-PHPRender.html#45" title="Go to source code"><var>$registered_views</var></a>
 
 			<div class="description short">
 				
@@ -1549,7 +1626,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#19" title="Go to source code"><var>$name</var></a>
+				<a href="source-class-PHPRender.html#47" title="Go to source code"><var>$name</var></a>
 
 			<div class="description short">
 				
@@ -1574,7 +1651,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#20" title="Go to source code"><var>$access</var></a>
+				<a href="source-class-PHPRender.html#48" title="Go to source code"><var>$access</var></a>
 
 			<div class="description short">
 				
@@ -1599,7 +1676,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#21" title="Go to source code"><var>$model</var></a>
+				<a href="source-class-PHPRender.html#49" title="Go to source code"><var>$model</var></a>
 
 			<div class="description short">
 				
@@ -1624,7 +1701,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#22" title="Go to source code"><var>$data</var></a>
+				<a href="source-class-PHPRender.html#50" title="Go to source code"><var>$data</var></a>
 
 			<div class="description short">
 				
@@ -1649,7 +1726,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#23" title="Go to source code"><var>$view</var></a>
+				<a href="source-class-PHPRender.html#51" title="Go to source code"><var>$view</var></a>
 
 			<div class="description short">
 				
@@ -1674,7 +1751,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#24" title="Go to source code"><var>$emessage</var></a>
+				<a href="source-class-PHPRender.html#52" title="Go to source code"><var>$emessage</var></a>
 
 			<div class="description short">
 				
@@ -1699,7 +1776,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#25" title="Go to source code"><var>$error</var></a>
+				<a href="source-class-PHPRender.html#53" title="Go to source code"><var>$error</var></a>
 
 			<div class="description short">
 				
@@ -1724,7 +1801,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-PHPRender.html#27" title="Go to source code"><var>$obj</var></a>
+				<a href="source-class-PHPRender.html#55" title="Go to source code"><var>$obj</var></a>
 
 			<div class="description short">
 				
@@ -1752,7 +1829,7 @@
 </div>
 
 	<div id="footer">
-		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+		YMVC System API documentation generated by <a href="http://apigen.org">ApiGen</a>
 	</div>
 </div>
 </div>

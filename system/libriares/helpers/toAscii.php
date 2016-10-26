@@ -1,5 +1,5 @@
 <?php
-namespace System\helpers;
+
 /**
  * Comprehensive string converter for PHP < 5.4
  * Supported blocks:
