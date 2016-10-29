@@ -333,7 +333,7 @@ final public function CheckError() {
 * @see ViewData
 **/ 
 	final private function Data_1($name = '') {
-		return (isset($this ->data->$name)) ? $this ->data->$data : '';
+		return (isset($this ->data->$name)) ? $this ->data->$name : '';
 	}
 
 /**
