@@ -3,11 +3,12 @@ class Layout extends XSLRender {
 	private $time;
 	public function onInit(){
 		// call in __constructor
+
 		Intl::set_path(SYS.LANGS);
 		$langs = Intl::available_locales(Intl::PO);
 			if(!Helper::Session('locale'))
 				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
-				Intl::load_locale_simple(Helper::Session('locale'),$this->name);
+				Intl::po_locale_plural(Helper::Session('locale'),$this->name);
 				//var_dump(Intl::$strings);
 		$this->time[0]=get_time();
 		$this->SetModel(SYS.M.'model');
@@ -15,15 +16,20 @@ class Layout extends XSLRender {
 		$this->only_registered_views = TRUE;
 		$this->RegisterView(SYS.V.strtolower($this->name));
 		$this->RegisterView(SYS.V.'errors'.DS.'error');
+
 		if(isset($_GET['errors']))
 		$this->error = $_GET['errors'];
+
+		$this->access = 1000;
+		$this->SetAccessMode(Helper::Session('user_access'),FALSE);
+
 		if($this->error > 0) {
 
 			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 // This is embarassing. We can't find what you were looking for.
-			$this->exception->ViewData('title', Intl::_('Epic 404 - Article Not Found',$this->name));
-			$this->exception->ViewData('header', Intl::_('Epic 404 - Article Not Found',$this->name));
-			$this->exception->ViewData('alert',Intl::_("This is embarassing. We can't find what you were looking for.",$this->name));
+			$this->exception->ViewData('title', Intl::_p('Epic 404 - Article Not Found',$this->name));
+			$this->exception->ViewData('header', Intl::_p('Epic 404 - Article Not Found',$this->name));
+			$this->exception->ViewData('alert',Intl::_p("This is embarassing. We can't find what you were looking for.",$this->name));
 			$this->exception->ViewData('error', $this->error);
 		}
 		return TRUE;
@@ -43,7 +49,7 @@ class Layout extends XSLRender {
 		$model->mem = convert(memory_get_usage());
 		$model->time = get_time_exec($this->time[0],$this->time[1]);
 
-		$time = $this->Loader($model,SYS.V.'time',SYS.C.'view');
+		$time = $this-> NewController($model,SYS.V.'time',SYS.C.'view');
 		$time->Show();
 		return TRUE;
 	}
@@ -64,13 +70,13 @@ class Layout extends XSLRender {
 			$this->ViewData($value['name'], $value['string']);
 		} 
 		if(Helper::Get('phpview')=="yes"){
-			$this->Register(NULL,SYS.V.'phpcall',SYS.C.'phpcall');
+			$this->SetModule(NULL,SYS.V.'phpcall',SYS.C.'phpcall');
 			//var_dump($this->modules);
-			$this->ViewData('php_view', $this->modules['phpcall']->View());
+			$this->ViewData('php_view', $this->GetModule(SYS.C.'phpcall')->View());
 		} elseif(Helper::Get('test')=="yes"){
-			$this->Register(NULL,NULL,APP.C.'test');
+			$this->SetModule(NULL,NULL,APP.C.'test');
 			//var_dump($this->modules);
-			$this->ViewData('php_view', $this->modules['test']->View());
+			$this->ViewData('php_view', $this->GetModule(APP.C.'test')->View());
 		} else {
 		//$this->SetView(SYS.V.'index');
 		//if($this->error == 404) $this->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
@@ -130,7 +136,7 @@ class Layout extends XSLRender {
 		$this->ViewData('items', '');
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
-				$viewer = $this->Viewer(SYS.V.$value,SYS.C.$key);
+				$viewer = $this->NewControllerB(SYS.V.$value,SYS.C.$key);
 				if(is_object($viewer)){
 					if($i == 0)
 					$viewer->setParameter('','show_link','yes');
@@ -139,7 +145,7 @@ class Layout extends XSLRender {
 			}
 		}
 		if(!isset($this->data->items->item)){
-			$viewer = $this->Viewer(SYS.V.$view,SYS.C.$controller);
+			$viewer = $this->NewControllerB(SYS.V.$view,SYS.C.$controller);
 			if(is_object($viewer))
 				$this->data->items->addChild('item',$viewer->View());
 		}

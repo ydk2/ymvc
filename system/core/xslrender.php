@@ -21,7 +21,7 @@ require_once(ROOT.CORE.'systemexception'.EXT);
  * @author     ydk2 <me@ydk2.tk>
  * @copyright  1997-2016 ydk2.tk
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    2.0.0
+ * @version    2.0.1
  * @link       http://ymvc.ydk2.tk
  * @see        PHPRender
  * @since      File available since Release 1.0.0
@@ -31,8 +31,8 @@ require_once(ROOT.CORE.'systemexception'.EXT);
 class XSLRender extends XSLTProcessor {
 	const ACCESS_ANY = 1000;
 	const ACCESS_USER = 500;
-	const ACCESS_EDITOR = 300;
-	const ACCESS_MODERATOR = 100;
+	const ACCESS_EDITOR = 3;
+	const ACCESS_MODERATOR = 2;
 	const ACCESS_SYSTEM = 1;
 	const ACCESS_ADMIN = 0;
 	
@@ -42,6 +42,8 @@ private $action;
 protected $modules;
 protected $only_registered_views;
 protected $registered_views;
+protected $global_access;
+protected $global_access_mode;
 
 public $name;
 public $access;
@@ -72,12 +74,15 @@ private static $obj;
         }
 		$this->name=get_class($this);
 		$this->only_registered_views = FALSE;
+		$this->global_access_mode = FALSE;
 		$this->registered_views = array();
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
 
 		if (!isset($this -> access)):
 			$this -> access = self::ACCESS_ANY;
 		endif;
+
+		$this->global_access = $this->access;
 
 		if (is_null($this -> error)):
 			$this -> error = 0;
@@ -217,7 +222,37 @@ public final function CheckModel($model){
 		}
 	}
 
- /**
+/**
+* Set Access mode buildin users role
+* @access public
+* @param integer $access
+* @param boolean $mode Default is TRUE
+**/ 
+final public function SetAccessMode($access,$mode=TRUE) {
+	$this->global_access = $access;
+	$this->global_access_mode = $mode;
+	if($this->global_access_mode){
+		if($this->global_access > $this->access){
+			$this->emessage = "Restricted access";
+			$this->error = 20503;
+		} else {
+			if($this->error == 20503){
+				$this->error = 0;
+			}
+		}
+	}
+} 
+
+/**
+* Set Access for controller buildin users role
+* @access public
+* @param string $view
+**/ 
+final public function SetAccess($access) {
+	$this->access = $access;
+} 
+
+/**
 * Set new View file path value if exists
 * @access public
 * @param string $view
@@ -254,7 +289,7 @@ final public function CheckView($view) {
 * @param mixed $controller Can be object or string of path to class
 * @return boolean
 **/ 
-final public function CheckController($controller) {
+final public function ControllerExists($controller) {
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -280,7 +315,13 @@ final public function CheckError() {
 	return FALSE;
 	}
 
-
+/**
+* Get or Set data to views
+* @access public
+* @param string $name Name of element  
+* @param mixed $value Optional new value for given name
+* @return mixed Value for name
+**/ 
 	final public function ViewData() {
 			$argsv = func_get_args();
 			$argsc = func_num_args();
@@ -289,20 +330,36 @@ final public function CheckError() {
 			}
 		}
 
-	final private function Data_1($value = '') {
-		return (isset($this ->data->$value)) ? $this ->data->$value : '';
+/**
+* Get data to views
+* @access private
+* @see ViewData
+**/ 
+	final private function Data_1($name = '') {
+		return (isset($this ->data->$name)) ? $this ->data->$data : '';
 	}
 
-	final private function Data_2($name, $newvalue = '') {
+/**
+* Set data to views
+* @access private
+* @see ViewData
+**/ 
+	final private function Data_2($name, $value = '') {
 		if($this ->data instanceof SimpleXMLElement){
 			unset($this ->data->$name);
-			$this->data->addChild($name,$newvalue);
+			$this->data->addChild($name,$value);
 		} else {
-			$this ->data->$name = $newvalue;
+			$this ->data->$name = $value;
 		}
 		return (isset($this ->data->$name)) ? $this ->data->$name: '';
 	}
 
+/**
+* Convert SimpleXMLElement to array
+* @access public
+* @param SimpleXMLElement $xml
+* @return Array
+**/ 
 	public function toArray(SimpleXMLElement $xml)  {
 		return json_decode(json_encode( $xml),TRUE);
 	}
@@ -321,11 +378,32 @@ final public function CheckError() {
 		unset($this);
 		clearstatcache();
 	}
+
+/**
+* Set limited View path in controller default false
+* @access protected
+* @param boolean $state 
+**/ 
+	final protected function only_registered($state = TRUE) {
+		$this->only_registered_views = $state;
+	}
 	
+/**
+* Register View path in controller when work in limited mode
+* @see only_registered
+* @access protected
+* @param string $view 
+**/ 
 	final protected function RegisterView($view) {
 		array_push($this->registered_views, $view);
 	}
 	
+/**
+* Unregister View path from controller when work in limited mode
+* @see only_registered
+* @access protected
+* @param string $view 
+**/ 	
 	final protected function UnRegisterView($view) {
 		foreach ($this->registered_views as $key => $value) {
 			if ($value==$view) {
@@ -333,18 +411,32 @@ final public function CheckError() {
 			}
 		}
 	}  
+	
+/**
+* Internal helper method to check errors or reset it.
+* @access private
+**/ 	
 	final private function _check(){
 			if(!in_array($this->view,$this->registered_views) && $this->only_registered_views){
-				 $this->message = "View not registered";
+				 $this->emessage = "View not registered";
 				 $this->error = 20402;
-				 
 			} else {
 				if($this->error == 20402){
 					$this->error = 0;
 				}
 			}
+			if($this->global_access_mode){
+				if($this->global_access > $this->access){
+					$this->emessage = "Restricted access";
+					$this->error = 20503;
+				} else {
+					if($this->error == 20503){
+						$this->error = 0;
+					}
+				}
+			} 
 			if($this->model==NULL){
-				 $this->message = "App Model not Definied";
+				 $this->emessage = "App Model not Definied";
 				 $this->error = 20304;
 			} else {
 				if($this->error == 20304){
@@ -352,7 +444,7 @@ final public function CheckError() {
 				}
 			}
 			if($this->view==NULL){
-				 $this->message = "View not Definied";
+				 $this->emessage = "View not Definied";
 				 $this->error = 20401;
 			} else {
 				if($this->error == 20401){
@@ -360,7 +452,7 @@ final public function CheckError() {
 				}
 			}
 			if (!$this->CheckView($this->view)){
-				 $this->message = "View not exists";
+				 $this->emessage = "View not exists";
 				 $this->error = 20404;
 			} else {
 				if($this->error == 20404){
@@ -369,10 +461,22 @@ final public function CheckError() {
 			}
 	}
 
-    final public function Show($view = NULL) {
-        echo $this->view($view);
+/**
+* Method used to get, render and show controller view 
+* @access public
+* @param string $path Optional normally set in constructor or onInit
+* @return Print View
+**/  
+    final public function Show($path = NULL) {
+        echo $this->View($path);
     }
 
+/**
+* Method used to get, render and return controller view as string
+* @access public
+* @param string $path Optional normally set in constructor or onInit
+* @return string HTML output
+**/ 
     final public function View($path=NULL) {
         # code...
         try {
@@ -409,6 +513,13 @@ final public function CheckError() {
         } 
     }
 
+/**
+* Method used to catch exceptions and return as new controller view 
+* @access public
+* @param mixed $model Can be object or path or NULL, can set later in loaded controller
+* @param string $view Path for view
+* @param mixed $controller Can be XSLRender/PHPRender object or path
+**/ 
 	final public function Exceptions($model,$view,$controller) {
 		if (is_object($controller)) {
 			unset($this->exception);
@@ -422,29 +533,59 @@ final public function CheckError() {
 			$this->exception = new $end($model,$view);
 		} 
 		}
-	}	
-	public final function Register($model, $view, $controller){
+	}
+
+/**
+* Method used to set new subcontroller in $this->modules Array of XSLRender/PHPRender objects
+* $controller string value is stored as name in modules array
+* @access public
+* @param mixed $model Can be object or path or NULL, can set later in loaded controller
+* @param string $view Path for view
+* @param string $controller 
+**/ 	
+	public final function SetModule($model, $view, $controller){
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
 			if(!class_exists($end)) return FALSE;
-				$this->modules[$end] = new $end($model,$view);
+				$this->modules[$controller] = new $end($model,$view);
 		}
-	}	
-	public final function Loader($model, $view, $controller){
+	}
 	
-		if (is_object($controller)) {
-			return $controller;
-		} else {
-		if($this->Inc($controller)){
-			$stack = explode(DS,$controller);
-			$end = end($stack);
-			if(!class_exists($end)) return FALSE;
-				return new $end($model,$view);
-		} 
+/**
+* Method used to get subcontroller by controller path from $this->modules 
+* @access public
+* @param string $controller 
+* @return XSLRender/PHPRender object
+**/ 	
+	public final function GetModule($controller){
+		if(isset($this->modules[$controller])){
+			return $this->modules[$controller];
 		}
+		return FALSE;
 	}	
-	public final function Controller($controller){
+	
+/**
+* Method used to unset subcontroller by controller path from $this->modules
+* @access public
+* @param string $controller 
+* @return boolean
+**/ 	
+	public final function UnsetModule($controller){
+		if(isset($this->modules[$controller])){
+			unset($this->modules[$controller]);
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+/**
+* Method return a new controller view 
+* @access public
+* @param mixed $controller Can be XSLRender/PHPRender object or path
+* @return XSLRender/PHPRender object
+**/ 
+	public final function NewControllerA($controller){
 	
 		if (is_object($controller)) {
 			return $controller;
@@ -457,7 +598,15 @@ final public function CheckError() {
 		} 
 		}
 	}
-	public final function Viewer($view,$controller){
+
+/**
+* Method return a new controller view 
+* @access public
+* @param string $view Path for view
+* @param mixed $controller Can be XSLRender/PHPRender object or path
+* @return XSLRender/PHPRender object
+**/ 
+	public final function NewControllerB($view,$controller){
 	
 		if (is_object($controller)) {
 			return $controller;
@@ -470,6 +619,36 @@ final public function CheckError() {
 		} 
 		}
 	}
+
+/**
+* Method return a new controller view with model
+* @access public
+* @param mixed $model Can be object or path or NULL, can set later in loaded controller
+* @param string $view Path for view
+* @param mixed $controller Can be XSLRender/PHPRender object or path
+* @return XSLRender/PHPRender object
+**/ 
+	public final function NewController($model, $view, $controller){
+	
+		if (is_object($controller)) {
+			return $controller;
+		} else {
+		if($this->Inc($controller)){
+			$stack = explode(DS,$controller);
+			$end = end($stack);
+			if(!class_exists($end)) return FALSE;
+				return new $end($model,$view);
+		} 
+		}
+	}
+
+
+/**
+* Method set a new Model 
+* @access public
+* @param mixed $model Can be object or path.
+* @return object Model
+**/ 
 	public final function SetModel($model){
 		if (is_object($model)) {
 			$this->model = $model;
@@ -490,7 +669,14 @@ final public function CheckError() {
 			}
 		}
 	}
-	
+
+/**
+* Method Call existing method in this class or child from XSLTProcessor
+* @access public
+* @param string $method Call existing method in this class from XSLTProcessor
+* @param mixed $arguments Multiple arguments ... 
+* @return mixed Result from called method
+**/ 	
     final public static function Call($method){
 		$parameters = func_get_args(); 
 		array_shift($parameters);
@@ -498,7 +684,12 @@ final public function CheckError() {
 		if(self::$obj !== NULL && method_exists(self::$obj, $method))
         return call_user_func_array(array(self::$obj, $method), $parameters);
     }
-	
+
+/**
+* Method check and preload class file 
+* @access public
+* @param string $class
+**/ 	
 	public final function Inc($class){
 		if(file_exists(ROOT.$class.EXT) && is_file(ROOT.$class.EXT)){	
 			require_once(ROOT.$class.EXT);

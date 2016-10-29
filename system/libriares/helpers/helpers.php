@@ -1,5 +1,5 @@
 <?php 
-namespace System\helpers {
+
 /**
  * static helpers
  */
@@ -10,5 +10,5 @@ static public function build_sorter($key) {
 	};
 }
 }
-}
+
 ?>

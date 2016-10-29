@@ -5,7 +5,18 @@ class Two extends XSLRender {
 		// call in __constructor
 		$this->registerPHPFunctions();
 		$this->model = new stdclass;
-		return TRUE;
+
+		$this->access = 3;
+		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
+		if($this->error > 0) {
+
+			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+			$this->exception->setParameter('','inside','yes');
+			$this->exception->ViewData('title', Intl::_p('Error!!!','main_index'));
+			$this->exception->ViewData('header', Intl::_p('Error!!!','main_index').' '.$this->error);
+			$this->exception->ViewData('alert',Intl::_p($this->emessage,'main_index').' - '.Intl::_p('Try get more privilages','main_index').' - ');
+			$this->exception->ViewData('error', $this->error);
+		}
 	}
 
 	public function onEnd(){

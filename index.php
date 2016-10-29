@@ -1,4 +1,12 @@
 <?php
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'bootstrap.php');
+?>
+<?php
+Helper::Session_Start();
+Helper::Inc(CORE.'router');
+//Helper::Inc(CORE.'intl');
+Config::Init();
+
 /**
 * @annotation
  * YMVC System fast and simple to use PHP MVC framework
@@ -26,19 +34,16 @@
  
  */
 
-
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'bootstrap.php');
-?>
-  <?php
-Helper::Session_Start();
-Helper::Inc(CORE.'router');
-Helper::Inc(CORE.'intl');
-Config::Init();
-
 Config::$data['default']['database']['type'] = 'sqlite';
     Config::$data['default']['cpu_limit'] = 15;
         //$model = new stdClass;
         //$views = new CoreRender;
+        if(Helper::Get('access'))
+        Helper::Session_Set('user_access',Helper::Get('access'));
+        else
+        if(!Helper::Session('user_access'))
+        Helper::Session_Set('user_access',500);
+
         Intl::set_default_lang('pl');
 		Intl::set_path(SYS.LANGS);
 		$langs = Intl::available_locales(Intl::PO);
@@ -58,8 +63,8 @@ Config::$data['default']['database']['type'] = 'sqlite';
         //echo $loader->showsys('layout','layout');
         //echo $loader->showsys('phpcall','phpcall');
         
-        Loader::get_module_show(SYS.C.'layout',SYS.V.'layout');
-        Loader::get_module_show(SYS.C.'layout',SYS.THEMES.'default'.DS.'theme');
+        Loader::show_module(SYS.C.'layout',SYS.V.'layout');
+       // Loader::get_module_show(SYS.C.'layout',SYS.THEMES.'default'.DS.'theme');
         //$test = Helper::Call(SYS.C.'layout',SYS.V.'layout');
         //var_dump($test);
         //$test->Show();
