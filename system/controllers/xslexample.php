@@ -83,7 +83,7 @@ class XSLExample extends XSLRender {
 
 		foreach ($this->langs as $key => $value) {
 		$links = $this->data->links->addChild('items',Intl::_p('Locale',$this->name).' '.$value);
-		$links->addAttribute('href', HOST_URL.'?setlocale='.$value.'&load=php');
+		$links->addAttribute('href', HOST_URL.'?setlocale='.$value.'&load=xsl');
 		$links->addAttribute('hreflang', $value);	 
 		}
 
