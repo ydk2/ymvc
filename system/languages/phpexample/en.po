@@ -86,3 +86,7 @@ msgstr ""
 #: /Users/ydk2/Sites/ymvc/system/controllers/xslexample.php:85
 msgid "Error"
 msgstr ""
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/PHPexample.php:84
+msgid "Back to Index"
+msgstr ""
