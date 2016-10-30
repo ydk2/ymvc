@@ -165,9 +165,7 @@ class Intl {
         }
         arsort($available_languages);
         foreach ($available_languages as $key => $value) {
-            if(in_array($default_language_code,$lang))
-                return $default_language_code;
-            if(in_array($key,$lang))
+             if(in_array($key,$lang))
                 return $key;
             $opt = explode('-', $key);
             if(in_array($opt[0],$lang))
@@ -175,6 +173,8 @@ class Intl {
             $opt = explode('_', $key);
             if(in_array($opt[0],$lang))
                 return $opt[0];
+            if(in_array($default_language_code,$lang))
+                return $default_language_code;
         }
         return $default_language_code;
     }

@@ -9,7 +9,6 @@ class XSLExample extends XSLRender {
 				Helper::Session_Set('locale',Intl::get_browser_lang($this->langs));
 				Intl::po_locale_plural(Helper::Session('locale'),$this->name);
 
-
 		$this->ViewData('lang', Helper::Session('locale'));
 		$this->SetModel(SYS.M.'model');
 

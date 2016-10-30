@@ -43,7 +43,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
         else
         if(!Helper::Session('user_access'))
         Helper::Session_Set('user_access',500);
-
+/*
         Intl::set_default_lang('pl');
 		Intl::set_path(SYS.LANGS);
 		$langs = Intl::available_locales(Intl::PO);
@@ -54,6 +54,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
 		if(!Helper::Session('locale'))
 				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
 				Intl::load_locale_simple(Helper::Session('locale'),'main_index');
+*/
         //echo Helper::Session('locale');
 		//var_dump($strings);
 		//echo Intl::_('Comments are closed','main_index');
