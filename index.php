@@ -52,6 +52,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
 				Helper::Session_Set('locale',Intl::get_browser_lang($langs));
 				Intl::load_locale_simple(Helper::Session('locale'),'main_index');
 */
+
         //echo Helper::Session('locale');
 		//var_dump($strings);
 		//echo Intl::_('Comments are closed','main_index');

@@ -8,6 +8,7 @@
  * It can auto-detect the user preferred languages and load translation files in JSON format or PHP scripts with arrays of strings
  * can to work with Gettext PO files with plurals.
  * It can also format strings with placeholders %named_value to translated string 'named_value'.
+ * If you find bug or bad logic for plurals, notify me, any support is welcome
  *
  * PHP version 5
  *
@@ -22,7 +23,7 @@
  * @author     ydk2 <me@ydk2.tk>
  * @copyright  1997-2016 ydk2.tk
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    1.5.0.0
+ * @version    1.5.1.0
  * @link       none
  * @see        not yet
  * @since      File available since Release 1.5.0.0
@@ -155,6 +156,7 @@ class Intl {
 * @return string 
 **/     
     public static function get_browser_lang($lang=array(),$short = 'en'){
+        if(is_array($lang) && !empty($lang)){
         $default_language_code = (self::$default_lang == NULL)? $short : self::$default_lang;
         $http_accept_language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
         preg_match_all('~([\w-]+)(?:[^,\d]+([\d.]+))?~', strtolower($http_accept_language), $matches, PREG_SET_ORDER);
@@ -177,6 +179,16 @@ class Intl {
                 return $default_language_code;
         }
         return $default_language_code;
+        } else {
+        $http_accept_language = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
+        preg_match_all('~([\w-]+)(?:[^,\d]+([\d.]+))?~', strtolower($http_accept_language), $matches, PREG_SET_ORDER);
+        $available_languages = array();
+        foreach ($matches as $match) {
+            $priority = isset($match[2]) ? (float) $match[2] : 1.0;
+            $available_languages[$priority] = $match[1];
+        }
+        return $available_languages[1];
+        }
     }
 
  /**
@@ -579,6 +591,78 @@ public static function _n_search_plural($msgid, $msgid_plural, $n, array $domain
 public static function get_plural_by_lang($n, $lang = NULL){
 
 switch ($lang) {
+    case 'cy':
+    // nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;
+        $nplurals = 4;
+        $plural = ($n==1) ? 0 : (($n==2) ? 1 : (($n != 8 && $n != 11) ? 2 : 3));
+        break;
+    case 'ga':
+    // nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>6 && n<11) ? 3 : 4;
+        $nplurals = 5;
+        $plural = ($n==1) ? 0 : (($n==2) ? 1 : (($n > 2 && $n < 7) ? 2 : (($n>6 && $n<11) ? 3 : 4)));
+        break;
+    case 'gd':
+    // nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;
+        $nplurals = 4;
+        $plural = ($n==1 || $n==11) ? 0 : (($n==2 || $n==12) ? 1 : (($n > 2 && $n < 20) ? 2 : 3));
+        break;
+    case 'is':
+    // nplurals=2; plural=(n%10!=1 || n%100==11);
+        $nplurals = 2;
+        $plural = (($n % 10!=1) || ($n % 100==11)) ? 1 : 0;
+        break;
+    case 'kw':
+    // nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n == 3) ? 2 : 3;
+        $nplurals = 4;
+        $plural = ($n==1) ? 0 : (($n==2) ? 1 : (($n == 3) ? 2 : 3));
+        break;
+    case 'lt':
+    // nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);
+        $nplurals = 3;
+        $plural = ($n%10==1 && $n%100!=11) ? 0 : ($n%10>=2 && ($n%100<10 || $n%100>=20) ? 1 : 2);
+        break;
+    case 'lv':
+    // nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);
+        $nplurals = 3;
+        $plural = ($n%10==1 && $n%100!=11) ? 0 :(($n != 0) ? 1 : 2);
+        break;
+    case 'mk':
+    // nplurals=2; plural= n==1 || n%10==1 ? 0 : 1; Can’t be correct needs a 2 somewhere
+        $nplurals = 2;
+        $plural = ($n==1 || $n%10==1) ? 0 : 1; // Can’t be correct needs a 2 somewhere
+        break;
+    case 'mnk':
+    // nplurals=3; plural=(n==0 ? 0 : n==1 ? 1 : 2);
+        $nplurals = 3;
+        $plural = ($n==0) ? 0 : (($n==1) ? 1 : 2);
+        break;
+    case 'mt':
+    // nplurals=4; plural=(n==1 ? 0 : n==0 || ( n%100>1 && n%100<11) ? 1 : (n%100>10 && n%100<20 ) ? 2 : 3);
+        $nplurals = 4;
+        $plural = ($n==1) ? 0 : ($n==0 || ( $n%100>1 && $n%100<11) ? 1 : ($n%100>10 && $n%100<20 ) ? 2 : 3);
+        break;
+    case 'ro':
+    // nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);
+        $nplurals = 3;
+        $plural = ($n==1) ? 0 : (($n==0 || ($n%100 > 0 && $n%100 < 20)) ? 1 : 2);
+        break;
+    case 'sl':
+    // nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);
+        $nplurals = 4;
+        $plural = ($n%100==1) ? 1 : (($n%100==2) ? 2 : ($n%100==3 || $n%100==4) ? 3 : 0);
+        break;
+    case 'ru':
+    case 'sr':
+    case 'hr':
+    case 'bs':
+    case 'be':
+    case 'uk':
+    //     
+        // nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);
+        $nplurals = 3;
+        $plural = ($n % 10==1 && $n % 100!=11) ? 0 : ((($n % 10>=2 && $n % 10<=4 && $n % 100<10) || $n % 100>=20) ? 1 : 2);
+        break;
+
     case 'ar':
         // nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);
         $nplurals = 6;
