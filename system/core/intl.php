@@ -695,6 +695,7 @@ switch ($lang) {
     case 'mi':
     case 'oc':
     case 'pt_BR':
+    case 'pt-br':
     case 'uz':
     case 'wa':
     case 'zh':
