@@ -429,7 +429,7 @@ public static function parse_po_file($path){
 * @param mixed $plurals = array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL
 * @return string Translated string
 **/
-public static function _p($msgid, $strings=array(), $plural = 2){
+public static function _p($msgid, $strings=array(), $plural = NULL){
     $_strings=array();
 	if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
 	$_strings = self::$strings[strtolower($strings)];
@@ -452,7 +452,7 @@ public static function _p($msgid, $strings=array(), $plural = 2){
 * @param array $plurals = array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL
 * @return string Translated string
 **/
-public static function _n($msgid, $msgid_plural, $n, $strings=array(), $plurals = NULL){
+public static function _n($msgid, $msgid_plural, $n, $strings=array(), $plural = NULL){
     $_strings=array();
 	if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
 	$_strings = self::$strings[strtolower($strings)];
