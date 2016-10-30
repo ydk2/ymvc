@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: XSLExample 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-30 05:59+0100\n"
+"PO-Revision-Date: 2016-10-30 06:07+0100\n"
+"Last-Translator: Łukasz Józwiak <ydk2@ymail.com>\n"
+"Language-Team: ydk2.tk <me@ydk2.tk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: Espaniol\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:43
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:44
+msgid "Error!!!"
+msgstr "Error"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:45
+msgid "Catch Error"
+msgstr "Excepción de la captura"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:51
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:53
+msgid "XSLExample"
+msgstr "Ejemplo de XSL"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:52
+msgid "View"
+msgstr "Vista"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:54
+msgid "XSLExample View"
+msgstr "Ver Ejemplo de XSL"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:55
+msgid "Content for XSLExample"
+msgstr "Contenido Ejemplo XSL"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:58
+msgid "XSLExample Footer Header"
+msgstr "Encabezado Pie de página Ejemplo de XSL"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:59
+msgid "XSLExample footer content"
+msgstr "El contenido del pie Ejemplo XSL"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:62
+msgid "Load PHP"
+msgstr "Cargar PHP"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:64
+msgid "Load XSL"
+msgstr "Cargar XSL"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:66
+msgid "Link three"
+msgstr "Enlace tres"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:68
+msgid "Link four"
+msgstr "Enlace cuatro"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:72
+msgid "Link"
+msgstr "Enlace"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:74
+msgid "Locale"
+msgstr "La ubicación"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:77
+msgid "Locale pl"
+msgstr "La ubicación pl"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:80
+msgid "Locale es"
+msgstr "La ubicación es"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/XSLexample.XSL:84
+msgid "Error"
+msgstr "Error"

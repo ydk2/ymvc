@@ -532,14 +532,20 @@ public static function _n_search($msgid, array $domain, $nplurals = 2, $plural =
         if(isset($value['msgid']) && isset($value['msgstr']) && !isset($value['msgid_plural']) && !is_array($value['msgstr']))
         	if($value['msgid']==$msgid)
         		$retstr = $value['msgstr'];
+                if($retstr == "")
+                    $retstr = $msgid;
         if(isset($value['msgid']) && isset($value['msgid_plural']) && is_array($value['msgstr']))
         		foreach($value['msgstr'] as $i=>$values):
        				if($i == 0)
         				if($value['msgid']==$msgid)
         					$retstr = (isset($value['msgstr'][0])) ? $value['msgstr'][0] : $msgid;
+                            if($retstr == "")
+                                $retstr = $msgid;
     				else
         				if($value['msgid_plural']==$msgid)
                             $retstr = (isset($value['msgstr'][$plural])) ? $value['msgstr'][$plural] : $msgid;
+                            if($retstr == "")
+                                $retstr = $msgid;
     			endforeach;
     }
 	return $retstr;

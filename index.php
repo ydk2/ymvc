@@ -62,8 +62,11 @@ Config::$data['default']['database']['type'] = 'sqlite';
         //echo htmlspecialchars_decode( Router::sys_routed($array,$disabled)->asXml());
         //echo $loader->showsys('layout','layout');
         //echo $loader->showsys('phpcall','phpcall');
-        
-        Loader::show_module(SYS.C.'layout',SYS.V.'layout');
+        if(Helper::Get('load')=="php"){
+            Loader::show_module(SYS.C.'phpexample',SYS.V.'phpexample');
+		}  else {
+            Loader::show_module(SYS.C.'xslexample',SYS.V.'xslexample');
+		}        
        // Loader::get_module_show(SYS.C.'layout',SYS.THEMES.'default'.DS.'theme');
         //$test = Helper::Call(SYS.C.'layout',SYS.V.'layout');
         //var_dump($test);
