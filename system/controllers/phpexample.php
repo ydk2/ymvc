@@ -26,6 +26,9 @@ class PHPExample extends PHPRender {
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		');
+		if(Helper::Get('action')=="error"){
+           $this->error = 193502;
+		}
 
 		if($this->error > 0) {
 			//$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
@@ -44,7 +47,7 @@ class PHPExample extends PHPRender {
 
 	public function onException(){
 		$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
-		$this->exception->setParameter('','inside','yes');
+		$this->exception->setParameter('','inside','no');
 		$this->exception->setParameter('','show_link','yes');
 		$this->exception->ViewData('title', Intl::_p('Error!!!',$this->name));
 		$this->exception->ViewData('header', Intl::_p('Error!!!',$this->name).' '.$this->error);
@@ -70,6 +73,8 @@ class PHPExample extends PHPRender {
 		$list->addAttribute('href', HOST_URL."?load=xsl");
 		$list = $this->data->list->addChild('items',Intl::_p('Load PHP',$this->name));
 		$list->addAttribute('href', HOST_URL."?load=php");
+		$list = $this->data->list->addChild('items',Intl::_p('Throw Error',$this->name));
+		$list->addAttribute('href', HOST_URL."?action=error");
 		$list = $this->data->list->addChild('items',Intl::_p('Link three',$this->name));
 		$list->addAttribute('href', HOST_URL."/?action=null");
 		$list = $this->data->list->addChild('items',Intl::_p('Link four',$this->name));
@@ -85,8 +90,7 @@ class PHPExample extends PHPRender {
 		$links = $this->data->links->addChild('items',Intl::_p('Locale',$this->name).' '.$value);
 		$links->addAttribute('href', HOST_URL.'?setlocale='.$value.'&load=php');
 		$links->addAttribute('hreflang', $value);	 
-		}
-
+		} 
 		if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 	}	
 	public function test($a='a test', $b='b test'){

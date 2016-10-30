@@ -27,6 +27,9 @@ class XSLExample extends XSLRender {
 		<![endif]-->
 		');
 
+		if(Helper::Get('action')=="error"){
+           $this->error = 193502;
+		}
 		if($this->error > 0) {
 			//$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 		}
@@ -44,7 +47,7 @@ class XSLExample extends XSLRender {
 
 	public function onException(){
 		$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
-		$this->exception->setParameter('','inside','yes');
+		$this->exception->setParameter('','inside','no');
 		$this->exception->setParameter('','show_link','yes');
 		$this->exception->ViewData('title', Intl::_p('Error!!!',$this->name));
 		$this->exception->ViewData('header', Intl::_p('Error!!!',$this->name).' '.$this->error);
@@ -70,6 +73,8 @@ class XSLExample extends XSLRender {
 		$list->addAttribute('href', HOST_URL."?load=xsl");
 		$list = $this->data->list->addChild('items',Intl::_p('Load PHP',$this->name));
 		$list->addAttribute('href', HOST_URL."?load=php");
+		$list = $this->data->list->addChild('items',Intl::_p('Throw Error',$this->name));
+		$list->addAttribute('href', HOST_URL."?action=error");
 		$list = $this->data->list->addChild('items',Intl::_p('Link three',$this->name));
 		$list->addAttribute('href', HOST_URL."/?action=null");
 		$list = $this->data->list->addChild('items',Intl::_p('Link four',$this->name));

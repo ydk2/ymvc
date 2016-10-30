@@ -44,6 +44,15 @@ position: relative;
 clear: both;
 width: 100%;
 }
+#heads {
+color: #c41818;
+}
+.onleft {
+border-left: 5px solid #c41818;
+}
+.onright {
+border-right: 5px solid #c41818;
+}
 ]]>
 </style>
 </head>
