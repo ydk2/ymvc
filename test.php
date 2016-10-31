@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <title>Intl Sample</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
  <?php
 if(!defined('DS')) {
 define('DS',DIRECTORY_SEPARATOR);
@@ -114,3 +122,5 @@ $strings = array(
         echo "<p>".$n." ".Intl::_n($searchone,$searchplural,$n,'json')."</p>\n"; // return transladed string with given number of choises
 
 ?> 
+  </body>
+</html>
