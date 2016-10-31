@@ -63,6 +63,8 @@ Config::$data['default']['database']['type'] = 'sqlite';
         //echo $loader->showsys('phpcall','phpcall');
         if(Helper::Get('load')=="php"){
             Loader::show_module(SYS.C.'phpexample',SYS.V.'phpexample');
+		}  elseif(Helper::Get('load')=="test"){
+            Helper::Inc('test');
 		}  else {
             Loader::show_module(SYS.C.'xslexample',SYS.V.'xslexample');
 		}        

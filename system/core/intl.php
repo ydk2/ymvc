@@ -23,7 +23,7 @@
  * @author     ydk2 <me@ydk2.tk>
  * @copyright  1997-2016 ydk2.tk
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    1.5.1.0
+ * @version    1.5.3.0
  * @link       none
  * @see        not yet
  * @since      File available since Release 1.5.0.0
@@ -121,29 +121,51 @@ class Intl {
 * @param mixed $strings
 * @return string 
 **/     
-    public static function _f($string,$array=array(),$strings=array()){
+    public static function _f($string,$array=array(),$strings='_',$p=0){
 		$_strings=array();
-		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
-		$_strings = self::$strings[strtolower($strings)];
-		if(is_array($strings))
-		$_strings = $strings;
+        if(isset(self::$strings[$string])){
+           $_strings = self::$strings;
+        } else {
+            if(is_string($strings)){
+                if(isset(self::$strings[strtolower($strings)][$string])){
+                $_strings = self::$strings[strtolower($strings)];
+                } else {
+                   return self::_p($string,$strings,$p);
+                }
+            }
+        }
+		if(is_array($strings)){
+            $_strings = $strings;
+        }
         return (isset($_strings[$string]) && $_strings[$string]!='')?self::format($_strings[$string],$array):self::format($_string,$array);
     }
 
  /**
 * Get translated string with array values
+* when plural string is loaded you can use this function like _p
 * @access public
 * @static
 * @param string $string
 * @param mixed $strings
+* @param integer $p added when plural string is loaded 
 * @return string 
 **/ 
-    public static function _($string,$strings=array()){
+    public static function _($string,$strings='_', $p = 0){
 		$_strings=array();
-		if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
-		$_strings = self::$strings[strtolower($strings)];
-		if(is_array($strings))
-		$_strings = $strings;
+        if(isset(self::$strings[$string])){
+           $_strings = self::$strings;
+        } else {
+            if(is_string($strings)){
+                if(isset(self::$strings[strtolower($strings)][$string])){
+                $_strings = self::$strings[strtolower($strings)];
+                } else {
+                   return self::_p($string,$strings,$p);
+                }
+            }
+        }
+		if(is_array($strings)){
+            $_strings = $strings;
+        }
         return (isset($_strings[$string]) && $_strings[$string]!='')?$_strings[$string]:$string;
     }
     
@@ -209,6 +231,28 @@ class Intl {
     }
 
  /**
+* load lang strings in specyfic domain usefull for multi files use 
+* @access public
+* @static
+* @param array $strings
+* @param array $domain
+**/        
+    public static function set_strings($strings, $domain='_'){
+        self::$strings[$domain] = $strings;
+    }
+
+ /**
+* unload lang strings from specyfic domain usefull for multi files use 
+* @access public
+* @static
+* @param array $domain
+**/        
+    public static function unset_strings($domain='_'){
+        if(isset(self::$strings[$domain]))
+        unset(self::$strings[$domain]);
+    }
+
+ /**
 * Set lang code
 * @access public
 * @static
@@ -256,7 +300,7 @@ class Intl {
 * @param string $name 
 * @return array
 **/      
-    public static function po_locale_simple($lang,$name=FALSE){
+    public static function po_locale_simple($lang,$name='_'){
         $string = '';
         $strings = array();
         if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.po')) {
@@ -291,7 +335,7 @@ class Intl {
 * @param string $name 
 * @return array
 **/     
-    public static function php_locale($lang,$name=FALSE){
+    public static function php_locale($lang,$name='_'){
         $strings=array();
         if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.php')) {
             self::$lang = $lang;
@@ -300,13 +344,11 @@ class Intl {
         } elseif (file_exists($lang)) {
 			if(is_string($name)) $keys = strtolower($name);
             require_once $lang;
-        } else {
-			self::$msgstr = $strings;
-		}
+        } 
 		if(isset($keys))
-		self::$strings[$keys] = self::$msgstr;
+		self::$strings[$keys] = $strings;
 		else
-        return self::$msgstr;
+        return $strings;
     }
 
 /**
@@ -317,7 +359,7 @@ class Intl {
 * @param string $name 
 * @return array
 **/     
-    public static function json_locale($lang,$name=FALSE){
+    public static function json_locale($lang,$name='_'){
 		$strings=array();
         if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.json')) {
             self::$lang = $lang;
@@ -341,7 +383,7 @@ class Intl {
 * @param string $name 
 * @return array
 **/     
-    public static function load_locale_simple($lang,$keys=FALSE){
+    public static function load_locale_simple($lang,$keys='_'){
 		if(is_file($lang)) self::$mode = pathinfo($lang, PATHINFO_EXTENSION);
         switch (self::$mode) {
 			case 'php':
@@ -402,7 +444,7 @@ public static function parse_po_file($path){
 * @param string $name
 * @return array of strings from po file
 **/
-    public static function po_locale_plural($lang,$name=FALSE){
+    public static function po_locale_plural($lang,$name='_'){
         $strings = array();
         if (file_exists(self::$path.DIRECTORY_SEPARATOR.$lang.'.po')) {
             self::$lang = $lang;
@@ -429,17 +471,16 @@ public static function parse_po_file($path){
 * @param mixed $plurals = array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL
 * @return string Translated string
 **/
-public static function _p($msgid, $strings=array(), $plural = NULL){
+public static function _p($msgid, $strings='_', $plural = 0){
     $_strings=array();
 	if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
 	$_strings = self::$strings[strtolower($strings)];
 	if(is_array($strings))
 	$_strings = $strings;
-    if((!isset($plural['plural']) && !isset($plural['nplurals'])))
-    $plurals = self::get_plural_by_lang($plural,self::$lang);
-    else 
-    $plurals = $plural;
-    return self::_n_search($msgid,$_strings,$plurals['nplurals'],$plurals['plural']);
+    if(is_numeric($plural)) {
+       $nplurals = $plural+1;
+    }
+    return self::_n_search($msgid,$_strings,$nplurals,$plural);
 }
 
 /**
@@ -452,16 +493,24 @@ public static function _p($msgid, $strings=array(), $plural = NULL){
 * @param array $plurals = array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL
 * @return string Translated string
 **/
-public static function _n($msgid, $msgid_plural, $n, $strings=array(), $plural = NULL){
+public static function _n($msgid, $msgid_plural, $n, $strings='_', $plural = NULL){
     $_strings=array();
+    $plurals = array('plural'=>0,'nplurals'=>1);
 	if(is_string($strings) && isset(self::$strings[strtolower($strings)]))
 	$_strings = self::$strings[strtolower($strings)];
 	if(is_array($strings))
 	$_strings = $strings;
-     if((!isset($plural['plural']) && !isset($plural['nplurals'])))
-    $plurals = self::get_plural_by_lang($n,self::$lang);
-    else 
-    $plurals = $plural;
+    if(is_array($plural)) {
+        $plurals = array('plural'=>$plural[1],'nplurals'=>$plural[0]);
+    } 
+    if(is_numeric($plural)) {
+       $nplurals = $plural+1;
+       $plurals = array('plural'=>$plural,'nplurals'=>$nplurals);
+    } 
+    if($plural == NULL){
+        $plurals = self::get_plural_by_lang($n,self::$lang);
+        //$plurals = self::get_plural_by_lang($plural,self::$lang);
+    } 
     return self::_n_search_plural($msgid,$msgid_plural,$n,$_strings,$plurals['nplurals'],$plurals['plural']);
 }
 
@@ -505,7 +554,7 @@ public static function parse_po_string($postring){
                 if($ikey == $i){
                     if($n == 1){
                         $oarray[$n]['HEADER']=$msgid[1];
-                    } else {
+                    } elseif($n > 1){
                         $oarray[$n]['msgid']=$msgid[1];
                     }
                 }
@@ -576,7 +625,7 @@ public static function _n_search($msgid, array $domain, $nplurals = 2, $plural =
 * @return string Translated string
 **/
 public static function _n_search_plural($msgid, $msgid_plural, $n, array $domain, $nplurals = 1, $plural = 0){
-    return ($n == 1) ? self::_n_search($msgid, $domain, $nplurals, $plural) : _n_search($msgid_plural, $domain, $nplurals, $plural);
+    return ($n == 1) ? self::_n_search($msgid, $domain, $nplurals, $plural) : self::_n_search($msgid_plural, $domain, $nplurals, $plural);
 }
 
 /**
@@ -794,12 +843,14 @@ return array('plural'=>$plural,'nplurals'=>$nplurals);
 * Save as json lang files
 * @access public
 * @static
-* @param array $array
 * @param string $file
-* @return boolean
+* @param array $array optional
+* @return json string or boolean
 **/    
-    public static function json_save($array,$file) {
-        if (file_put_contents($file, json_encode($array))) {
+    public static function tojson($file = NULL,$array=NULL) {
+        $_array = ($array == NULL)? self::$strings:$array;
+        if($file == NULL) return json_encode($_array);
+        if (file_put_contents($file, json_encode($_array))) {
             return true;
         } else {
             return false;

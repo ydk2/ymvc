@@ -75,8 +75,8 @@ class PHPExample extends PHPRender {
 		$list->addAttribute('href', HOST_URL."?load=php");
 		$list = $this->data->list->addChild('items',Intl::_p('Throw Error',$this->name));
 		$list->addAttribute('href', HOST_URL."?action=error");
-		$list = $this->data->list->addChild('items',Intl::_p('Link three',$this->name));
-		$list->addAttribute('href', HOST_URL."/?action=null");
+		$list = $this->data->list->addChild('items',Intl::_p('Load Intl test from phpclasses',$this->name));
+		$list->addAttribute('href', HOST_URL."/?load=test");
 		$list = $this->data->list->addChild('items',Intl::_p('Link four',$this->name));
 		$list->addAttribute('href', HOST_URL);
 		$list = $this->data->list->addChild('items',Intl::_p('Docs',$this->name));
