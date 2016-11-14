@@ -69,7 +69,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
               ); 
 
         if(Helper::Get('load')=="php"){
-            Loader::show_restricted_view(SYS.C.'phpexample',SYS.V.'phpexample');
+            Loader::show_restricted_view(SYS.C.'phpexample');
 		} elseif(Helper::Get('load')=="xsl"){
             Loader::show_restricted_view(SYS.C.'xslexample',SYS.V.'xslexample');
 		} elseif(Helper::Get('load')=="theme"){

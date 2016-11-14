@@ -11,7 +11,7 @@ class PHPExample extends PHPRender {
 
 		$this->ViewData('lang', Helper::Session('locale'));
 		$this->SetModel(SYS.M.'model');
-
+		$this->setView(SYS.V.strtolower($this->name));
 		$this->registerPHPFunctions();
 		
 		$this->only_registered(TRUE);
@@ -29,15 +29,14 @@ class PHPExample extends PHPRender {
 		if(Helper::Get('action')=="error"){
            $this->error = 193502;
 		}
-		echo $this->global_access;
-		echo $this->access;
-		echo $this->error;
-	//	if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
+//	if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
+	
 		if($this->error > 0) {
 			//echo $this->error ;
 		//	$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 		}
-		//var_dump($this->exception);
+		
+		
 	}
 
 	public function onEnd(){
@@ -63,7 +62,7 @@ class PHPExample extends PHPRender {
 	public function onRun($model = NULL){
 		//$this->SetView(SYS.V.'time');
 
-	//	if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
+		if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 		$this->ViewData('maintitle', Intl::_p('YMVC System',$this->name));
 		$this->ViewData('title', Intl::_p('PHPExample',$this->name));
 		$this->ViewData('smallheader', Intl::_p('View',$this->name));

@@ -30,9 +30,7 @@ class XSLExample extends XSLRender {
 		if(Helper::Get('action')=="error"){
            $this->error = 193502;
 		}
-				echo $this->global_access;
-		echo $this->access;
-		echo $this->error;
+
 		if($this->error > 0) {
 			//echo $this->error ;
 		//	$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
