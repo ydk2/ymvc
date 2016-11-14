@@ -42,7 +42,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
         Helper::Session_Set('user_access',Helper::Get('access'));
         else
         if(!Helper::Session('user_access'))
-        Helper::Session_Set('user_access',500);
+       // Helper::Session_Set('user_access',1000);
 
 		if(Helper::Get('setlocale')){
 			Helper::Session_Set('locale',Helper::Get('setlocale'));
@@ -62,7 +62,12 @@ Config::$data['default']['database']['type'] = 'sqlite';
         //echo $loader->showsys('layout','layout');
         //Loader::show_module(SYS.C.'phpexample',SYS.V.'phpexample');
         //echo $loader->showsys('phpcall','phpcall');
-        Config::$data['enabled'][0] = SYS.C.'xslexample'; 
+        Config::$data['enabled'] = array(
+              SYS.C.'xslexample',
+              SYS.C.'phpexample',
+              SYS.C.'errors'.DS.'systemerror'
+              ); 
+
         if(Helper::Get('load')=="php"){
             Loader::show_restricted_view(SYS.C.'phpexample',SYS.V.'phpexample');
 		} elseif(Helper::Get('load')=="xsl"){
@@ -94,7 +99,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
         ?>
     <?php
         //Encryption:
-
+//echo Helper::Session('user_access');
         //print "My Decrypted Text: ". $decryptedText;
 
 		//echo Intl::_('Comments are closed','main_index');

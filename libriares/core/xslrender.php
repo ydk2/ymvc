@@ -232,7 +232,7 @@ final public function SetAccessMode($access,$mode=TRUE) {
 	$this->global_access = $access;
 	$this->global_access_mode = $mode;
 	if($this->global_access_mode){
-		if($this->global_access > $this->access){
+		if($this->global_access < $this->access){
 			$this->emessage = "Restricted access";
 			$this->error = 20503;
 		} else {
@@ -426,7 +426,7 @@ final public function CheckError() {
 				}
 			}
 			if($this->global_access_mode){
-				if($this->global_access > $this->access){
+				if($this->global_access < $this->access){
 					$this->emessage = "Restricted access";
 					$this->error = 20503;
 				} else {
@@ -486,7 +486,10 @@ final public function CheckError() {
 			$this->action->run = $this->onRun();
 			$this->_check();
             if($this->error > 0) {
-            	if(isset($this->exception) || $this->error == 20404){
+            	if(isset($this->exception)){
+                    throw new SystemException($this->emessage,$this->error);
+                }
+            	if($this->error == 20404){
                     throw new SystemException($this->emessage,$this->error);
                 }
             }

@@ -150,6 +150,7 @@ class Loader {
 		if(!$module) return FALSE;
 		$module->only_registered(TRUE);
 		$module->RegisterView($view);
+		$module->SetAccessMode(Helper::Session('user_access'),TRUE);
 		return	$module->View(); 
 		}
 		return "";
@@ -169,6 +170,11 @@ class Loader {
 		if(!$module) return FALSE;
 		$module->only_registered(TRUE);
 		$module->RegisterView($view);
+		$module->SetAccessMode(Helper::Session('user_access'),TRUE);
+		
+		if($module->error > 0) {
+			//$module->Exceptions(NULL,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+		}
 		return	$module->Show(); 
 		}
 		return "";

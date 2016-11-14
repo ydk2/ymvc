@@ -18,7 +18,7 @@ class PHPExample extends PHPRender {
 		$this->RegisterView(SYS.V.strtolower($this->name));
 		$this->RegisterView(SYS.V.'errors'.DS.'error');
 
-		$this->access = self::ACCESS_ANY;
+		$this->setAccess(self::ACCESS_ANY);
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
 
 		$this->setParameter('','fixie','<!--[if lt IE 9]>
@@ -29,10 +29,15 @@ class PHPExample extends PHPRender {
 		if(Helper::Get('action')=="error"){
            $this->error = 193502;
 		}
-
+		echo $this->global_access;
+		echo $this->access;
+		echo $this->error;
+	//	if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 		if($this->error > 0) {
-			//$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+			//echo $this->error ;
+		//	$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 		}
+		//var_dump($this->exception);
 	}
 
 	public function onEnd(){
@@ -57,6 +62,8 @@ class PHPExample extends PHPRender {
 
 	public function onRun($model = NULL){
 		//$this->SetView(SYS.V.'time');
+
+	//	if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 		$this->ViewData('maintitle', Intl::_p('YMVC System',$this->name));
 		$this->ViewData('title', Intl::_p('PHPExample',$this->name));
 		$this->ViewData('smallheader', Intl::_p('View',$this->name));
@@ -91,7 +98,6 @@ class PHPExample extends PHPRender {
 		$links->addAttribute('href', HOST_URL.'?setlocale='.$value.'&load=php');
 		$links->addAttribute('hreflang', $value);	 
 		} 
-		if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 	}	
 	public function test($a='a test', $b='b test'){
 		$this->ViewData('message', " Content for call PHPExample &amp; ".$a." ".$b );
