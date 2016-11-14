@@ -72,6 +72,6 @@ define('CACHE',LIBS.'cache'.DS);
 define('CLASSES',LIBS.'classes'.DS);
 // sys scheme dirs
 // global dirs
-define('CORE',SYS.'core'.DS);
+define('CORE',LIBS.'core'.DS);
 //define('LIBS','libriares'.DS);
 ?>

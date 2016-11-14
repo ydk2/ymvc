@@ -60,14 +60,24 @@ Config::$data['default']['database']['type'] = 'sqlite';
         
         //echo htmlspecialchars_decode( Router::sys_routed($array,$disabled)->asXml());
         //echo $loader->showsys('layout','layout');
+        //Loader::show_module(SYS.C.'phpexample',SYS.V.'phpexample');
         //echo $loader->showsys('phpcall','phpcall');
+        Config::$data['enabled'][0] = SYS.C.'xslexample'; 
         if(Helper::Get('load')=="php"){
-            Loader::show_module(SYS.C.'phpexample',SYS.V.'phpexample');
-		}  elseif(Helper::Get('load')=="test"){
+            Loader::show_restricted_view(SYS.C.'phpexample',SYS.V.'phpexample');
+		} elseif(Helper::Get('load')=="xsl"){
+            Loader::show_restricted_view(SYS.C.'xslexample',SYS.V.'xslexample');
+		} elseif(Helper::Get('load')=="theme"){
+            Loader::show_restricted_view(SYS.C.'theme',SYS.THEMES.'default'.DS.'theme');
+		} elseif(Helper::Get('load')=="route"){
+            Loader::show_restricted_view(SYS.C.'route',SYS.V.'route');
+		} elseif(Helper::Get('load')=="test"){
             Helper::Inc('test');
-		}  else {
-            Loader::show_module(SYS.C.'xslexample',SYS.V.'xslexample');
-		}        
+		} elseif(Helper::Get('load')=="layout") {
+            Loader::show_restricted_view(SYS.C.'layout',SYS.V.'layout');
+		} else {
+            Loader::show_restricted_view(SYS.C.'xslexample',SYS.V.'xslexample');
+		}      
        // Loader::get_module_show(SYS.C.'layout',SYS.THEMES.'default'.DS.'theme');
         //$test = Helper::Call(SYS.C.'layout',SYS.V.'layout');
         //var_dump($test);

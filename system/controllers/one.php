@@ -35,6 +35,18 @@ class One extends XSLRender {
 		$links = $this->data->links->addChild('a','emulate login user');
 		$links->addAttribute('href', HOST_URL.'?one=one&two=two&access=500');
 
+		$links = $this->data->links->addChild('a','xsl');
+		$links->addAttribute('href', HOST_URL.'?load=xsl');
+
+		$links = $this->data->links->addChild('a','php');
+		$links->addAttribute('href', HOST_URL.'?load=php');
+
+		$links = $this->data->links->addChild('a','theme');
+		$links->addAttribute('href', HOST_URL.'?load=theme');
+
+		$links = $this->data->links->addChild('a','route');
+		$links->addAttribute('href', HOST_URL.'?load=route');
+
 		$links = $this->data->links->addChild('a','Docs');
 		$links->addAttribute('href', HOST_URL.'docs');
 		

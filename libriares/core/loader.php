@@ -33,6 +33,7 @@ class Loader {
 /**
 *  Load Controller Class 
 * @access public
+* static
 * @param mixed $controller can be object or path
 * @param string $view optional can set later
 * @param mixed $model optional can set later, can be object or path
@@ -58,6 +59,7 @@ class Loader {
 /**
 *  Load Controller Class and return rendered view
 * @access public
+* static
 * @param mixed $controller can be object or path
 * @param string $view optional can set later Path to view file
 * @param mixed $model optional can set later, can be object or path
@@ -72,6 +74,7 @@ class Loader {
 /**
 *  Load Controller Class and Print rendered view
 * @access public
+* static
 * @param mixed $controller can be object or path
 * @param string $view optional can set later Path to view file
 * @param mixed $model optional can set later, can be object or path
@@ -116,6 +119,13 @@ class Loader {
 	public final function showsys($controller, $view){
 		self::show_module(SYS.C.$controller,SYS.V.$view);	
 	}
+
+/**
+* Class loader 
+* @access public
+* @param {string} $class path
+* @return {boolean} 
+**/
 	final private function Inc($class){
 		if(file_exists(ROOT.$class.EXT)  && is_file(ROOT.$class.EXT)){	
 			require_once(ROOT.$class.EXT);
@@ -123,5 +133,46 @@ class Loader {
 		}
 		return FALSE;
 	}
+
+
+/**
+*  Load Controller Class and return rendered view with restriction from configs
+* @access public
+* static
+* @param mixed $controller can be object or path
+* @param string $view optional can set later Path to view file
+* @param mixed $model optional can set later, can be object or path
+* @return string
+**/ 
+	final public static function get_restricted_view($controller,$view=NULL,$model = NULL){
+		if(in_array($controller,Config::$data['enabled'])){
+		$module = self::get_module($controller,$view,$model);
+		if(!$module) return FALSE;
+		$module->only_registered(TRUE);
+		$module->RegisterView($view);
+		return	$module->View(); 
+		}
+		return "";
+	}
+/**
+*  Load Controller Class and show rendered view with restriction from configs
+* @access public
+* static
+* @param mixed $controller can be object or path
+* @param string $view optional can set later Path to view file
+* @param mixed $model optional can set later, can be object or path
+* @return string
+**/ 
+	final public static function show_restricted_view($controller,$view=NULL,$model = NULL){
+		if(in_array($controller,Config::$data['enabled'])){
+		$module = self::get_module($controller,$view,$model);
+		if(!$module) return FALSE;
+		$module->only_registered(TRUE);
+		$module->RegisterView($view);
+		return	$module->Show(); 
+		}
+		return "";
+	}
+
 }
 ?>

@@ -378,30 +378,30 @@ final public function CheckError() {
 
 /**
 * Set limited View path in controller default false
-* @access protected
+* @access public
 * @param boolean $state 
 **/ 
-	final protected function only_registered($state = TRUE) {
+	final public function only_registered($state = TRUE) {
 		$this->only_registered_views = $state;
 	}
 	
 /**
 * Register View path in controller when work in limited mode
 * @see only_registered
-* @access protected
+* @access public
 * @param string $view 
 **/ 
-	final protected function RegisterView($view) {
+	final public function RegisterView($view) {
 		array_push($this->registered_views, $view);
 	}
 	
 /**
 * Unregister View path from controller when work in limited mode
 * @see only_registered
-* @access protected
+* @access public
 * @param string $view 
 **/ 	
-	final protected function UnRegisterView($view) {
+	final public function UnRegisterView($view) {
 		foreach ($this->registered_views as $key => $value) {
 			if ($value==$view) {
 				unset($this->registered_views[$key]);
@@ -520,7 +520,7 @@ final public function CheckError() {
 * @access public
 * @param mixed $model Can be object or path or NULL, can set later in loaded controller
 * @param string $view Path for view
-* @param mixed $controller Can be XSLRender/PHPRender object or path
+* @param mixed $controller Can be XSLRender or PHPRender object or path
 **/ 
 	final public function Exceptions($model,$view,$controller) {
 		if (is_object($controller)) {
@@ -538,7 +538,7 @@ final public function CheckError() {
 	}
 
 /**
-* Method used to set new subcontroller in $this->modules Array of XSLRender/PHPRender objects
+* Method used to set new subcontroller in $this->modules Array of XSLRender or PHPRender objects
 * $controller string value is stored as name in modules array
 * @access public
 * @param mixed $model Can be object or path or NULL, can set later in loaded controller
@@ -558,7 +558,7 @@ final public function CheckError() {
 * Method used to get subcontroller by controller path from $this->modules 
 * @access public
 * @param string $controller 
-* @return XSLRender/PHPRender object
+* @return XSLRender or PHPRender object
 **/ 	
 	public final function GetModule($controller){
 		if(isset($this->modules[$controller])){
@@ -584,8 +584,8 @@ final public function CheckError() {
 /**
 * Method return a new controller view 
 * @access public
-* @param mixed $controller Can be XSLRender/PHPRender object or path
-* @return XSLRender/PHPRender object
+* @param mixed $controller Can be XSLRender or PHPRender object or path
+* @return XSLRender or PHPRender object
 **/ 
 	public final function NewControllerA($controller){
 	
@@ -605,8 +605,8 @@ final public function CheckError() {
 * Method return a new controller view 
 * @access public
 * @param string $view Path for view
-* @param mixed $controller Can be XSLRender/PHPRender object or path
-* @return XSLRender/PHPRender object
+* @param mixed $controller Can be XSLRender or PHPRender object or path
+* @return XSLRender or PHPRender object
 **/ 
 	public final function NewControllerB($view,$controller){
 	
@@ -627,8 +627,8 @@ final public function CheckError() {
 * @access public
 * @param mixed $model Can be object or path or NULL, can set later in loaded controller
 * @param string $view Path for view
-* @param mixed $controller Can be XSLRender/PHPRender object or path
-* @return XSLRender/PHPRender object
+* @param mixed $controller Can be XSLRender or PHPRender object or path
+* @return XSLRender or PHPRender object
 **/ 
 	public final function NewController($model, $view, $controller){
 	
@@ -712,8 +712,39 @@ final public function CheckError() {
    final public function setParameter($namespace,$key,$value){
 		if($namespace != ''){
 			$this->parameters[$namespace][$key] = $value;
+			if(isset($this->parameters[$namespace][$key]) && $this->parameters[$namespace][$key]==$value){
+			return TRUE;
+			}
+			return FALSE;
 		} else {
 			$this->parameters['/'][$key] = $value;
+			if(isset($this->parameters['/'][$key]) && $this->parameters['/'][$key]==$value){
+			return TRUE;
+			}
+			return FALSE;
+		}
+	}
+
+/**
+* Method remove parameter like in XSLRender
+* Added to can use same controller in different modes
+* @access public
+* @param string $namespace
+* @param string $key
+**/ 	
+   final public function removeParameter($namespace,$key){
+		if($namespace != ''){
+			if(isset($this->parameters[$namespace][$key])){
+			unset($this->parameters[$namespace][$key]);
+			return TRUE;
+			}
+			return FALSE;
+		} else {
+			if(isset($this->parameters['/'][$key])){
+			unset($this->parameters['/'][$key]);
+			return TRUE;
+			}
+			return FALSE;
 		}
 	}
 
@@ -727,9 +758,15 @@ final public function CheckError() {
 **/ 	
    final public function getParameter($namespace,$key){
 		if($namespace != ''){
+			if(isset($this->parameters[$namespace][$key])){
 			return $this->parameters[$namespace][$key];
+			}
+			return FALSE;
 		} else {
+			if(isset($this->parameters['/'][$key])){
 			return $this->parameters['/'][$key];
+			}
+			return FALSE;
 		}
 	}
 
