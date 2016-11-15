@@ -27,6 +27,7 @@
  
  */
 
+
 class Router {
 	private static $loader;
 	private static $data;
@@ -50,7 +51,7 @@ class Router {
 			if(!in_array($key,$disabled)){
 				$viewer = Loader::get_module($mode.C.$value,$mode.V.$key);
 				if(is_object($viewer)){
-				$style = $data->items->addChild('section','');
+				$style = $data->items->addChild('rows','');
 
 				simplexml_import_xml($style,$viewer->View());
 
@@ -63,7 +64,7 @@ class Router {
 			$viewer = Loader::get_module($mode.C.$view,$mode.V.$controller);
 			if(is_object($viewer)){
 				unset($data->items->section);
-				$data->items->addChild('section','');
+				$data->items->addChild('rows','');
 				simplexml_import_xml($data->items->section,$viewer->View());
 			}
 		}

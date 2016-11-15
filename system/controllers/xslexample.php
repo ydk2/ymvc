@@ -5,8 +5,8 @@ class XSLExample extends XSLRender {
 		// call in __constructor
 		Intl::set_path(SYS.LANGS.strtolower($this->name));
 		$this->langs = Intl::available_locales(Intl::PO);
-			if(!Helper::Session('locale'))
-				Helper::Session_Set('locale',Intl::get_browser_lang($this->langs));
+		//	if(!Helper::Session('locale'))
+		//		Helper::Session_Set('locale',Intl::get_browser_lang($this->langs));
 				Intl::po_locale_plural(Helper::Session('locale'),$this->name);
 
 		$this->ViewData('lang', Helper::Session('locale'));
@@ -60,6 +60,8 @@ class XSLExample extends XSLRender {
 
 	public function onRun($model = NULL){
 		//$this->SetView(SYS.V.'time');
+
+		if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 		$this->ViewData('maintitle', Intl::_p('YMVC System',$this->name));
 		$this->ViewData('title', Intl::_p('XSLExample',$this->name));
 		$this->ViewData('smallheader', Intl::_p('View',$this->name));
@@ -89,13 +91,21 @@ class XSLExample extends XSLRender {
 		$links = $this->data->links->addChild('items',Intl::_p('Link',$this->name));
 		$links->addAttribute('href', HOST_URL.'?load=xsl');
 
+		$links = $this->data->links->addChild('items',Intl::_p('Any',$this->name));
+		$links->addAttribute('href', HOST_URL.'?access=1000');
+
+		$links = $this->data->links->addChild('items',Intl::_p('User',$this->name));
+		$links->addAttribute('href', HOST_URL.'?access=500');
+
+		$links = $this->data->links->addChild('items',Intl::_p('Admin',$this->name));
+		$links->addAttribute('href', HOST_URL.'?access=0');
+
 		foreach ($this->langs as $key => $value) {
 		$links = $this->data->links->addChild('items',Intl::_p('Locale',$this->name).' '.$value);
 		$links->addAttribute('href', HOST_URL.'?setlocale='.$value.'&load=xsl');
 		$links->addAttribute('hreflang', $value);	 
 		}
 
-	//	if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 	}	
 	public function test($a='a test', $b='b test'){
 		$this->ViewData('message', " Content for call XSLExample &amp; ".$a." ".$b );

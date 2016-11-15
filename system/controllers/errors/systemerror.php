@@ -29,7 +29,7 @@ class SystemError extends XSLRender {
 		//$this->ViewData('header', "Error on site!!!");
 		//$this->ViewData('alert', "System catch error: ");
 		$this->ViewData('links', "" );
-		$links = $this->data->links->addChild('a',Intl::_p('Back to Index','xslexample'));
+		$links = $this->data->links->addChild('a',Intl::_p('Back to Index'));
 		$links->addAttribute('href', HOST_URL);
 	}
 }

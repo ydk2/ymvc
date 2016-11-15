@@ -5,20 +5,21 @@ class PHPExample extends PHPRender {
 		// call in __constructor
 		Intl::set_path(SYS.LANGS.strtolower($this->name));
 		$this->langs = Intl::available_locales(Intl::PO);
-			if(!Helper::Session('locale'))
-				Helper::Session_Set('locale',Intl::get_browser_lang($this->langs));
+		//	if(!Helper::Session('locale'))
+		//		Helper::Session_Set('locale',Intl::get_browser_lang($this->langs));
 				Intl::po_locale_plural(Helper::Session('locale'),$this->name);
 
 		$this->ViewData('lang', Helper::Session('locale'));
 		$this->SetModel(SYS.M.'model');
-		$this->setView(SYS.V.strtolower($this->name));
+		$this->setView(SYS.V.'layout'.DS.'php');
 		$this->registerPHPFunctions();
 		
 		$this->only_registered(TRUE);
 		$this->RegisterView(SYS.V.strtolower($this->name));
+		$this->RegisterView(SYS.V.'layout'.DS.'php');
 		$this->RegisterView(SYS.V.'errors'.DS.'error');
 
-		$this->setAccess(self::ACCESS_ANY);
+		$this->setAccess(self::ACCESS_USER);
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
 
 		$this->setParameter('','fixie','<!--[if lt IE 9]>
@@ -91,6 +92,15 @@ class PHPExample extends PHPRender {
 		$this->ViewData('links', "" );
 		$links = $this->data->links->addChild('items',Intl::_p('Link',$this->name));
 		$links->addAttribute('href', HOST_URL.'?load=php');
+
+		$links = $this->data->links->addChild('items',Intl::_p('Any',$this->name));
+		$links->addAttribute('href', HOST_URL.'?load=php&access=1000');
+
+		$links = $this->data->links->addChild('items',Intl::_p('User',$this->name));
+		$links->addAttribute('href', HOST_URL.'?load=php&access=500');
+
+		$links = $this->data->links->addChild('items',Intl::_p('Admin',$this->name));
+		$links->addAttribute('href', HOST_URL.'?load=php&access=0');
 
 		foreach ($this->langs as $key => $value) {
 		$links = $this->data->links->addChild('items',Intl::_p('Locale',$this->name).' '.$value);
