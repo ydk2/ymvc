@@ -11,6 +11,7 @@ class PHPExample extends PHPRender {
 
 		$this->ViewData('lang', Helper::Session('locale'));
 		$this->SetModel(SYS.M.'model');
+		if(Helper::Get('load')!='php')
 		$this->setView(SYS.V.'layout'.DS.'php');
 		$this->registerPHPFunctions();
 		
