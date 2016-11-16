@@ -1,5 +1,6 @@
 <?php
 
+
 /**
 * klasa pobierania pliku :)
 */
@@ -29,9 +30,9 @@ class FileUtils {
 		if(is_dir($what)){
 			foreach(glob($what . '/*') as $files) {
 				if(is_dir($files))
-						self::Delete($files);
+										self::Delete($files);
 				else
-						$e=(unlink($files))?0:2;
+										$e=(unlink($files))?0:2;
 			}
 			$e=(rmdir($what))?0:2;
 		}
@@ -43,7 +44,7 @@ class FileUtils {
 	}
 	
 	public static function Copy($from,$where,$mode=0)
-			{
+				{
 		$e=0;
 		if (!file_exists($from)) {
 			return 1;
@@ -75,10 +76,10 @@ class FileUtils {
 		return $e;
 	}
 	public static function Move($from,$where)
-			{
+				{
 		return self::Copy($from,$where,1);
 	}
-
+	
 	public static function Byte2Size($filesize){
 		if(is_numeric($filesize)){
 			$decr = 1024;
@@ -103,28 +104,26 @@ class FileUtils {
 		$lista=preg_match("/(K|M|G|T|P)$/", strtoupper($getBit), $match);
 		switch ($match[0]) {
 			case 'K':
-				return (int) $size * $incr;
+							return (int) $size * $incr;
 			break;
 			case 'M':
-				return (int) $size * pow($incr,2);
+							return (int) $size * pow($incr,2);
 			break;
 			case 'G':
-				return (int) $size *  pow($incr,3);
+							return (int) $size *  pow($incr,3);
 			break;
 			case 'T':
-				return (int) $size *  pow($incr,4);
+							return (int) $size *  pow($incr,4);
 			break;
 			case 'P':
-				return (int) $size *  pow($incr,5);
+							return (int) $size *  pow($incr,5);
 			break;
 			default:
-				return (int) $size;
+							return (int) $size;
 			break;
 		}
 	}
-	public static function error($nr) {
-		return self::$message['error'.$nr];
-	}
+	
 	public static function getUploaded($from,$where=null,$message=array(),$code=0) {
 		$uploaded_size = (int) $_SERVER['CONTENT_LENGTH'];
 		$where = ($where == NULL)?$message['uploaddir']:$where;
@@ -139,7 +138,7 @@ class FileUtils {
 		$size = $files['size'];
 		$type = $files['type'];
 		$tmp = $files['tmp_name'];
-		$error= $files['error'];		
+		$error= $files['error'];
 		if ($uploaded_size > $max) {
 			$arr_out = 5;
 		}
@@ -165,6 +164,13 @@ class FileUtils {
 			}
 		}
 		return $arr_out;
+	}
+	public static function disk_free($path){
+		$bytes = disk_free_space($path);
+		$si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+		$base = 1024;
+		$class = min((int)log($bytes , $base) , count($si_prefix) - 1);
+		return sprintf('%1.2f' , $bytes / pow($base,$class)) . ' ' . $si_prefix[$class] . ' ';
 	}
 }
 // FileUtils
