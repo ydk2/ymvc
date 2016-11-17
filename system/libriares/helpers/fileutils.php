@@ -1,8 +1,9 @@
 <?php
 
 
+
 /**
-* klasa pobierania pliku :)
+* Class FileUtils
 */
 class FileUtils {
 	public static function Download($file) {
@@ -30,30 +31,30 @@ class FileUtils {
 		if(is_dir($what)){
 			foreach(glob($what . '/*') as $files) {
 				if(is_dir($files))
-										self::Delete($files);
+						self::Delete($files);
 				else
-										$e=(unlink($files))?0:2;
+						$e=(unlink($files))?2:0;
 			}
-			$e=(rmdir($what))?0:2;
+			$e=(rmdir($what))?2:0;
 		}
 		else {
-			$e=(unlink($what))?0:2;
+			$e=(unlink($what))?2:0;
 		}
 		clearstatcache();
 		return $e;
 	}
 	
 	public static function Copy($from,$where,$mode=0)
-				{
+		{
 		$e=0;
 		if (!file_exists($from)) {
-			return 1;
+			return 0;
 		}
 		if (file_exists($where)) {
-			return 2;
+			return 0;
 		}
 		if (is_dir($from)) {
-			$e=(mkdir($where))?0:3;
+			$e=(mkdir($where))?3:0;
 			$files = scandir($from);
 			foreach ($files as $file){
 				if ($file != "." && $file != "..") {
@@ -76,7 +77,7 @@ class FileUtils {
 		return $e;
 	}
 	public static function Move($from,$where)
-				{
+		{
 		return self::Copy($from,$where,1);
 	}
 	
@@ -84,7 +85,7 @@ class FileUtils {
 		if(is_numeric($filesize)){
 			$decr = 1024;
 			$step = 0;
-			$prefix = array('Byte','KB','MB','GB','TB','PB');
+			$prefix = array('b','Kb','Mb','Gb','Tb','Pb');
 			while(($filesize / $decr) > 0.9999){
 				$filesize = $filesize / $decr;
 				$step++;
@@ -104,74 +105,217 @@ class FileUtils {
 		$lista=preg_match("/(K|M|G|T|P)$/", strtoupper($getBit), $match);
 		switch ($match[0]) {
 			case 'K':
-							return (int) $size * $incr;
+				return (int) $size * $incr;
 			break;
 			case 'M':
-							return (int) $size * pow($incr,2);
+				return (int) $size * pow($incr,2);
 			break;
 			case 'G':
-							return (int) $size *  pow($incr,3);
+				return (int) $size *  pow($incr,3);
 			break;
 			case 'T':
-							return (int) $size *  pow($incr,4);
+				return (int) $size *  pow($incr,4);
 			break;
 			case 'P':
-							return (int) $size *  pow($incr,5);
+				return (int) $size *  pow($incr,5);
 			break;
 			default:
-							return (int) $size;
+				return (int) $size;
 			break;
 		}
 	}
 	
-	public static function getUploaded($from,$where=null,$message=array(),$code=0) {
-		$uploaded_size = (int) $_SERVER['CONTENT_LENGTH'];
-		$where = ($where == NULL)?$message['uploaddir']:$where;
-		$max = self::Size2Byte($message['limit']);
-		if($max > self::Size2Byte(ini_get('upload_max_filesize'))) {
-			$max = self::Size2Byte(ini_get('upload_max_filesize'));
-		}
-		$uploaded_size = $uploaded_size;
-		$max = $max;
-		$files = $_FILES[$from];
-		$name = $files['name'];
-		$size = $files['size'];
-		$type = $files['type'];
-		$tmp = $files['tmp_name'];
-		$error= $files['error'];
-		if ($uploaded_size > $max) {
-			$arr_out = 5;
-		}
-		else {
-			foreach ($name as $num => $file) {
-				if ($error[$num] !== UPLOAD_ERR_OK ) {
-					$arr_out[].= $error[$num];
+	/**
+	* getUploaded('file',array('limit'=>'5M','uploaddir'=>__DIR__.DIRECTORY_SEPARATOR.'uploads'))
+		*/
+		public static function getUploaded($from,$message=array(),$code=0) {
+		$arr_out = array();
+		if (isset($_FILES[$from])) {
+			$uploaded_size = (int) $_SERVER['CONTENT_LENGTH'];
+			$where = $message['uploaddir'];
+			$max = self::Size2Byte($message['limit']);
+			if($max > self::Size2Byte(ini_get('upload_max_filesize'))) {
+				$max = self::Size2Byte(ini_get('upload_max_filesize'));
+			}
+			$max = $max;
+			$files = $_FILES[$from];
+			$name = $files['name'];
+			$size = $files['size'];
+			$type = $files['type'];
+			$tmp = $files['tmp_name'];
+			$error= $files['error'];
+			if ($uploaded_size > $max) {
+				$arr_out = 5;
+			}
+			else {
+				if(is_array($name)){
+					foreach ($name as $num => $file) {
+						if ($error[$num] !== UPLOAD_ERR_OK ) {
+							$arr_out[].= $error[$num];
+						}
+						elseif($error[$num] === UPLOAD_ERR_OK) {
+							if($code === 1){
+								$save=base64_encode($name[$num]);
+							}
+							else {
+								$save = $name[$num];
+							}
+							if (move_uploaded_file($tmp[$num], $where.DIRECTORY_SEPARATOR.$save)) {
+								$arr_out[].=  $file;
+							}
+							else {
+								$arr_out[].=  $error[$num];
+							}
+						}
+					}
 				}
-				elseif($error[$num] === UPLOAD_ERR_OK) {
-					if($code === 1){
-						$save=base64_encode($name[$num]);
+				else {
+					if ($error !== UPLOAD_ERR_OK ) {
+						$arr_out[].= $error;
 					}
-					else {
-						$save = $name[$num];
-					}
-					if (move_uploaded_file($tmp[$num], $where.DIRECTORY_SEPARATOR.$save)) {
-						$arr_out[].=  $file;
-					}
-					else {
-						$arr_out[].=  $error[$num];
+					elseif($error === UPLOAD_ERR_OK) {
+						if($code === 1){
+							$save=base64_encode($name);
+						}
+						else {
+							$save = $name;
+						}
+						if (move_uploaded_file($tmp, $where.DIRECTORY_SEPARATOR.$save)) {
+							$arr_out[].=  $name;
+						}
+						else {
+							$arr_out[].=  $error;
+						}
 					}
 				}
 			}
 		}
 		return $arr_out;
 	}
-	public static function disk_free($path){
+	public static function freeinDir($path){
 		$bytes = disk_free_space($path);
 		$si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
 		$base = 1024;
 		$class = min((int)log($bytes , $base) , count($si_prefix) - 1);
-		return sprintf('%1.2f' , $bytes / pow($base,$class)) . ' ' . $si_prefix[$class] . ' ';
+		return sprintf('%1.2f' , $bytes / pow($base,$class)) . $si_prefix[$class];
 	}
+	
+	public static function inDir($path = '') {
+		$info = FALSE;
+		$path = realpath($path);
+		$p = "{" . $path . "/*," . $path . "/.*}";
+		foreach (glob("$p",GLOB_BRACE) as $file) {
+			if (basename($file) != '..' && basename($file) != '.') {
+				$type = filetype(realpath($file));
+				$info[basename(realpath($file))] = array('path'=>realpath($file),'type'=>$type);
+			}
+		}
+		return $info;
+	}
+
+public static function AllinDir($path = '') {
+	$info=array();
+	$path = realpath($path);
+	$dir[] = $path;
+	while (count($dir) != 0) {
+		$v = array_shift($dir);
+		foreach (glob($v) as $item) {
+			if (is_dir($item)) {
+				$dir[] = $item . "/*";
+				$type = filetype(realpath($item));
+				$info[dirname(realpath($item))][basename(realpath($item))] = array('path'=>realpath($item),'type'=>$type);
+			}
+			elseif (!is_dir($item)) {
+				$type = filetype(realpath($item));
+				$info[dirname(realpath($item))][basename(realpath($item))] = array('path'=>realpath($item),'type'=>$type);
+			}
+		}
+	}
+	return $info;
+}
+
+	public static function getOwner($filename)
+	    {
+		$filename=realpath($filename);
+		if(file_exists($filename)){
+			$username = posix_getpwuid(fileowner($filename));
+			$user=$username['name'];
+			$groupname = posix_getgrgid(filegroup($filename));
+			$group=$groupname['name'];
+			return array($user,$group);
+		}
+		return FALSE;
+	} // getOwner
+		
+	public static function setOwner($filename ,$user,$group,$recursive=0){
+		$e=0;
+		$filename = realpath($filename);
+		
+		if(file_exists($filename)){
+			if ($recursive==1) {
+				if (is_dir($filename)) {
+					$e=(@chown($filename, $user))?1:0;
+					$e=(@chgrp($filename, $group))?1:0;
+					foreach (glob($filename."/*") as $value) {
+						$e=self::setOwner($value,$user,$group,$recursive);
+					}
+				}
+				else {
+					$e=(@chown($filename, $user))?2:0;
+					$e=(@chgrp($filename, $group))?2:0;
+				}
+			}
+			else {
+				$e=(@chown($filename, $user))?3:0;
+				$e=(@chgrp($filename, $group))?3:0;
+			}
+			return $e;
+		}
+		return FALSE;
+	}
+	// 	setOwner
+	public static function getPerms($filename)
+	    {
+		$filename=realpath($filename);
+		if(file_exists($filename)){
+			$stat = stat($filename);
+			$mode = intval( substr( decoct($stat['mode']),-4));
+			return $mode;
+		}
+		return FALSE;
+	}
+	// 	getPerms
+	
+	public static function setPerms($filename ,$mode,$recursive=0){
+		$e=0;
+		$filename = realpath($filename);
+		
+		if(file_exists($filename)){
+			if ($recursive==1) {
+				if (is_dir($filename)) {
+					$dir = intval($mode)+111;
+					$e=(@chmod($filename, octdec($dir)))?1:0;
+					foreach (glob($filename."/*") as $value) {
+						$e=self::setPerms($value, $mode, $recursive);
+					}
+				}
+				else {
+					$e=(@chmod($filename, octdec($mode)))?2:0;
+				}
+			}
+			else {
+				if (is_dir($filename)) {
+				$dir = intval($mode)+111;
+					$e=(@chmod($filename, octdec($dir)))?1:0;
+				} else {
+					$e=(@chmod($filename, octdec($mode)))?3:0;
+				}
+			}
+			return $e;
+		}
+		return FALSE;
+	}
+	// 	setPerms
 }
 // FileUtils
 ?>
