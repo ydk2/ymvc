@@ -1,10 +1,10 @@
 <?php
 /**
 * 
- * PHPRender fast and simple to use PHP MVC framework
+ * FileUtils fast and simple to use PHP MVC framework
  *
  * MVC Framework for PHP 5.2 + with PHP files views part of YMVC System
- * Router to dynamic loading controllers from GET
+ * Copy, Move, Upload, Download and many other helper class.
  *
  * PHP version 5
  *
@@ -27,8 +27,14 @@
  
  */
 class FileUtils {
+/**
+ * Set file to download
+ * 
+ * static
+ * @param {String} $file file path
+ * @return {none}
+ */
 	public static function Download($file) {
-		//$		file = ($file==NULL)?$_GET['pobierz']:$file;
 		if (file_exists($file)) {
 			header('Pragma: public');
 			header('Content-Description: File Transfer');
@@ -44,6 +50,13 @@ class FileUtils {
 			exit();
 		}
 	}
+/**
+ * Delete File or directory
+ * 
+ * static
+ * @param {String} $what file path
+ * @return {integer} 0 = FALSE & 1>= TRUE
+ */
 	public static function Delete($what) {
 		$e=0;
 		if (!file_exists($what)) {
@@ -64,7 +77,16 @@ class FileUtils {
 		clearstatcache();
 		return $e;
 	}
-	
+
+/**
+ * Copy File or directory
+ * 
+ * static
+ * @param {String} $from source filepath
+ * @param {String} $where destination filepath
+ * @param {Integer} $mode 1 works like move
+ * @return {integer} 0 = FALSE & 1>= TRUE
+ */	
 	public static function Copy($from,$where,$mode=0)
 		{
 		$e=0;
@@ -97,11 +119,27 @@ class FileUtils {
 		clearstatcache();
 		return $e;
 	}
+
+/**
+ * Move or Reneme File or directory alias of Copy(src,dest,1)
+ * 
+ * static
+ * @param {String} $from source filepath
+ * @param {String} $where destination filepath
+ * @return {integer} 0 = FALSE & 1>= TRUE
+ */	
 	public static function Move($from,$where)
 		{
 		return self::Copy($from,$where,1);
 	}
-	
+
+/**
+ * Convert byte value to (n)Mb  
+ * 
+ * static
+ * @param {integer} size in bytes
+ * @return {String} $size for sample 20Mb 
+ */		
 	public static function Byte2Size($filesize){
 		if(is_numeric($filesize)){
 			$decr = 1024;
@@ -118,7 +156,14 @@ class FileUtils {
 		}
 	}
 	// 	pokaz size w string
-	
+
+/**
+ * Convert (n)Mb to byte value 
+ * 
+ * static
+ * @param {String} $size for sample 20Mb
+ * @return {integer} size in bytes
+ */		
 	public static function Size2Byte ($size) {
 		$incr=1024;
 		$getBit = substr($size, strlen((int) $size));
@@ -146,9 +191,17 @@ class FileUtils {
 		}
 	}
 	
-	/**
-	* getUploaded('file',array('limit'=>'5M','uploaddir'=>__DIR__.DIRECTORY_SEPARATOR.'uploads'))
-		*/
+
+/**
+ * Uploading File
+ * example use getUploaded('file',array('limit'=>'5M','uploaddir'=>__DIR__.DIRECTORY_SEPARATOR.'uploads'))
+ * 
+ * static
+ * @param {String} $from source filepath
+ * @param {Array} $message array('limit'=>'5M','uploaddir'=>'uploads')
+ * @param {Integer} $code 1 encode to base64
+ * @return {Array} array with uploaded file or files
+ */	
 		public static function getUploaded($from,$message=array(),$code=0) {
 		$arr_out = array();
 		if (isset($_FILES[$from])) {
@@ -213,6 +266,14 @@ class FileUtils {
 		}
 		return $arr_out;
 	}
+
+/**
+ * Get free space in given path
+ * 
+ * static
+ * @param {String} $path filepath
+ * @return {String} for sample 10MB 
+ */	
 	public static function freeinDir($path){
 		$bytes = disk_free_space($path);
 		$si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
@@ -220,7 +281,19 @@ class FileUtils {
 		$class = min((int)log($bytes , $base) , count($si_prefix) - 1);
 		return sprintf('%1.2f' , $bytes / pow($base,$class)) . $si_prefix[$class];
 	}
-	
+/**
+ * Get all entries in directory
+ * 
+ * static
+ * @param {String} $path filepath
+ * @return {Array} array of 'filename' as array(
+ *        'path' => string fullpath
+ *        'type' => string 'file'
+ *        'owner' => string 'user''
+ *        'group' => string 'group' (length=5)
+ *        'perms' => int 777)
+ *							
+ */		
 	public static function inDir($path = '') {
 		$info = FALSE;
 		$path = realpath($path);
@@ -236,6 +309,19 @@ class FileUtils {
 		return $info;
 	}
 
+/**
+ * Get all entries in directory recursively
+ * 
+ * static
+ * @param {String} $path filepath
+ * @return {Array} array of 'dirpaths' as array(
+ *        'path' => string fullpath
+ *        'type' => string 'file'
+ *        'owner' => string 'user''
+ *        'group' => string 'group' (length=5)
+ *        'perms' => int 777)
+ *							
+ */	
 public static function AllinDir($path = '') {
 	$info=array();
 	$path = realpath($path);
@@ -260,7 +346,13 @@ public static function AllinDir($path = '') {
 	}
 	return $info;
 }
-
+/**
+ * Get Owner and group of file or folder
+ * 
+ * static
+ * @param {String} $filename filepath
+ * @return {Array} array (user,group)
+ */	
 	public static function getOwner($filename)
 	    {
 		$filename=realpath($filename);
@@ -273,7 +365,18 @@ public static function AllinDir($path = '') {
 		}
 		return FALSE;
 	} // getOwner
-		
+
+
+/**
+ * Set Owner and group file or folder
+ * 
+ * static
+ * @param {String} $filename filepath
+ * @param {String} $user username in string
+ * @param {String} $group groupname in string
+ * @param {Integer} $recursive for recursive mode
+ * @return {integer} 0 = FALSE & 1>= TRUE
+ */			
 	public static function setOwner($filename ,$user,$group,$recursive=0){
 		$e=0;
 		$filename = realpath($filename);
@@ -301,6 +404,14 @@ public static function AllinDir($path = '') {
 		return FALSE;
 	}
 	// 	setOwner
+
+/**
+ * Get permission of file or folder
+ * 
+ * static
+ * @param {String} $filename filepath
+ * @return {Integer} in oct mode
+ */	
 	public static function getPerms($filename)
 	    {
 		$filename=realpath($filename);
@@ -312,7 +423,16 @@ public static function AllinDir($path = '') {
 		return FALSE;
 	}
 	// 	getPerms
-	
+
+/**
+ * Set Permissions file or folder
+ * 
+ * static
+ * @param {String} $filename filepath
+ * @param {String} $mode dec digits like 755 or 644
+ * @param {Integer} $recursive for recursive mode
+ * @return {integer} 0 = FALSE & 1>= TRUE
+ */	
 	public static function setPerms($filename ,$mode,$recursive=0){
 		$e=0;
 		$filename = realpath($filename);

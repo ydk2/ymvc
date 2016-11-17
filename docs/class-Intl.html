@@ -45,6 +45,11 @@
 
 						</li>
 				<li>
+					<a href="package-YMVC.FileUtils.html">
+						FileUtils					</a>
+
+						</li>
+				<li>
 					<a href="package-YMVC.Functions.html">
 						Functions					</a>
 
@@ -142,7 +147,8 @@
 
 <p>It can auto-detect the user preferred languages and load translation files in JSON format or PHP scripts with arrays of strings
 can to work with Gettext PO files with plurals.
-It can also format strings with placeholders %named_value to translated string 'named_value'.</p>
+It can also format strings with placeholders %named_value to translated string 'named_value'.
+If you find bug or bad logic for plurals, notify me, any support is welcome</p>
 
 <p>PHP version 5</p>
 
@@ -176,14 +182,14 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 				<b>Author:</b>
 				ydk2 <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;">&#109;&#101;&#x40;&#x79;&#x64;&#107;&#50;&#x2e;&#x74;&#x6b;</a><br>
 				<b>Version:</b>
-				1.5.0.0<br>
+				1.5.3.0<br>
 				<b>Since:</b>
 				File available since Release 1.5.0.0<br>
 				<b>See:</b>
 				not yet<br>
 				<b>Link:</b>
 				none<br>
-			<b>Located at</b> <a href="source-class-Intl.html#3-725" title="Go to source code">system/core/intl.php</a>
+			<b>Located at</b> <a href="source-class-Intl.html#3-867" title="Go to source code">libriares/core/intl.php</a>
 		<br>
 	</div>
 
@@ -203,7 +209,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_format">#</a>
-		<code><a href="source-class-Intl.html#93-112" title="Go to source code">format</a>( <span>string <var>$string</var> = <span class="php-quote">''</span></span>, <span>array <var>$vars</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Intl.html#94-113" title="Go to source code">format</a>( <span>string <var>$string</var> = <span class="php-quote">''</span></span>, <span>array <var>$vars</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			<p>Get formated string with array values</p>
@@ -244,7 +250,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__f">#</a>
-		<code><a href="source-class-Intl.html#114-130" title="Go to source code">_f</a>( <span>string <var>$string</var></span>, <span>array <var>$array</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Intl.html#115-141" title="Go to source code">_f</a>( <span>string <var>$string</var></span>, <span>array <var>$array</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$strings</var> = <span class="php-quote">'_'</span></span>, <span> <var>$p</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Get formated translated string with array values</p>
@@ -261,6 +267,8 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 					<dt><var>$array</var></dt>
 					<dd></dd>
 					<dt><var>$strings</var></dt>
+					<dd></dd>
+					<dt><var>$p</var></dt>
 					<dd></dd>
 				</dl></div>
 
@@ -287,14 +295,16 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__">#</a>
-		<code><a href="source-class-Intl.html#132-147" title="Go to source code">_</a>( <span>string <var>$string</var></span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-Intl.html#143-170" title="Go to source code">_</a>( <span>string <var>$string</var></span>, <span>mixed <var>$strings</var> = <span class="php-quote">'_'</span></span>, <span>integer <var>$p</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
-			<p>Get translated string with array values</p>
+			<p>Get translated string with array values
+when plural string is loaded you can use this function like _p</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Get translated string with array values</p>
+			<p>Get translated string with array values
+when plural string is loaded you can use this function like _p</p>
 
 
 				<h4>Parameters</h4>
@@ -303,6 +313,8 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 					<dd></dd>
 					<dt><var>$strings</var></dt>
 					<dd></dd>
+					<dt><var>$p</var></dt>
+					<dd>added when plural string is loaded</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -328,7 +340,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get_browser_lang">#</a>
-		<code><a href="source-class-Intl.html#149-180" title="Go to source code">get_browser_lang</a>( <span>string <var>$lang</var> = <span class="php-keyword1">array</span>()</span>, <span>array <var>$short</var> = <span class="php-quote">'en'</span></span> )</code>
+		<code><a href="source-class-Intl.html#172-214" title="Go to source code">get_browser_lang</a>( <span>string <var>$lang</var> = <span class="php-keyword1">array</span>()</span>, <span>array <var>$short</var> = <span class="php-quote">'en'</span></span> )</code>
 
 		<div class="description short">
 			<p>Get available locales from browser</p>
@@ -369,7 +381,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_available_locales">#</a>
-		<code><a href="source-class-Intl.html#182-197" title="Go to source code">available_locales</a>( <span>string <var>$mode</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-Intl.html#216-231" title="Go to source code">available_locales</a>( <span>string <var>$mode</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Get available locales from dir with mode Intl::PHP/PO/JSON</p>
@@ -396,6 +408,78 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="set_strings" id="_set_strings">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_set_strings">#</a>
+		<code><a href="source-class-Intl.html#233-242" title="Go to source code">set_strings</a>( <span>array <var>$strings</var></span>, <span>array <var>$domain</var> = <span class="php-quote">'_'</span></span> )</code>
+
+		<div class="description short">
+			<p>load lang strings in specyfic domain usefull for multi files use</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>load lang strings in specyfic domain usefull for multi files use</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$strings</var></dt>
+					<dd></dd>
+					<dt><var>$domain</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unset_strings" id="_unset_strings">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unset_strings">#</a>
+		<code><a href="source-class-Intl.html#244-253" title="Go to source code">unset_strings</a>( <span>array <var>$domain</var> = <span class="php-quote">'_'</span></span> )</code>
+
+		<div class="description short">
+			<p>unload lang strings from specyfic domain usefull for multi files use</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>unload lang strings from specyfic domain usefull for multi files use</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$domain</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="set_lang" id="_set_lang">
 
 		<td class="attributes"><code>
@@ -408,7 +492,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_set_lang">#</a>
-		<code><a href="source-class-Intl.html#199-207" title="Go to source code">set_lang</a>( <span>string <var>$lang</var></span> )</code>
+		<code><a href="source-class-Intl.html#255-263" title="Go to source code">set_lang</a>( <span>string <var>$lang</var></span> )</code>
 
 		<div class="description short">
 			<p>Set lang code</p>
@@ -443,7 +527,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_set_default_lang">#</a>
-		<code><a href="source-class-Intl.html#209-217" title="Go to source code">set_default_lang</a>( <span>string <var>$lang</var></span> )</code>
+		<code><a href="source-class-Intl.html#265-273" title="Go to source code">set_default_lang</a>( <span>string <var>$lang</var></span> )</code>
 
 		<div class="description short">
 			<p>Set default lang code</p>
@@ -478,7 +562,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_set_mode">#</a>
-		<code><a href="source-class-Intl.html#219-227" title="Go to source code">set_mode</a>( <span>string <var>$mode</var></span> )</code>
+		<code><a href="source-class-Intl.html#275-283" title="Go to source code">set_mode</a>( <span>string <var>$mode</var></span> )</code>
 
 		<div class="description short">
 			<p>Set default mode Intl::PHP/PO/JSON</p>
@@ -513,7 +597,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_set_path">#</a>
-		<code><a href="source-class-Intl.html#229-237" title="Go to source code">set_path</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Intl.html#285-293" title="Go to source code">set_path</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Set path for langs files</p>
@@ -548,7 +632,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_po_locale_simple">#</a>
-		<code><a href="source-class-Intl.html#239-272" title="Go to source code">po_locale_simple</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Intl.html#295-328" title="Go to source code">po_locale_simple</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-quote">'_'</span></span> )</code>
 
 		<div class="description short">
 			<p>Load simple po lang files</p>
@@ -589,7 +673,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_php_locale">#</a>
-		<code><a href="source-class-Intl.html#274-298" title="Go to source code">php_locale</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Intl.html#330-352" title="Go to source code">php_locale</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-quote">'_'</span></span> )</code>
 
 		<div class="description short">
 			<p>Load php lang files</p>
@@ -630,7 +714,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_json_locale">#</a>
-		<code><a href="source-class-Intl.html#300-322" title="Go to source code">json_locale</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Intl.html#354-376" title="Go to source code">json_locale</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-quote">'_'</span></span> )</code>
 
 		<div class="description short">
 			<p>Load json lang files</p>
@@ -671,7 +755,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_load_locale_simple">#</a>
-		<code><a href="source-class-Intl.html#324-349" title="Go to source code">load_locale_simple</a>( <span>string <var>$lang</var></span>, <span>string <var>$keys</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Intl.html#378-403" title="Go to source code">load_locale_simple</a>( <span>string <var>$lang</var></span>, <span>string <var>$keys</var> = <span class="php-quote">'_'</span></span> )</code>
 
 		<div class="description short">
 			<p>Load simple lang files not for plural</p>
@@ -712,7 +796,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_mergestrings">#</a>
-		<code><a href="source-class-Intl.html#351-367" title="Go to source code">mergestrings</a>( )</code>
+		<code><a href="source-class-Intl.html#405-421" title="Go to source code">mergestrings</a>( )</code>
 
 		<div class="description short">
 			<p>Merge arrays</p>
@@ -746,7 +830,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_parse_po_file">#</a>
-		<code><a href="source-class-Intl.html#369-383" title="Go to source code">parse_po_file</a>( <span>string <var>$path</var></span> )</code>
+		<code><a href="source-class-Intl.html#423-437" title="Go to source code">parse_po_file</a>( <span>string <var>$path</var></span> )</code>
 
 		<div class="description short">
 			<p>Parse Gettext po file into array</p>
@@ -785,7 +869,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_po_locale_plural">#</a>
-		<code><a href="source-class-Intl.html#385-410" title="Go to source code">po_locale_plural</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+		<code><a href="source-class-Intl.html#439-464" title="Go to source code">po_locale_plural</a>( <span>string <var>$lang</var></span>, <span>string <var>$name</var> = <span class="php-quote">'_'</span></span> )</code>
 
 		<div class="description short">
 			<p>Load and parse Gettext po file into array</p>
@@ -826,7 +910,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__p">#</a>
-		<code><a href="source-class-Intl.html#412-431" title="Go to source code">_p</a>( <span>string <var>$msgid</var></span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span>, <span>mixed <var>$plural</var> = <span class="php-num">2</span></span> )</code>
+		<code><a href="source-class-Intl.html#466-484" title="Go to source code">_p</a>( <span>string <var>$msgid</var></span>, <span>mixed <var>$strings</var> = <span class="php-quote">'_'</span></span>, <span>mixed <var>$plural</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Get translated string from array with plurals</p>
@@ -869,7 +953,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__n">#</a>
-		<code><a href="source-class-Intl.html#433-454" title="Go to source code">_n</a>( <span>string <var>$msgid</var></span>, <span>string <var>$msgid_plural</var></span>, <span>integer <var>$n</var></span>, <span>mixed <var>$strings</var> = <span class="php-keyword1">array</span>()</span>, <span>array <var>$plurals</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-Intl.html#486-515" title="Go to source code">_n</a>( <span>string <var>$msgid</var></span>, <span>string <var>$msgid_plural</var></span>, <span>integer <var>$n</var></span>, <span>mixed <var>$strings</var> = <span class="php-quote">'_'</span></span>, <span>array <var>$plural</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Get translated plural string from array with plurals</p>
@@ -889,8 +973,8 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 					<dd></dd>
 					<dt><var>$strings</var></dt>
 					<dd></dd>
-					<dt><var>$plurals</var></dt>
-					<dd>= array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL</dd>
+					<dt><var>$plural</var></dt>
+					<dd>$plurals = array('plural'=>$plural,'nplurals'=>$nplurals) auto if NULL</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -916,7 +1000,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_parse_po_string">#</a>
-		<code><a href="source-class-Intl.html#456-517" title="Go to source code">parse_po_string</a>( <span>string <var>$postring</var></span> )</code>
+		<code><a href="source-class-Intl.html#517-578" title="Go to source code">parse_po_string</a>( <span>string <var>$postring</var></span> )</code>
 
 		<div class="description short">
 			<p>Parse Gettext po string into array</p>
@@ -955,7 +1039,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__n_search">#</a>
-		<code><a href="source-class-Intl.html#519-546" title="Go to source code">_n_search</a>( <span>string <var>$msgid</var></span>, <span>array <var>$domain</var></span>, <span>integer <var>$nplurals</var> = <span class="php-num">2</span></span>, <span>integer <var>$plural</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-Intl.html#580-613" title="Go to source code">_n_search</a>( <span>string <var>$msgid</var></span>, <span>array <var>$domain</var></span>, <span>integer <var>$nplurals</var> = <span class="php-num">2</span></span>, <span>integer <var>$plural</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>Return translated string from parsed po array*</p>
@@ -1000,7 +1084,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#__n_search_plural">#</a>
-		<code><a href="source-class-Intl.html#548-562" title="Go to source code">_n_search_plural</a>( <span>string <var>$msgid</var></span>, <span>string <var>$msgid_plural</var></span>, <span>integer <var>$n</var></span>, <span>array <var>$domain</var></span>, <span>integer <var>$nplurals</var> = <span class="php-num">1</span></span>, <span>integer <var>$plural</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-Intl.html#615-629" title="Go to source code">_n_search_plural</a>( <span>string <var>$msgid</var></span>, <span>string <var>$msgid_plural</var></span>, <span>integer <var>$n</var></span>, <span>array <var>$domain</var></span>, <span>integer <var>$nplurals</var> = <span class="php-num">1</span></span>, <span>integer <var>$plural</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Return translated plural string from parsed po array</p>
@@ -1049,7 +1133,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get_plural_by_lang">#</a>
-		<code><a href="source-class-Intl.html#564-699" title="Go to source code">get_plural_by_lang</a>( <span>integer <var>$n</var></span>, <span>string <var>$lang</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-Intl.html#631-839" title="Go to source code">get_plural_by_lang</a>( <span>integer <var>$n</var></span>, <span>string <var>$lang</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Return plural by language code and numeric value</p>
@@ -1082,19 +1166,19 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="json_save" id="_json_save">
+	<tr data-order="tojson" id="_tojson">
 
 		<td class="attributes"><code>
 			 public static
 
-			boolean
+			json
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_json_save">#</a>
-		<code><a href="source-class-Intl.html#702-716" title="Go to source code">json_save</a>( <span>array <var>$array</var></span>, <span>string <var>$file</var></span> )</code>
+		<a class="anchor" href="#_tojson">#</a>
+		<code><a href="source-class-Intl.html#842-858" title="Go to source code">tojson</a>( <span>string <var>$file</var> = <span class="php-keyword1">NULL</span></span>, <span>array <var>$array</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Save as json lang files</p>
@@ -1106,15 +1190,15 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
-					<dt><var>$array</var></dt>
-					<dd></dd>
 					<dt><var>$file</var></dt>
 					<dd></dd>
+					<dt><var>$array</var></dt>
+					<dd>optional</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					boolean
+					json<br>string or boolean
 				</div>
 
 
@@ -1139,7 +1223,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		<td class="attributes"><code>string</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-Intl.html#35-38" title="Go to source code"><b>PHP</b></a>
+				<a href="source-class-Intl.html#36-39" title="Go to source code"><b>PHP</b></a>
 			</code>
 
 			<div class="description short">
@@ -1163,7 +1247,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		<td class="attributes"><code>string</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-Intl.html#39" title="Go to source code"><b>PO</b></a>
+				<a href="source-class-Intl.html#40" title="Go to source code"><b>PO</b></a>
 			</code>
 
 			<div class="description short">
@@ -1187,7 +1271,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		<td class="attributes"><code>string</code></td>
 		<td class="name">
 			<code>
-				<a href="source-class-Intl.html#40" title="Go to source code"><b>JSON</b></a>
+				<a href="source-class-Intl.html#41" title="Go to source code"><b>JSON</b></a>
 			</code>
 
 			<div class="description short">
@@ -1220,7 +1304,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Intl.html#44-50" title="Go to source code"><var>$strings</var></a>
+				<a href="source-class-Intl.html#45-51" title="Go to source code"><var>$strings</var></a>
 
 			<div class="description short">
 				<p>Array with translated strings</p>
@@ -1245,7 +1329,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Intl.html#52-58" title="Go to source code"><var>$default_lang</var></a>
+				<a href="source-class-Intl.html#53-59" title="Go to source code"><var>$default_lang</var></a>
 
 			<div class="description short">
 				<p>Default lang code</p>
@@ -1270,7 +1354,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Intl.html#60-66" title="Go to source code"><var>$lang</var></a>
+				<a href="source-class-Intl.html#61-67" title="Go to source code"><var>$lang</var></a>
 
 			<div class="description short">
 				<p>lang code</p>
@@ -1295,7 +1379,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Intl.html#68-74" title="Go to source code"><var>$path</var></a>
+				<a href="source-class-Intl.html#69-75" title="Go to source code"><var>$path</var></a>
 
 			<div class="description short">
 				<p>Path for locales dir</p>
@@ -1320,7 +1404,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Intl.html#76-82" title="Go to source code"><var>$mode</var></a>
+				<a href="source-class-Intl.html#77-83" title="Go to source code"><var>$mode</var></a>
 
 			<div class="description short">
 				<p>mode for Intl work with Intl::PHP/PO/JSON</p>
@@ -1345,7 +1429,7 @@ send a note to license@php.net so we can mail you a copy immediately.</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Intl.html#84-90" title="Go to source code"><var>$msgstr</var></a>
+				<a href="source-class-Intl.html#85-91" title="Go to source code"><var>$msgstr</var></a>
 
 			<div class="description short">
 				<p>function helper property</p>

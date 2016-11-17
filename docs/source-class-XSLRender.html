@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="robots" content="noindex">
 
-	<title>File system/core/xslrender.php | YMVC System</title>
+	<title>File libriares/core/xslrender.php | YMVC System</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -43,6 +43,11 @@
 				<li>
 					<a href="package-YMVC.DBConnect.html">
 						DBConnect					</a>
+
+						</li>
+				<li>
+					<a href="package-YMVC.FileUtils.html">
+						FileUtils					</a>
 
 						</li>
 				<li>
@@ -90,25 +95,30 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-Accounts.html">Accounts</a></li>
 				<li><a href="class-Config.html">Config</a></li>
+				<li><a href="class-crypting.html">crypting</a></li>
 				<li><a href="class-DBConnect.html">DBConnect</a></li>
+				<li><a href="class-Encoding.html">Encoding</a></li>
 				<li><a href="class-Errors.html">Errors</a></li>
+				<li><a href="class-FileUtils.html">FileUtils</a></li>
 				<li><a href="class-Helper.html">Helper</a></li>
 				<li><a href="class-Helpers.html">Helpers</a></li>
 				<li><a href="class-Intl.html">Intl</a></li>
-				<li><a href="class-Layout.html">Layout</a></li>
+				<li><a href="class-Layout.html" class="invalid">Layout</a></li>
 				<li><a href="class-Loader.html">Loader</a></li>
 				<li><a href="class-model.html">model</a></li>
 				<li><a href="class-One.html">One</a></li>
 				<li><a href="class-PHPCall.html">PHPCall</a></li>
+				<li><a href="class-PHPExample.html">PHPExample</a></li>
 				<li><a href="class-PHPRender.html">PHPRender</a></li>
 				<li><a href="class-Router.html">Router</a></li>
 				<li><a href="class-SystemError.html">SystemError</a></li>
-				<li><a href="class-Test.html">Test</a></li>
 				<li><a href="class-toAscii.html">toAscii</a></li>
 				<li><a href="class-Two.html">Two</a></li>
 				<li><a href="class-view.html">view</a></li>
 				<li><a href="class-X2A.html">X2A</a></li>
+				<li><a href="class-XSLExample.html">XSLExample</a></li>
 				<li><a href="class-XSLRender.html">XSLRender</a></li>
 				<li><a href="class-XtoA.html">XtoA</a></li>
 			</ul>
@@ -123,18 +133,15 @@
 
 			<h3>Functions</h3>
 			<ul>
-				<li><a href="function-_n_search.html">_n_search</a></li>
-				<li><a href="function-_n_search_plural.html">_n_search_plural</a></li>
+				<li><a href="function-build_sorter.html">build_sorter</a></li>
 				<li><a href="function-convert.html">convert</a></li>
 				<li><a href="function-cpu_get_usage.html">cpu_get_usage</a></li>
 				<li><a href="function-dump.html">dump</a></li>
 				<li><a href="function-format_time.html">format_time</a></li>
-				<li><a href="function-get_plural_by_lang.html">get_plural_by_lang</a></li>
 				<li><a href="function-get_root_url.html">get_root_url</a></li>
 				<li><a href="function-get_time.html">get_time</a></li>
 				<li><a href="function-get_time_exec.html">get_time_exec</a></li>
-				<li><a href="function-parse_po_file.html">parse_po_file</a></li>
-				<li><a href="function-parse_po_string.html">parse_po_string</a></li>
+				<li><a href="function-getIntl.html">getIntl</a></li>
 				<li><a href="function-simplexml_import_simplexml.html">simplexml_import_simplexml</a></li>
 				<li><a href="function-simplexml_import_xml.html">simplexml_import_xml</a></li>
 			</ul>
@@ -407,8 +414,8 @@
 </span><span id="232" class="l"><a href="#232">232: </a>    <span class="php-var">$this</span>-&gt;global_access = <span class="php-var">$access</span>;
 </span><span id="233" class="l"><a href="#233">233: </a>    <span class="php-var">$this</span>-&gt;global_access_mode = <span class="php-var">$mode</span>;
 </span><span id="234" class="l"><a href="#234">234: </a>    <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;global_access_mode){
-</span><span id="235" class="l"><a href="#235">235: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;global_access &lt; <span class="php-var">$this</span>-&gt;access){
-</span><span id="236" class="l"><a href="#236">236: </a>            <span class="php-var">$this</span>-&gt;message = <span class="php-quote">&quot;Restricted access&quot;</span>;
+</span><span id="235" class="l"><a href="#235">235: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;global_access &gt; <span class="php-var">$this</span>-&gt;access){
+</span><span id="236" class="l"><a href="#236">236: </a>            <span class="php-var">$this</span>-&gt;emessage = <span class="php-quote">&quot;Restricted access&quot;</span>;
 </span><span id="237" class="l"><a href="#237">237: </a>            <span class="php-var">$this</span>-&gt;error = <span class="php-num">20503</span>;
 </span><span id="238" class="l"><a href="#238">238: </a>        } <span class="php-keyword1">else</span> {
 </span><span id="239" class="l"><a href="#239">239: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20503</span>){
@@ -511,7 +518,7 @@
 </span></span><span id="336" class="l"><a href="#336">336: </a><span class="php-comment">* @see ViewData
 </span></span><span id="337" class="l"><a href="#337">337: </a><span class="php-comment">**/</span> 
 </span><span id="338" class="l"><a href="#338">338: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> Data_1(<span class="php-var">$name</span> = <span class="php-quote">''</span>) {
-</span><span id="339" class="l"><a href="#339">339: </a>        <span class="php-keyword1">return</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$this</span> -&gt;data-&gt;<span class="php-var">$name</span>)) ? <span class="php-var">$this</span> -&gt;data-&gt;<span class="php-var">$data</span> : <span class="php-quote">''</span>;
+</span><span id="339" class="l"><a href="#339">339: </a>        <span class="php-keyword1">return</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$this</span> -&gt;data-&gt;<span class="php-var">$name</span>)) ? <span class="php-var">$this</span> -&gt;data-&gt;<span class="php-var">$name</span> : <span class="php-quote">''</span>;
 </span><span id="340" class="l"><a href="#340">340: </a>    }
 </span><span id="341" class="l"><a href="#341">341: </a>
 </span><span id="342" class="l"><a href="#342">342: </a><span class="php-comment">/**
@@ -556,30 +563,30 @@
 </span><span id="381" class="l"><a href="#381">381: </a>
 </span><span id="382" class="l"><a href="#382">382: </a><span class="php-comment">/**
 </span></span><span id="383" class="l"><a href="#383">383: </a><span class="php-comment">* Set limited View path in controller default false
-</span></span><span id="384" class="l"><a href="#384">384: </a><span class="php-comment">* @access protected
+</span></span><span id="384" class="l"><a href="#384">384: </a><span class="php-comment">* @access public
 </span></span><span id="385" class="l"><a href="#385">385: </a><span class="php-comment">* @param boolean $state 
 </span></span><span id="386" class="l"><a href="#386">386: </a><span class="php-comment">**/</span> 
-</span><span id="387" class="l"><a href="#387">387: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> only_registered(<span class="php-var">$state</span> = <span class="php-keyword1">TRUE</span>) {
+</span><span id="387" class="l"><a href="#387">387: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> only_registered(<span class="php-var">$state</span> = <span class="php-keyword1">TRUE</span>) {
 </span><span id="388" class="l"><a href="#388">388: </a>        <span class="php-var">$this</span>-&gt;only_registered_views = <span class="php-var">$state</span>;
 </span><span id="389" class="l"><a href="#389">389: </a>    }
 </span><span id="390" class="l"><a href="#390">390: </a>    
 </span><span id="391" class="l"><a href="#391">391: </a><span class="php-comment">/**
 </span></span><span id="392" class="l"><a href="#392">392: </a><span class="php-comment">* Register View path in controller when work in limited mode
 </span></span><span id="393" class="l"><a href="#393">393: </a><span class="php-comment">* @see only_registered
-</span></span><span id="394" class="l"><a href="#394">394: </a><span class="php-comment">* @access protected
+</span></span><span id="394" class="l"><a href="#394">394: </a><span class="php-comment">* @access public
 </span></span><span id="395" class="l"><a href="#395">395: </a><span class="php-comment">* @param string $view 
 </span></span><span id="396" class="l"><a href="#396">396: </a><span class="php-comment">**/</span> 
-</span><span id="397" class="l"><a href="#397">397: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> RegisterView(<span class="php-var">$view</span>) {
+</span><span id="397" class="l"><a href="#397">397: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> RegisterView(<span class="php-var">$view</span>) {
 </span><span id="398" class="l"><a href="#398">398: </a>        <span class="php-keyword2">array_push</span>(<span class="php-var">$this</span>-&gt;registered_views, <span class="php-var">$view</span>);
 </span><span id="399" class="l"><a href="#399">399: </a>    }
 </span><span id="400" class="l"><a href="#400">400: </a>    
 </span><span id="401" class="l"><a href="#401">401: </a><span class="php-comment">/**
 </span></span><span id="402" class="l"><a href="#402">402: </a><span class="php-comment">* Unregister View path from controller when work in limited mode
 </span></span><span id="403" class="l"><a href="#403">403: </a><span class="php-comment">* @see only_registered
-</span></span><span id="404" class="l"><a href="#404">404: </a><span class="php-comment">* @access protected
+</span></span><span id="404" class="l"><a href="#404">404: </a><span class="php-comment">* @access public
 </span></span><span id="405" class="l"><a href="#405">405: </a><span class="php-comment">* @param string $view 
 </span></span><span id="406" class="l"><a href="#406">406: </a><span class="php-comment">**/</span>     
-</span><span id="407" class="l"><a href="#407">407: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> UnRegisterView(<span class="php-var">$view</span>) {
+</span><span id="407" class="l"><a href="#407">407: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> UnRegisterView(<span class="php-var">$view</span>) {
 </span><span id="408" class="l"><a href="#408">408: </a>        <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;registered_views <span class="php-keyword1">as</span> <span class="php-var">$key</span> =&gt; <span class="php-var">$value</span>) {
 </span><span id="409" class="l"><a href="#409">409: </a>            <span class="php-keyword1">if</span> (<span class="php-var">$value</span>==<span class="php-var">$view</span>) {
 </span><span id="410" class="l"><a href="#410">410: </a>                <span class="php-keyword1">unset</span>(<span class="php-var">$this</span>-&gt;registered_views[<span class="php-var">$key</span>]);
@@ -593,7 +600,7 @@
 </span></span><span id="418" class="l"><a href="#418">418: </a><span class="php-comment">**/</span>     
 </span><span id="419" class="l"><a href="#419">419: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> _check(){
 </span><span id="420" class="l"><a href="#420">420: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">in_array</span>(<span class="php-var">$this</span>-&gt;view,<span class="php-var">$this</span>-&gt;registered_views) &amp;&amp; <span class="php-var">$this</span>-&gt;only_registered_views){
-</span><span id="421" class="l"><a href="#421">421: </a>                 <span class="php-var">$this</span>-&gt;message = <span class="php-quote">&quot;View not registered&quot;</span>;
+</span><span id="421" class="l"><a href="#421">421: </a>                 <span class="php-var">$this</span>-&gt;emessage = <span class="php-quote">&quot;View not registered&quot;</span>;
 </span><span id="422" class="l"><a href="#422">422: </a>                 <span class="php-var">$this</span>-&gt;error = <span class="php-num">20402</span>;
 </span><span id="423" class="l"><a href="#423">423: </a>            } <span class="php-keyword1">else</span> {
 </span><span id="424" class="l"><a href="#424">424: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20402</span>){
@@ -601,8 +608,8 @@
 </span><span id="426" class="l"><a href="#426">426: </a>                }
 </span><span id="427" class="l"><a href="#427">427: </a>            }
 </span><span id="428" class="l"><a href="#428">428: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;global_access_mode){
-</span><span id="429" class="l"><a href="#429">429: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;global_access &lt; <span class="php-var">$this</span>-&gt;access){
-</span><span id="430" class="l"><a href="#430">430: </a>                    <span class="php-var">$this</span>-&gt;message = <span class="php-quote">&quot;Restricted access&quot;</span>;
+</span><span id="429" class="l"><a href="#429">429: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;global_access &gt; <span class="php-var">$this</span>-&gt;access){
+</span><span id="430" class="l"><a href="#430">430: </a>                    <span class="php-var">$this</span>-&gt;emessage = <span class="php-quote">&quot;Restricted access&quot;</span>;
 </span><span id="431" class="l"><a href="#431">431: </a>                    <span class="php-var">$this</span>-&gt;error = <span class="php-num">20503</span>;
 </span><span id="432" class="l"><a href="#432">432: </a>                } <span class="php-keyword1">else</span> {
 </span><span id="433" class="l"><a href="#433">433: </a>                    <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20503</span>){
@@ -611,7 +618,7 @@
 </span><span id="436" class="l"><a href="#436">436: </a>                }
 </span><span id="437" class="l"><a href="#437">437: </a>            } 
 </span><span id="438" class="l"><a href="#438">438: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;model==<span class="php-keyword1">NULL</span>){
-</span><span id="439" class="l"><a href="#439">439: </a>                 <span class="php-var">$this</span>-&gt;message = <span class="php-quote">&quot;App Model not Definied&quot;</span>;
+</span><span id="439" class="l"><a href="#439">439: </a>                 <span class="php-var">$this</span>-&gt;emessage = <span class="php-quote">&quot;App Model not Definied&quot;</span>;
 </span><span id="440" class="l"><a href="#440">440: </a>                 <span class="php-var">$this</span>-&gt;error = <span class="php-num">20304</span>;
 </span><span id="441" class="l"><a href="#441">441: </a>            } <span class="php-keyword1">else</span> {
 </span><span id="442" class="l"><a href="#442">442: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20304</span>){
@@ -619,7 +626,7 @@
 </span><span id="444" class="l"><a href="#444">444: </a>                }
 </span><span id="445" class="l"><a href="#445">445: </a>            }
 </span><span id="446" class="l"><a href="#446">446: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;view==<span class="php-keyword1">NULL</span>){
-</span><span id="447" class="l"><a href="#447">447: </a>                 <span class="php-var">$this</span>-&gt;message = <span class="php-quote">&quot;View not Definied&quot;</span>;
+</span><span id="447" class="l"><a href="#447">447: </a>                 <span class="php-var">$this</span>-&gt;emessage = <span class="php-quote">&quot;View not Definied&quot;</span>;
 </span><span id="448" class="l"><a href="#448">448: </a>                 <span class="php-var">$this</span>-&gt;error = <span class="php-num">20401</span>;
 </span><span id="449" class="l"><a href="#449">449: </a>            } <span class="php-keyword1">else</span> {
 </span><span id="450" class="l"><a href="#450">450: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20401</span>){
@@ -627,7 +634,7 @@
 </span><span id="452" class="l"><a href="#452">452: </a>                }
 </span><span id="453" class="l"><a href="#453">453: </a>            }
 </span><span id="454" class="l"><a href="#454">454: </a>            <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;CheckView(<span class="php-var">$this</span>-&gt;view)){
-</span><span id="455" class="l"><a href="#455">455: </a>                 <span class="php-var">$this</span>-&gt;message = <span class="php-quote">&quot;View not exists&quot;</span>;
+</span><span id="455" class="l"><a href="#455">455: </a>                 <span class="php-var">$this</span>-&gt;emessage = <span class="php-quote">&quot;View not exists&quot;</span>;
 </span><span id="456" class="l"><a href="#456">456: </a>                 <span class="php-var">$this</span>-&gt;error = <span class="php-num">20404</span>;
 </span><span id="457" class="l"><a href="#457">457: </a>            } <span class="php-keyword1">else</span> {
 </span><span id="458" class="l"><a href="#458">458: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20404</span>){
@@ -661,219 +668,222 @@
 </span><span id="486" class="l"><a href="#486">486: </a>            <span class="php-var">$this</span>-&gt;action-&gt;run = <span class="php-var">$this</span>-&gt;onRun();
 </span><span id="487" class="l"><a href="#487">487: </a>            <span class="php-var">$this</span>-&gt;_check();
 </span><span id="488" class="l"><a href="#488">488: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error &gt; <span class="php-num">0</span>) {
-</span><span id="489" class="l"><a href="#489">489: </a>                <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;exception) || <span class="php-var">$this</span>-&gt;error == <span class="php-num">20404</span>){
+</span><span id="489" class="l"><a href="#489">489: </a>                <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;exception)){
 </span><span id="490" class="l"><a href="#490">490: </a>                    <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SystemException(<span class="php-var">$this</span>-&gt;emessage,<span class="php-var">$this</span>-&gt;error);
 </span><span id="491" class="l"><a href="#491">491: </a>                }
-</span><span id="492" class="l"><a href="#492">492: </a>            }
-</span><span id="493" class="l"><a href="#493">493: </a>            <span class="php-var">$view</span> = <span class="php-keyword1">new</span> DOMDocument();
-</span><span id="494" class="l"><a href="#494">494: </a>            <span class="php-var">$view</span>-&gt;substituteEntities = <span class="php-keyword1">TRUE</span>;
-</span><span id="495" class="l"><a href="#495">495: </a>            <span class="php-var">$view</span>-&gt;loadXML(<span class="php-keyword2">file_get_contents</span>(ROOT.<span class="php-var">$this</span>-&gt;view. XSL));
-</span><span id="496" class="l"><a href="#496">496: </a>            <span class="php-var">$this</span>-&gt;setParameter(<span class="php-quote">''</span>, <span class="php-quote">'self'</span>, <span class="php-var">$this</span>-&gt;name.<span class="php-quote">'::Call'</span>);
-</span><span id="497" class="l"><a href="#497">497: </a>            <span class="php-var">$this</span>-&gt;importStylesheet(<span class="php-var">$view</span>);
-</span><span id="498" class="l"><a href="#498">498: </a>            <span class="php-var">$retval</span> = <span class="php-var">$this</span>-&gt;transformToXML(<span class="php-var">$this</span>-&gt;data); 
-</span><span id="499" class="l"><a href="#499">499: </a>            <span class="php-var">$this</span>-&gt;action-&gt;<span class="php-keyword2">end</span> = <span class="php-var">$this</span>-&gt;onEnd();
-</span><span id="500" class="l"><a href="#500">500: </a>            self::<span class="php-var">$obj</span>=<span class="php-keyword1">NULL</span>;
-</span><span id="501" class="l"><a href="#501">501: </a>            <span class="php-keyword1">return</span> <span class="php-var">$retval</span>;
-</span><span id="502" class="l"><a href="#502">502: </a>        } <span class="php-keyword1">catch</span> (SystemException <span class="php-var">$e</span>){
-</span><span id="503" class="l"><a href="#503">503: </a>            <span class="php-var">$this</span>-&gt;error = <span class="php-var">$e</span>-&gt;Code();
-</span><span id="504" class="l"><a href="#504">504: </a>            <span class="php-var">$this</span>-&gt;emessage= <span class="php-var">$e</span>-&gt;Message();
-</span><span id="505" class="l"><a href="#505">505: </a>            <span class="php-var">$this</span>-&gt;action-&gt;<span class="php-keyword2">end</span> = <span class="php-var">$this</span>-&gt;onException();
-</span><span id="506" class="l"><a href="#506">506: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;exception)){
-</span><span id="507" class="l"><a href="#507">507: </a>                <span class="php-var">$this</span>-&gt;exception-&gt;ViewData(<span class="php-quote">'error'</span> ,<span class="php-var">$e</span>-&gt;Code());
-</span><span id="508" class="l"><a href="#508">508: </a>                <span class="php-var">$this</span>-&gt;exception-&gt;ViewData(<span class="php-quote">'emessage'</span> ,<span class="php-var">$e</span>-&gt;Message());
-</span><span id="509" class="l"><a href="#509">509: </a>                <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;exception-&gt;view();
-</span><span id="510" class="l"><a href="#510">510: </a>            }
-</span><span id="511" class="l"><a href="#511">511: </a>            self::<span class="php-var">$obj</span>=<span class="php-keyword1">NULL</span>;
-</span><span id="512" class="l"><a href="#512">512: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="513" class="l"><a href="#513">513: </a>        } 
-</span><span id="514" class="l"><a href="#514">514: </a>    }
-</span><span id="515" class="l"><a href="#515">515: </a>
-</span><span id="516" class="l"><a href="#516">516: </a><span class="php-comment">/**
-</span></span><span id="517" class="l"><a href="#517">517: </a><span class="php-comment">* Method used to catch exceptions and return as new controller view 
-</span></span><span id="518" class="l"><a href="#518">518: </a><span class="php-comment">* @access public
-</span></span><span id="519" class="l"><a href="#519">519: </a><span class="php-comment">* @param mixed $model Can be object or path or NULL, can set later in loaded controller
-</span></span><span id="520" class="l"><a href="#520">520: </a><span class="php-comment">* @param string $view Path for view
-</span></span><span id="521" class="l"><a href="#521">521: </a><span class="php-comment">* @param mixed $controller Can be XSLRender/PHPRender object or path
-</span></span><span id="522" class="l"><a href="#522">522: </a><span class="php-comment">**/</span> 
-</span><span id="523" class="l"><a href="#523">523: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> Exceptions(<span class="php-var">$model</span>,<span class="php-var">$view</span>,<span class="php-var">$controller</span>) {
-</span><span id="524" class="l"><a href="#524">524: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
-</span><span id="525" class="l"><a href="#525">525: </a>            <span class="php-keyword1">unset</span>(<span class="php-var">$this</span>-&gt;exception);
-</span><span id="526" class="l"><a href="#526">526: </a>            <span class="php-var">$this</span>-&gt;exception = <span class="php-var">$controller</span>;
-</span><span id="527" class="l"><a href="#527">527: </a>        } <span class="php-keyword1">else</span> {
-</span><span id="528" class="l"><a href="#528">528: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
-</span><span id="529" class="l"><a href="#529">529: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
-</span><span id="530" class="l"><a href="#530">530: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
-</span><span id="531" class="l"><a href="#531">531: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="532" class="l"><a href="#532">532: </a>            <span class="php-keyword1">unset</span>(<span class="php-var">$this</span>-&gt;exception);
-</span><span id="533" class="l"><a href="#533">533: </a>            <span class="php-var">$this</span>-&gt;exception = <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$model</span>,<span class="php-var">$view</span>);
-</span><span id="534" class="l"><a href="#534">534: </a>        } 
-</span><span id="535" class="l"><a href="#535">535: </a>        }
-</span><span id="536" class="l"><a href="#536">536: </a>    }
-</span><span id="537" class="l"><a href="#537">537: </a>
-</span><span id="538" class="l"><a href="#538">538: </a><span class="php-comment">/**
-</span></span><span id="539" class="l"><a href="#539">539: </a><span class="php-comment">* Method used to set new subcontroller in $this-&gt;modules Array of XSLRender/PHPRender objects
-</span></span><span id="540" class="l"><a href="#540">540: </a><span class="php-comment">* $controller string value is stored as name in modules array
-</span></span><span id="541" class="l"><a href="#541">541: </a><span class="php-comment">* @access public
-</span></span><span id="542" class="l"><a href="#542">542: </a><span class="php-comment">* @param mixed $model Can be object or path or NULL, can set later in loaded controller
-</span></span><span id="543" class="l"><a href="#543">543: </a><span class="php-comment">* @param string $view Path for view
-</span></span><span id="544" class="l"><a href="#544">544: </a><span class="php-comment">* @param string $controller 
-</span></span><span id="545" class="l"><a href="#545">545: </a><span class="php-comment">**/</span>     
-</span><span id="546" class="l"><a href="#546">546: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> SetModule(<span class="php-var">$model</span>, <span class="php-var">$view</span>, <span class="php-var">$controller</span>){
-</span><span id="547" class="l"><a href="#547">547: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
-</span><span id="548" class="l"><a href="#548">548: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
-</span><span id="549" class="l"><a href="#549">549: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
-</span><span id="550" class="l"><a href="#550">550: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="551" class="l"><a href="#551">551: </a>                <span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>] = <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$model</span>,<span class="php-var">$view</span>);
-</span><span id="552" class="l"><a href="#552">552: </a>        }
-</span><span id="553" class="l"><a href="#553">553: </a>    }
-</span><span id="554" class="l"><a href="#554">554: </a>    
-</span><span id="555" class="l"><a href="#555">555: </a><span class="php-comment">/**
-</span></span><span id="556" class="l"><a href="#556">556: </a><span class="php-comment">* Method used to get subcontroller by controller path from $this-&gt;modules 
-</span></span><span id="557" class="l"><a href="#557">557: </a><span class="php-comment">* @access public
-</span></span><span id="558" class="l"><a href="#558">558: </a><span class="php-comment">* @param string $controller 
-</span></span><span id="559" class="l"><a href="#559">559: </a><span class="php-comment">* @return XSLRender/PHPRender object
-</span></span><span id="560" class="l"><a href="#560">560: </a><span class="php-comment">**/</span>     
-</span><span id="561" class="l"><a href="#561">561: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> GetModule(<span class="php-var">$controller</span>){
-</span><span id="562" class="l"><a href="#562">562: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>])){
-</span><span id="563" class="l"><a href="#563">563: </a>            <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>];
-</span><span id="564" class="l"><a href="#564">564: </a>        }
-</span><span id="565" class="l"><a href="#565">565: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="566" class="l"><a href="#566">566: </a>    }   
-</span><span id="567" class="l"><a href="#567">567: </a>    
-</span><span id="568" class="l"><a href="#568">568: </a><span class="php-comment">/**
-</span></span><span id="569" class="l"><a href="#569">569: </a><span class="php-comment">* Method used to unset subcontroller by controller path from $this-&gt;modules
-</span></span><span id="570" class="l"><a href="#570">570: </a><span class="php-comment">* @access public
-</span></span><span id="571" class="l"><a href="#571">571: </a><span class="php-comment">* @param string $controller 
-</span></span><span id="572" class="l"><a href="#572">572: </a><span class="php-comment">* @return boolean
-</span></span><span id="573" class="l"><a href="#573">573: </a><span class="php-comment">**/</span>     
-</span><span id="574" class="l"><a href="#574">574: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> UnsetModule(<span class="php-var">$controller</span>){
-</span><span id="575" class="l"><a href="#575">575: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>])){
-</span><span id="576" class="l"><a href="#576">576: </a>            <span class="php-keyword1">unset</span>(<span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>]);
-</span><span id="577" class="l"><a href="#577">577: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
-</span><span id="578" class="l"><a href="#578">578: </a>        }
-</span><span id="579" class="l"><a href="#579">579: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="580" class="l"><a href="#580">580: </a>    }
-</span><span id="581" class="l"><a href="#581">581: </a>
-</span><span id="582" class="l"><a href="#582">582: </a><span class="php-comment">/**
-</span></span><span id="583" class="l"><a href="#583">583: </a><span class="php-comment">* Method return a new controller view 
-</span></span><span id="584" class="l"><a href="#584">584: </a><span class="php-comment">* @access public
-</span></span><span id="585" class="l"><a href="#585">585: </a><span class="php-comment">* @param mixed $controller Can be XSLRender/PHPRender object or path
-</span></span><span id="586" class="l"><a href="#586">586: </a><span class="php-comment">* @return XSLRender/PHPRender object
-</span></span><span id="587" class="l"><a href="#587">587: </a><span class="php-comment">**/</span> 
-</span><span id="588" class="l"><a href="#588">588: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> NewControllerA(<span class="php-var">$controller</span>){
-</span><span id="589" class="l"><a href="#589">589: </a>    
-</span><span id="590" class="l"><a href="#590">590: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
-</span><span id="591" class="l"><a href="#591">591: </a>            <span class="php-keyword1">return</span> <span class="php-var">$controller</span>;
-</span><span id="592" class="l"><a href="#592">592: </a>        } <span class="php-keyword1">else</span> {
-</span><span id="593" class="l"><a href="#593">593: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
-</span><span id="594" class="l"><a href="#594">594: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
-</span><span id="595" class="l"><a href="#595">595: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
-</span><span id="596" class="l"><a href="#596">596: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="597" class="l"><a href="#597">597: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">new</span> <span class="php-var">$end</span>();
-</span><span id="598" class="l"><a href="#598">598: </a>        } 
-</span><span id="599" class="l"><a href="#599">599: </a>        }
-</span><span id="600" class="l"><a href="#600">600: </a>    }
-</span><span id="601" class="l"><a href="#601">601: </a>
-</span><span id="602" class="l"><a href="#602">602: </a><span class="php-comment">/**
-</span></span><span id="603" class="l"><a href="#603">603: </a><span class="php-comment">* Method return a new controller view 
-</span></span><span id="604" class="l"><a href="#604">604: </a><span class="php-comment">* @access public
-</span></span><span id="605" class="l"><a href="#605">605: </a><span class="php-comment">* @param string $view Path for view
-</span></span><span id="606" class="l"><a href="#606">606: </a><span class="php-comment">* @param mixed $controller Can be XSLRender/PHPRender object or path
-</span></span><span id="607" class="l"><a href="#607">607: </a><span class="php-comment">* @return XSLRender/PHPRender object
-</span></span><span id="608" class="l"><a href="#608">608: </a><span class="php-comment">**/</span> 
-</span><span id="609" class="l"><a href="#609">609: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> NewControllerB(<span class="php-var">$view</span>,<span class="php-var">$controller</span>){
-</span><span id="610" class="l"><a href="#610">610: </a>    
-</span><span id="611" class="l"><a href="#611">611: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
-</span><span id="612" class="l"><a href="#612">612: </a>            <span class="php-keyword1">return</span> <span class="php-var">$controller</span>;
-</span><span id="613" class="l"><a href="#613">613: </a>        } <span class="php-keyword1">else</span> {
-</span><span id="614" class="l"><a href="#614">614: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
-</span><span id="615" class="l"><a href="#615">615: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
-</span><span id="616" class="l"><a href="#616">616: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
-</span><span id="617" class="l"><a href="#617">617: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="618" class="l"><a href="#618">618: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$view</span>);
-</span><span id="619" class="l"><a href="#619">619: </a>        } 
-</span><span id="620" class="l"><a href="#620">620: </a>        }
-</span><span id="621" class="l"><a href="#621">621: </a>    }
-</span><span id="622" class="l"><a href="#622">622: </a>
-</span><span id="623" class="l"><a href="#623">623: </a><span class="php-comment">/**
-</span></span><span id="624" class="l"><a href="#624">624: </a><span class="php-comment">* Method return a new controller view with model
-</span></span><span id="625" class="l"><a href="#625">625: </a><span class="php-comment">* @access public
-</span></span><span id="626" class="l"><a href="#626">626: </a><span class="php-comment">* @param mixed $model Can be object or path or NULL, can set later in loaded controller
-</span></span><span id="627" class="l"><a href="#627">627: </a><span class="php-comment">* @param string $view Path for view
-</span></span><span id="628" class="l"><a href="#628">628: </a><span class="php-comment">* @param mixed $controller Can be XSLRender/PHPRender object or path
-</span></span><span id="629" class="l"><a href="#629">629: </a><span class="php-comment">* @return XSLRender/PHPRender object
-</span></span><span id="630" class="l"><a href="#630">630: </a><span class="php-comment">**/</span> 
-</span><span id="631" class="l"><a href="#631">631: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> NewController(<span class="php-var">$model</span>, <span class="php-var">$view</span>, <span class="php-var">$controller</span>){
-</span><span id="632" class="l"><a href="#632">632: </a>    
-</span><span id="633" class="l"><a href="#633">633: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
-</span><span id="634" class="l"><a href="#634">634: </a>            <span class="php-keyword1">return</span> <span class="php-var">$controller</span>;
-</span><span id="635" class="l"><a href="#635">635: </a>        } <span class="php-keyword1">else</span> {
-</span><span id="636" class="l"><a href="#636">636: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
-</span><span id="637" class="l"><a href="#637">637: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
-</span><span id="638" class="l"><a href="#638">638: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
-</span><span id="639" class="l"><a href="#639">639: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="640" class="l"><a href="#640">640: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$model</span>,<span class="php-var">$view</span>);
-</span><span id="641" class="l"><a href="#641">641: </a>        } 
-</span><span id="642" class="l"><a href="#642">642: </a>        }
-</span><span id="643" class="l"><a href="#643">643: </a>    }
-</span><span id="644" class="l"><a href="#644">644: </a>
-</span><span id="645" class="l"><a href="#645">645: </a>
-</span><span id="646" class="l"><a href="#646">646: </a><span class="php-comment">/**
-</span></span><span id="647" class="l"><a href="#647">647: </a><span class="php-comment">* Method set a new Model 
-</span></span><span id="648" class="l"><a href="#648">648: </a><span class="php-comment">* @access public
-</span></span><span id="649" class="l"><a href="#649">649: </a><span class="php-comment">* @param mixed $model Can be object or path.
-</span></span><span id="650" class="l"><a href="#650">650: </a><span class="php-comment">* @return object Model
-</span></span><span id="651" class="l"><a href="#651">651: </a><span class="php-comment">**/</span> 
-</span><span id="652" class="l"><a href="#652">652: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> SetModel(<span class="php-var">$model</span>){
-</span><span id="653" class="l"><a href="#653">653: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$model</span>)) {
-</span><span id="654" class="l"><a href="#654">654: </a>            <span class="php-var">$this</span>-&gt;model = <span class="php-var">$model</span>;
-</span><span id="655" class="l"><a href="#655">655: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20304</span>){
-</span><span id="656" class="l"><a href="#656">656: </a>                <span class="php-var">$this</span>-&gt;error = <span class="php-num">0</span>;
-</span><span id="657" class="l"><a href="#657">657: </a>            }
-</span><span id="658" class="l"><a href="#658">658: </a>        } <span class="php-keyword1">else</span> {
-</span><span id="659" class="l"><a href="#659">659: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$model</span>)){
-</span><span id="660" class="l"><a href="#660">660: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$model</span>);
-</span><span id="661" class="l"><a href="#661">661: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
-</span><span id="662" class="l"><a href="#662">662: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">NULL</span>;
-</span><span id="663" class="l"><a href="#663">663: </a>                <span class="php-var">$this</span>-&gt;model = <span class="php-keyword1">new</span> <span class="php-var">$end</span>;
-</span><span id="664" class="l"><a href="#664">664: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20304</span>){
-</span><span id="665" class="l"><a href="#665">665: </a>                <span class="php-var">$this</span>-&gt;error = <span class="php-num">0</span>;
-</span><span id="666" class="l"><a href="#666">666: </a>                }
-</span><span id="667" class="l"><a href="#667">667: </a>            } <span class="php-keyword1">else</span> {
-</span><span id="668" class="l"><a href="#668">668: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">NULL</span>;
-</span><span id="669" class="l"><a href="#669">669: </a>            }
-</span><span id="670" class="l"><a href="#670">670: </a>        }
-</span><span id="671" class="l"><a href="#671">671: </a>    }
-</span><span id="672" class="l"><a href="#672">672: </a>
-</span><span id="673" class="l"><a href="#673">673: </a><span class="php-comment">/**
-</span></span><span id="674" class="l"><a href="#674">674: </a><span class="php-comment">* Method Call existing method in this class or child from XSLTProcessor
-</span></span><span id="675" class="l"><a href="#675">675: </a><span class="php-comment">* @access public
-</span></span><span id="676" class="l"><a href="#676">676: </a><span class="php-comment">* @param string $method Call existing method in this class from XSLTProcessor
-</span></span><span id="677" class="l"><a href="#677">677: </a><span class="php-comment">* @param mixed $arguments Multiple arguments ... 
-</span></span><span id="678" class="l"><a href="#678">678: </a><span class="php-comment">* @return mixed Result from called method
-</span></span><span id="679" class="l"><a href="#679">679: </a><span class="php-comment">**/</span>     
-</span><span id="680" class="l"><a href="#680">680: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> Call(<span class="php-var">$method</span>){
-</span><span id="681" class="l"><a href="#681">681: </a>        <span class="php-var">$parameters</span> = <span class="php-keyword2">func_get_args</span>(); 
-</span><span id="682" class="l"><a href="#682">682: </a>        <span class="php-keyword2">array_shift</span>(<span class="php-var">$parameters</span>);
-</span><span id="683" class="l"><a href="#683">683: </a>        <span class="php-var">$a</span> = self::<span class="php-var">$obj</span>-&gt;name.<span class="php-quote">&quot;::&quot;</span>.<span class="php-var">$method</span>;
-</span><span id="684" class="l"><a href="#684">684: </a>        <span class="php-keyword1">if</span>(self::<span class="php-var">$obj</span> !== <span class="php-keyword1">NULL</span> &amp;&amp; <span class="php-keyword2">method_exists</span>(self::<span class="php-var">$obj</span>, <span class="php-var">$method</span>))
-</span><span id="685" class="l"><a href="#685">685: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">call_user_func_array</span>(<span class="php-keyword1">array</span>(self::<span class="php-var">$obj</span>, <span class="php-var">$method</span>), <span class="php-var">$parameters</span>);
-</span><span id="686" class="l"><a href="#686">686: </a>    }
-</span><span id="687" class="l"><a href="#687">687: </a>
-</span><span id="688" class="l"><a href="#688">688: </a><span class="php-comment">/**
-</span></span><span id="689" class="l"><a href="#689">689: </a><span class="php-comment">* Method check and preload class file 
-</span></span><span id="690" class="l"><a href="#690">690: </a><span class="php-comment">* @access public
-</span></span><span id="691" class="l"><a href="#691">691: </a><span class="php-comment">* @param string $class
-</span></span><span id="692" class="l"><a href="#692">692: </a><span class="php-comment">**/</span>     
-</span><span id="693" class="l"><a href="#693">693: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> Inc(<span class="php-var">$class</span>){
-</span><span id="694" class="l"><a href="#694">694: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">file_exists</span>(ROOT.<span class="php-var">$class</span>.EXT) &amp;&amp; <span class="php-keyword2">is_file</span>(ROOT.<span class="php-var">$class</span>.EXT)){   
-</span><span id="695" class="l"><a href="#695">695: </a>            <span class="php-keyword1">require_once</span>(ROOT.<span class="php-var">$class</span>.EXT);
-</span><span id="696" class="l"><a href="#696">696: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
-</span><span id="697" class="l"><a href="#697">697: </a>        }
-</span><span id="698" class="l"><a href="#698">698: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
-</span><span id="699" class="l"><a href="#699">699: </a>    }
-</span><span id="700" class="l"><a href="#700">700: </a>}
-</span><span id="701" class="l"><a href="#701">701: </a><span class="xlang">?&gt;</span></span></code></pre>
+</span><span id="492" class="l"><a href="#492">492: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20404</span>){
+</span><span id="493" class="l"><a href="#493">493: </a>                    <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SystemException(<span class="php-var">$this</span>-&gt;emessage,<span class="php-var">$this</span>-&gt;error);
+</span><span id="494" class="l"><a href="#494">494: </a>                }
+</span><span id="495" class="l"><a href="#495">495: </a>            }
+</span><span id="496" class="l"><a href="#496">496: </a>            <span class="php-var">$view</span> = <span class="php-keyword1">new</span> DOMDocument();
+</span><span id="497" class="l"><a href="#497">497: </a>            <span class="php-var">$view</span>-&gt;substituteEntities = <span class="php-keyword1">TRUE</span>;
+</span><span id="498" class="l"><a href="#498">498: </a>            <span class="php-var">$view</span>-&gt;loadXML(<span class="php-keyword2">file_get_contents</span>(ROOT.<span class="php-var">$this</span>-&gt;view. XSL));
+</span><span id="499" class="l"><a href="#499">499: </a>            <span class="php-var">$this</span>-&gt;setParameter(<span class="php-quote">''</span>, <span class="php-quote">'self'</span>, <span class="php-var">$this</span>-&gt;name.<span class="php-quote">'::Call'</span>);
+</span><span id="500" class="l"><a href="#500">500: </a>            <span class="php-var">$this</span>-&gt;importStylesheet(<span class="php-var">$view</span>);
+</span><span id="501" class="l"><a href="#501">501: </a>            <span class="php-var">$retval</span> = <span class="php-var">$this</span>-&gt;transformToXML(<span class="php-var">$this</span>-&gt;data); 
+</span><span id="502" class="l"><a href="#502">502: </a>            <span class="php-var">$this</span>-&gt;action-&gt;<span class="php-keyword2">end</span> = <span class="php-var">$this</span>-&gt;onEnd();
+</span><span id="503" class="l"><a href="#503">503: </a>            self::<span class="php-var">$obj</span>=<span class="php-keyword1">NULL</span>;
+</span><span id="504" class="l"><a href="#504">504: </a>            <span class="php-keyword1">return</span> <span class="php-var">$retval</span>;
+</span><span id="505" class="l"><a href="#505">505: </a>        } <span class="php-keyword1">catch</span> (SystemException <span class="php-var">$e</span>){
+</span><span id="506" class="l"><a href="#506">506: </a>            <span class="php-var">$this</span>-&gt;error = <span class="php-var">$e</span>-&gt;Code();
+</span><span id="507" class="l"><a href="#507">507: </a>            <span class="php-var">$this</span>-&gt;emessage= <span class="php-var">$e</span>-&gt;Message();
+</span><span id="508" class="l"><a href="#508">508: </a>            <span class="php-var">$this</span>-&gt;action-&gt;<span class="php-keyword2">end</span> = <span class="php-var">$this</span>-&gt;onException();
+</span><span id="509" class="l"><a href="#509">509: </a>            <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;exception)){
+</span><span id="510" class="l"><a href="#510">510: </a>                <span class="php-var">$this</span>-&gt;exception-&gt;ViewData(<span class="php-quote">'error'</span> ,<span class="php-var">$e</span>-&gt;Code());
+</span><span id="511" class="l"><a href="#511">511: </a>                <span class="php-var">$this</span>-&gt;exception-&gt;ViewData(<span class="php-quote">'emessage'</span> ,<span class="php-var">$e</span>-&gt;Message());
+</span><span id="512" class="l"><a href="#512">512: </a>                <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;exception-&gt;view();
+</span><span id="513" class="l"><a href="#513">513: </a>            }
+</span><span id="514" class="l"><a href="#514">514: </a>            self::<span class="php-var">$obj</span>=<span class="php-keyword1">NULL</span>;
+</span><span id="515" class="l"><a href="#515">515: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="516" class="l"><a href="#516">516: </a>        } 
+</span><span id="517" class="l"><a href="#517">517: </a>    }
+</span><span id="518" class="l"><a href="#518">518: </a>
+</span><span id="519" class="l"><a href="#519">519: </a><span class="php-comment">/**
+</span></span><span id="520" class="l"><a href="#520">520: </a><span class="php-comment">* Method used to catch exceptions and return as new controller view 
+</span></span><span id="521" class="l"><a href="#521">521: </a><span class="php-comment">* @access public
+</span></span><span id="522" class="l"><a href="#522">522: </a><span class="php-comment">* @param mixed $model Can be object or path or NULL, can set later in loaded controller
+</span></span><span id="523" class="l"><a href="#523">523: </a><span class="php-comment">* @param string $view Path for view
+</span></span><span id="524" class="l"><a href="#524">524: </a><span class="php-comment">* @param mixed $controller Can be XSLRender or PHPRender object or path
+</span></span><span id="525" class="l"><a href="#525">525: </a><span class="php-comment">**/</span> 
+</span><span id="526" class="l"><a href="#526">526: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> Exceptions(<span class="php-var">$model</span>,<span class="php-var">$view</span>,<span class="php-var">$controller</span>) {
+</span><span id="527" class="l"><a href="#527">527: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
+</span><span id="528" class="l"><a href="#528">528: </a>            <span class="php-keyword1">unset</span>(<span class="php-var">$this</span>-&gt;exception);
+</span><span id="529" class="l"><a href="#529">529: </a>            <span class="php-var">$this</span>-&gt;exception = <span class="php-var">$controller</span>;
+</span><span id="530" class="l"><a href="#530">530: </a>        } <span class="php-keyword1">else</span> {
+</span><span id="531" class="l"><a href="#531">531: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
+</span><span id="532" class="l"><a href="#532">532: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
+</span><span id="533" class="l"><a href="#533">533: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
+</span><span id="534" class="l"><a href="#534">534: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="535" class="l"><a href="#535">535: </a>            <span class="php-keyword1">unset</span>(<span class="php-var">$this</span>-&gt;exception);
+</span><span id="536" class="l"><a href="#536">536: </a>            <span class="php-var">$this</span>-&gt;exception = <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$model</span>,<span class="php-var">$view</span>);
+</span><span id="537" class="l"><a href="#537">537: </a>        } 
+</span><span id="538" class="l"><a href="#538">538: </a>        }
+</span><span id="539" class="l"><a href="#539">539: </a>    }
+</span><span id="540" class="l"><a href="#540">540: </a>
+</span><span id="541" class="l"><a href="#541">541: </a><span class="php-comment">/**
+</span></span><span id="542" class="l"><a href="#542">542: </a><span class="php-comment">* Method used to set new subcontroller in $this-&gt;modules Array of XSLRender or PHPRender objects
+</span></span><span id="543" class="l"><a href="#543">543: </a><span class="php-comment">* $controller string value is stored as name in modules array
+</span></span><span id="544" class="l"><a href="#544">544: </a><span class="php-comment">* @access public
+</span></span><span id="545" class="l"><a href="#545">545: </a><span class="php-comment">* @param mixed $model Can be object or path or NULL, can set later in loaded controller
+</span></span><span id="546" class="l"><a href="#546">546: </a><span class="php-comment">* @param string $view Path for view
+</span></span><span id="547" class="l"><a href="#547">547: </a><span class="php-comment">* @param string $controller 
+</span></span><span id="548" class="l"><a href="#548">548: </a><span class="php-comment">**/</span>     
+</span><span id="549" class="l"><a href="#549">549: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> SetModule(<span class="php-var">$model</span>, <span class="php-var">$view</span>, <span class="php-var">$controller</span>){
+</span><span id="550" class="l"><a href="#550">550: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
+</span><span id="551" class="l"><a href="#551">551: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
+</span><span id="552" class="l"><a href="#552">552: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
+</span><span id="553" class="l"><a href="#553">553: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="554" class="l"><a href="#554">554: </a>                <span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>] = <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$model</span>,<span class="php-var">$view</span>);
+</span><span id="555" class="l"><a href="#555">555: </a>        }
+</span><span id="556" class="l"><a href="#556">556: </a>    }
+</span><span id="557" class="l"><a href="#557">557: </a>    
+</span><span id="558" class="l"><a href="#558">558: </a><span class="php-comment">/**
+</span></span><span id="559" class="l"><a href="#559">559: </a><span class="php-comment">* Method used to get subcontroller by controller path from $this-&gt;modules 
+</span></span><span id="560" class="l"><a href="#560">560: </a><span class="php-comment">* @access public
+</span></span><span id="561" class="l"><a href="#561">561: </a><span class="php-comment">* @param string $controller 
+</span></span><span id="562" class="l"><a href="#562">562: </a><span class="php-comment">* @return XSLRender or PHPRender object
+</span></span><span id="563" class="l"><a href="#563">563: </a><span class="php-comment">**/</span>     
+</span><span id="564" class="l"><a href="#564">564: </a><span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> GetModule(<span class="php-var">$controller</span>){
+</span><span id="565" class="l"><a href="#565">565: </a>    <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>])){
+</span><span id="566" class="l"><a href="#566">566: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>];
+</span><span id="567" class="l"><a href="#567">567: </a>    }
+</span><span id="568" class="l"><a href="#568">568: </a>    <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="569" class="l"><a href="#569">569: </a>}   
+</span><span id="570" class="l"><a href="#570">570: </a>    
+</span><span id="571" class="l"><a href="#571">571: </a><span class="php-comment">/**
+</span></span><span id="572" class="l"><a href="#572">572: </a><span class="php-comment">* Method used to unset subcontroller by controller path from $this-&gt;modules
+</span></span><span id="573" class="l"><a href="#573">573: </a><span class="php-comment">* @access public
+</span></span><span id="574" class="l"><a href="#574">574: </a><span class="php-comment">* @param string $controller 
+</span></span><span id="575" class="l"><a href="#575">575: </a><span class="php-comment">* @return boolean
+</span></span><span id="576" class="l"><a href="#576">576: </a><span class="php-comment">**/</span>     
+</span><span id="577" class="l"><a href="#577">577: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> UnsetModule(<span class="php-var">$controller</span>){
+</span><span id="578" class="l"><a href="#578">578: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>])){
+</span><span id="579" class="l"><a href="#579">579: </a>            <span class="php-keyword1">unset</span>(<span class="php-var">$this</span>-&gt;modules[<span class="php-var">$controller</span>]);
+</span><span id="580" class="l"><a href="#580">580: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
+</span><span id="581" class="l"><a href="#581">581: </a>        }
+</span><span id="582" class="l"><a href="#582">582: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="583" class="l"><a href="#583">583: </a>    }
+</span><span id="584" class="l"><a href="#584">584: </a>
+</span><span id="585" class="l"><a href="#585">585: </a><span class="php-comment">/**
+</span></span><span id="586" class="l"><a href="#586">586: </a><span class="php-comment">* Method return a new controller view 
+</span></span><span id="587" class="l"><a href="#587">587: </a><span class="php-comment">* @access public
+</span></span><span id="588" class="l"><a href="#588">588: </a><span class="php-comment">* @param mixed $controller Can be XSLRender or PHPRender object or path
+</span></span><span id="589" class="l"><a href="#589">589: </a><span class="php-comment">* @return XSLRender or PHPRender object
+</span></span><span id="590" class="l"><a href="#590">590: </a><span class="php-comment">**/</span> 
+</span><span id="591" class="l"><a href="#591">591: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> NewControllerA(<span class="php-var">$controller</span>){
+</span><span id="592" class="l"><a href="#592">592: </a>    
+</span><span id="593" class="l"><a href="#593">593: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
+</span><span id="594" class="l"><a href="#594">594: </a>            <span class="php-keyword1">return</span> <span class="php-var">$controller</span>;
+</span><span id="595" class="l"><a href="#595">595: </a>        } <span class="php-keyword1">else</span> {
+</span><span id="596" class="l"><a href="#596">596: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
+</span><span id="597" class="l"><a href="#597">597: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
+</span><span id="598" class="l"><a href="#598">598: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
+</span><span id="599" class="l"><a href="#599">599: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="600" class="l"><a href="#600">600: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">new</span> <span class="php-var">$end</span>();
+</span><span id="601" class="l"><a href="#601">601: </a>        } 
+</span><span id="602" class="l"><a href="#602">602: </a>        }
+</span><span id="603" class="l"><a href="#603">603: </a>    }
+</span><span id="604" class="l"><a href="#604">604: </a>
+</span><span id="605" class="l"><a href="#605">605: </a><span class="php-comment">/**
+</span></span><span id="606" class="l"><a href="#606">606: </a><span class="php-comment">* Method return a new controller view 
+</span></span><span id="607" class="l"><a href="#607">607: </a><span class="php-comment">* @access public
+</span></span><span id="608" class="l"><a href="#608">608: </a><span class="php-comment">* @param string $view Path for view
+</span></span><span id="609" class="l"><a href="#609">609: </a><span class="php-comment">* @param mixed $controller Can be XSLRender or PHPRender object or path
+</span></span><span id="610" class="l"><a href="#610">610: </a><span class="php-comment">* @return XSLRender or PHPRender object
+</span></span><span id="611" class="l"><a href="#611">611: </a><span class="php-comment">**/</span> 
+</span><span id="612" class="l"><a href="#612">612: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> NewControllerB(<span class="php-var">$view</span>,<span class="php-var">$controller</span>){
+</span><span id="613" class="l"><a href="#613">613: </a>    
+</span><span id="614" class="l"><a href="#614">614: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
+</span><span id="615" class="l"><a href="#615">615: </a>            <span class="php-keyword1">return</span> <span class="php-var">$controller</span>;
+</span><span id="616" class="l"><a href="#616">616: </a>        } <span class="php-keyword1">else</span> {
+</span><span id="617" class="l"><a href="#617">617: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
+</span><span id="618" class="l"><a href="#618">618: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
+</span><span id="619" class="l"><a href="#619">619: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
+</span><span id="620" class="l"><a href="#620">620: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="621" class="l"><a href="#621">621: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$view</span>);
+</span><span id="622" class="l"><a href="#622">622: </a>        } 
+</span><span id="623" class="l"><a href="#623">623: </a>        }
+</span><span id="624" class="l"><a href="#624">624: </a>    }
+</span><span id="625" class="l"><a href="#625">625: </a>
+</span><span id="626" class="l"><a href="#626">626: </a><span class="php-comment">/**
+</span></span><span id="627" class="l"><a href="#627">627: </a><span class="php-comment">* Method return a new controller view with model
+</span></span><span id="628" class="l"><a href="#628">628: </a><span class="php-comment">* @access public
+</span></span><span id="629" class="l"><a href="#629">629: </a><span class="php-comment">* @param mixed $model Can be object or path or NULL, can set later in loaded controller
+</span></span><span id="630" class="l"><a href="#630">630: </a><span class="php-comment">* @param string $view Path for view
+</span></span><span id="631" class="l"><a href="#631">631: </a><span class="php-comment">* @param mixed $controller Can be XSLRender or PHPRender object or path
+</span></span><span id="632" class="l"><a href="#632">632: </a><span class="php-comment">* @return XSLRender or PHPRender object
+</span></span><span id="633" class="l"><a href="#633">633: </a><span class="php-comment">**/</span> 
+</span><span id="634" class="l"><a href="#634">634: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> NewController(<span class="php-var">$model</span>, <span class="php-var">$view</span>, <span class="php-var">$controller</span>){
+</span><span id="635" class="l"><a href="#635">635: </a>    
+</span><span id="636" class="l"><a href="#636">636: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$controller</span>)) {
+</span><span id="637" class="l"><a href="#637">637: </a>            <span class="php-keyword1">return</span> <span class="php-var">$controller</span>;
+</span><span id="638" class="l"><a href="#638">638: </a>        } <span class="php-keyword1">else</span> {
+</span><span id="639" class="l"><a href="#639">639: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$controller</span>)){
+</span><span id="640" class="l"><a href="#640">640: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$controller</span>);
+</span><span id="641" class="l"><a href="#641">641: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
+</span><span id="642" class="l"><a href="#642">642: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="643" class="l"><a href="#643">643: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">new</span> <span class="php-var">$end</span>(<span class="php-var">$model</span>,<span class="php-var">$view</span>);
+</span><span id="644" class="l"><a href="#644">644: </a>        } 
+</span><span id="645" class="l"><a href="#645">645: </a>        }
+</span><span id="646" class="l"><a href="#646">646: </a>    }
+</span><span id="647" class="l"><a href="#647">647: </a>
+</span><span id="648" class="l"><a href="#648">648: </a>
+</span><span id="649" class="l"><a href="#649">649: </a><span class="php-comment">/**
+</span></span><span id="650" class="l"><a href="#650">650: </a><span class="php-comment">* Method set a new Model 
+</span></span><span id="651" class="l"><a href="#651">651: </a><span class="php-comment">* @access public
+</span></span><span id="652" class="l"><a href="#652">652: </a><span class="php-comment">* @param mixed $model Can be object or path.
+</span></span><span id="653" class="l"><a href="#653">653: </a><span class="php-comment">* @return object Model
+</span></span><span id="654" class="l"><a href="#654">654: </a><span class="php-comment">**/</span> 
+</span><span id="655" class="l"><a href="#655">655: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> SetModel(<span class="php-var">$model</span>){
+</span><span id="656" class="l"><a href="#656">656: </a>        <span class="php-keyword1">if</span> (<span class="php-keyword2">is_object</span>(<span class="php-var">$model</span>)) {
+</span><span id="657" class="l"><a href="#657">657: </a>            <span class="php-var">$this</span>-&gt;model = <span class="php-var">$model</span>;
+</span><span id="658" class="l"><a href="#658">658: </a>            <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20304</span>){
+</span><span id="659" class="l"><a href="#659">659: </a>                <span class="php-var">$this</span>-&gt;error = <span class="php-num">0</span>;
+</span><span id="660" class="l"><a href="#660">660: </a>            }
+</span><span id="661" class="l"><a href="#661">661: </a>        } <span class="php-keyword1">else</span> {
+</span><span id="662" class="l"><a href="#662">662: </a>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;Inc(<span class="php-var">$model</span>)){
+</span><span id="663" class="l"><a href="#663">663: </a>            <span class="php-var">$stack</span> = <span class="php-keyword2">explode</span>(DS,<span class="php-var">$model</span>);
+</span><span id="664" class="l"><a href="#664">664: </a>            <span class="php-var">$end</span> = <span class="php-keyword2">end</span>(<span class="php-var">$stack</span>);
+</span><span id="665" class="l"><a href="#665">665: </a>            <span class="php-keyword1">if</span>(!<span class="php-keyword2">class_exists</span>(<span class="php-var">$end</span>)) <span class="php-keyword1">return</span> <span class="php-keyword1">NULL</span>;
+</span><span id="666" class="l"><a href="#666">666: </a>                <span class="php-var">$this</span>-&gt;model = <span class="php-keyword1">new</span> <span class="php-var">$end</span>;
+</span><span id="667" class="l"><a href="#667">667: </a>                <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;error == <span class="php-num">20304</span>){
+</span><span id="668" class="l"><a href="#668">668: </a>                <span class="php-var">$this</span>-&gt;error = <span class="php-num">0</span>;
+</span><span id="669" class="l"><a href="#669">669: </a>                }
+</span><span id="670" class="l"><a href="#670">670: </a>            } <span class="php-keyword1">else</span> {
+</span><span id="671" class="l"><a href="#671">671: </a>                <span class="php-keyword1">return</span> <span class="php-keyword1">NULL</span>;
+</span><span id="672" class="l"><a href="#672">672: </a>            }
+</span><span id="673" class="l"><a href="#673">673: </a>        }
+</span><span id="674" class="l"><a href="#674">674: </a>    }
+</span><span id="675" class="l"><a href="#675">675: </a>
+</span><span id="676" class="l"><a href="#676">676: </a><span class="php-comment">/**
+</span></span><span id="677" class="l"><a href="#677">677: </a><span class="php-comment">* Method Call existing method in this class or child from XSLTProcessor
+</span></span><span id="678" class="l"><a href="#678">678: </a><span class="php-comment">* @access public
+</span></span><span id="679" class="l"><a href="#679">679: </a><span class="php-comment">* @param string $method Call existing method in this class from XSLTProcessor
+</span></span><span id="680" class="l"><a href="#680">680: </a><span class="php-comment">* @param mixed $arguments Multiple arguments ... 
+</span></span><span id="681" class="l"><a href="#681">681: </a><span class="php-comment">* @return mixed Result from called method
+</span></span><span id="682" class="l"><a href="#682">682: </a><span class="php-comment">**/</span>     
+</span><span id="683" class="l"><a href="#683">683: </a>    <span class="php-keyword1">final</span> <span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> Call(<span class="php-var">$method</span>){
+</span><span id="684" class="l"><a href="#684">684: </a>        <span class="php-var">$parameters</span> = <span class="php-keyword2">func_get_args</span>(); 
+</span><span id="685" class="l"><a href="#685">685: </a>        <span class="php-keyword2">array_shift</span>(<span class="php-var">$parameters</span>);
+</span><span id="686" class="l"><a href="#686">686: </a>        <span class="php-var">$a</span> = self::<span class="php-var">$obj</span>-&gt;name.<span class="php-quote">&quot;::&quot;</span>.<span class="php-var">$method</span>;
+</span><span id="687" class="l"><a href="#687">687: </a>        <span class="php-keyword1">if</span>(self::<span class="php-var">$obj</span> !== <span class="php-keyword1">NULL</span> &amp;&amp; <span class="php-keyword2">method_exists</span>(self::<span class="php-var">$obj</span>, <span class="php-var">$method</span>))
+</span><span id="688" class="l"><a href="#688">688: </a>        <span class="php-keyword1">return</span> <span class="php-keyword2">call_user_func_array</span>(<span class="php-keyword1">array</span>(self::<span class="php-var">$obj</span>, <span class="php-var">$method</span>), <span class="php-var">$parameters</span>);
+</span><span id="689" class="l"><a href="#689">689: </a>    }
+</span><span id="690" class="l"><a href="#690">690: </a>
+</span><span id="691" class="l"><a href="#691">691: </a><span class="php-comment">/**
+</span></span><span id="692" class="l"><a href="#692">692: </a><span class="php-comment">* Method check and preload class file 
+</span></span><span id="693" class="l"><a href="#693">693: </a><span class="php-comment">* @access public
+</span></span><span id="694" class="l"><a href="#694">694: </a><span class="php-comment">* @param string $class
+</span></span><span id="695" class="l"><a href="#695">695: </a><span class="php-comment">**/</span>     
+</span><span id="696" class="l"><a href="#696">696: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">final</span> <span class="php-keyword1">function</span> Inc(<span class="php-var">$class</span>){
+</span><span id="697" class="l"><a href="#697">697: </a>        <span class="php-keyword1">if</span>(<span class="php-keyword2">file_exists</span>(ROOT.<span class="php-var">$class</span>.EXT) &amp;&amp; <span class="php-keyword2">is_file</span>(ROOT.<span class="php-var">$class</span>.EXT)){   
+</span><span id="698" class="l"><a href="#698">698: </a>            <span class="php-keyword1">require_once</span>(ROOT.<span class="php-var">$class</span>.EXT);
+</span><span id="699" class="l"><a href="#699">699: </a>            <span class="php-keyword1">return</span> <span class="php-keyword1">TRUE</span>;
+</span><span id="700" class="l"><a href="#700">700: </a>        }
+</span><span id="701" class="l"><a href="#701">701: </a>        <span class="php-keyword1">return</span> <span class="php-keyword1">FALSE</span>;
+</span><span id="702" class="l"><a href="#702">702: </a>    }
+</span><span id="703" class="l"><a href="#703">703: </a>}
+</span><span id="704" class="l"><a href="#704">704: </a><span class="xlang">?&gt;</span></span></code></pre>
 
 	<div id="footer">
 		YMVC System API documentation generated by <a href="http://apigen.org">ApiGen</a>
@@ -881,6 +891,6 @@
 </div>
 </div>
 <script src="resources/combined.js?37ba7f318570788c44e04c18c68bcd5abe9f92d2"></script>
-<script src="elementlist.js?b7064fc64871bb54a992e76a49ea7edba3a09f49"></script>
+<script src="elementlist.js?44aabc546fdd0d67995981d0e5dd0d4e27e6b9a7"></script>
 </body>
 </html>

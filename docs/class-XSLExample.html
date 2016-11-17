@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Class Test | YMVC System</title>
+	<title>Class XSLExample | YMVC System</title>
 
 	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
@@ -42,6 +42,11 @@
 				<li>
 					<a href="package-YMVC.DBConnect.html">
 						DBConnect					</a>
+
+						</li>
+				<li>
+					<a href="package-YMVC.FileUtils.html">
+						FileUtils					</a>
 
 						</li>
 				<li>
@@ -89,12 +94,11 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-Layout.html">Layout</a></li>
 				<li><a href="class-One.html">One</a></li>
 				<li><a href="class-SystemError.html">SystemError</a></li>
-				<li class="active"><a href="class-Test.html">Test</a></li>
 				<li><a href="class-Two.html">Two</a></li>
 				<li><a href="class-view.html">view</a></li>
+				<li class="active"><a href="class-XSLExample.html">XSLExample</a></li>
 				<li><a href="class-XSLRender.html">XSLRender</a></li>
 			</ul>
 
@@ -138,7 +142,7 @@
 	</div>
 
 <div id="content" class="class">
-	<h1>Class Test</h1>
+	<h1>Class XSLExample</h1>
 
 
 	<div class="description">
@@ -171,7 +175,7 @@ XSLTProcessor
 		</dd>
 		<dd style="padding-left:60px">
 			<img src="resources/inherit.png" alt="Extended by">
-<b><span>Test</span></b>			
+<b><span>XSLExample</span></b>			
 			
 			
 		</dd>
@@ -206,7 +210,7 @@ XSLTProcessor
 				<code><a href="class-PHPRender.html">PHPRender</a></code><br>
 				<b>Link:</b>
 				<a href="http://ymvc.ydk2.tk">http://ymvc.ydk2.tk</a><br>
-			<b>Located at</b> <a href="source-class-Test.html#2-44" title="Go to source code">application/controllers/test.php</a>
+			<b>Located at</b> <a href="source-class-XSLExample.html#2-113" title="Go to source code">system/controllers/xslexample.php</a>
 		<br>
 	</div>
 
@@ -226,7 +230,7 @@ XSLTProcessor
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onInit">#</a>
-		<code><a href="source-class-Test.html#4-14" title="Go to source code">onInit</a>( )</code>
+		<code><a href="source-class-XSLExample.html#4-39" title="Go to source code">onInit</a>( )</code>
 
 		<div class="description short">
 			<p>Virtual method used in childs classes called in parent(this) class constructor
@@ -264,7 +268,7 @@ Used as child constructor before render views</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onEnd">#</a>
-		<code><a href="source-class-Test.html#16-20" title="Go to source code">onEnd</a>( )</code>
+		<code><a href="source-class-XSLExample.html#41-44" title="Go to source code">onEnd</a>( )</code>
 
 		<div class="description short">
 			<p>Virtual method used in childs classes called when view is returned without error</p>
@@ -300,7 +304,7 @@ Used as child constructor before render views</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onDestruct">#</a>
-		<code><a href="source-class-Test.html#22-25" title="Go to source code">onDestruct</a>( )</code>
+		<code><a href="source-class-XSLExample.html#46-49" title="Go to source code">onDestruct</a>( )</code>
 
 		<div class="description short">
 			<p>Virtual method used in childs classes called in parent(this) class destructor
@@ -326,6 +330,44 @@ Used as child destructor not required</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="onException" id="_onException">
+
+		<td class="attributes"><code>
+			 public 
+
+			optional
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_onException">#</a>
+		<code><a href="source-class-XSLExample.html#51-59" title="Go to source code">onException</a>( )</code>
+
+		<div class="description short">
+			<p>Virtual method used in childs classes called on exception is throwed
+Used as child destructor not required</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Virtual method used in childs classes called on exception is throwed
+Used as child destructor not required</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					optional<br>user defined
+				</div>
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-XSLRender.html#_onException">XSLRender::onException()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="onRun" id="_onRun">
 
 		<td class="attributes"><code>
@@ -338,7 +380,7 @@ Used as child destructor not required</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_onRun">#</a>
-		<code><a href="source-class-Test.html#27-33" title="Go to source code">onRun</a>( )</code>
+		<code><a href="source-class-XSLExample.html#61-109" title="Go to source code">onRun</a>( <span>mixed <var>$model</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Virtual method used in childs classes called when view is show or return
@@ -350,6 +392,11 @@ Used as runtime method</p>
 Used as runtime method</p>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$model</var></dt>
+					<dd>optional</dd>
+				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
@@ -364,7 +411,7 @@ Used as runtime method</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="routings" id="_routings">
+	<tr data-order="test" id="_test">
 
 		<td class="attributes"><code>
 			 public 
@@ -375,8 +422,8 @@ Used as runtime method</p>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_routings">#</a>
-		<code><a href="source-class-Test.html#34-42" title="Go to source code">routings</a>( )</code>
+		<a class="anchor" href="#_test">#</a>
+		<code><a href="source-class-XSLExample.html#110-112" title="Go to source code">test</a>( <span> <var>$a</var> = <span class="php-quote">'a test'</span></span>, <span> <var>$b</var> = <span class="php-quote">'b test'</span></span> )</code>
 
 		<div class="description short">
 			
@@ -424,7 +471,6 @@ Used as runtime method</p>
 			<a href="class-XSLRender.html#_ViewData">ViewData()</a>, 
 			<a href="class-XSLRender.html#___construct">__construct()</a>, 
 			<a href="class-XSLRender.html#___destruct">__destruct()</a>, 
-			<a href="class-XSLRender.html#_onException">onException()</a>, 
 			<a href="class-XSLRender.html#_only_registered">only_registered()</a>, 
 			<a href="class-XSLRender.html#_toArray">toArray()</a>
 		</code></td>

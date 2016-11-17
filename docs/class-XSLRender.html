@@ -45,6 +45,11 @@
 
 						</li>
 				<li>
+					<a href="package-YMVC.FileUtils.html">
+						FileUtils					</a>
+
+						</li>
+				<li>
 					<a href="package-YMVC.Functions.html">
 						Functions					</a>
 
@@ -89,12 +94,11 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-Layout.html">Layout</a></li>
 				<li><a href="class-One.html">One</a></li>
 				<li><a href="class-SystemError.html">SystemError</a></li>
-				<li><a href="class-Test.html">Test</a></li>
 				<li><a href="class-Two.html">Two</a></li>
 				<li><a href="class-view.html">view</a></li>
+				<li><a href="class-XSLExample.html">XSLExample</a></li>
 				<li class="active"><a href="class-XSLRender.html">XSLRender</a></li>
 			</ul>
 
@@ -173,12 +177,11 @@ XSLTProcessor
 
 	<div>
 		<h4>Direct known subclasses</h4>
-			<a href="class-Layout.html">Layout</a>, 
 			<a href="class-One.html">One</a>, 
 			<a href="class-SystemError.html">SystemError</a>, 
-			<a href="class-Test.html">Test</a>, 
 			<a href="class-Two.html">Two</a>, 
-			<a href="class-view.html">view</a>
+			<a href="class-view.html">view</a>, 
+			<a href="class-XSLExample.html">XSLExample</a>
 	</div>
 
 
@@ -208,7 +211,7 @@ XSLTProcessor
 				<code><a href="class-PHPRender.html">PHPRender</a></code><br>
 				<b>Link:</b>
 				<a href="http://ymvc.ydk2.tk">http://ymvc.ydk2.tk</a><br>
-			<b>Located at</b> <a href="source-class-XSLRender.html#4-700" title="Go to source code">system/core/xslrender.php</a>
+			<b>Located at</b> <a href="source-class-XSLRender.html#4-703" title="Go to source code">libriares/core/xslrender.php</a>
 		<br>
 	</div>
 
@@ -974,7 +977,7 @@ Used as child destructor not required</p>
 	<tr data-order="only_registered" id="_only_registered">
 
 		<td class="attributes"><code>
-			final protected 
+			final public 
 
 			
 			
@@ -1009,7 +1012,7 @@ Used as child destructor not required</p>
 	<tr data-order="RegisterView" id="_RegisterView">
 
 		<td class="attributes"><code>
-			final protected 
+			final public 
 
 			
 			
@@ -1048,7 +1051,7 @@ Used as child destructor not required</p>
 	<tr data-order="UnRegisterView" id="_UnRegisterView">
 
 		<td class="attributes"><code>
-			final protected 
+			final public 
 
 			
 			
@@ -1165,7 +1168,7 @@ Used as child destructor not required</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_View">#</a>
-		<code><a href="source-class-XSLRender.html#474-514" title="Go to source code">View</a>( <span>string <var>$path</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-XSLRender.html#474-517" title="Go to source code">View</a>( <span>string <var>$path</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>Method used to get, render and return controller view as string</p>
@@ -1204,7 +1207,7 @@ Used as child destructor not required</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Exceptions">#</a>
-		<code><a href="source-class-XSLRender.html#516-536" title="Go to source code">Exceptions</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span>, <span>mixed <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#519-539" title="Go to source code">Exceptions</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span>, <span>mixed <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Method used to catch exceptions and return as new controller view</p>
@@ -1221,7 +1224,7 @@ Used as child destructor not required</p>
 					<dt><var>$view</var></dt>
 					<dd>Path for view</dd>
 					<dt><var>$controller</var></dt>
-					<dd>Can be XSLRender/PHPRender object or path</dd>
+					<dd>Can be XSLRender or PHPRender object or path</dd>
 				</dl></div>
 
 
@@ -1243,15 +1246,15 @@ Used as child destructor not required</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_SetModule">#</a>
-		<code><a href="source-class-XSLRender.html#538-553" title="Go to source code">SetModule</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span>, <span>string <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#541-556" title="Go to source code">SetModule</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span>, <span>string <var>$controller</var></span> )</code>
 
 		<div class="description short">
-			<p>Method used to set new subcontroller in $this->modules Array of XSLRender/PHPRender objects
+			<p>Method used to set new subcontroller in $this->modules Array of XSLRender or PHPRender objects
 $controller string value is stored as name in modules array</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Method used to set new subcontroller in $this->modules Array of XSLRender/PHPRender objects
+			<p>Method used to set new subcontroller in $this->modules Array of XSLRender or PHPRender objects
 $controller string value is stored as name in modules array</p>
 
 
@@ -1277,14 +1280,14 @@ $controller string value is stored as name in modules array</p>
 		<td class="attributes"><code>
 			final public 
 
-			XSLRender/PHPRender
+			<code><a href="class-XSLRender.html">XSLRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_GetModule">#</a>
-		<code><a href="source-class-XSLRender.html#555-566" title="Go to source code">GetModule</a>( <span>string <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#558-569" title="Go to source code">GetModule</a>( <span>string <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Method used to get subcontroller by controller path from $this->modules</p>
@@ -1302,7 +1305,7 @@ $controller string value is stored as name in modules array</p>
 
 				<h4>Returns</h4>
 				<div class="list">
-					XSLRender/PHPRender<br>object
+					<code><a href="class-XSLRender.html">XSLRender</a></code><br>or PHPRender object
 				</div>
 
 
@@ -1323,7 +1326,7 @@ $controller string value is stored as name in modules array</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_UnsetModule">#</a>
-		<code><a href="source-class-XSLRender.html#568-580" title="Go to source code">UnsetModule</a>( <span>string <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#571-583" title="Go to source code">UnsetModule</a>( <span>string <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Method used to unset subcontroller by controller path from $this->modules</p>
@@ -1355,14 +1358,14 @@ $controller string value is stored as name in modules array</p>
 		<td class="attributes"><code>
 			final public 
 
-			XSLRender/PHPRender
+			<code><a href="class-XSLRender.html">XSLRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_NewControllerA">#</a>
-		<code><a href="source-class-XSLRender.html#582-600" title="Go to source code">NewControllerA</a>( <span>mixed <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#585-603" title="Go to source code">NewControllerA</a>( <span>mixed <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Method return a new controller view</p>
@@ -1375,12 +1378,12 @@ $controller string value is stored as name in modules array</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$controller</var></dt>
-					<dd>Can be XSLRender/PHPRender object or path</dd>
+					<dd>Can be XSLRender or PHPRender object or path</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					XSLRender/PHPRender<br>object
+					<code><a href="class-XSLRender.html">XSLRender</a></code><br>or PHPRender object
 				</div>
 
 
@@ -1394,14 +1397,14 @@ $controller string value is stored as name in modules array</p>
 		<td class="attributes"><code>
 			final public 
 
-			XSLRender/PHPRender
+			<code><a href="class-XSLRender.html">XSLRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_NewControllerB">#</a>
-		<code><a href="source-class-XSLRender.html#602-621" title="Go to source code">NewControllerB</a>( <span>string <var>$view</var></span>, <span>mixed <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#605-624" title="Go to source code">NewControllerB</a>( <span>string <var>$view</var></span>, <span>mixed <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Method return a new controller view</p>
@@ -1416,12 +1419,12 @@ $controller string value is stored as name in modules array</p>
 					<dt><var>$view</var></dt>
 					<dd>Path for view</dd>
 					<dt><var>$controller</var></dt>
-					<dd>Can be XSLRender/PHPRender object or path</dd>
+					<dd>Can be XSLRender or PHPRender object or path</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					XSLRender/PHPRender<br>object
+					<code><a href="class-XSLRender.html">XSLRender</a></code><br>or PHPRender object
 				</div>
 
 
@@ -1435,14 +1438,14 @@ $controller string value is stored as name in modules array</p>
 		<td class="attributes"><code>
 			final public 
 
-			XSLRender/PHPRender
+			<code><a href="class-XSLRender.html">XSLRender</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_NewController">#</a>
-		<code><a href="source-class-XSLRender.html#623-643" title="Go to source code">NewController</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span>, <span>mixed <var>$controller</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#626-646" title="Go to source code">NewController</a>( <span>mixed <var>$model</var></span>, <span>string <var>$view</var></span>, <span>mixed <var>$controller</var></span> )</code>
 
 		<div class="description short">
 			<p>Method return a new controller view with model</p>
@@ -1459,12 +1462,12 @@ $controller string value is stored as name in modules array</p>
 					<dt><var>$view</var></dt>
 					<dd>Path for view</dd>
 					<dt><var>$controller</var></dt>
-					<dd>Can be XSLRender/PHPRender object or path</dd>
+					<dd>Can be XSLRender or PHPRender object or path</dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					XSLRender/PHPRender<br>object
+					<code><a href="class-XSLRender.html">XSLRender</a></code><br>or PHPRender object
 				</div>
 
 
@@ -1485,7 +1488,7 @@ $controller string value is stored as name in modules array</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_SetModel">#</a>
-		<code><a href="source-class-XSLRender.html#646-671" title="Go to source code">SetModel</a>( <span>mixed <var>$model</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#649-674" title="Go to source code">SetModel</a>( <span>mixed <var>$model</var></span> )</code>
 
 		<div class="description short">
 			<p>Method set a new Model</p>
@@ -1524,7 +1527,7 @@ $controller string value is stored as name in modules array</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Call">#</a>
-		<code><a href="source-class-XSLRender.html#673-686" title="Go to source code">Call</a>( <span>string <var>$method</var></span>, <span>mixed <var>$arguments</var>,…</span> )</code>
+		<code><a href="source-class-XSLRender.html#676-689" title="Go to source code">Call</a>( <span>string <var>$method</var></span>, <span>mixed <var>$arguments</var>,…</span> )</code>
 
 		<div class="description short">
 			<p>Method Call existing method in this class or child from XSLTProcessor</p>
@@ -1565,7 +1568,7 @@ $controller string value is stored as name in modules array</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_Inc">#</a>
-		<code><a href="source-class-XSLRender.html#688-699" title="Go to source code">Inc</a>( <span>string <var>$class</var></span> )</code>
+		<code><a href="source-class-XSLRender.html#691-702" title="Go to source code">Inc</a>( <span>string <var>$class</var></span> )</code>
 
 		<div class="description short">
 			<p>Method check and preload class file</p>
