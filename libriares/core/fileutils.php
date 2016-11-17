@@ -26,12 +26,12 @@ class FileUtils {
 	public static function Delete($what) {
 		$e=0;
 		if (!file_exists($what)) {
-			return 1;
+			return 0;
 		}
 		if(is_dir($what)){
 			foreach(glob($what . '/*') as $files) {
 				if(is_dir($files))
-						self::Delete($files);
+						$e=self::Delete($files);
 				else
 						$e=(unlink($files))?2:0;
 			}
@@ -57,21 +57,21 @@ class FileUtils {
 			$e=(mkdir($where))?3:0;
 			$files = scandir($from);
 			foreach ($files as $file){
-				if ($file != "." && $file != "..") {
-					self::Copy("$from/$file", "$where/$file");
+				if ($file != "." && $file != ".." && is_dir($file)) {
+					$e=self::Copy("$from/$file", "$where/$file");
 				}
-				else {
+				elseif(!is_dir($file)) {
 					$data = file_get_contents("$from/$file");
-					$e=(file_put_contents("$where/$file", $data))?0:4;
+					$e=(file_put_contents("$where/$file", $data))?1:0;
 				}
 			}
 		}
 		elseif(is_file($from)) {
 			$data = file_get_contents($from);
-			$e=(file_put_contents($where, $data))?0:4;
+			$e=(file_put_contents($where, $data))?2:0;
 		}
 		if ($mode===1) {
-			$e=(self::Delete($from))?0:5;
+			$e=(self::Delete($from))?1:0;
 		}
 		clearstatcache();
 		return $e;
@@ -207,7 +207,9 @@ class FileUtils {
 		foreach (glob("$p",GLOB_BRACE) as $file) {
 			if (basename($file) != '..' && basename($file) != '.') {
 				$type = filetype(realpath($file));
-				$info[basename(realpath($file))] = array('path'=>realpath($file),'type'=>$type);
+				$owner = self::getOwner(realpath($file));
+				$perms = self::getPerms(realpath($file));
+				$info[basename(realpath($file))] = array('path'=>realpath($file),'type'=>$type,'owner'=>$owner[0],'group'=>$owner[1],'perms'=>$perms);
 			}
 		}
 		return $info;
@@ -223,11 +225,15 @@ public static function AllinDir($path = '') {
 			if (is_dir($item)) {
 				$dir[] = $item . "/*";
 				$type = filetype(realpath($item));
-				$info[dirname(realpath($item))][basename(realpath($item))] = array('path'=>realpath($item),'type'=>$type);
+				$owner = self::getOwner(realpath($item));
+				$perms = self::getPerms(realpath($item));
+				$info[dirname(realpath($item))][0] = array('path'=>realpath($item),'type'=>$type,'owner'=>$owner[0],'group'=>$owner[1],'perms'=>$perms);
 			}
-			elseif (!is_dir($item)) {
+			else {
 				$type = filetype(realpath($item));
-				$info[dirname(realpath($item))][basename(realpath($item))] = array('path'=>realpath($item),'type'=>$type);
+				$owner = self::getOwner(realpath($item));
+				$perms = self::getPerms(realpath($item));
+				$info[dirname(realpath($item))][] = array('path'=>realpath($item),'type'=>$type,'owner'=>$owner[0],'group'=>$owner[1],'perms'=>$perms);
 			}
 		}
 	}
