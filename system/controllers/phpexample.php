@@ -13,24 +13,18 @@ class PHPExample extends PHPRender {
 		$this->SetModel(SYS.M.'model');
 
 		$this->only_registered(TRUE);
-	//	if(Helper::Get('load')!='php'){
+		if(Helper::Get('load')!='php'){
 		$this->setView(SYS.V.'layout'.DS.'php');
 		$this->RegisterView(SYS.V.'layout'.DS.'php');
 		$this->unRegisterView(SYS.V.strtolower($this->name));
 		$this->setAccess(self::ACCESS_USER);
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
-	//	} else {
+		} else {
 
 		$this->RegisterView(SYS.V.strtolower($this->name));
-	//	}
+		}
 		$this->registerPHPFunctions();
 		
-		
-		
-		
-
-		
-
 		$this->setParameter('','fixie','<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -42,8 +36,9 @@ class PHPExample extends PHPRender {
 		if($this->error > 0) {
 			//echo $this->error ;
 			$this->RegisterView(SYS.V.'errors'.DS.'error');
+			
+			
 			$this->exceptions = TRUE;
-			//$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 		}
 		
 		
@@ -62,7 +57,7 @@ class PHPExample extends PHPRender {
 	public function onException(){
 		$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 
-		if(Helper::Get('load')=='sec'){
+		if(Helper::Get('load')!=='php'){
 		$this->exception->setParameter('','inside','yes');
 		$this->exception->setParameter('','show_link','no');
 		} else {
@@ -78,7 +73,7 @@ class PHPExample extends PHPRender {
 
 	public function onRun($model = NULL){
 		//$this->SetView(SYS.V.'time');
-
+		if($this->error == 193502) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 		if(Helper::Get('load')=='php'){
 		if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 		}

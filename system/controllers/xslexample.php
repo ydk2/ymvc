@@ -32,8 +32,13 @@ class XSLExample extends XSLRender {
 		}
 
 		if($this->error > 0) {
-			//echo $this->error ;
-		//	$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+		$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+		$this->exception->setParameter('','inside','no');
+		$this->exception->setParameter('','show_link','yes');
+		$this->exception->ViewData('title', Intl::_p('Error!!!',$this->name));
+		$this->exception->ViewData('header', Intl::_p('Error!!!',$this->name).' '.$this->error);
+		$this->exception->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Catch Error',$this->name).' - ');
+		$this->exception->ViewData('error', $this->error);
 			
 		}
 	}
@@ -54,7 +59,7 @@ class XSLExample extends XSLRender {
 		$this->exception->setParameter('','show_link','yes');
 		$this->exception->ViewData('title', Intl::_p('Error!!!',$this->name));
 		$this->exception->ViewData('header', Intl::_p('Error!!!',$this->name).' '.$this->error);
-		$this->exception->ViewData('alert',Intl::_p($this->emessage,'main_index').' - '.Intl::_p('Catch Error',$this->name).' - ');
+		$this->exception->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Catch Error',$this->name).' - ');
 		$this->exception->ViewData('error', $this->error);
 	}
 

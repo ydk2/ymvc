@@ -44,6 +44,7 @@ protected $only_registered_views;
 protected $registered_views;
 protected $global_access;
 protected $global_access_mode;
+protected $model_required;
 protected $exceptions;
 
 public $name;
@@ -76,6 +77,7 @@ private static $obj;
 		$this->name=get_class($this);
 		$this->global_access_mode = FALSE;
 		$this->only_registered_views = FALSE;
+		$this->model_required = FALSE;
 		$this->registered_views = array();
 		$this->exceptions = FALSE;
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
@@ -395,6 +397,15 @@ final public function CheckError() {
 	final public function only_registered($state = TRUE) {
 		$this->only_registered_views = $state;
 	}
+
+/**
+* Set model is required or not
+* @access public
+* @param boolean $state 
+**/ 
+	final public function model_required($state = TRUE) {
+		$this->model_required = $state;
+	}
 	
 /**
 * Register View path in controller when work in limited mode
@@ -443,6 +454,7 @@ final public function CheckError() {
 					}
 				}
 			} 
+			if(FALSE !== $this->model_required){
 			if($this->model==NULL){
 				 $this->emessage = "App Model not Definied";
 				 $this->error = 20304;
@@ -450,7 +462,7 @@ final public function CheckError() {
 				if($this->error == 20304){
 					$this->error = 0;
 				}
-			}
+			}}
 			if($this->view==NULL){
 				 $this->emessage = "View not Definied";
 				 $this->error = 20401;
@@ -522,7 +534,7 @@ final public function CheckError() {
 			if(isset($this->exception)){
             	$this->exception->ViewData('error' ,$e->Code());
             	$this->exception->ViewData('emessage' ,$e->Message());
-				return $this->exception->view();
+				return $this->exception->View();
 			}
 			self::$obj=NULL;
             return FALSE;
