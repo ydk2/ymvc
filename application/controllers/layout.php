@@ -38,8 +38,8 @@ class Layout extends XSLRender {
 
 		$sections = array(
 			'phpexample'=>array('layout/php','php','','float:left;'),
-			'two'=>array('two','',''),
-			'one'=>array('one','',''),
+			'two'=>array('two','','',''),
+			'one'=>array('one','','',''),
 			);
 		
 		//$this->ViewData('layout', '');
@@ -93,13 +93,11 @@ class Layout extends XSLRender {
 		$this->ViewData('layout', '');
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
-				$col = $this->data->layout->addChild('columns',Loader::get_restricted_view($mode.C.$key,$mode.V.$value));
-				$col->addAttribute('size', "6");	
+				$col = $this->data->layout->addChild('columns',Loader::get_restricted_view($mode.C.$key,$mode.V.$value));	
 			}
 		}
 		if(!isset($this->data->layout->sections)){ // get_restricted_view
 			$col = $this->data->layout->addChild('columns',Loader::get_restricted_view($mode.V.$controller,$mode.C.$view));
-			$col->addAttribute('size', "12");
 		}
 	}	
 }

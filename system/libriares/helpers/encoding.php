@@ -1,6 +1,6 @@
 <?php
 /**
- * kodowanie piliku ini konfig users.
+ * kodowanie pliku ini konfig users.
  */
 class Encoding {
 public static function str_split($str, $l = 0) {
@@ -16,17 +16,17 @@ public static function str_split($str, $l = 0) {
 }
 public static function encode($string,$key)
 {
-	//$convert = base64_encode(self::strToHex(str_replace(array("\n","="), array("@%".$key."%@","*&".$key."^%"), $string)));
-	$convert = self::strToHex(self::strToHex($string));
-	$convert = str_replace(array(0), array(self::strToHex($key)), $convert);
-	return $convert;
+	$convert = self::strToHex($string);
+    $encoded = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $convert, MCRYPT_MODE_CBC, md5(md5($key))));
+	$converted = self::strToHex($encoded);
+	return $converted;
 }
 public static function decode($coded,$key)
 {
-	$convert=self::hexToStr(self::hexToStr($coded));
-	$convert = str_replace(array(self::strToHex($key)), array(0), $convert);
-	//$convert=str_replace(array("@%".$key."%@","*&".$key."^%"), array("\n","="), self::hexToStr(base64_decode($coded)));
-	return $convert;
+	$convert=self::hexToStr($coded);
+    $decoded = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($convert), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
+	$converted = self::strToHex($decoded);
+	return $converted;
 }
 public static function hexToStr($hex)
 {
@@ -57,20 +57,5 @@ public static function strToHex($string)
         return $sbin;
     }
 } // koniec Kodowanie
-
-?>
-<?php
-$string = "test string 0";
-$hex  = Encoding::encode($string,"hq68");
-$bin = Encoding::decode($hex,"hq68");
-
-
-echo htmlentities($hex)."\n";
-echo "\n";
-echo $bin."\n";
-echo "\n";
-//echo htmlentities(Encoding::decode(file_get_contents("./testcode")))."\n";
-
-echo "\n";
 
 ?>

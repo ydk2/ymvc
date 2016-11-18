@@ -120,11 +120,11 @@ function simplexml_import_simplexml(SimpleXMLElement $parent, SimpleXMLElement $
 
     return simplexml_import_xml($parent, $xml, $before);
 }
-
+/*
 function build_sorter($key) {
 	return function($a, $b) use ($key) {
 		return strnatcmp($a[$key], $b[$key]);
 	};
 }
-
+*/
 ?>

@@ -44,6 +44,7 @@ protected $only_registered_views;
 protected $registered_views;
 protected $global_access;
 protected $global_access_mode;
+protected $exceptions;
 
 public $name;
 public $access;
@@ -73,9 +74,10 @@ private static $obj;
             throw new SystemException('EXSLT not supported',20510);
         }
 		$this->name=get_class($this);
-		$this->only_registered_views = FALSE;
 		$this->global_access_mode = FALSE;
+		$this->only_registered_views = FALSE;
 		$this->registered_views = array();
+		$this->exceptions = FALSE;
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
 
 		if (!isset($this -> access)):
@@ -103,8 +105,14 @@ private static $obj;
 		if(isset($this->exception)){
 			throw new SystemException($this->emessage,$this->error);
 		}
+		if($this->exceptions !== FALSE){
+			throw new SystemException($this->emessage,$this->error);
+		}
 		}
         } catch (SystemException $e){
+			if($this->exceptions !== FALSE){
+				return $this->onException();
+			}
             $this->error = $e->Code();
             $this->emessage= $e->Message();
             return FALSE;
@@ -489,6 +497,9 @@ final public function CheckError() {
             	if(isset($this->exception)){
                     throw new SystemException($this->emessage,$this->error);
                 }
+				if($this->exceptions !== FALSE){
+					throw new SystemException($this->emessage,$this->error);
+				}
             	if($this->error == 20404){
                     throw new SystemException($this->emessage,$this->error);
                 }
@@ -505,7 +516,9 @@ final public function CheckError() {
         } catch (SystemException $e){
             $this->error = $e->Code();
             $this->emessage= $e->Message();
-			$this->action->end = $this->onException();
+			if($this->exceptions !== FALSE){
+				return $this->onException();
+			}
 			if(isset($this->exception)){
             	$this->exception->ViewData('error' ,$e->Code());
             	$this->exception->ViewData('emessage' ,$e->Message());

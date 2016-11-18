@@ -4,10 +4,10 @@ class Two extends XSLRender {
 	public function onInit(){
 		// call in __constructor
 		$this->registerPHPFunctions();
-		$this->model = new stdclass;
+		$this->setmodel (new stdclass);
 
-		$this->access = 3;
-		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
+		$this->setAccess(self::ACCESS_EDITOR);
+		$this->SetAccessMode(Helper::Session('user_access'),FALSE);
 		if($this->error > 0) {
 
 			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');

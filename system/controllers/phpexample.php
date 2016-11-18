@@ -11,17 +11,25 @@ class PHPExample extends PHPRender {
 
 		$this->ViewData('lang', Helper::Session('locale'));
 		$this->SetModel(SYS.M.'model');
-		if(Helper::Get('load')!='php')
-		$this->setView(SYS.V.'layout'.DS.'php');
-		$this->registerPHPFunctions();
-		
-		$this->only_registered(TRUE);
-		$this->RegisterView(SYS.V.strtolower($this->name));
-		$this->RegisterView(SYS.V.'layout'.DS.'php');
-		$this->RegisterView(SYS.V.'errors'.DS.'error');
 
+		$this->only_registered(TRUE);
+	//	if(Helper::Get('load')!='php'){
+		$this->setView(SYS.V.'layout'.DS.'php');
+		$this->RegisterView(SYS.V.'layout'.DS.'php');
+		$this->unRegisterView(SYS.V.strtolower($this->name));
 		$this->setAccess(self::ACCESS_USER);
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
+	//	} else {
+
+		$this->RegisterView(SYS.V.strtolower($this->name));
+	//	}
+		$this->registerPHPFunctions();
+		
+		
+		
+		
+
+		
 
 		$this->setParameter('','fixie','<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -31,11 +39,11 @@ class PHPExample extends PHPRender {
 		if(Helper::Get('action')=="error"){
            $this->error = 193502;
 		}
-//	if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
-	
 		if($this->error > 0) {
 			//echo $this->error ;
-		//	$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+			$this->RegisterView(SYS.V.'errors'.DS.'error');
+			$this->exceptions = TRUE;
+			//$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 		}
 		
 		
@@ -53,18 +61,27 @@ class PHPExample extends PHPRender {
 
 	public function onException(){
 		$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+
+		if(Helper::Get('load')=='sec'){
+		$this->exception->setParameter('','inside','yes');
+		$this->exception->setParameter('','show_link','no');
+		} else {
 		$this->exception->setParameter('','inside','no');
 		$this->exception->setParameter('','show_link','yes');
+		}
 		$this->exception->ViewData('title', Intl::_p('Error!!!',$this->name));
 		$this->exception->ViewData('header', Intl::_p('Error!!!',$this->name).' '.$this->error);
-		$this->exception->ViewData('alert',Intl::_p($this->emessage,'main_index').' - '.Intl::_p('Catch Error',$this->name).' - ');
+		$this->exception->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Catch Error',$this->name).' - ');
 		$this->exception->ViewData('error', $this->error);
+		return $this->exception->View();
 	}
 
 	public function onRun($model = NULL){
 		//$this->SetView(SYS.V.'time');
 
+		if(Helper::Get('load')=='php'){
 		if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
+		}
 		$this->ViewData('maintitle', Intl::_p('YMVC System',$this->name));
 		$this->ViewData('title', Intl::_p('PHPExample',$this->name));
 		$this->ViewData('smallheader', Intl::_p('View',$this->name));

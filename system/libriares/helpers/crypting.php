@@ -1,5 +1,5 @@
 <?php
-class crypting
+class Crypting
 {
     const HASH_ALGO = 'sha256';
 	const METHOD = 'aes-256-cbc';
