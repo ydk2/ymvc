@@ -41,6 +41,7 @@ msgid "You have ones choice: "
 msgid_plural "You have choices: "
 msgstr[0] "Masz jeden wybór: "
 msgstr[1] "Masz do wyboru: "
+msgstr[2] "Masz wyborów: "
 
 #: archive.php:14
 msgid "Tags:"

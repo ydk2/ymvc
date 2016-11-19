@@ -4,14 +4,11 @@ class PHPCall extends PHPRender {
 	public function onInit(){
 		// call in __constructor
 		$this->registerPHPFunctions();
-		Intl::set_path(SYS.LANGS);
+		Intl::set_path(SYS.LANGS.'phpcall');
 		$langs = Intl::available_locales(Intl::PO);
 		$lang_ = array('pl-PL','en-US');
 		//echo Intl::get_browser_lang($lang_);
-		$this->langs = $langs;
-		if(!Helper::Session('locale'))
-			Helper::Session_Set('locale',Intl::get_browser_lang($langs));
-			Intl::load_locale_simple(Helper::Session('locale'),$this->name);
+		Intl::po_locale_plural(Helper::Session('locale'),'phpcall');
 		
 	//	Intl::load_locale(Helper::Session('locale'),'po_phpcall');
 		
@@ -41,10 +38,11 @@ class PHPCall extends PHPRender {
 	
 	public function onRun($model = NULL){
 		if($this->error == 20404)
-			throw new SystemException(Intl::_("Not Found",'main_index'),$this->error);
-
-		$this->ViewData('title', Intl::_("No",$this->name));
-		$this->ViewData('header', str_replace('\n','<br>',Intl::_('Posts Tagged:',$this->name)));
+			throw new SystemException(Intl::_("Not Found"),$this->error);
+$text = "Whatever you were looking for was not found, but maybe try looking again or ".
+		"search using the form below.";
+		$this->ViewData('title', Intl::_($text,$this->name));
+		$this->ViewData('header', str_replace('\n','<br>',Intl::_('Category:',$this->name)));
 	}
 
 }

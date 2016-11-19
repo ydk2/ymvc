@@ -129,3 +129,7 @@ msgstr "Emuluj błąd"
 #: /Users/ydk2/Sites/ymvc/system/controllers/PHPexample.php:64
 msgid "Load Theme"
 msgstr "Załaduj szablon"
+
+#: /Users/ydk2/Sites/ymvc/system/controllers/PHPexample.php:64
+msgid "Restricted access"
+msgstr "Ograniczony dostęp"

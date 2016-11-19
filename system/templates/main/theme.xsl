@@ -136,13 +136,15 @@ border-right: 5px solid #c41818;
 							</ul>
 						</div>
 						<div class="col-md-10">
-							<div class="well">
-								<h2>
-									<xsl:value-of select="data/subheader"/>
-								</h2>
-								<p>
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<xsl:value-of select="data/subheader"/>
+									</h3>
+								</div>
+								<div class="panel-body">
 									<xsl:value-of select="data/content" disable-output-escaping="yes"/>
-								</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -188,7 +190,6 @@ border-right: 5px solid #c41818;
 			</div>
 		</footer>
 	</xsl:template>
-
 	<!-- langs -->
 	<xsl:template name="languages">
 		<div class="row">
@@ -196,10 +197,10 @@ border-right: 5px solid #c41818;
 				<div class="btn-toolbar" role="toolbar">
 					<div class="btn-group">
 						<xsl:for-each select="data/links/langs">
-						<a href="{@href}" hreflang="{@hreflang}" type="button" class="btn btn-link">
-							<i class="fa fa-fw fa-globe"></i>
-							<xsl:value-of select="node()"/>
-						</a>
+							<a href="{@href}" hreflang="{@hreflang}" type="button" class="btn btn-link">
+								<i class="fa fa-fw fa-globe"></i>
+								<xsl:value-of select="node()"/>
+							</a>
 						</xsl:for-each>
 					</div>
 				</div>

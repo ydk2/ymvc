@@ -5,6 +5,7 @@
         <xsl:apply-templates select="data/layout/views" />
     </xsl:template>
    <xsl:template match="data/layout/views">
+        <xsl:if test="node() != ''">
         <div>
             <xsl:if test="@id != ''">
                 <xsl:attribute name="id">
@@ -23,5 +24,6 @@
             </xsl:if>
             <xsl:value-of select="node()" disable-output-escaping="yes"/>
         </div>
+        </xsl:if>
     </xsl:template>
 </xsl:stylesheet>

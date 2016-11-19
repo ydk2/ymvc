@@ -16,7 +16,7 @@ class view extends XSLRender {
 		$this->time[1]=get_time();
 		$this->model->cpu = round(cpu_get_usage(),2);
 		$this->model->mem = convert(memory_get_usage());
-		$this->model->time = get_time_exec($this->model->time[0],$this->time[1]);
+		$this->model->time = get_time_exec(Config::$data['time'],$this->time[1]);
 		return TRUE;
 	}
 

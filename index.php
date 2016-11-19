@@ -37,6 +37,8 @@ Config::$data['template']['system'] = 'main';
 Config::$data['template']['application'] = 'default';
 Config::$data['template']['default'] = 'default';
 
+Config::$data['time'] = get_time();
+
 Config::$data['default']['database']['type'] = 'sqlite';
     Config::$data['default']['cpu_limit'] = 15;
         //$model = new stdClass;
@@ -77,6 +79,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
     SYS.C.'errors'.DS.'systemerror',
     SYS.C.'theme',
     SYS.C.'view',
+    SYS.C.'phpcall',
     SYS.C.'layout'.DS.'layout'
     );
     
@@ -97,7 +100,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
     } elseif(Helper::Get('load')=="col") {
         Loader::show_module(APP.C.'layout',APP.V.'columns');
     } elseif(Helper::Get('load')=="sec") {
-        Loader::show_module(SYS.C.'layout'.DS.'layout',SYS.V.'layout'.DS.'sections');
+        Loader::show_module(APP.C.'applayout',SYS.V.'layout'.DS.'sections');
     } elseif(Helper::Get('load')=="layout") {
         Loader::show_restricted_view(SYS.C.'layout',SYS.V.'layout');
     } else {
