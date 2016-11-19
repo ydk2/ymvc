@@ -1,5 +1,5 @@
 <?php
-class Layout extends XSLRender {
+class Layouts extends XSLRender {
 	private $time;
 	public function onInit(){
 		// call in __constructor

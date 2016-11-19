@@ -35,10 +35,11 @@ abstract class Config {
 		),
 		'template'=>array(
 			'index'=>'new',
+			'default'=>'default',
+			'system'=>'default',
+			'application'=>'default',
 			'any'=>'new',
 			'admin'=>'admin',
-			'system'=>'new',
-			'default'=>'default',
 			'user'=>'default'
 		),
 		'default'=>array(

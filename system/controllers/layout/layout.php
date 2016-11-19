@@ -4,7 +4,7 @@ class Layout extends XSLRender {
 	public function onInit(){
 		// call in __constructor
 		$this->SetModel(SYS.M.'model');
-		$this->SetView(APP.V.strtolower($this->name));
+		//$this->SetView(APP.V.strtolower($this->name));
 		//echo $this->view;
 		if(isset($_GET['error']))
 		$this->error = $_GET['error'];
@@ -15,7 +15,7 @@ class Layout extends XSLRender {
 
 	public function onEnd(){
 		// call after render view
-		if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
+		//if($this->error > 0) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'error');
 		return TRUE;
 	}
 
@@ -32,23 +32,25 @@ class Layout extends XSLRender {
 		$this->routings();
 	}
 	public function routings(){
-		$disabled = array('error','errors','data','item','action','layout','test');
+		$disabled = array('error','errors','data','item','action','layout','test','load');
 		$default = array('one'=>'one');
 		$array = array('phpexample'=>'layout/php','two'=>'two','one'=>'one');
 
 		$sections = array(
-			'phpexample'=>array('layout/php','php','','float:left;'),
+			'phpexample'=>array('layout/php','php','',''),
 			'two'=>array('two','','',''),
 			'one'=>array('one','','',''),
 			);
-		
+		$this->sections($sections,$disabled,SYS);
 		//$this->ViewData('layout', '');
+	/*
 		if(Helper::Get('load')=="row") 
 		$xml = $this->rows($array,$disabled,SYS);
 		if(Helper::Get('load')=="col") 
 		$xml = $this->columns($array,$disabled,SYS);
 		if(Helper::Get('load')=="sec") 
 		$xml = $this->sections($sections,$disabled,SYS);
+	*/
 		//echo $xml;
 		//$this->ViewData('content',simplexml_load_string($xml));
 		//simplexml_import_xml($this->data,$xml);

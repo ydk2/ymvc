@@ -31,6 +31,11 @@ Config::Init();
 * @since      File available since Release 1.0.0
 
 */
+Config::$data['template']['admin'] = 'default';
+Config::$data['template']['user'] = 'default';
+Config::$data['template']['system'] = 'main';
+Config::$data['template']['application'] = 'default';
+Config::$data['template']['default'] = 'default';
 
 Config::$data['default']['database']['type'] = 'sqlite';
     Config::$data['default']['cpu_limit'] = 15;
@@ -40,7 +45,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
         Helper::Session_Set('user_access',Helper::Get('access'));
         else
         if(!Helper::Session('user_access'))
-        Helper::Session_Set('user_access',1000);
+        Helper::Session_Set('user_access',10);
         
         
         
@@ -69,7 +74,9 @@ Config::$data['default']['database']['type'] = 'sqlite';
     SYS.C.'two',
     SYS.C.'xslexample',
     SYS.C.'phpexample',
-    SYS.C.'errors'.DS.'systemerror'
+    SYS.C.'errors'.DS.'systemerror',
+    SYS.C.'theme',
+    SYS.C.'layout'.DS.'layout'
     );
     
     if(Helper::Get('load')=="php"){
@@ -77,7 +84,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
     } elseif(Helper::Get('load')=="xsl"){
         Loader::show_restricted_view(SYS.C.'xslexample',SYS.V.'xslexample');
     } elseif(Helper::Get('load')=="theme"){
-        Loader::show_restricted_view(SYS.C.'theme',SYS.THEMES.'default'.DS.'theme');
+        Loader::show_restricted_view(SYS.C.'theme',SYS.THEMES.Config::$data['template']['system'].DS.'theme');
     } elseif(Helper::Get('load')=="route"){
         Loader::show_restricted_view(SYS.C.'route',SYS.V.'route');
     } elseif(Helper::Get('load')=="test"){
@@ -89,11 +96,11 @@ Config::$data['default']['database']['type'] = 'sqlite';
     } elseif(Helper::Get('load')=="col") {
         Loader::show_module(APP.C.'layout',APP.V.'columns');
     } elseif(Helper::Get('load')=="sec") {
-        Loader::show_module(APP.C.'layout',APP.V.'sections');
+        Loader::show_module(SYS.C.'layout'.DS.'layout',SYS.V.'layout'.DS.'sections');
     } elseif(Helper::Get('load')=="layout") {
         Loader::show_restricted_view(SYS.C.'layout',SYS.V.'layout');
     } else {
-        Loader::show_restricted_view(SYS.C.'xslexample',SYS.V.'xslexample');
+        Loader::show_restricted_view(SYS.C.'theme',SYS.THEMES.Config::$data['template']['system'].DS.'theme');
     }
     // Loader::get_module_show(SYS.C.'layout',SYS.THEMES.'default'.DS.'theme');
     //$test = Helper::Call(SYS.C.'layout',SYS.V.'layout');

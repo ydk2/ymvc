@@ -39,6 +39,7 @@ class PHPExample extends PHPRender {
 			
 			
 			$this->exceptions = TRUE;
+			throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 		}
 		
 		
@@ -73,7 +74,7 @@ class PHPExample extends PHPRender {
 
 	public function onRun($model = NULL){
 		//$this->SetView(SYS.V.'time');
-		if($this->error == 193502) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+	//	if($this->error == 193502) $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
 		if(Helper::Get('load')=='php'){
 		if($this->error > 0) throw new SystemException(Intl::_p('Error',$this->name),$this->error);
 		}
@@ -107,13 +108,13 @@ class PHPExample extends PHPRender {
 		$links->addAttribute('href', HOST_URL.'?load=php');
 
 		$links = $this->data->links->addChild('items',Intl::_p('Any',$this->name));
-		$links->addAttribute('href', HOST_URL.'?load=php&access=1000');
+		$links->addAttribute('href', HOST_URL.'?load=php&access=10');
 
 		$links = $this->data->links->addChild('items',Intl::_p('User',$this->name));
-		$links->addAttribute('href', HOST_URL.'?load=php&access=500');
+		$links->addAttribute('href', HOST_URL.'?load=php&access=5');
 
 		$links = $this->data->links->addChild('items',Intl::_p('Admin',$this->name));
-		$links->addAttribute('href', HOST_URL.'?load=php&access=0');
+		$links->addAttribute('href', HOST_URL.'?load=php&access=1');
 
 		foreach ($this->langs as $key => $value) {
 		$links = $this->data->links->addChild('items',Intl::_p('Locale',$this->name).' '.$value);

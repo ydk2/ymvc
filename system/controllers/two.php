@@ -7,16 +7,12 @@ class Two extends XSLRender {
 		$this->setmodel (new stdclass);
 
 		$this->setAccess(self::ACCESS_EDITOR);
-		$this->SetAccessMode(Helper::Session('user_access'),FALSE);
+		$this->SetAccessMode(Helper::Session('user_access'),true);
+		$this->exceptions = true;
 		if($this->error > 0) {
 
-			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
-			$this->exception->setParameter('','inside','yes');
-			$this->exception->setParameter('','show_link','yes');
-			$this->exception->ViewData('title', Intl::_p('Error!!!','main_index'));
-			$this->exception->ViewData('header', Intl::_p('Error!!!','main_index').' '.$this->error);
-			$this->exception->ViewData('alert',Intl::_p($this->emessage,'main_index').' - '.Intl::_p('Try get more privilages','main_index').' - ');
-			$this->exception->ViewData('error', $this->error);
+			//$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+			
 		}
 	}
 
@@ -32,6 +28,19 @@ class Two extends XSLRender {
 
 	public function onException(){
 		//echo "";
+		if($this->error == 20503) return $this->showerror();
+		
+	}
+	public function showerror()
+	{
+		$error=$this->NewControllerB(SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+		$error->setParameter('','inside','yes');
+		$error->setParameter('','show_link','no');
+		$error->ViewData('title', Intl::_p('Error!!!'));
+		$error->ViewData('header', Intl::_p('Error!!!').' '.$this->error);
+		$error->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Try get more privilages').' - ');
+		$error->ViewData('error', $this->error);
+		return $error->View();
 	}
 
 	public function onRun($model = NULL){

@@ -29,12 +29,12 @@ require_once(ROOT.CORE.'systemexception'.EXT);
  */
  
 class PHPRender {
-	const ACCESS_ANY = 1000;
-	const ACCESS_USER = 500;
-	const ACCESS_EDITOR = 3;
-	const ACCESS_MODERATOR = 2;
-	const ACCESS_SYSTEM = 1;
-	const ACCESS_ADMIN = 0;
+	const ACCESS_ANY = 10;
+	const ACCESS_USER = 5;
+	const ACCESS_EDITOR = 4;
+	const ACCESS_MODERATOR = 3;
+	const ACCESS_SYSTEM = 2;
+	const ACCESS_ADMIN = 1;
 
 private $registerPHPFunctions;
 private $parameters;

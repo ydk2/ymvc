@@ -32,14 +32,7 @@ class XSLExample extends XSLRender {
 		}
 
 		if($this->error > 0) {
-		$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
-		$this->exception->setParameter('','inside','no');
-		$this->exception->setParameter('','show_link','yes');
-		$this->exception->ViewData('title', Intl::_p('Error!!!',$this->name));
-		$this->exception->ViewData('header', Intl::_p('Error!!!',$this->name).' '.$this->error);
-		$this->exception->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Catch Error',$this->name).' - ');
-		$this->exception->ViewData('error', $this->error);
-			
+			$this->exceptions = TRUE;
 		}
 	}
 
@@ -61,6 +54,7 @@ class XSLExample extends XSLRender {
 		$this->exception->ViewData('header', Intl::_p('Error!!!',$this->name).' '.$this->error);
 		$this->exception->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Catch Error',$this->name).' - ');
 		$this->exception->ViewData('error', $this->error);
+		return $this->exception->View();
 	}
 
 	public function onRun($model = NULL){
@@ -97,13 +91,13 @@ class XSLExample extends XSLRender {
 		$links->addAttribute('href', HOST_URL.'?load=xsl');
 
 		$links = $this->data->links->addChild('items',Intl::_p('Any',$this->name));
-		$links->addAttribute('href', HOST_URL.'?access=1000');
+		$links->addAttribute('href', HOST_URL.'?access=10');
 
 		$links = $this->data->links->addChild('items',Intl::_p('User',$this->name));
-		$links->addAttribute('href', HOST_URL.'?access=500');
+		$links->addAttribute('href', HOST_URL.'?access=5');
 
 		$links = $this->data->links->addChild('items',Intl::_p('Admin',$this->name));
-		$links->addAttribute('href', HOST_URL.'?access=0');
+		$links->addAttribute('href', HOST_URL.'?access=1');
 
 		foreach ($this->langs as $key => $value) {
 		$links = $this->data->links->addChild('items',Intl::_p('Locale',$this->name).' '.$value);
