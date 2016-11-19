@@ -1,7 +1,6 @@
 <main class="main">
 
-<section class="section">
-<div class="container">
+
 <div class="row">
 <div class="col-md-2">
 <ul class="list-group">
@@ -19,7 +18,6 @@
 </div>
 </div>
 </div>
-</div>
-</section>
+
 
 </main> <!-- main -->

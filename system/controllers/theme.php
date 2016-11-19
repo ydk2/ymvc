@@ -64,20 +64,33 @@ class Theme extends XSLRender {
 		
 		$this->ViewData('subheader', Intl::_p('Theme modules'));
 		//$this->ViewData('content', Intl::_p("Content of modules" ));
-		$this->SetModule($this->model,SYS.V.'layout'.DS.'sections',SYS.C.'layout'.DS.'layout');
-		$content = $this->GetModule(SYS.C.'layout'.DS.'layout');
-		$content = ($content)? htmlspecialchars($content->View()):"";
-		$this->ViewData('content', $content);
-		
-		
-		
-		
-		
+
+		$this->model->disabled = array('error','errors','data','item','action','layout','test','load');
+		$this->model->default = array('one'=>'one');
+		$this->model->array = array('phpexample'=>'layout/php','two'=>'two','one'=>'one');
+
+		$this->model->sections = array(
+			'phpexample'=>array('layout/php','php','col-md-12',''),
+			'two'=>array('two','','col-md-6',''),
+			'one'=>array('one','','col-md-6',''),
+			'view'=>array('time','','col-md-12',''),
+			);
+
+		$this->contents();
+
 		$this->headers();
 		$this->mainmenu();
 		$this->sidemenu();
 		$this->langmenu();
 		$this->footer();
+	}
+
+	protected function contents()
+	{
+		$this->SetModule($this->model,SYS.V.'layout'.DS.'views',SYS.C.'layout'.DS.'layout');
+		$content = $this->GetModule(SYS.C.'layout'.DS.'layout');
+		$content = ($content)? htmlspecialchars($content->View()):"";
+		$this->ViewData('content', $content);
 	}
 
 	protected function footer()

@@ -567,16 +567,15 @@ final public function CheckError() {
 * Method used to set new subcontroller in $this->modules Array of XSLRender or PHPRender objects
 * $controller string value is stored as name in modules array
 * @access public
-* @param mixed $model Can be object or path or NULL, can set later in loaded controller
 * @param string $view Path for view
 * @param string $controller 
 **/ 	
-	public final function SetModule($model, $view, $controller){
+	public final function SetModule($view, $controller){
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
 			if(!class_exists($end)) return FALSE;
-				$this->modules[$controller] = new $end($model,$view);
+				$this->modules[$controller] = new $end($this->model,$view);
 		}
 	}
 	

@@ -3,7 +3,7 @@ class Layout extends XSLRender {
 
 	public function onInit(){
 		// call in __constructor
-		$this->SetModel(SYS.M.'model');
+		//$this->SetModel(SYS.M.'model');
 		//$this->SetView(APP.V.strtolower($this->name));
 		//echo $this->view;
 		if(isset($_GET['error']))
@@ -41,7 +41,7 @@ class Layout extends XSLRender {
 			'two'=>array('two','','',''),
 			'one'=>array('one','','',''),
 			);
-		$this->sections($sections,$disabled,SYS);
+		$this->views($this->model->sections,$this->model->disabled,SYS);
 		//$this->ViewData('layout', '');
 	/*
 		if(Helper::Get('load')=="row") 
@@ -70,24 +70,18 @@ class Layout extends XSLRender {
 	}
 
 
-	public function columns($array,$disabled,$mode=SYS){
+	public function views($array,$disabled,$mode=SYS){
 		$this->ViewData('layout', '');
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
-				$col = $this->data->layout->addChild('columns',Loader::get_restricted_view($mode.C.$key,$mode.V.$value));
-				$col->addAttribute('size', "6");	
+				$col = $this->data->layout->addChild('views',Loader::get_restricted_view($mode.C.$key,$mode.V.$value[0]));
+				$col->addAttribute('style', $value[3]);
+				$col->addAttribute('class', $value[2]);
+				$col->addAttribute('id', $value[1]);	
 			}
 		}
 	}
 
-	public function rows($array,$disabled,$mode=SYS){
-		$this->ViewData('layout', '');
-		foreach ($array as $key => $value) {
-			if(!in_array($key,$disabled)){
-				$this->data->layout->addChild('rows',Loader::get_restricted_view($mode.C.$key,$mode.V.$value));	
-			}
-		}
-	}
 
 	public function route($array,$disabled,$default,$mode=SYS){
 		$controller = key($default);

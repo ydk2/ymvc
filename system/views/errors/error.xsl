@@ -67,7 +67,10 @@ border-right: 5px solid #c41818;
 <main class="main">
 
 <div class="section">
+
+<div class="container">
 <xsl:call-template name="inside"/>
+</div>
 </div>
 
 </main>
@@ -78,7 +81,6 @@ border-right: 5px solid #c41818;
 </xsl:template>
 
 <xsl:template name="inside">
-<div class="container">
 <div class="row">
 <div class="col-md-12">
 <div class="jumbotron onright onleft">
@@ -94,7 +96,6 @@ border-right: 5px solid #c41818;
 <a class="btn btn-danger btn-large" href="{@href}"><xsl:value-of select="node()"/></a>
 </xsl:for-each>
 </xsl:if>
-</div>
 </div>
 </div>
 </div>

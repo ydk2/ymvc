@@ -76,6 +76,7 @@ Config::$data['default']['database']['type'] = 'sqlite';
     SYS.C.'phpexample',
     SYS.C.'errors'.DS.'systemerror',
     SYS.C.'theme',
+    SYS.C.'view',
     SYS.C.'layout'.DS.'layout'
     );
     
