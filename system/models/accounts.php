@@ -7,7 +7,7 @@ class Accounts extends DBConnect {
 		//var_dump($data);
 		
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
-		$this->lang=Router::session('locale');
+		$this->lang=Helper::session('locale');
 		$this->lang_menu = 'en';
 		$this->lang_strings=$this->get_site_data_lang();
 		Intl::$strings=$this->lang_strings;
@@ -27,7 +27,7 @@ class Accounts extends DBConnect {
 	public function get_page_title($link) {
 		$page = $this -> db -> prepare("SELECT title FROM ".DBPREFIX."pages WHERE link  =  ?");
 		$page -> execute([$link]);
-		$item = $page -> fetchAll(\PDO::FETCH_NAMED);
+		$item = $page -> fetchAll(PDO::FETCH_NAMED);
 		if ($item) :
 			return $item[0]['title'];
 		endif;
@@ -36,8 +36,8 @@ class Accounts extends DBConnect {
 
 	public function login() {
 		/*** if we are here the data is valid and we can insert it into database ***/
-		$name = filter_var(Router::post('name'), FILTER_SANITIZE_STRING);
-		$password = filter_var(Router::post('password'), FILTER_SANITIZE_STRING);
+		$name = filter_var(Helper::post('name'), FILTER_SANITIZE_STRING);
+		$password = filter_var(Helper::post('password'), FILTER_SANITIZE_STRING);
 
 		/*** now we can encrypt the password ***/
 		$password = sha1($password);
@@ -55,16 +55,16 @@ class Accounts extends DBConnect {
 			if ($user_id == FALSE) {
 				return 101;
 			} else {
-				Router::session_set('id', $user_id);
-				//Router::session_set('user_name', $row['name']);
-				//Router::session_set('user_email', $row['email']);
+				Helper::session_set('id', $user_id);
+				//Helper::session_set('user_name', $row['name']);
+				//Helper::session_set('user_email', $row['email']);
 				//$search = "%$search%";
 				$user_data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."users WHERE name = ? OR email = ?");
 				$user_data -> execute([$name, $name]);
 				$data = $user_data -> fetchAll();
-				Router::session_set('user_name', $data[0]['name']);
-				Router::session_set('user_email', $data[0]['email']);
-				Router::session_set('user_role', $data[0]['role']);
+				Helper::session_set('user_name', $data[0]['name']);
+				Helper::session_set('user_email', $data[0]['email']);
+				Helper::session_set('user_role', $data[0]['role']);
 				//var_dump($data[0]);
 				//while ($row = $stmt -> fetch()) {
 
@@ -79,9 +79,9 @@ class Accounts extends DBConnect {
 	}
 
 	public function register() {
-		$name = filter_var(Router::post('name'), FILTER_SANITIZE_STRING);
-		$email = filter_var(Router::post('email'), FILTER_SANITIZE_STRING);
-		$password = filter_var(Router::post('password'), FILTER_SANITIZE_STRING);
+		$name = filter_var(Helper::post('name'), FILTER_SANITIZE_STRING);
+		$email = filter_var(Helper::post('email'), FILTER_SANITIZE_STRING);
+		$password = filter_var(Helper::post('password'), FILTER_SANITIZE_STRING);
 		$password = sha1($password);
 		try {
 
@@ -117,7 +117,7 @@ class Accounts extends DBConnect {
 	public function get_menu($groups) {
 		$h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."menus WHERE lang=? AND groups=? ORDER BY pos ASC");
 		$h -> execute([$this->lang_menu,$groups]);
-		$pages = $h -> fetchAll(\PDO::FETCH_NAMED);
+		$pages = $h -> fetchAll(PDO::FETCH_NAMED);
 		if ($pages) :
 			usort($pages, $this -> build_sorter('pos'));
 			return $pages;
@@ -177,7 +177,7 @@ class Accounts extends DBConnect {
 	public function get_site_data_item($name='') {
 		$data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."sitedata WHERE name=?");
 		$data->execute([$name]);
-		$string = $data -> fetchAll(\PDO::FETCH_NAMED);
+		$string = $data -> fetchAll(PDO::FETCH_NAMED);
 		if($string):
 		return Intl::_($string[0]['string']);
 		endif;
@@ -188,7 +188,7 @@ class Accounts extends DBConnect {
 		$array = array();
 		$data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."translatedstrings WHERE lang=?");
 		$data->execute([$this->lang]);
-		$items = $data -> fetchAll(\PDO::FETCH_NAMED);
+		$items = $data -> fetchAll(PDO::FETCH_NAMED);
 		if($items):
 		foreach ($items as $key => $value) {
 			$array[$value['name']]=$value['string'];

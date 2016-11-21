@@ -28,9 +28,21 @@ class Two extends XSLRender {
 
 	public function onException(){
 		//echo "";
-		if($this->error == 20503) return $this->showerror();
+		if($this->error == 20503) return $this->showwarning();
 		
 	}
+	public function showwarning()
+	{
+		$error=$this->NewControllerB(SYS.V.'errors'.DS.'warning',SYS.C.'errors'.DS.'systemerror');
+		$error->setParameter('','inside','yes');
+		$error->setParameter('','show_link','no');
+		$error->ViewData('title', Intl::_p('Warning!!!'));
+		$error->ViewData('header', Intl::_p('Warning!!!').' '.$this->error);
+		$error->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Try get more privilages').' - ');
+		$error->ViewData('error', $this->error);
+		return $error->View();
+	}
+
 	public function showerror()
 	{
 		$error=$this->NewControllerB(SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');

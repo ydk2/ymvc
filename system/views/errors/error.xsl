@@ -62,43 +62,57 @@ border-right: 5px solid #c41818;
 ]]>
 </style>
 </head>
-<body class="bg-danger">
-
-<main class="main">
-
-<div class="section">
-
-<div class="container">
-<xsl:call-template name="inside"/>
-</div>
-</div>
-
-</main>
-
-</body>
-</html>
-
-</xsl:template>
-
-<xsl:template name="inside">
-<div class="row">
-<div class="col-md-12">
-<div class="jumbotron onright onleft">
-<h1 id="heads"><span class="glyphicon glyphicon-warning-sign"></span><xsl:text> </xsl:text><xsl:value-of select="data/header"  disable-output-escaping="yes"/></h1>
-<blockquote class="lead onleft">
-<p class="lead text-danger">
-<b><xsl:value-of select="data/alert" disable-output-escaping="yes"/></b>
-<xsl:text> </xsl:text><span class="label label-danger"><xsl:value-of select="data/error"/></span>
-</p>
-</blockquote>
-<xsl:if test="$inside != 'yes' or $show_link = 'yes'">
-<xsl:for-each select="data/links/a">
-<a class="btn btn-danger btn-large" href="{@href}"><xsl:value-of select="node()"/></a>
-</xsl:for-each>
-</xsl:if>
-</div>
-</div>
-</div>
-</xsl:template>
-
+			<body class="bg-danger">
+				<main class="main">
+					<div class="section">
+						<div class="container">
+							<div class="col-md-12">
+								<div class="jumbotron">
+									<h1 id="heads" class="text-danger">
+										<span class="fa fa-3x fa-fw fa-exclamation-circle"></span>
+										<xsl:text> </xsl:text>
+										<xsl:value-of select="data/header" disable-output-escaping="yes"/>
+									</h1>
+									<p class="lead text-danger">
+										<b>
+											<xsl:value-of select="data/alert" disable-output-escaping="yes"/>
+										</b>
+										<xsl:text> </xsl:text>
+										<span class="label label-danger">
+											<xsl:value-of select="data/error"/>
+										</span>
+									</p>
+									<xsl:if test="$inside != 'yes' or $show_link = 'yes'">
+										<xsl:for-each select="data/links/a">
+											<a class="btn btn-large btn-danger" href="{@href}">
+												<xsl:value-of select="node()"/>
+											</a>
+										</xsl:for-each>
+									</xsl:if>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+			</body>
+		</html>
+	</xsl:template>
+	<xsl:template name="inside">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="alert alert-dismissable alert-danger lead">
+					<button contenteditable="false" type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<strong>
+						<span class="fa fa-3x fa-fw fa-exclamation-circle"></span>
+						<xsl:text> </xsl:text>
+						<xsl:value-of select="data/title" disable-output-escaping="yes"/>
+					</strong>
+					<xsl:text> </xsl:text>
+					<xsl:value-of select="data/alert" disable-output-escaping="yes"/>
+					<xsl:text> </xsl:text>
+					<xsl:value-of select="data/error"/>
+				</div>
+			</div>
+		</div>
+	</xsl:template>
 </xsl:stylesheet>

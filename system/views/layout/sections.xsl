@@ -6,6 +6,7 @@
         <xsl:apply-templates select="data/layout/sections" />
     </xsl:template>
     <xsl:template match="data/layout/sections">
+        <xsl:if test="node() != ''">
         <section>
             <xsl:if test="@id != ''">
                 <xsl:attribute name="id">
@@ -24,5 +25,6 @@
             </xsl:if>
             <xsl:value-of select="node()" disable-output-escaping="yes"/>
         </section>
+        </xsl:if>
     </xsl:template>
 </xsl:stylesheet>

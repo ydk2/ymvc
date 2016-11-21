@@ -65,7 +65,7 @@ class One extends XSLRender {
 
 	public function onRun($model = NULL){
 		if($this->error == 11023) {
-			$this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+			$this->Exceptions($this->model,SYS.V.'errors'.DS.'info',SYS.C.'errors'.DS.'systemerror');
 			$this->exception->setParameter('','inside','yes');
 			$this->exception->setParameter('','show_link','yes');
 			$this->exception->ViewData('title', "Inside Error!!! ".$this->error);

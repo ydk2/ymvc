@@ -17,7 +17,7 @@ class PHPExample extends PHPRender {
 		$this->setView(SYS.V.'layout'.DS.'php');
 		$this->RegisterView(SYS.V.'layout'.DS.'php');
 		$this->unRegisterView(SYS.V.strtolower($this->name));
-		$this->setAccess(self::ACCESS_USER);
+		$this->setAccess(self::ACCESS_ANY);
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
 		} else {
 
