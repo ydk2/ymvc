@@ -80,6 +80,8 @@ Config::$data['default']['database']['type'] = 'sqlite';
     SYS.C.'theme',
     SYS.C.'view',
     SYS.C.'phpcall',
+    SYS.C.'admin',
+    SYS.C.'menus',
     SYS.C.'layout'.DS.'layout'
     );
     

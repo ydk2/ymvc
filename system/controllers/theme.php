@@ -75,7 +75,7 @@ class Theme extends XSLRender {
 		
 		foreach ($_GET as $key => $value) {
 			if(!in_array($key,$this->model->disabled) && $this->ControllerExists(SYS.C.$key)){
-				$this->model->sections[$key] = array($value,'','col-md-6','');
+				$this->model->sections[$key] = array($value,'','col-md-12','');
 			}
 		}
 

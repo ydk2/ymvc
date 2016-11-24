@@ -1,0 +1,316 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="pl"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="pl"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="pl"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pl"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>https://localhost/ymvc | b</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+  <!-- CSS: implied media=all -->
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="https://localhost/ymvc/templates/new/theme/css/style.css">
+  <style type="text/css">
+
+  </style>
+  <!-- end CSS-->
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+  <!-- All JavaScript at the bottom, except for Modernizr / Respond.
+       Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
+       For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
+<script type="text/javascript" src="https://localhost/ymvc/templates/new/theme/bootstrap/themes/start/js/jquery.js"></script>
+    <script type="text/javascript" src="https://localhost/ymvc/templates/new/theme/js/jquery.min.js"></script>
+    <script type="text/javascript" src="https://localhost/ymvc/templates/new/theme/js/bootstrap.min.js"></script>
+    <link href="https://localhost/ymvc/templates/new/theme/css/font-awesome.min.css"
+    rel="stylesheet" type="text/css">
+    <link href="https://localhost/ymvc/templates/new/theme/bootstrap/themes/default/bootstrap.css"
+    rel="stylesheet" type="text/css">
+</head><body>
+<div id="root">
+
+
+
+
+
+	    <div class="section section-warning">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="page-header">
+              <h1>Ymvc <small>System</small></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><span>Brand</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+				        </div>
+      </div>
+    </div>
+   -->
+
+
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="?index=menu">Ymvc</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+<a href="https://localhost/ymvc/?index=menu&data=a" class="dropdown-toggle" data-toggle="dropdown" role="menu-item" aria-expanded="true">a <span class="caret"></span></a>
+<ul class="dropdown-menu sub-menu" role="menu-item">
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=a">a</a>
+</li>
+<li class="dropdown">
+<a href="https://localhost/ymvc/?index=menu&data=b" class="dropdown-toggle" data-toggle="dropdown" role="menu-item" aria-expanded="true">b <span class="caret"></span></a>
+<ul class="dropdown-menu sub-menu" role="menu-item">
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=b">b</a>
+</li>
+<li class="dropdown">
+<a href="https://localhost/ymvc/?index=menu&data=d" class="dropdown-toggle" data-toggle="dropdown" role="menu-item" aria-expanded="true">d <span class="caret"></span></a>
+<ul class="dropdown-menu sub-menu" role="menu-item">
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=d">d</a>
+</li>
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=g">g</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=e">e</a>
+</li>
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=a,z">z</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=f">f</a>
+</li>
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=h">h</a>
+</li>
+<li class="dropdown">
+<a href="https://localhost/ymvc/?index=menu&data=i" class="dropdown-toggle" data-toggle="dropdown" role="menu-item" aria-expanded="true">i <span class="caret"></span></a>
+<ul class="dropdown-menu sub-menu" role="menu-item">
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=i">i</a>
+</li>
+<li>
+<a href="https://localhost/ymvc/?index=menu&data=c">c</a>
+</li>
+</ul>
+</li>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>
+
+<section id="main" role="main">
+	    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="https://unsplash.imgix.net/photo-1423347834838-5162bb452ca7?w=1024&amp;q=50&amp;fm=jpg&amp;s=c255e589621f06513c1d123c7323fe9c"
+            class="img-responsive">
+          </div>
+          <div class="col-md-6">
+            <h1>b</h1>
+            <h3>10 - April - 2016</h3>
+            <p>ytres</p>
+            <p>rrr</p>
+            <p>	<a href="?index=menu">menu</a> <a href="?core=core">core</a>  <a href="?admin=login">admin</a></p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="list-group">
+			  <li class="list-group-item">https://localhost/ymvc</li>
+              <li class="list-group-item">
+              	
+              <table  class="table">
+			<thead>
+                <tr>
+                  <th>CONSTANT</th>
+                  <th>VALUE</th>
+                </tr>
+              </thead>
+              <tbody><tr><td>PHP_SELF</td><td>/ymvc/index.php</td></tr><tr><td>argv</td><td>-</td></tr><tr><td>argc</td><td>-</td></tr><tr><td>GATEWAY_INTERFACE</td><td>CGI/1.1</td></tr><tr><td>SERVER_ADDR</td><td>::1</td></tr><tr><td>SERVER_NAME</td><td>localhost</td></tr><tr><td>SERVER_SOFTWARE</td><td>Apache/2.4.12 (Unix) OpenSSL/1.0.1m PHP/5.6.8 mod_perl/2.0.8-dev Perl/v5.16.3</td></tr><tr><td>SERVER_PROTOCOL</td><td>HTTP/1.1</td></tr><tr><td>REQUEST_METHOD</td><td>GET</td></tr><tr><td>REQUEST_TIME</td><td>1460280160</td></tr><tr><td>REQUEST_TIME_FLOAT</td><td>1460280160.61</td></tr><tr><td>QUERY_STRING</td><td>data=b</td></tr><tr><td>DOCUMENT_ROOT</td><td>/Users/ydk2/Sites</td></tr><tr><td>HTTP_ACCEPT</td><td>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</td></tr><tr><td>HTTP_ACCEPT_CHARSET</td><td>-</td></tr><tr><td>HTTP_ACCEPT_ENCODING</td><td>gzip, deflate, br</td></tr><tr><td>HTTP_ACCEPT_LANGUAGE</td><td>pl</td></tr><tr><td>HTTP_CONNECTION</td><td>keep-alive</td></tr><tr><td>HTTP_HOST</td><td>localhost</td></tr><tr><td>HTTP_REFERER</td><td>https://localhost/ymvc/?index=menu&data=h</td></tr><tr><td>HTTP_USER_AGENT</td><td>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0) Gecko/20100101 Firefox/45.0</td></tr><tr><td>HTTPS</td><td>on</td></tr><tr><td>REMOTE_ADDR</td><td>::1</td></tr><tr><td>REMOTE_HOST</td><td>-</td></tr><tr><td>REMOTE_PORT</td><td>54003</td></tr><tr><td>REMOTE_USER</td><td>-</td></tr><tr><td>REDIRECT_REMOTE_USER</td><td>-</td></tr><tr><td>SCRIPT_FILENAME</td><td>/Users/ydk2/Sites/ymvc/index.php</td></tr><tr><td>SERVER_ADMIN</td><td>info@ydk2.tk</td></tr><tr><td>SERVER_PORT</td><td>443</td></tr><tr><td>SERVER_SIGNATURE</td><td></td></tr><tr><td>PATH_TRANSLATED</td><td>-</td></tr><tr><td>SCRIPT_NAME</td><td>/ymvc/index.php</td></tr><tr><td>REQUEST_URI</td><td>/ymvc/?data=b</td></tr><tr><td>PHP_AUTH_DIGEST</td><td>-</td></tr><tr><td>PHP_AUTH_USER</td><td>-</td></tr><tr><td>PHP_AUTH_PW</td><td>-</td></tr><tr><td>AUTH_TYPE</td><td>-</td></tr><tr><td>PATH_INFO</td><td>-</td></tr><tr><td>ORIG_PATH_INFO</td><td>-</td></tr></tbody></table>              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <ul id="navs" class="nav nav-pills">
+			<li><a href="https://localhost/ymvc/?index=menu&data=a">a</a>
+<ul class="nav">
+<li><a href="https://localhost/ymvc/?index=menu&data=b">b</a>
+<ul class="nav">
+<li><a href="https://localhost/ymvc/?index=menu&data=d">d</a>
+<ul class="nav">
+<li><a href="https://localhost/ymvc/?index=menu&data=g">g</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://localhost/ymvc/?index=menu&data=e">e</a>
+</li>
+<li><a href="https://localhost/ymvc/?index=menu&data=a,z">z</a>
+</li>
+</ul>
+</li>
+<li><a href="https://localhost/ymvc/?index=menu&data=f">f</a>
+</li>
+<li><a href="https://localhost/ymvc/?index=menu&data=h">h</a>
+</li>
+<li><a href="https://localhost/ymvc/?index=menu&data=i">i</a>
+<ul class="nav">
+<li><a href="https://localhost/ymvc/?index=menu&data=c">c</a>
+</li>
+</ul>
+</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>    
+   
+
+</section>
+<aside id="sidebar">
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="media-list">
+					<li class="media">
+<a class="pull-left" href="https://localhost/ymvc/?data=b"><img class="media-object" src="https://unsplash.imgix.net/photo-1420708392410-3c593b80d416?w=1024&amp;q=50&amp;fm=jpg&amp;s=db450320d7ee6de66c24c9b0bf2de3c6" height="64" width="64"></a>
+<div class="media-body">
+<h4 class="media-heading">b</h4>
+<p>ytres</p>
+</li>
+<li class="media">
+<a class="pull-left" href="https://localhost/ymvc/?data=e"><img class="media-object" src="https://unsplash.imgix.net/photo-1420708392410-3c593b80d416?w=1024&amp;q=50&amp;fm=jpg&amp;s=db450320d7ee6de66c24c9b0bf2de3c6" height="64" width="64"></a>
+<div class="media-body">
+<h4 class="media-heading">e</h4>
+<p>ytres</p>
+</li>
+<li class="media">
+<a class="pull-left" href="https://localhost/ymvc/?data=a,z"><img class="media-object" src="https://unsplash.imgix.net/photo-1420708392410-3c593b80d416?w=1024&amp;q=50&amp;fm=jpg&amp;s=db450320d7ee6de66c24c9b0bf2de3c6" height="64" width="64"></a>
+<div class="media-body">
+<h4 class="media-heading">z</h4>
+<p>content of z site</p>
+</li>
+					<!--
+					
+						<li class="media">
+							<a class="pull-left" href="#"><img class="media-object" src="https://unsplash.imgix.net/photo-1420708392410-3c593b80d416?w=1024&amp;q=50&amp;fm=jpg&amp;s=db450320d7ee6de66c24c9b0bf2de3c6" height="64" width="64"></a>
+							<div class="media-body">
+								<h4 class="media-heading">Media heading</h4>
+								<p>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+									ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+									tempus viverra turpis.
+								</p>
+							</div>
+						</li>
+						<li class="media">
+							<a class="pull-left" href="#"><img class="media-object" src="https://ununsplash.imgix.net/photo-1414637104192-f9ab9a0ee249?w=1024&amp;q=50&amp;fm=jpg&amp;s=39603686d9062f5c4a5309a45e28264e" height="64" width="64"></a>
+							<div class="media-body">
+								<h4 class="media-heading">Media heading</h4>
+								<p>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+									ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+									tempus viverra turpis.
+								</p>
+							</div>
+						</li>
+						
+					
+					-->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</aside>
+
+    <footer class="section section-warning">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h1>Footer header</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,
+              <br>sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+              <br>Ut enim ad minim veniam, quis nostrud</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="text-info text-right">
+              <br>
+              <br>
+            </p>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <a href="#"><i class="fa fa-instagram text-inverse"></i></a>
+                <a href="#"><i class="fa fa-twitter text-inverse"></i></a>
+                <a href="#"><i class="fa fa-facebook text-inverse"></i></a>
+                <a href="#"><i class="fa fa-github text-inverse"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer></div>
+</body>
+</html>

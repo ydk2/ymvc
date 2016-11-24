@@ -61,7 +61,7 @@ class Layout extends XSLRender {
 		$this->ViewData('layout', '');
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
-				$col = $this->data->layout->addChild('sections',Loader::get_restricted_view($mode.C.$key,$mode.V.$value[0]));
+				$col = $this->data->layout->addChild('sections',htmlspecialchars(Loader::get_restricted_view($mode.C.$key,$mode.V.$value[0])));
 				$col->addAttribute('style', $value[3]);
 				$col->addAttribute('class', $value[2]);
 				$col->addAttribute('id', $value[1]);	
@@ -74,7 +74,7 @@ class Layout extends XSLRender {
 		$this->ViewData('layout', '');
 		foreach ($array as $key => $value) {
 			if(!in_array($key,$disabled)){
-				$col = $this->data->layout->addChild('views',Loader::get_restricted_view($mode.C.$key,$mode.V.$value[0]));
+				$col = $this->data->layout->addChild('views', htmlspecialchars( Loader::get_restricted_view($mode.C.$key,$mode.V.$value[0])));
 				$col->addAttribute('style', $value[3]);
 				$col->addAttribute('class', $value[2]);
 				$col->addAttribute('id', $value[1]);	

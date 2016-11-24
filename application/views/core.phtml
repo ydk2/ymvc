@@ -1,0 +1,21 @@
+<div>
+<div>
+<?php
+	echo $this->me;
+?>
+</div>
+<div>
+<?php
+	echo $this->parent;
+?>
+</div>
+<div>
+	<?='<a href="'.HOST_URL.'/?view=view">start</a>';?>
+	<?='<a href="'.HOST_URL.'/?table=table">table</a>';?>
+	<?='<a href="' .HOST_URL. '/?admin=account&action=register">register</a>'; ?>
+	<?='<a href="' .HOST_URL. '?admin=account&action=login">login</a>'; ?>
+	<?='<a href="' .HOST_URL. '?view=view&data=not-existing-page">not existing page</a>'; ?>
+	<?='<a href="' .HOST_URL. '?none=blind">not existing module and view</a>'; ?>
+	<?='<a href="' .HOST_URL. '?core=core">core not in app module</a>'; ?>
+</div>
+</div>

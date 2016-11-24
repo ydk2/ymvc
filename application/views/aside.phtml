@@ -1,0 +1,21 @@
+
+            <div class="section">
+              <div class="container">
+                <div class="row">
+				<div class="col-md-12">
+					<ul class="media-list"><li class="media">
+					<?php if(intval($this->id) > 0) :
+						$a=$this->model->get_by_pid($this->pid);
+					?>
+                    <a class="pull-left" href="<?=HOST_URL?>/?view=view<?=($a[1]!='')?'&data='.$a[1]:'';?>">
+                    	<img class="media-object" src="https://unsplash.imgix.net/photo-1420708392410-3c593b80d416?w=1024&amp;q=50&amp;fm=jpg&amp;s=db450320d7ee6de66c24c9b0bf2de3c6" height="64" width="64"></a>
+                	<div class="media-body">
+					<h4 class="media-heading"><?=$a[0]?></h4>
+					<p>Go to backward</p>
+					</li>
+					<?php endif ?>
+					<?=$this->media_list($this -> model -> get_by_parents($this->id))?>
+					</ul>
+					
+				</div></div></div></div></div>
+

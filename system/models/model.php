@@ -4,7 +4,7 @@
  */
 class model extends DBConnect {
 	public $dump;
-	function __construct()
+	function __construct($import=NULL)
 	{
 		# code...
 		$data=Config::$data['default']['database'];
@@ -12,8 +12,8 @@ class model extends DBConnect {
 		//var_dump($data);
 		$this->time = get_time();
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
-		if(isset($this->import)){
-		$queries = file_get_contents(ROOT.CACHE.'database.sql');
+		if($import!== NULL){
+		$queries = file_get_contents(ROOT.DATA.'db.sql');
 		$queries = explode(";", $queries);
     	foreach ($queries as $query) {
         	$this->db->query($query);
