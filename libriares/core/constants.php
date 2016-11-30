@@ -44,7 +44,8 @@ define('ACCESS_EDITOR',100);
 define('ACCESS_SYSTEM',10);
 define('ACCESS_ADMIN',0);
 
-$url=(isset($_SERVER['HTTPS']))?'https://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/':'http://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
+
+$url=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?'https://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/':'http://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
 define('HOST_URL',$url);
 if(!defined('ROOT')){
 define('ROOT',dirname(dirname(dirname(__FILE__))).DS);

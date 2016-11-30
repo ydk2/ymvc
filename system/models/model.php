@@ -10,9 +10,10 @@ class model extends DBConnect {
 		$data=Config::$data['default']['database'];
 		//$data['type'] = 'sqlite';
 		//var_dump($data);
+		$import = 0;
 		$this->time = get_time();
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
-		if($import!== NULL){
+		if($import!==0){
 		$queries = file_get_contents(ROOT.DATA.'db.sql');
 		$queries = explode(";", $queries);
     	foreach ($queries as $query) {
