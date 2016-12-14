@@ -39,7 +39,15 @@ Config::$data['template']['default'] = 'default';
 
 Config::$data['time'] = get_time();
 
-Config::$data['default']['database']['type'] = 'sqlite';
+Config::$data['default']['database']['name'] = 'ymvc';
+Config::$data['default']['database']['host'] = 'localhost';
+Config::$data['default']['database']['user'] = 'ydk2';
+Config::$data['default']['database']['pass'] = '8738';
+Config::$data['default']['database']['type'] = 'sqlsrv';
+
+
+//Config::$data['default']['database']['name'] = 'database'; 
+//Config::$data['default']['database']['type'] = 'sqlite';
     Config::$data['default']['cpu_limit'] = 15;
         //$model = new stdClass;
         //$views = new CoreRender;
@@ -82,6 +90,10 @@ Config::$data['default']['database']['type'] = 'sqlite';
     SYS.C.'phpcall',
     SYS.C.'admin',
     SYS.C.'menus',
+    //SYS.C.'admin'.DS.'menus',
+    SYS.C.'admin:menus',
+    //SYS.C.'admin'.DS.'menu',
+    SYS.C.'admin:menu',
     SYS.C.'layout'.DS.'layout'
     );
     

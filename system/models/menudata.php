@@ -8,9 +8,9 @@ class MenuData extends DBConnect {
 		
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
 		$this->lang=Helper::session('locale');
-		$this->lang_menu = 'en';
+		$this->lang_menu = (Helper::session('lang'))?Helper::session('lang'):'en';
 		$this->lang_strings=$this->get_site_data_lang();
-		Intl::$strings=$this->lang_strings;
+		//Intl::$strings=$this->lang_strings;
 		$this -> template = 'admin';
 		$this -> links = array( 
 		array('stylesheet', HOST_URL . '/templates/admin/theme/css/style.css', 'text/css'), 
@@ -67,22 +67,22 @@ class MenuData extends DBConnect {
 		}
 	}
 
-	public function update_menu_items($id, $parent, $title, $link, $access, $ids, $groups) {
+	public function update_menu_items($pos, $parent, $title, $link, $access, $ids, $groups) {
 		try {
-			$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $id OR link='$link' AND lang='".$this->lang_menu."' AND groups='$groups' ");
+			$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $pos OR link='$link' AND lang='".$this->lang_menu."' AND groups='$groups' ");
 			$check = $a -> fetchColumn();
 			if ($check == TRUE) {
 				$add = $this -> db -> prepare("UPDATE ".DBPREFIX."menus SET pos=?,title=?,parent=?,link=?,access=?, lang=?, groups=? WHERE id=? AND lang=?");
-				$add -> execute(array($id, $title, $parent, $link, $access,$this->lang_menu, $groups, $ids, $this->lang_menu));
-				$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $id AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups = '".$groups."'");
+				$add -> execute(array($pos, $title, $parent, $link, $access,$this->lang_menu, $groups, $ids, $this->lang_menu));
+				$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $pos AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups = '".$groups."'");
 				$added = $a -> fetchColumn();
 				if ($added == TRUE) {
 					return 0;
 				} else return 1065;
 			} else {
 				$add = $this -> db -> prepare("INSERT INTO ".DBPREFIX."menus (pos, title, parent, link, access, lang, groups) VALUES (?,?,?,?,?,?,?)");
-				$add -> execute(array($id, $title, $parent, $link, $access, $this->lang_menu,$groups));
-				$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $id AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups = '$groups'");
+				$add -> execute(array($pos, $title, $parent, $link, $access, $this->lang_menu,$groups));
+				$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $pos AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups = '$groups'");
 				$added = $a -> fetchColumn();
 				if ($added == TRUE) {
 					return 0;

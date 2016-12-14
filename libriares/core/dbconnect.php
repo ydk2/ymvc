@@ -74,7 +74,7 @@ class DBConnect {
 				if ($user === NULL || $pass === NULL) {
 					throw new SystemException('User and Password not filed.');
 				}
-				$this->db = new PDO($engin.':Server=' . $host . ';dbname=' . $database, $user, $pass);
+				$this->db = new PDO($engin.':Server=' . $host . ';Database=' . $database.';ConnectionPooling=0', $user, $pass);
 				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 				$err = $this->db->errorInfo();
@@ -88,7 +88,7 @@ class DBConnect {
 			}
 			}
 			
-			if ($engin != 'posql' && $engin != 'sqlite' && $engin != 'sqlsrv') {
+			if ( !in_array($engin,array('posql','sqlite','sqlsrv'))) {
 			try {
 				if ($user === NULL || $pass === NULL) {
 					throw new SystemException('User and Password not filed.');

@@ -100,8 +100,8 @@ class Theme extends XSLRender {
 
 	protected function contents()
 	{
-		$this->SetModule(SYS.V.'layout'.DS.'views',SYS.C.'layout'.DS.'layout');
-		$content = $this->GetModule(SYS.C.'layout'.DS.'layout');
+		$this->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
+		$content = $this->GetModule(SYS.C.'layout:layout');
 		$content = ($content)? htmlspecialchars($content->View()):"";
 		$this->ViewData('content', $content);
 	}

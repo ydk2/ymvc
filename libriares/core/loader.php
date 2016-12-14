@@ -44,6 +44,10 @@ class Loader {
 			return $controller;
 		} else {
 		$me = new self;
+		$controller = str_replace(':',DS,$controller);
+		$view = str_replace(':',DS,$view);
+		if(!is_object($model) && $model!==NULL)
+			$model = str_replace(':',DS,$model);
 		$me->Inc(CORE.'phprender');
 		$me->Inc(CORE.'xslrender');
 		if($me->Inc($controller)){
