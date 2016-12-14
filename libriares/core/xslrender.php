@@ -561,8 +561,10 @@ final public function CheckError() {
 		if (is_object($controller)) {
 			unset($this->exception);
 			if(($controller instanceof XSLRender) || ($controller instanceof PHPRender)){
-				$controller->SetModel($model);
-				$controller->SetView($view);
+				if($model!==NULL)
+					$controller->SetModel($model);
+				if($view!==NULL)
+					$controller->SetView($view);
 			}
 			$this->exception = $controller;
 		} else {
@@ -657,7 +659,8 @@ public final function GetModule($controller){
 	
 		if (is_object($controller)) {
 			if(($controller instanceof XSLRender) || ($controller instanceof PHPRender)){
-				$controller->SetView($view);
+				if($view!==NULL)
+					$controller->SetView($view);
 			}
 			return $controller;
 		} else {
@@ -684,8 +687,10 @@ public final function GetModule($controller){
 	
 		if (is_object($controller)) {
 			if(($controller instanceof XSLRender) || ($controller instanceof PHPRender)){
-				$controller->SetModel($model);
-				$controller->SetView($view);
+				if($model!==NULL)
+					$controller->SetModel($model);
+				if($view!==NULL)
+					$controller->SetView($view);
 			}
 			return $controller;
 		} else {
