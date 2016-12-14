@@ -20,7 +20,7 @@
  * @author     ydk2 <me@ydk2.tk>
  * @copyright  1997-2016 ydk2.tk
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    2.0.1
+ * @version    2.0.2
  * @link       http://ymvc.ydk2.tk
  * @see        YMVC System
  * @since      File available since Release 1.0.0
@@ -31,18 +31,21 @@ define('DS',DIRECTORY_SEPARATOR);
 }
 // global const
 define('ERR_SUCCESS',0);
-define('ERR_CVACCESS',12403);
-define('ERR_CVENABLE',12502);
-define('ERR_CVDISABLE',12501);
-define('ERR_CVEXIST',12404);
+define('ERR_ACCESS',20503);
+define('ERR_ENABLE',20502);
+define('ERR_NOMODEL',20304);
+define('ERR_NOEXIST',20404);
+define('ERR_NOREGISTERED',20402);
+define('ERR_NODEF',20401);
+define('ERR_REQUIRED',20401);
 
 
-define('ACCESS_ANY',1000);
-define('ACCESS_USER',500);
-define('ACCESS_MODERATOR',200);
-define('ACCESS_EDITOR',100);
-define('ACCESS_SYSTEM',10);
-define('ACCESS_ADMIN',0);
+define('ACCESS_ANY',10);
+define('ACCESS_USER',5);
+define('ACCESS_MODERATOR',5);
+define('ACCESS_EDITOR',3);
+define('ACCESS_SYSTEM',2);
+define('ACCESS_ADMIN',1);
 
 
 $url=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?'https://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/':'http://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
