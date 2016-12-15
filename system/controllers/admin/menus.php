@@ -40,11 +40,12 @@ class Menus extends PHPRender {
 	function menulist($data, $parent = '') {
 		$tree = '<ul>';
 		$i = 1;
+		
 		foreach ($data as $item) {
 			if ($item['parent'] === $parent) {
 				$tree .= '<li><a href="'.$item['link'].'">' . $item['title'].'</a>';
 
-				$tree .= call_user_func_array(array($this, 'menulist'), array($data, $item['pos']));
+				$tree .= call_user_func_array(array($this, 'menulist'), array($data, strval($item['pos'])));
 				//call_user_func('show_list',$data, $i);
 
 				$tree .= '</li>' . PHP_EOL;
@@ -131,7 +132,7 @@ class Menus extends PHPRender {
 		$this -> alert_link = "menus";
 		switch (Helper::get('action')) {
 			case 'adds' :
-				$this -> alert_link = "admin:menus&action=adds&data=".$this->groups;
+				$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
 				$this->SetView(SYS.V . "menus/adds");
 				$this -> adds();
 				break;
@@ -189,7 +190,7 @@ class Menus extends PHPRender {
 					case 0 :
 						$this -> alert_header = "Menu item was added";
 						$this -> alert_string = "Reload to see changes";
-						$this -> alert_link = "admin:menus&action=adds&data=".$this->groups;
+						$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
 						$this->SetView(SYS.V . "menus/message");
 						break;
 					default :

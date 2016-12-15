@@ -3,7 +3,7 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'bootstrap.php');
 Helper::Session_Start();
 Helper::Inc(CORE.'router');
 //Helper::Inc(CORE.'intl');
-Config::Init();
+
 
 /**
 * @annotation
@@ -39,11 +39,6 @@ Config::$data['template']['default'] = 'default';
 
 Config::$data['time'] = get_time();
 
-Config::$data['default']['database']['name'] = 'ymvc';
-Config::$data['default']['database']['host'] = 'localhost';
-Config::$data['default']['database']['user'] = 'ydk2';
-Config::$data['default']['database']['pass'] = '8738';
-Config::$data['default']['database']['type'] = 'sqlsrv';
 
 
 //Config::$data['default']['database']['name'] = 'database'; 

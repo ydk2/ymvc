@@ -26,6 +26,7 @@ class Menu extends XSLRender {
 		$this->only_registered(FALSE);
 		//$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
 		//var_dump($this->menulist($this -> items));
+		if(!empty($this->items))
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data>'.$this->menulist($this -> items).'</data>', null, false);
 	}
 	public function showin($view='')
@@ -40,7 +41,7 @@ class Menu extends XSLRender {
 			if ($item['parent'] === $parent) {
 				$tree .= '<item id="'.$item['pos'].'" url="'.htmlspecialchars($item['link']).'" name="'.$item['title'].'">' . PHP_EOL;
 
-				$tree .= call_user_func_array(array($this, 'menulist'), array($data, $item['pos']));
+				$tree .= call_user_func_array(array($this, 'menulist'), array($data, strval($item['pos'])));
 				//call_user_func('show_list',$data, $i);
 
 				$tree .= '</item>' . PHP_EOL;

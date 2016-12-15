@@ -3,7 +3,6 @@ if(!defined('DS')){
 define('DS',DIRECTORY_SEPARATOR);
 }
 
-define('SQL','posql');
 define('DEBUG',null);
 define('MEDIA_LEN',100);
 define('INDEX', 'start');
@@ -20,5 +19,13 @@ Helper::Inc(CORE.'dbconnect');
 Helper::Inc(CORE.'systemexception');
 Helper::Inc(HELP.'functions');
 
+// db connection
+Helper::Inc('config');
+Config::Init();
+Config::$data['default']['database']['name'] = DBNAME;
+Config::$data['default']['database']['host'] = DBHOST;
+Config::$data['default']['database']['user'] = DBUSER;
+Config::$data['default']['database']['pass'] = DBPASS;
+Config::$data['default']['database']['type'] = DBTYPE;
 
 ?>
