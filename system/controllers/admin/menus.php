@@ -1,5 +1,4 @@
 <?php
-
 class Menus extends PHPRender {
 
 	public function onInit() {
@@ -149,12 +148,17 @@ class Menus extends PHPRender {
 				break;
 			case 'delete_item' :
 				$item = Helper::get('item');
-				$del = $this -> model -> db -> prepare('DELETE FROM '.DBPREFIX.'menus WHERE id=? AND lang=?');
-				
-				$del -> execute(array($item, $this->model->lang_menu));
+				//$del = $this -> model -> db -> prepare('DELETE FROM '.DBPREFIX.'menus WHERE id=? AND lang=?');
+				//$del -> execute(array($item, $this->model->lang_menu));
+				if($this->model->delete_menu_item($item)==0){
 				$this -> alert_header = "Menu item has been deleted";
 				$this -> alert_string = "Go to form";
 				$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+				} else {
+				$this -> alert_header = "Menu item will not deleted";
+				$this -> alert_string = "Go to form";
+				$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+				}
 				$this->SetView(SYS.V . "menus/message");
 				break;
 		}

@@ -1,9 +1,5 @@
 <?php
-use \System\core\Router as Router;
-use \System\helpers\Intl as Intl;
 ?>
-    <div class="section">
-      <div class="container">
         <div class="row">
           <div class="col-md-4">
             <div class="well">
@@ -12,22 +8,22 @@ use \System\helpers\Intl as Intl;
             </div>
             <div class="row">
             <div class="col-md-12">
-              <a href="<?=HOST_URL ?>/?admin=edit&account=account&&action=delete" class="btn btn-primary">Delete account</a> 
-              <a href="<?=HOST_URL ?>/?admin=edit&account=account&action=logout" class="btn btn-primary">logout</a>
+              <a href="<?=HOST_URL ?>?admin:account&&action=delete" class="btn btn-primary">Delete account</a> 
+              <a href="<?=HOST_URL ?>?admin:account&action=logout" class="btn btn-primary">logout</a>
             </div>
             </div>
           </div>
           <div class="col-md-6">
-            <form role="form" method="post" action="<?=HOST_URL ?>/?admin=edit&account=account&action=change" >
+            <form role="form" method="post" action="<?=HOST_URL ?>?admin:account&action=change" >
               <div class="form-group">
                 <label class="control-label" for="name">Your name</label>
                 <input class="form-control" id="name" placeholder="Enter Name"
-                type="text" name="name" value="<?=Router::session('user_name')?>">
+                type="text" name="name" value="<?=helper::session('user_name')?>">
               </div>
               <div class="form-group">
                 <label class="control-label" for="Email">Email address</label>
                 <input class="form-control" id="Email" placeholder="Enter email"
-                type="email" name="email" value="<?=Router::session('user_email')?>">
+                type="email" name="email" value="<?=helper::session('user_email')?>">
               </div>
               <div class="form-group">
                 <label class="control-label" for="Password">Password</label>
@@ -39,5 +35,3 @@ use \System\helpers\Intl as Intl;
             
           </div>
         </div>
-      </div>
-      </div>

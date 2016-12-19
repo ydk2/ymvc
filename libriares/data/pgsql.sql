@@ -79,12 +79,12 @@ ALTER TABLE menus ALTER id SET DEFAULT NEXTVAL('menus_id_seq');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(1, 'Start', 'start', '',10,'en');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(2, 'About Us', 'about', '',10,'en');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(3, 'Contact', 'contact', '',10,'en');
-INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Table', 'http://localhost/ymvc/?table=table', 'Start',10,'en');
+INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Table', 'http://localhost/ymvc/?table=table', '1',10,'en');
 
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(1, 'Start', 'start', '',10,'pl');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(2, 'O nas', 'about', '',10,'pl');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(3, 'Kontakt', 'contact', '',10,'pl');
-INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Tabela', 'http://localhost/ymvc/?table=table', 'Start',10,'pl');
+INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Tabela', 'http://localhost/ymvc/?table=table', '1',10,'pl');
 
 DROP TABLE IF EXISTS pages;
 CREATE SEQUENCE pages_id_seq;

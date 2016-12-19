@@ -32,7 +32,7 @@ class Layout extends XSLRender {
 		$this->routings();
 	}
 	public function routings(){
-		$disabled = array('error','errors','data','item','action','layout','test','load');
+		$disabled = array('error','errors','data','item','action','layout','load');
 		$default = array('one'=>'one');
 		$array = array('phpexample'=>'layout/php','two'=>'two','one'=>'one');
 

@@ -420,6 +420,7 @@ final public function CheckError() {
 * @param string $view 
 **/ 
 	final public function RegisterView($view) {
+		$view = str_replace(':',DS,$view);
 		array_push($this->registered_views, $view);
 	}
 	
@@ -430,6 +431,7 @@ final public function CheckError() {
 * @param string $view 
 **/ 	
 	final public function UnRegisterView($view) {
+		$view = str_replace(':',DS,$view);
 		foreach ($this->registered_views as $key => $value) {
 			if ($value==$view) {
 				unset($this->registered_views[$key]);

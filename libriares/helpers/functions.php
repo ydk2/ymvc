@@ -175,4 +175,14 @@ function sksort(&$array, $subkey="", $sort_ascending=TRUE) {
 
     else $array = $temp_array;
 }
+        function getIntl() {
+            if(Helper::Get('setlocale')){
+                Helper::Session_Set('locale',Helper::Get('setlocale'));
+            }
+            $d = SYS.LANGS.basename(__FILE__,'.php');
+            Intl::set_path($d);
+            $langs = Intl::available_locales(Intl::PO);
+            if(!Helper::Session('locale')) Helper::Session_Set('locale',Intl::get_browser_lang($langs));
+            Intl::po_locale_plural(Helper::Session('locale'));
+        }
 ?>

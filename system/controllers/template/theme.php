@@ -65,7 +65,7 @@ class Theme extends XSLRender {
 		$this->ViewData('subheader', Intl::_p('Theme modules'));
 		//$this->ViewData('content', Intl::_p("Content of modules" ));
 
-		$this->model->disabled = array('error','errors','data','index','item','action','layout','test','load','access');
+		$this->model->disabled = array('error','errors','data','index','item','action','layout','load','access');
 		$this->model->default = array('one'=>'one');
 		$this->model->array = array('phpexample'=>'layout/php','two'=>'two','one'=>'one');
 

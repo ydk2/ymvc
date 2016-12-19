@@ -1,6 +1,6 @@
 <?php
 
-class Menus extends PHPRender {
+class tests extends XSLRender {
 
 	public function onInit() {
 		/*
@@ -11,18 +11,23 @@ class Menus extends PHPRender {
 		 */
 		
 		$this->exceptions = TRUE;
-		$this->SetAccess(self::ACCESS_EDITOR);
+		$this->SetAccess(self::ACCESS_ANY);
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
-		$this->SetModel(SYS.M.'menudata');
-		$this->Inc(SYS.M.'model');
+		$this->SetModel(SYS.M.'model');
+		//$this->Inc(SYS.M.'model');
 		$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
-		$this -> set_changes();
+		//$this -> set_changes();
 		//$db = new Model(TRUE);
 		//$db->import = TRUE;
 		//var_dump($db);
 	}
 	public function onRun()
 	{
+		$this->model->import = TRUE;
+		if(isset($this->model->data)){
+		foreach ($this->model->data as $key => $value) {
+			# code...
+		}}
 		//$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
 		//$this -> set_changes();
 		//var_dump(get_called_class());

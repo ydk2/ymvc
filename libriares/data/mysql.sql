@@ -8,9 +8,9 @@
 
 DROP TABLE IF EXISTS sitedata;
 CREATE TABLE IF NOT EXISTS sitedata (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(255) NOT NULL,
-  string TEXT DEFAULT '',
+  string TEXT,
   access int(11) DEFAULT 10,
   groups varchar(255) NOT NULL DEFAULT 'main'
 ); 
@@ -23,9 +23,9 @@ INSERT INTO sitedata (name, string) VALUES('footer_content_str', 'Footer Content
 
 DROP TABLE IF EXISTS translatedstrings;
 CREATE TABLE IF NOT EXISTS translatedstrings (
-  id INTEGER NOT NULL PRIMARY KEY,
-  name TEXT DEFAULT '',
-  string TEXT DEFAULT '',
+  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  name TEXT,
+  string TEXT,
   access int(11) DEFAULT 10,
   groups varchar(255) NOT NULL DEFAULT 'main',
   lang varchar(11) DEFAULT 'en'
@@ -60,7 +60,7 @@ INSERT INTO translatedstrings (name, string, lang) VALUES('File', 'Plik', 'pl');
 
 DROP TABLE IF EXISTS menus;
 CREATE TABLE IF NOT EXISTS menus (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
   pos int(11) NOT NULL,
   title varchar(255) NOT NULL,
   link varchar(255) NOT NULL,
@@ -82,12 +82,12 @@ INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Tabela', '
 
 DROP TABLE IF EXISTS pages;
 CREATE TABLE IF NOT EXISTS pages (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
   title varchar(255) DEFAULT '',
   access int(11) DEFAULT 10,
   groups varchar(255) DEFAULT 'main',
   link varchar(255) DEFAULT '',
-  content TEXT DEFAULT '',
+  content TEXT,
   lang varchar(11) DEFAULT 'en',
   ctime int(11) DEFAULT 0,
   mtime int(11) DEFAULT 0
@@ -121,7 +121,7 @@ INSERT INTO test (id, title, parent, link, content) VALUES(10, 'z', 0, 'z', 'a')
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
   email varchar(20) NOT NULL UNIQUE,
   password char(99) NOT NULL,
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS users (
   last_name varchar(1010) DEFAULT '',
   address varchar(1010) DEFAULT '',
   phone varchar(20) DEFAULT '',
-  description TEXT DEFAULT '',
+  description TEXT,
   lang varchar(11) DEFAULT 'en'
 ); 
 

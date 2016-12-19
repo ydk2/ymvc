@@ -8,13 +8,13 @@ CREATE TABLE  sitedata (
   groups varchar(255) DEFAULT 'main'
 ); 
 
-SET IDENTITY_INSERT sitedata ON;
+--SET IDENTITY_INSERT sitedata ON;
 INSERT INTO sitedata (name, string) VALUES('page_title_str', 'Ymvc <small>System</small>');
 INSERT INTO sitedata (name, string) VALUES('page_subtitle_str', 'Subtitle of this page');
 INSERT INTO sitedata (name, string) VALUES('footer_title_str', 'Footer Header');
 INSERT INTO sitedata (name, string) VALUES('page_short_title_str', 'Ymvc');
 INSERT INTO sitedata (name, string) VALUES('footer_content_str', 'Footer Contents.');
-SET IDENTITY_INSERT sitedata OFF;
+--SET IDENTITY_INSERT sitedata OFF;
 
 IF OBJECT_ID ('translatedstrings', 'U') IS NOT NULL
 DROP TABLE  translatedstrings;
@@ -69,12 +69,12 @@ CREATE TABLE  menus (
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(1, 'Start', 'start', '',10,'en');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(2, 'About Us', 'about', '',10,'en');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(3, 'Contact', 'contact', '',10,'en');
-INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Table', 'http://localhost/ymvc/?table=table', 'Start',10,'en');
+INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Table', 'http://localhost/ymvc/?table=table', '1',10,'en');
 
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(1, 'Start', 'start', '',10,'pl');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(2, 'O nas', 'about', '',10,'pl');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(3, 'Kontakt', 'contact', '',10,'pl');
-INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Tabela', 'http://localhost/ymvc/?table=table', 'Start',10,'pl');
+INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Tabela', 'http://localhost/ymvc/?table=table', '1',10,'pl');
 
 IF OBJECT_ID ('pages', 'U') IS NOT NULL
 DROP TABLE  pages;

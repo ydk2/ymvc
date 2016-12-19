@@ -9,8 +9,6 @@ class AccountsData extends DBConnect {
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
 		$this->lang=Helper::session('locale');
 		$this->lang_menu = 'en';
-		$this->lang_strings=$this->get_site_data_lang();
-		Intl::$strings=$this->lang_strings;
 		$this -> template = 'admin';
 		$this -> links = array( 
 		array('stylesheet', HOST_URL . '/templates/admin/theme/css/style.css', 'text/css'), 
@@ -108,11 +106,6 @@ class AccountsData extends DBConnect {
 		}
 	}
 
-	function build_sorter($key) {
-		return function($a, $b) use ($key) {
-			return strnatcmp($a[$key], $b[$key]);
-		};
-	}
 
 	
 }

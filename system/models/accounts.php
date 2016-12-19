@@ -108,18 +108,13 @@ class Accounts extends DBConnect {
 		}
 	}
 
-	function build_sorter($key) {
-		return function($a, $b) use ($key) {
-			return strnatcmp($a[$key], $b[$key]);
-		};
-	}
 
 	public function get_menu($groups) {
 		$h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."menus WHERE lang=? AND groups=? ORDER BY pos ASC");
 		$h -> execute([$this->lang_menu,$groups]);
 		$pages = $h -> fetchAll(\PDO::FETCH_NAMED);
 		if ($pages) :
-			usort($pages, $this -> build_sorter('pos'));
+			sksort($pages, 'pos');
 			return $pages;
 		endif;	// end get pages
 		return false;

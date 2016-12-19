@@ -1,4 +1,5 @@
 <?php
+//error_reporting(1);
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'bootstrap.php');
 Helper::Session_Start();
 Helper::Inc(CORE.'router');
@@ -54,16 +55,7 @@ Config::$data['time'] = get_time();
         
         
         
-        function getIntl() {
-            if(Helper::Get('setlocale')){
-                Helper::Session_Set('locale',Helper::Get('setlocale'));
-        }
-        $d = SYS.LANGS.basename(__FILE__,'.php');
-        Intl::set_path($d);
-        $langs = Intl::available_locales(Intl::PO);
-        if(!Helper::Session('locale')) Helper::Session_Set('locale',Intl::get_browser_lang($langs));
-        Intl::po_locale_plural(Helper::Session('locale'));
-        }
+
     getIntl();
     //echo Helper::Session('locale');
     //var_dump($langs);
@@ -84,11 +76,12 @@ Config::$data['time'] = get_time();
     SYS.C.'view',
     SYS.C.'phpcall',
     SYS.C.'admin',
-    SYS.C.'menus',
+    SYS.C.'test',
     //SYS.C.'admin'.DS.'menus',
     SYS.C.'admin:menus',
     //SYS.C.'admin'.DS.'menu',
     SYS.C.'admin:menu',
+    SYS.C.'admin:account',
     SYS.C.'layout'.DS.'layout'
     );
     
@@ -101,7 +94,7 @@ Config::$data['time'] = get_time();
     } elseif(Helper::Get('load')=="route"){
         Loader::show_restricted_view(SYS.C.'route',SYS.V.'route');
     } elseif(Helper::Get('load')=="test"){
-        Helper::Inc('test');
+        Loader::show_restricted_view(SYS.C.'test',SYS.V.'test');
     } elseif(Helper::Get('load')=="layout") {
         Loader::show_restricted_view(SYS.C.'layout',SYS.V.'layout');
     } elseif(Helper::Get('load')=="row") {
