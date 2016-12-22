@@ -60,7 +60,7 @@ class Modules extends XSLRender {
 		return $tree;
 	}
 	public function modules($array,$mode=SYS){
-		$this->ViewData('layout', '');
+		$this->ViewData('sections', '');
 		foreach ($array as $key => $value) {
 				$col = $this->data->layout->addChild('views', htmlspecialchars( Loader::get_restricted_view($mode.C.$key,$mode.V.$value[0])));
 				$col->addAttribute('style', $value[3]);
