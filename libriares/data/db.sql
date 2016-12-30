@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS users (
   lang varchar(11) DEFAULT 'en'
 ); 
 
-INSERT INTO users (id, name, email, password, role, role_id) VALUES(1, 'admin', 'admin@localhost.to', '40bd001563085fc351653210ea1ff5c5ecbdbbeef', 'admin',0);
-INSERT INTO users (id, name, email, password, role, role_id) VALUES(2, 'me', 'me@be.mu', '40bd001563085fc351653210ea1ff5c5ecbdbbeef', 'editor',7);
-INSERT INTO users (id, name, email, password, role, role_id) VALUES(3, 'kupa', 'kupa@kibel.tu', '36a32e106cbfd11fd108e8c108e38d10ad10b41f57f1a', 'user',10);
+INSERT INTO users (id, name, email, password, role, role_id) VALUES(1, 'admin', 'admin@localhost.to', '40bd001563085fc351653210ea1ff5c5ecbdbbeef', 'admin',1);
+INSERT INTO users (id, name, email, password, role, role_id) VALUES(2, 'me', 'me@be.mu', '40bd001563085fc351653210ea1ff5c5ecbdbbeef', 'editor',3);
+INSERT INTO users (id, name, email, password, role, role_id) VALUES(3, 'kupa', 'kupa@kibel.tu', '36a32e106cbfd11fd108e8c108e38d10ad10b41f57f1a', 'user',5);
 

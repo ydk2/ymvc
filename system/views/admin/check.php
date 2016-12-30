@@ -1,8 +1,5 @@
-<?php
-use \System\core\Router as Router;
-use \System\helpers\Intl as Intl;
-?>
-    <div class="section">
+
+
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -13,8 +10,8 @@ use \System\helpers\Intl as Intl;
                   <h4 class="media-heading"><?=Intl::_('Check Form')?> <?=$this->name?></h4>
                   <p><?=$this->email?> <?=$this->pass?> <?=$this->pass2?></p>
                   <p>
-                  	<a class="btn btn-primary" href="<?=HOST_URL?>/?admin=edit&account=account&action=login"><?=Intl::_('Login')?></a> 
-                  	<a class="btn btn-primary" href="<?=HOST_URL?>/?admin=edit&account=account&action=register"><?=Intl::_('Register')?></a>
+                  	<a class="btn btn-primary" href="<?=HOST_URL?>?admin:account&action=login"><?=Intl::_('Login')?></a> 
+                  	<a class="btn btn-primary" href="<?=HOST_URL?>?admin:account&action=register"><?=Intl::_('Register')?></a>
                   </p>
                 <p><?=$this->alert?></p>
                 </div>
@@ -23,5 +20,3 @@ use \System\helpers\Intl as Intl;
           </div>
         </div>
       </div>
-</div>
-    <?=$this->show(SVIEW.Router::post('from'))?>

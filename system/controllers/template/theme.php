@@ -66,24 +66,25 @@ class Theme extends XSLRender {
 		//$this->ViewData('content', Intl::_p("Content of modules" ));
 
 		$this->model->disabled = array('error','errors','data','index','item','action','layout','load','access');
-		$this->model->default = array('one'=>'one');
-		$this->model->array = array('phpexample'=>'layout/php','two'=>'two','one'=>'one');
+		$this->model->default = array('admin:account'=>'admin:account');
+		$this->model->array = array('admin:account'=>'admin:account');
 
 		$fromget = array(
-			'phpexample'=>array('layout/php','php','col-md-12','')
+			'admin:menu'=>array('elements:nav','','col-md-12',''),
 		);
 		
 		foreach ($_GET as $key => $value) {
+			$this->model->sections['admin:menu'] = array('elements:nav','','col-md-12','');
 			if(!in_array($key,$this->model->disabled) && $this->ControllerExists(SYS.C.$key)){
 				$this->model->sections[$key] = array($value,'','col-md-12','');
 			}
 		}
 
-		if(empty($this->model->sections)){
+		if(empty($this->model->sections) || count($this->model->sections)==1){
 			$this->model->sections = array(
-			'phpexample'=>array('layout/php','php','col-md-12',''),
-			'two'=>array('two','','col-md-6',''),
-			'one'=>array('one','','col-md-6',''),
+			'admin:menu'=>array('elements:nav','','col-md-12',''),
+			'admin:account'=>array('admin:login','php','col-md-8  col-md-offset-2',''),
+			'other:two'=>array('other:two','','col-md-12',''),
 			);
 		}
 		$this->model->sections['view']=array('time','','col-md-12','');
@@ -121,6 +122,22 @@ class Theme extends XSLRender {
 	}
 	
 	protected function sidemenu($value='')
+	{
+		$this->ViewData('list', "" );
+		$list = $this->data->list->addChild('items',Intl::_p('Load XSL'));
+		$list->addAttribute('href', HOST_URL."?load=xsl");
+		$list = $this->data->list->addChild('items',Intl::_p('Load PHP'));
+		$list->addAttribute('href', HOST_URL."?load=php");
+		$list = $this->data->list->addChild('items',Intl::_p('Throw Error'));
+		$list->addAttribute('href', HOST_URL."?action=error");
+		$list = $this->data->list->addChild('items',Intl::_p('Load Theme'));
+		$list->addAttribute('href', HOST_URL."?load=theme");
+		$list = $this->data->list->addChild('items',Intl::_p('Link four'));
+		$list->addAttribute('href', HOST_URL);
+		$list = $this->data->list->addChild('items',Intl::_p('Docs'));
+		$list->addAttribute('href', HOST_URL.'docs');
+	}	
+	protected function sidemenus($value='')
 	{
 		$this->ViewData('list', "" );
 		$list = $this->data->list->addChild('items',Intl::_p('Load XSL'));

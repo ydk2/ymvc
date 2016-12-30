@@ -9,7 +9,7 @@
               </p>
             </div>
     <script>
-      $('a').click(function(event) {
+      $('#editmenu a').click(function(event) {
         event.preventDefault();
         $.ajax({
           url: $(this).attr('href'),

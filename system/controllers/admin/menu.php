@@ -15,7 +15,7 @@ class Menu extends XSLRender {
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
 		$this->SetModel(SYS.M.'menudata');
 		if(Helper::Get('admin:menu') == '')
-		$this->SetView(SYS.V . "elements/menu");
+		$this->SetView(SYS.V . "elements:nav");
 		$this->Inc(SYS.M.'model');
 		$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
 		$this -> items = $this -> model -> get_menu($this->groups);

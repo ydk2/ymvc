@@ -17,6 +17,7 @@ class Account extends PHPRender {
 		$this->RegisterView(SYS.V.'admin:register');
 		$this->RegisterView(SYS.V.'admin:message');
 		$this->RegisterView(SYS.V.'admin:success');
+		$this->RegisterView(SYS.V.'admin:check');
 		$this->SetModel(SYS.M.'accountsdata');
 
 	}
@@ -26,9 +27,15 @@ class Account extends PHPRender {
 		$this -> email = Helper::post('email');
 		$this -> pass = Helper::post('password');
 		$this -> pass2 = Helper::post('password2');
-		if (Helper::session('id') > 0) {
+
 		if(Helper::Get('admin:account') == '')
-		$this->SetView(SYS.V . "admin:account");
+		$this->SetView(SYS.V . "admin:check");
+
+		if (Helper::session('id') > 0) {
+			$this -> alert_header = 'Hi! '.Helper::session('user_name');
+			$this -> alert_string = 'You are logged in';
+
+		/*
 			if(Helper::session('error')==200){
 				$this -> alert_header = 'Success! '.Helper::session('user_name');
 				$this -> alert_string = 'You are logged in';
@@ -43,15 +50,22 @@ class Account extends PHPRender {
 				$this -> alert = '';
 				//$this->SetView(SYS.V . "admin:message");
 			}
+			*/
+
+			$this->SetView(SYS.V . "admin:account");
 			if (Helper::get('action') == 'logout') {
 				if (Helper::session_stop(Helper::session('id'))) {
-					Helper::session_set('error',100);
-				$this->SetView(SYS.V . "admin:message");
+					$this -> alert_header = 'Bye bye! '.Helper::session('user_name');
+					$this -> alert_string = 'You are logged out';	
+					$this -> alert_mode = "alert-success";
+					$this->SetView(SYS.V.'admin:message'); 
 				} else {
-					Helper::session_set('error',101);
-				$this->SetView(SYS.V . "admin:message");
+					$this->SetView(SYS.V . "admin:message");
 				}
-
+			} elseif (Helper::get('action') == 'login') {
+					$this -> alert_header = 'Hi! '.Helper::session('user_name');
+					$this -> alert_string = 'You are login';	
+					$this -> alert_mode = "alert-success";
 			}
 		} else {
 			switch (Helper::get('action')) {
@@ -60,9 +74,7 @@ class Account extends PHPRender {
 					$this -> alert_string = 'You need login';
 					$this -> alert_mode = "alert-info";
 					$this->SetView(SYS.V . "admin:login");
-					if (Helper::post('from')=='login') {
 						$this -> login();
-					}
 					break;
 				case 'register' :
 					$this -> alert_header = 'Hello!';
@@ -89,26 +101,14 @@ class Account extends PHPRender {
 					$this -> alert_header = 'Ups!';
 					$this -> alert_string = 'You are not login';
 					$this -> alert_mode = "alert-warning";
-					if (Helper::session('error')==100) {
-						$this -> alert_header = 'Bye bye! '.Helper::session('user_name');
-						$this -> alert_string = 'You are logged out';
-						$this -> alert_mode = "alert-success";
-						$this->SetView(SYS.V.'admin:success'); 
-					} else {
-						$this -> alert_header = 'Ups!';
-						$this -> alert_string = 'Something wrong, cannot logout';
-						$this -> alert_mode = "alert-danger";
-						$this -> alert = '';
-					}
-
 					break;
 
 				default :
 					$this -> alert_header = 'Hello!';
 					$this -> alert_string = 'You need login';
-					$this -> alert_mode = "alert-warning";
-					//if(Helper::Get('admin:account') == '')
+					$this -> alert_mode = "alert-info";
 					$this->SetView(SYS.V . "admin:login");
+					$this -> login();
 					break;
 			}
 
@@ -117,6 +117,8 @@ class Account extends PHPRender {
 	}
 
 	public function login() {
+
+	if (Helper::post('from')=='login') {
 		if (!Helper::post('name') || !Helper::post('password')) {
 			$this -> alert_mode = "alert-danger";
 			$this -> alert_header = 'Error!!!';
@@ -136,9 +138,10 @@ class Account extends PHPRender {
 			$this->SetView(SYS.V . "admin:message");
 		} else {
 			$login = $this -> model -> login();
-			//var_dump($login);
 			if ($login == 0) {
-				Helper::session_set('error',200);
+				$this -> alert_header = 'Success! '.Helper::session('user_name');
+				$this -> alert_string = 'You are logged in'.Helper::session('user_access');
+				$this->SetView(SYS.V . "admin:success");
 			} elseif ($login == 101) {
 				$this -> alert_header = 'Error!';
 				$this -> alert_string = ' Incorrect username or password ';
@@ -151,7 +154,7 @@ class Account extends PHPRender {
 				$this->SetView(SYS.V . "admin:message");
 			}
 		}
-
+	}
 	}
 
 	public function register() {

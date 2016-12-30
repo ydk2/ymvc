@@ -63,6 +63,7 @@ class AccountsData extends DBConnect {
 				Helper::session_set('user_name', $data[0]['name']);
 				Helper::session_set('user_email', $data[0]['email']);
 				Helper::session_set('user_role', $data[0]['role']);
+				Helper::session_set('user_access', $data[0]['role_id']);
 				//var_dump($data[0]);
 				//while ($row = $stmt -> fetch()) {
 

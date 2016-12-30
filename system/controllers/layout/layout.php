@@ -37,7 +37,7 @@ class Layout extends XSLRender {
 		$array = array('phpexample'=>'layout/php','two'=>'two','one'=>'one');
 
 		$sections = array(
-			'phpexample'=>array('layout/php','php','',''),
+			''=>array('layout/php','php','',''),
 			'two'=>array('two','','',''),
 			'one'=>array('one','','',''),
 			);

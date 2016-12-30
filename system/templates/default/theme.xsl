@@ -55,113 +55,27 @@ border-right: 5px solid #c41818;
 				</style>
 			</head>
 			<body>
-				<nav class="navbar navbar-default">
-					<div class="container">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" href="#">
-								<span>
-									<xsl:value-of select="data/maintitle"/>
-								</span>
-							</a>
-						</div>
-						<div class="collapse navbar-collapse" id="navbar-ex-collapse">
-							<ul class="nav navbar-nav navbar-right">
-								<xsl:for-each select="data/links/items">
-									<li>
-										<a href="{@href}" hreflang="{@hreflang}">
-											<xsl:value-of select="node()"/>
-										</a>
-									</li>
-								</xsl:for-each>
-							</ul>
-						</div>
-					</div>
-				</nav>
-				<header class="section">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="page-header">
-									<h1>
-										<xsl:value-of select="data/header"/>
-										<small>
-											<xsl:text></xsl:text>
-											<xsl:value-of select="data/smallheader"/>
-										</small>
-									</h1>
+
+			<section class="section">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<xsl:value-of select="data/subheader"/>
+									</h3>
+								</div>
+								<div class="panel-body">
+									<xsl:value-of select="data/content" disable-output-escaping="yes"/>
 								</div>
 							</div>
 						</div>
 					</div>
-				</header>
-				<main class="main">
-					<section class="section">
-						<div class="container">
-							<div class="row">
-								<div class="col-md-2">
-									<ul class="list-group">
-										<xsl:for-each select="data/list/items">
-											<li class="list-group-item">
-												<a href="{@href}">
-													<xsl:value-of select="node()"/>
-												</a>
-											</li>
-										</xsl:for-each>
-									</ul>
-								</div>
-								<div class="col-md-10">
-									<div class="well">
-										<h2>
-											<xsl:value-of select="data/subheader"/>
-										</h2>
-										<p>
-											<xsl:value-of select="data/content"/>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</section>
-				</main>
+				</div>
+			</section>
 				<!-- main -->
-				<footer class="section footer">
-					<div class="container">
-						<div class="row">
-							<div class="col-sm-6">
-								<h3>
-									<xsl:value-of select="data/footerheader"/>
-								</h3>
-								<p>
-									<xsl:value-of select="data/footercontent"/>
-								</p>
-							</div>
-							<div class="col-sm-6">
-								<div class="row">
-									<div class="col-md-12 text-right">
-										<a href="#">
-											<i class="fa fa-3x fa-fw fa-instagram text-inverse"></i>
-										</a>
-										<a href="#">
-											<i class="fa fa-3x fa-fw fa-twitter text-inverse"></i>
-										</a>
-										<a href="#">
-											<i class="fa fa-3x fa-fw fa-facebook text-inverse"></i>
-										</a>
-										<a href="#">
-											<i class="fa fa-3x fa-fw fa-github text-inverse"></i>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</footer>
+
 			</body>
 		</html>
 	</xsl:template>

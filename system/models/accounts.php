@@ -7,7 +7,7 @@ class Accounts extends DBConnect {
 		//var_dump($data);
 		
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
-		$this->lang=Router::session('locale');
+		$this->lang=Helper::session('locale');
 		$this->lang_menu = 'en';
 		$this->lang_strings=$this->get_site_data_lang();
 		Intl::$strings=$this->lang_strings;
@@ -36,8 +36,8 @@ class Accounts extends DBConnect {
 
 	public function login() {
 		/*** if we are here the data is valid and we can insert it into database ***/
-		$name = filter_var(Router::post('name'), FILTER_SANITIZE_STRING);
-		$password = filter_var(Router::post('password'), FILTER_SANITIZE_STRING);
+		$name = filter_var(Helper::post('name'), FILTER_SANITIZE_STRING);
+		$password = filter_var(Helper::post('password'), FILTER_SANITIZE_STRING);
 
 		/*** now we can encrypt the password ***/
 		$password = sha1($password);
@@ -55,16 +55,17 @@ class Accounts extends DBConnect {
 			if ($user_id == FALSE) {
 				return 101;
 			} else {
-				Router::session_set('id', $user_id);
-				//Router::session_set('user_name', $row['name']);
-				//Router::session_set('user_email', $row['email']);
+				Helper::session_set('id', $user_id);
+				//Helper::session_set('user_name', $row['name']);
+				//Helper::session_set('user_email', $row['email']);
 				//$search = "%$search%";
 				$user_data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."users WHERE name = ? OR email = ?");
 				$user_data -> execute([$name, $name]);
 				$data = $user_data -> fetchAll();
-				Router::session_set('user_name', $data[0]['name']);
-				Router::session_set('user_email', $data[0]['email']);
-				Router::session_set('user_role', $data[0]['role']);
+				Helper::session_set('user_name', $data[0]['name']);
+				Helper::session_set('user_email', $data[0]['email']);
+				Helper::session_set('user_role', $data[0]['role']);
+				Helper::session_set('user_access', $data[0]['role_id']);
 				//var_dump($data[0]);
 				//while ($row = $stmt -> fetch()) {
 
@@ -72,16 +73,16 @@ class Accounts extends DBConnect {
 				return 0;
 			}
 
-		} catch(Exception $e) {
+		} catch(SystemException $e) {
 			/*** if we are here, something has gone wrong with the database ***/
 			return 102;
 		}
 	}
 
 	public function register() {
-		$name = filter_var(Router::post('name'), FILTER_SANITIZE_STRING);
-		$email = filter_var(Router::post('email'), FILTER_SANITIZE_STRING);
-		$password = filter_var(Router::post('password'), FILTER_SANITIZE_STRING);
+		$name = filter_var(Helper::post('name'), FILTER_SANITIZE_STRING);
+		$email = filter_var(Helper::post('email'), FILTER_SANITIZE_STRING);
+		$password = filter_var(Helper::post('password'), FILTER_SANITIZE_STRING);
 		$password = sha1($password);
 		try {
 
@@ -106,91 +107,6 @@ class Accounts extends DBConnect {
 		} catch(Exception $e) {
 			return 112;
 		}
-	}
-
-
-	public function get_menu($groups) {
-		$h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."menus WHERE lang=? AND groups=? ORDER BY pos ASC");
-		$h -> execute([$this->lang_menu,$groups]);
-		$pages = $h -> fetchAll(\PDO::FETCH_NAMED);
-		if ($pages) :
-			sksort($pages, 'pos');
-			return $pages;
-		endif;	// end get pages
-		return false;
-	}
-
-	public function add_menu_item($item_title, $item_link, $groups) {
-		try {
-			$a = $this -> db -> query("SELECT title, link, lang, groups FROM ".DBPREFIX."menus WHERE link = '$item_link' AND groups = '$groups' AND lang='".$this->lang_menu."'");
-			$check = $a -> fetchColumn();
-			if ($check == TRUE) {
-				return 1069;
-			} else {
-				$i = count($this -> get_menu($groups)) + 1;
-				$add = $this -> db -> prepare("INSERT INTO ".DBPREFIX."menus (pos, title, parent, link, lang, groups) VALUES (?,?,?,?,?,?)");
-				$add -> execute([$i, $item_title, '', $item_link, $this->lang_menu,$groups]);
-				$a = $this -> db -> query("SELECT title, link, lang, groups FROM ".DBPREFIX."menus WHERE link = '$item_link' AND groups = '$groups' AND lang='".$this->lang_menu."'");
-				$added = $a -> fetchColumn();
-				if ($added == TRUE) {
-					return 0;
-				} else return 1068;
-				
-			}
-		} catch(Exception $e) {
-			return 1067;
-		}
-	}
-
-	public function update_menu_items($id, $parent, $title, $link, $access, $ids, $groups) {
-		try {
-			$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $id OR link='$link' AND lang='".$this->lang_menu."' AND groups='$groups' ");
-			$check = $a -> fetchColumn();
-			if ($check == TRUE) {
-				$add = $this -> db -> prepare("UPDATE ".DBPREFIX."menus SET pos=?,title=?,parent=?,link=?,access=?, lang=?, groups=? WHERE id=? AND lang=?");
-				$add -> execute([$id, $title, $parent, $link, $access,$this->lang_menu, $groups, $ids, $this->lang_menu]);
-				$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $id AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups = '".$groups."'");
-				$added = $a -> fetchColumn();
-				if ($added == TRUE) {
-					return 0;
-				} else return 1065;
-			} else {
-				$add = $this -> db -> prepare("INSERT INTO ".DBPREFIX."menus (pos, title, parent, link, access, lang, groups) VALUES (?,?,?,?,?,?,?)");
-				$add -> execute([$id, $title, $parent, $link, $access, $this->lang_menu,$groups]);
-				$a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos = $id AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups = '$groups'");
-				$added = $a -> fetchColumn();
-				if ($added == TRUE) {
-					return 0;
-				} else return 1066;
-				
-			}
-		} catch(Exception $e) {
-			return 1067;
-		}
-	}
-	
-	public function get_site_data_item($name='') {
-		$data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."sitedata WHERE name=?");
-		$data->execute([$name]);
-		$string = $data -> fetchAll(\PDO::FETCH_NAMED);
-		if($string):
-		return Intl::_($string[0]['string']);
-		endif;
-		return FALSE;		
-	}	
-	
-	public function get_site_data_lang() {
-		$array = array();
-		$data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."translatedstrings WHERE lang=?");
-		$data->execute([$this->lang]);
-		$items = $data -> fetchAll(\PDO::FETCH_NAMED);
-		if($items):
-		foreach ($items as $key => $value) {
-			$array[$value['name']]=$value['string'];
-		}
-		return $array;
-		endif;
-		return FALSE;		
 	}
 }
 ?>

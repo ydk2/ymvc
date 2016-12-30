@@ -34,13 +34,13 @@ Helper::Inc(CORE.'router');
 */
 Config::$data['template']['admin'] = 'default';
 Config::$data['template']['user'] = 'default';
-Config::$data['template']['system'] = 'main';
+Config::$data['template']['system'] = 'default';
 Config::$data['template']['application'] = 'default';
 Config::$data['template']['default'] = 'default';
 
 Config::$data['time'] = get_time();
 
-
+//echo sha1("admin");
 
 //Config::$data['default']['database']['name'] = 'database'; 
 //Config::$data['default']['database']['type'] = 'sqlite';
@@ -68,18 +68,17 @@ Config::$data['time'] = get_time();
     //echo $loader->showsys('phpcall','phpcall');
     Config::$data['enabled'] = array(
     SYS.C.'one',
-    SYS.C.'two',
+    SYS.C.'other:two',
     SYS.C.'xslexample',
     SYS.C.'phpexample',
     SYS.C.'errors'.DS.'systemerror',
     SYS.C.'theme',
     SYS.C.'view',
     SYS.C.'phpcall',
-    SYS.C.'admin',
+    //SYS.C.'admin',
     SYS.C.'test',
     //SYS.C.'admin'.DS.'menus',
     SYS.C.'admin:menus',
-    //SYS.C.'admin'.DS.'menu',
     SYS.C.'admin:menu',
     SYS.C.'admin:account',
     SYS.C.'layout'.DS.'layout'
@@ -87,26 +86,10 @@ Config::$data['time'] = get_time();
     
     if(Helper::Get('load')=="php"){
         Loader::show_restricted_view(SYS.C.'phpexample',SYS.V.'phpexample');
-    } elseif(Helper::Get('load')=="xsl"){
-        Loader::show_restricted_view(SYS.C.'xslexample',SYS.V.'xslexample');
-    } elseif(Helper::Get('load')=="theme"){
-        Loader::show_restricted_view(SYS.C.'theme',SYS.THEMES.Config::$data['template']['system'].DS.'theme');
-    } elseif(Helper::Get('load')=="route"){
-        Loader::show_restricted_view(SYS.C.'route',SYS.V.'route');
-    } elseif(Helper::Get('load')=="test"){
-        Loader::show_restricted_view(SYS.C.'test',SYS.V.'test');
-    } elseif(Helper::Get('load')=="layout") {
-        Loader::show_restricted_view(SYS.C.'layout',SYS.V.'layout');
-    } elseif(Helper::Get('load')=="row") {
-        Loader::show_module(APP.C.'layout',APP.V.'rows');
-    } elseif(Helper::Get('load')=="col") {
-        Loader::show_module(APP.C.'layout',APP.V.'columns');
-    } elseif(Helper::Get('load')=="sec") {
-        Loader::show_module(APP.C.'applayout',SYS.V.'layout'.DS.'sections');
-    } elseif(Helper::Get('load')=="layout") {
-        Loader::show_restricted_view(SYS.C.'layout',SYS.V.'layout');
+    } elseif(Helper::Get('load')=="admin") {
+        Loader::show_restricted_view(SYS.C.'admin:menus',SYS.V.'admin:choose');
     } else {
-        Loader::show_restricted_view(SYS.C.'theme',SYS.THEMES.Config::$data['template']['system'].DS.'theme');
+        Loader::show_module(SYS.C.'template:theme',SYS.THEMES.Config::$data['template']['system'].DS.'theme');
     }
     // Loader::get_module_show(SYS.C.'layout',SYS.THEMES.'default'.DS.'theme');
     //$test = Helper::Call(SYS.C.'layout',SYS.V.'layout');

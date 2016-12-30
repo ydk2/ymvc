@@ -11,6 +11,7 @@ class Menus extends PHPRender {
 		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_EDITOR);
+		//Helper::Session_Set('user_access',Helper::Get('access'));
 		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
 		$this->SetModel(SYS.M.'menudata');
 		if(Helper::Get('admin:menus') == '')

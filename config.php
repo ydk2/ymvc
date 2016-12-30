@@ -9,7 +9,7 @@ if (DBTYPE=='sqlsrv') {
 	define('DBPASS','8738');
 }
 if (DBTYPE=='mysql') {
-	define('DBNAME','ymvc');
+	define('DBNAME','database');
 	define('DBHOST','localhost');
 	define('DBUSER','root');
 	define('DBPASS','8738');
