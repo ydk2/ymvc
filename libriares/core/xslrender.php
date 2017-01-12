@@ -49,7 +49,7 @@ protected $exceptions;
 
 public $name;
 public $access;
-public $group;
+public $current_group;
 public $access_groups;
 public $model;
 public $data;
@@ -98,7 +98,7 @@ private static $obj;
 		$this->modules = array();
 
 		$this->access_groups = array('admin','user','any');
-		$this->group = 'any';
+		$this->current_group = 'any';
 
         $argsv = func_get_args();
         $argsc = func_num_args();
@@ -262,7 +262,7 @@ final public function SetAccess($access) {
 * @param string $view
 **/ 
 final public function SetGroup($group) {
-	$this->group = $group;
+	$this->current_group = $group;
 } 
 
 /**
@@ -464,8 +464,8 @@ final public function CheckError() {
 					}
 				}
 			} elseif($this->access_mode == 2){
-				if(!in_array($this->group,$this->access_groups)){
-					$this->emessage = "Restricted access for ".$this->group;
+				if(!in_array($this->current_group,$this->access_groups)){
+					$this->emessage = "Restricted access for ".$this->current_group;
 					$this->error = 20503;
 				} else {
 					if($this->error == 20503){

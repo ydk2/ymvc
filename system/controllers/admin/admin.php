@@ -13,7 +13,7 @@ class Menus extends PHPRender {
 
 		$this->SetAccess(self::ACCESS_EDITOR);
 		$this->access_groups = array('admin','editor');
-		$this->group = 'editor';
+		$this->current_group = 'editor';
 		$this->AccessMode(1);
 		$this->global_access = Helper::Session('user_access');
 		

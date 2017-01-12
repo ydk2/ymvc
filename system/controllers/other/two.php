@@ -8,7 +8,7 @@ class Two extends XSLRender {
 
 		$this->SetAccess(self::ACCESS_ANY);
 		$this->access_groups = array('admin','editor');
-		$this->group = 'any';
+		$this->current_group = Helper::Session('user_role');
 		$this->AccessMode(2);
 		$this->global_access = Helper::Session('user_access');
 
@@ -32,7 +32,8 @@ class Two extends XSLRender {
 
 	public function onException(){
 		//echo "";
-		if($this->error == 20503) return $this->showwarning();
+		if($this->error == 20503) return $this->show_login();
+		//if($this->error == 20503) return $this->showwarning();
 		
 	}
 	public function showwarning()
@@ -70,6 +71,11 @@ class Two extends XSLRender {
 	}	
 	public function test($a='a test', $b='b test'){
 		$this->ViewData('message', " Content for Two &amp; ".$a." ".$b );
+	}
+
+	public function show_login()
+	{
+		return "<div class='row'><h3>You need login</h3><a class='btn btn-info' href='?admin"."'>Login</a></div>";
 	}
 }
 ?>

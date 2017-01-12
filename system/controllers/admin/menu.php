@@ -13,7 +13,7 @@ class Menu extends XSLRender {
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_ANY);
 		$this->access_groups = array('admin','user','any');
-		$this->group = 'any';
+		$this->current_group = 'any';
 		$this->AccessMode(2);
 		$this->SetModel(SYS.M.'menudata');
 		if(Helper::Get('admin:menu') == '')

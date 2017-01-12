@@ -73,8 +73,6 @@ class Layout extends XSLRender {
 	public function views($array,$disabled,$mode=SYS){
 		$this->ViewData('layout', '');
 		foreach ($array as $key => $value) {
-			//$key = str_replace(':',DS,$key);
-			//$value = str_replace(':',DS,$value);
 			if(!in_array($key,$disabled)){
 				$col = $this->data->layout->addChild('views', htmlspecialchars( Loader::get_restricted_view($mode.C.$key,$mode.V.$value[0])));
 				$col->addAttribute('style', $value[3]);

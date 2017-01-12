@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);
 class Menus extends PHPRender {
 
 	public function onInit() {
@@ -13,8 +14,8 @@ class Menus extends PHPRender {
 		$this->SetAccess(self::ACCESS_EDITOR);
 		//Helper::Session_Set('user_access',Helper::Get('access'));
 		$this->access_groups = array('admin','editor');
-		$this->group = 'editor';
-		$this->AccessMode(1);
+		$this->current_group = Helper::Session('user_role');
+		$this->AccessMode(2);
 		$this->global_access = Helper::Session('user_access');
 		$this->SetModel(SYS.M.'menudata');
 		if(Helper::Get('admin:menus') == '')
@@ -240,19 +241,26 @@ class Menus extends PHPRender {
 
 	public function onException(){
 		//echo "";
-		if($this->error > 0) return $this->showwarning();
+		if($this->error > 0) return $this->show_login();
+		//if($this->error > 0) return $this->showwarning();
 		
 	}
 	public function showwarning()
 	{
 		$error=$this->NewControllerB(SYS.V.'errors'.DS.'warning',SYS.C.'errors'.DS.'systemerror');
 		$error->setParameter('','inside','yes');
-		$error->setParameter('','show_link','no');
+		$error->setParameter('','show_link','yes');
 		$error->ViewData('title', Intl::_p('Warning!!!'));
 		$error->ViewData('header', Intl::_p('Warning!!!').' '.$this->error);
 		$error->ViewData('alert',Intl::_p($this->emessage).' - ');
 		$error->ViewData('error', $this->error);
 		return $error->View();
+	}
+	public function show_login()
+	{
+		//return Loader::get_module_view(SYS.C.'admin:account',null);
+		$login=$this->NewControllerA(SYS.C.'admin:account');
+		return "<div class='row'><h3>You need login</h3><a class='btn btn-info' href='?admin"."'>Login</a></div>";
 	}
 
 }

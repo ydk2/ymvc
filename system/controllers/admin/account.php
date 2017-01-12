@@ -7,11 +7,10 @@ class Account extends PHPRender {
 		$this -> alert = '';
 		$this -> alert_header = '';
 		$this -> alert_string = '';
-		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_ANY);
-		$this->access_groups = array('admin','editor','user','any');
-		$this->group = 'any';
+		$this->access_groups = array('admin','editor','user','any','');
+		$this->current_group = Helper::Session('user_role');
 		$this->AccessMode(1);
 		$this->global_access = Helper::Session('user_access');
 
@@ -32,7 +31,7 @@ class Account extends PHPRender {
 		$this -> pass2 = Helper::post('password2');
 
 		if(Helper::Get('admin:account') == '')
-		$this->SetView(SYS.V . "admin:check");
+		$this->SetView(SYS.V . "admin:login");
 
 		if (Helper::session('id') > 0) {
 			$this -> alert_header = 'Hi! '.Helper::session('user_name');
