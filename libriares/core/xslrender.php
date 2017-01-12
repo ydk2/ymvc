@@ -43,12 +43,14 @@ protected $modules;
 protected $only_registered_views;
 protected $registered_views;
 protected $global_access;
-protected $global_access_mode;
+protected $access_mode;
 protected $model_required;
 protected $exceptions;
 
 public $name;
 public $access;
+public $group;
+public $access_groups;
 public $model;
 public $data;
 public $view;
@@ -75,7 +77,7 @@ private static $obj;
             throw new SystemException('EXSLT not supported',20510);
         }
 		$this->name=get_class($this);
-		$this->global_access_mode = FALSE;
+		$this->access_mode = 0;
 		$this->only_registered_views = FALSE;
 		$this->model_required = FALSE;
 		$this->registered_views = array();
@@ -95,6 +97,9 @@ private static $obj;
 		$this->action = new stdClass;
 		$this->modules = array();
 
+		$this->access_groups = array('admin','user','any');
+		$this->group = 'any';
+
         $argsv = func_get_args();
         $argsc = func_num_args();
         if (method_exists($this, $f = '__construct_' . $argsc)) {
@@ -104,9 +109,6 @@ private static $obj;
 		$this->action->init = $this->onInit();
 		$this->_check();
 		if($this->error > 0) {
-		if(isset($this->exception)){
-			throw new SystemException($this->emessage,$this->error);
-		}
 		if($this->exceptions !== FALSE){
 			throw new SystemException($this->emessage,$this->error);
 		}
@@ -241,19 +243,8 @@ public final function CheckModel($model){
 * @param integer $access
 * @param boolean $mode Default is TRUE
 **/ 
-final public function SetAccessMode($access,$mode=TRUE) {
-	$this->global_access = $access;
-	$this->global_access_mode = $mode;
-	if($this->global_access_mode){
-		if($this->global_access > $this->access){
-			$this->emessage = "Restricted access";
-			$this->error = 20503;
-		} else {
-			if($this->error == 20503){
-				$this->error = 0;
-			}
-		}
-	}
+final public function AccessMode($mode=1) {
+	$this->access_mode = $mode;
 } 
 
 /**
@@ -263,6 +254,15 @@ final public function SetAccessMode($access,$mode=TRUE) {
 **/ 
 final public function SetAccess($access) {
 	$this->access = $access;
+} 
+
+/**
+* Set Access group for controller buildin users role
+* @access public
+* @param string $view
+**/ 
+final public function SetGroup($group) {
+	$this->group = $group;
 } 
 
 /**
@@ -452,7 +452,9 @@ final public function CheckError() {
 					$this->error = 0;
 				}
 			}
-			if($this->global_access_mode){
+
+
+			if($this->access_mode == 1){
 				if($this->global_access > $this->access){
 					$this->emessage = "Restricted access";
 					$this->error = 20503;
@@ -461,7 +463,21 @@ final public function CheckError() {
 						$this->error = 0;
 					}
 				}
-			} 
+			} elseif($this->access_mode == 2){
+				if(!in_array($this->group,$this->access_groups)){
+					$this->emessage = "Restricted access for ".$this->group;
+					$this->error = 20503;
+				} else {
+					if($this->error == 20503){
+						$this->error = 0;
+					}
+				}
+			} else {
+				if($this->error == 20503){
+					$this->error = 0;
+				}
+			}
+
 			if(FALSE !== $this->model_required){
 			if($this->model==NULL){
 				 $this->emessage = "App Model not Definied";
@@ -517,9 +533,6 @@ final public function CheckError() {
 			$this->action->run = $this->onRun();
 			$this->_check();
             if($this->error > 0) {
-            	if(isset($this->exception)){
-                    throw new SystemException($this->emessage,$this->error);
-                }
 				if($this->exceptions !== FALSE){
 					throw new SystemException($this->emessage,$this->error);
 				}
@@ -541,11 +554,6 @@ final public function CheckError() {
             $this->emessage= $e->Message();
 			if($this->exceptions !== FALSE){
 				return $this->onException();
-			}
-			if(isset($this->exception)){
-            	$this->exception->ViewData('error' ,$e->Code());
-            	$this->exception->ViewData('emessage' ,$e->Message());
-				return $this->exception->View();
 			}
 			self::$obj=NULL;
             return FALSE;

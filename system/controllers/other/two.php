@@ -6,8 +6,12 @@ class Two extends XSLRender {
 		$this->registerPHPFunctions();
 		$this->setmodel (new stdclass);
 
-		$this->setAccess(self::ACCESS_EDITOR);
-		$this->SetAccessMode(Helper::Session('user_access'),true);
+		$this->SetAccess(self::ACCESS_ANY);
+		$this->access_groups = array('admin','editor');
+		$this->group = 'any';
+		$this->AccessMode(2);
+		$this->global_access = Helper::Session('user_access');
+
 		$this->exceptions = true;
 		if($this->error > 0) {
 

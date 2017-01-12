@@ -154,7 +154,6 @@ class Loader {
 		if(!$module) return FALSE;
 		$module->only_registered(TRUE);
 		$module->RegisterView($view);
-		$module->SetAccessMode(Helper::Session('user_access'),TRUE);
 		return	$module->View(); 
 		}
 		return "";
@@ -174,7 +173,6 @@ class Loader {
 		if(!$module) return FALSE;
 		$module->only_registered(TRUE);
 		$module->RegisterView($view);
-		$module->SetAccessMode(Helper::Session('user_access'),TRUE);
 		return	$module->Show(); 
 		}
 		return "";

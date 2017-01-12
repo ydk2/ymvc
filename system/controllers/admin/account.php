@@ -10,7 +10,10 @@ class Account extends PHPRender {
 		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_ANY);
-		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
+		$this->access_groups = array('admin','editor','user','any');
+		$this->group = 'any';
+		$this->AccessMode(1);
+		$this->global_access = Helper::Session('user_access');
 
 		$this->RegisterView(SYS.V.'admin:account');
 		$this->RegisterView(SYS.V.'admin:login');

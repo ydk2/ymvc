@@ -19,8 +19,8 @@ class Theme extends XSLRender {
 		$this->RegisterView(SYS.V.'errors'.DS.'error');
 		
 		$this->setaccess(self::ACCESS_ANY);
-		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
-		
+		$this->AccessMode(1);
+		$this->global_access = Helper::Session('user_access');
 		$this->setParameter('','fixie','<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>

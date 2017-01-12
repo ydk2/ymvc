@@ -12,7 +12,9 @@ class Menu extends XSLRender {
 		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_ANY);
-		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
+		$this->access_groups = array('admin','user','any');
+		$this->group = 'any';
+		$this->AccessMode(2);
 		$this->SetModel(SYS.M.'menudata');
 		if(Helper::Get('admin:menu') == '')
 		$this->SetView(SYS.V . "elements:nav");

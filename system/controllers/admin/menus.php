@@ -12,7 +12,10 @@ class Menus extends PHPRender {
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_EDITOR);
 		//Helper::Session_Set('user_access',Helper::Get('access'));
-		$this->SetAccessMode(Helper::Session('user_access'),TRUE);
+		$this->access_groups = array('admin','editor');
+		$this->group = 'editor';
+		$this->AccessMode(1);
+		$this->global_access = Helper::Session('user_access');
 		$this->SetModel(SYS.M.'menudata');
 		if(Helper::Get('admin:menus') == '')
 		$this->SetView(SYS.V . "menus/choose");
