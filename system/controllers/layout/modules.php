@@ -1,6 +1,6 @@
 <?php
 
-class Menu extends XSLRender {
+class Modules extends XSLRender {
 
 	public function onInit() {
 		/*

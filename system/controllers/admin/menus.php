@@ -9,7 +9,6 @@ class Menus extends PHPRender {
 		 $this->view = $view;
 		 *
 		 */
-		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_EDITOR);
 		//Helper::Session_Set('user_access',Helper::Get('access'));
@@ -27,11 +26,10 @@ class Menus extends PHPRender {
 		//$db = new Model(TRUE);
 		//$db->import = TRUE;
 		//var_dump($db);
+		$this->only_registered(FALSE);
 	}
 	public function onRun()
 	{
-
-		$this->only_registered(FALSE);
 		//$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
 		$this -> set_changes();
 		//var_dump(get_called_class());

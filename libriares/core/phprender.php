@@ -441,7 +441,8 @@ final public function CheckError() {
 * @access private
 **/ 	
 	final private function _check(){
-			if(!in_array($this->view,$this->registered_views) && $this->only_registered_views){
+		if($this->only_registered_views){
+			if(!in_array($this->view,$this->registered_views)){
 				 $this->emessage = "View not registered";
 				 $this->error = 20402;
 			} else {
@@ -449,6 +450,11 @@ final public function CheckError() {
 					$this->error = 0;
 				}
 			}
+		} else {
+			if($this->error == 20402){
+				$this->error = 0;
+			}
+		}
 
 			if($this->access_mode == 1){
 				if($this->global_access > $this->access){

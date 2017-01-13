@@ -152,7 +152,6 @@ class Loader {
 		if(in_array($controller,Config::$data['enabled'])){
 		$module = self::get_module($controller,$view,$model);
 		if(!$module) return FALSE;
-		$module->only_registered(TRUE);
 		$module->RegisterView($view);
 		return	$module->View(); 
 		}
@@ -171,7 +170,6 @@ class Loader {
 		if(in_array($controller,Config::$data['enabled'])){
 		$module = self::get_module($controller,$view,$model);
 		if(!$module) return FALSE;
-		$module->only_registered(TRUE);
 		$module->RegisterView($view);
 		return	$module->Show(); 
 		}

@@ -77,11 +77,11 @@ Config::$data['time'] = get_time();
     SYS.C.'phpcall',
     //SYS.C.'admin',
     SYS.C.'test',
-    //SYS.C.'admin'.DS.'menus',
+    SYS.C.'login:form',
     SYS.C.'admin:menus',
     SYS.C.'admin:menu',
     SYS.C.'admin:account',
-    SYS.C.'layout'.DS.'layout'
+    SYS.C.'layout:layout'
     );
     
     if(Helper::Get('load')=="php"){
