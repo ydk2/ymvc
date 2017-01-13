@@ -31,6 +31,8 @@ abstract class Config {
 	public static function Init() {
 		
 		self::$data = array(
+		'tmp_data'=>array(
+		),
 		'site_data'=>array(
 		),
 		'template'=>array(

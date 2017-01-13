@@ -4,6 +4,7 @@ class Account extends PHPRender {
 	//private $error;
 
 	public function onInit() {
+		Config::$data['tmp_data']['login'] = TRUE;
 		$this -> alert = '';
 		$this -> alert_header = '';
 		$this -> alert_string = '';
@@ -22,6 +23,9 @@ class Account extends PHPRender {
 		$this->RegisterView(SYS.V.'admin:check');
 		$this->SetModel(SYS.M.'accountsdata');
 
+		if(Helper::Get('admin:account') == '')
+		$this->SetView(SYS.V . "admin:login");
+
 	}
 
 	public function OnRun() {
@@ -30,8 +34,6 @@ class Account extends PHPRender {
 		$this -> pass = Helper::post('password');
 		$this -> pass2 = Helper::post('password2');
 
-		if(Helper::Get('admin:account') == '')
-		$this->SetView(SYS.V . "admin:login");
 
 		if (Helper::session('id') > 0) {
 			$this -> alert_header = 'Hi! '.Helper::session('user_name');

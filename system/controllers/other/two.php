@@ -32,7 +32,7 @@ class Two extends XSLRender {
 
 	public function onException(){
 		//echo "";
-		if($this->error == 20503) return $this->show_login();
+		if($this->error == 20503 && !isset(Config::$data['tmp_data']['login'])) return $this->show_login();
 		//if($this->error == 20503) return $this->showwarning();
 		
 	}
@@ -75,7 +75,8 @@ class Two extends XSLRender {
 
 	public function show_login()
 	{
-		return "<div class='row'><h3>You need login</h3><a class='btn btn-info' href='?admin"."'>Login</a></div>";
+		$login=$this->NewControllerA(SYS.C.'admin:account');
+		return $login->View();
 	}
 }
 ?>

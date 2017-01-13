@@ -241,8 +241,8 @@ class Menus extends PHPRender {
 
 	public function onException(){
 		//echo "";
-		if($this->error > 0) return $this->show_login();
-		//if($this->error > 0) return $this->showwarning();
+		if($this->error == 20503 && !isset(Config::$data['tmp_data']['login'])) return $this->show_login();
+		if($this->error > 0) return $this->showwarning();
 		
 	}
 	public function showwarning()

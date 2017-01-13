@@ -526,6 +526,14 @@ final public function CheckError() {
 				$this->view=$path;
 			}
 			$this->_check();
+            if($this->error > 0) {
+				if($this->exceptions !== FALSE){
+					throw new SystemException($this->emessage,$this->error);
+				}
+            	if($this->error == 20404){
+                    throw new SystemException($this->emessage,$this->error);
+                }
+            }
 			$this->action->run = $this->onRun();
 			$this->_check();
             if($this->error > 0) {
