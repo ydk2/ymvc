@@ -260,7 +260,8 @@ class Menus extends PHPRender {
 	{
 		//return Loader::get_module_view(SYS.C.'admin:account',null);
 		$login=$this->NewControllerA(SYS.C.'admin:account');
-		return "<div class='row'><h3>You need login</h3><a class='btn btn-info' href='?admin"."'>Login</a></div>";
+		return $login->View();
+		//return "<div class='row'><h3>You need login</h3><a class='btn btn-info' href='?admin"."'>Login</a></div>";
 	}
 
 }

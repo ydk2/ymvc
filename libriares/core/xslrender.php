@@ -114,9 +114,6 @@ private static $obj;
 		}
 		}
         } catch (SystemException $e){
-			if($this->exceptions !== FALSE){
-				return $this->onException();
-			}
             $this->error = $e->Code();
             $this->emessage= $e->Message();
             return FALSE;
