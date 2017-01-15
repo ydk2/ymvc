@@ -25,15 +25,13 @@ class Form extends XSLRender {
 
 	public function OnRun() {
 		$this->items = array(
-			array('id'=>'a','pos'=>1,'name'=>'a','type'=>'text','value'=>''),
-			array('id'=>'b','pos'=>2,'name'=>'b','type'=>'text','value'=>''),
-			array('id'=>'c','pos'=>3,'name'=>'c','type'=>'text','value'=>''),
-			array('id'=>'d','pos'=>4,'name'=>'d','type'=>'text','value'=>''),
-			array('id'=>'e','pos'=>5,'name'=>'e','type'=>'submit','value'=>'GO!'),
+			array('id'=>'a','pos'=>1,'name'=>'a','type'=>'text','value'=>'','label'=>'Name','error'=>'text-success'),
+			array('id'=>'b','pos'=>2,'name'=>'b','type'=>'password','value'=>'','label'=>'Pass','error'=>'text-danger'),
+			array('id'=>'ec','pos'=>5,'name'=>'e','type'=>'submit','value'=>'Login','class'=>'btn btn-block btn-warning'),
 		);
-		$this->formattr = array('id'=>'form','class'=>'form','method'=>'post','action'=>'#');
+		$this->formattr = array('id'=>'form','class'=>'form-horizontal text-info form','method'=>'post','action'=>'#');
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data'.$this->itemattr($this->formattr).'>'.$this->itemlist($this -> items).'</data>', null, false);
-
+		$this->setparameter("","title","Login Form");
 	}
 	public function itemattr($attrs){
 		$retval = '';
@@ -97,59 +95,6 @@ class Form extends XSLRender {
 			}
 		}
 	}
-	}
-
-	public function register() {
-		if (!Helper::post('name') || !Helper::post('email') || !Helper::post('password') || !Helper::post('password2')) {
-			$this -> alert_mode = "alert-danger";
-			$this -> alert_header = 'Error!!!';
-			$this -> alert_string .= ' Please fill all fields <br>';
-		} elseif (!ctype_alnum(Helper::post('name'))) {
-			$this -> alert_mode = "alert-danger";
-			$this -> alert_header = 'Error!!!';
-			$this -> alert_string .= ' Please enter a valid username <br>';
-		} elseif (filter_var(Helper::post('name'), FILTER_VALIDATE_EMAIL)) {
-			$this -> alert_mode = "alert-danger";
-			$this -> alert_header = 'Error!!!';
-			$this -> alert_string .= ' Please enter a valid email <br>';
-		} elseif (!ctype_alnum(Helper::post('password')) && !ctype_alnum(Helper::post('password2'))) {
-			$this -> alert_mode = "alert-danger";
-			$this -> alert_header = 'Error!!!';
-			$this -> alert_string .= ' Please enter a valid password <br>';
-			$this -> alert = $this -> showin(SVIEW . 'admin/alert');
-			$this -> section = $this -> showin(SVIEW . 'admin/register');
-		} elseif (Helper::post('password') !== Helper::post('password2')) {
-			$this -> alert_mode = "alert-danger";
-			$this -> alert_header = 'Error!!!';
-			$this -> alert_string .= ' Passwords is not equals <br>';
-		} else {
-			$register = $this -> model -> register();
-			//var_dump($login);
-			if ($register == 0) {
-				$this -> alert_header = 'Welcome!';
-				$this -> alert_string = ' You are registered';
-				$this -> alert_mode = "alert-success";
-				$this -> section = '';
-				//Helper::session_set('error',210);
-			} elseif ($register == 110) {
-				$this -> alert_header = 'Error!';
-				$this -> alert_string = ' Can\' register new User ';
-				$this -> alert_mode = "alert-danger";
-			} elseif ($register == 111) {
-				$this -> alert_header = 'Error!';
-				$this -> alert_string = ' Username or email alredy exists ';
-				$this -> alert_mode = "alert-danger";
-			} elseif ($register == 112) {
-				$this -> alert_header = 'Error!';
-				$this -> alert_string = ' Udefinied error, please try later ';
-				$this -> alert_mode = "alert-danger";
-			}
-		}
-
-	}
-
-	public function edit() {
-
 	}
 
 	public function onException(){

@@ -176,5 +176,38 @@ class Loader {
 		return "";
 	}
 
+
+	public function ordered_views($array,$disabled,$mode=SYS,$group='main'){
+		sksort($array,'pos');
+		$model = new stdClass;
+		
+		$layout = self::get_module(SYS.C.'layout:layout',SYS.V.'layout:views',$model);
+		$layout->ViewData('layout', '');
+		foreach ($array as $value) {
+			if($value['group']==$group || $value['group']==""){
+			if(in_array($mode.C.$value['module'], Config::$data['enabled']) && !in_array($mode.C.$value['module'],$disabled) && $layout->ControllerExists($mode.C.$value['module'])){
+				$col = $this->data->layout->addChild('views', htmlspecialchars( self::get_restricted_view($mode.C.$value['module'],$mode.V.$value['view'])));
+
+				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
+				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
+				if(isset($value['attrid'])) $col->addAttribute('id', $value['id']);	
+
+			} elseif(in_array($value['module'], Config::$data['layouts'])){
+				$layout->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
+				$content = $layout->GetModule(SYS.C.'layout:layout');
+				$content->model->layout_group = $value['module'];
+				$content = ($content)? htmlspecialchars($content->View()):"";
+				$col = $this->data->layout->addChild('views', $content);
+
+				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
+				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
+				if(isset($value['attrid'])) $col->addAttribute('id', $value['id']);	
+
+			}
+			}
+		}
+		return $layout->View();
+	}
+
 }
 ?>

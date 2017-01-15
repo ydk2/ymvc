@@ -83,6 +83,9 @@ Config::$data['time'] = get_time();
     SYS.C.'admin:account',
     SYS.C.'layout:layout'
     );
+    Config::$data['layouts'] = array(
+    'sections'
+    );
     
     if(Helper::Get('load')=="php"){
         Loader::show_restricted_view(SYS.C.'phpexample',SYS.V.'phpexample');

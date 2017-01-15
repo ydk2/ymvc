@@ -72,22 +72,34 @@ class Theme extends XSLRender {
 		$fromget = array(
 			'admin:menu'=>array('elements:nav','','col-md-12',''),
 		);
-		
+
+		$layout_items = array(
+			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'main','attrid'=>''),
+			array('id'=>4,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
+			array('id'=>2,'pos' => 2, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12', 'model'=>'', 'group'=>'main','attrid'=>''),
+			array('id'=>3,'pos' => 3, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
+			array('id'=>5,'pos' => 1, 'name'=>'two', 'module'=>'sections','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
+			array('id'=>8,'pos' => 2, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
+			array('id'=>6,'pos' => 3, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
+			array('id'=>7,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'sections','attrid'=>''),
+		);
+		$this->model->layout_group = 'sec';
+/**/
+		$i = 2;
 		foreach ($_GET as $key => $value) {
-			$this->model->sections['admin:menu'] = array('elements:nav','','col-md-12','');
+			$this->model->sections[1] = array('pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12','id'=>'', 'access_group'=>'', 'group'=>'');
+
 			if(!in_array($key,$this->model->disabled) && $this->ControllerExists(SYS.C.$key)){
-				$this->model->sections[$key] = array($value,'','col-md-12','');
+				$this->model->sections[] = array('pos' => $i++, 'name'=>'FromGet','module'=>$key,'view'=>$value,'class'=>'col-sm-12','id'=>'', 'access_group'=>'', 'group'=>'');
+
 			}
 		}
-
-		if(empty($this->model->sections) || count($this->model->sections)==1){
-			$this->model->sections = array(
-			'admin:menu'=>array('elements:nav','','col-md-12',''),
-			'admin:account'=>array('admin:login','php','col-md-8  col-md-offset-2',''),
-			'other:two'=>array('other:two','','col-md-12',''),
-			);
+/**/
+		if(count($this->model->sections)==1){
+			$this->model->sections = $layout_items;
 		}
-		$this->model->sections['view']=array('time','','col-md-12','');
+		
+		//$this->model->sections['view']=array('time','','col-md-12','');
 		//var_dump($this->model->sections);
 
 		$this->contents();

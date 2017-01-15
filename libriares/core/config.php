@@ -68,6 +68,8 @@ abstract class Config {
 		),
 		'enabled'=>array(
 		),
+		'layouts'=>array(
+		)
 		);
 	}
 }
