@@ -5,6 +5,22 @@ class One extends XSLRender {
 		// call in __constructor
 		$this->model = new stdclass;
 		$this->exceptions = true;
+		
+		return TRUE;
+	}
+
+	public function onEnd(){
+		// call after render view
+		return TRUE;
+	}
+
+	public function onDestruct(){
+		// call in __destructor
+		return TRUE;
+	}
+
+	public function onRun($model = NULL){
+		
 		if(Helper::Get('inside_errors') == 11023){
 			$this->error = 11023;
 		}
@@ -50,23 +66,6 @@ class One extends XSLRender {
 
 		$links = $this->data->links->addChild('a','Docs');
 		$links->addAttribute('href', HOST_URL.'docs');
-		
-		return TRUE;
-	}
-
-	public function onEnd(){
-		// call after render view
-		return TRUE;
-	}
-
-	public function onDestruct(){
-		// call in __destructor
-		return TRUE;
-	}
-
-	public function onRun($model = NULL){
-		if($this->error == 11023) {
-		}
 		//$this->SetView(SYS.V.'time');
 		$this->ViewData('title', 'Section One');
 		$this->ViewData('message', " Content for One" );

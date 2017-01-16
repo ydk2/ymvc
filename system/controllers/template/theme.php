@@ -26,7 +26,7 @@ class Theme extends XSLRender {
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		');
-		
+		$this->current_group = Helper::Session('user_role');
 		if(Helper::Get('action')=="error"){
 			$this->error = 193502;
 		}
@@ -65,8 +65,7 @@ class Theme extends XSLRender {
 		$this->ViewData('subheader', Intl::_p('Theme modules'));
 		//$this->ViewData('content', Intl::_p("Content of modules" ));
 
-		$this->model->disabled = array('error','errors','data','index','item','action','layout','load','access');
-		$this->model->default = array('admin:account'=>'admin:account');
+		$this->model->disabled = array('error','errors','data','index','item','action','load','access'); 
 		$this->model->array = array('admin:account'=>'admin:account');
 
 		$fromget = array(
@@ -74,21 +73,21 @@ class Theme extends XSLRender {
 		);
 
 		$layout_items = array(
+			// sec
 
+			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'row', 'model'=>'', 'group'=>'sec', 'attrid'=>'', 'users'=>''),
+			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'row', 'model'=>'', 'group'=>'sec1', 'attrid'=>'', 'users'=>''),
 			
 			// layout
-			array('id'=>5,'pos' => 1, 'name'=>'layout', 'module'=>'layout','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec', 'attrid'=>'', 'users'=>''),
+			array('id'=>5,'pos' => 2, 'name'=>'layout', 'module'=>'layout','view'=>'','class'=>'row', 'model'=>'', 'group'=>'sec', 'attrid'=>'', 'users'=>''),
 			// items
-			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'layout', 'attrid'=>'', 'users'=>''),
+			//array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'layout', 'attrid'=>'', 'users'=>''),
 			array('id'=>19,'pos' => 3, 'name'=>'one', 'module'=>'other:one','view'=>'other:one','class'=>'col-sm-4', 'model'=>'', 'group'=>'layout', 'attrid'=>'', 'users'=>''),
 			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-8', 'model'=>'', 'group'=>'layout', 'attrid'=>'', 'users'=>''),
 			
 			// sections
-			array('id'=>5,'pos' => 1, 'name'=>'section', 'module'=>'sections','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec', 'attrid'=>'', 'users'=>''),
+			array('id'=>5,'pos' => 3, 'name'=>'section', 'module'=>'layout','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec1', 'attrid'=>'', 'users'=>''),
 			// items
-			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
-			array('id'=>19,'pos' => 3, 'name'=>'one', 'module'=>'other:one','view'=>'other:one','class'=>'col-sm-4', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
-			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-8', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
 			array('id'=>2,'pos' => 2, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
 
 //			array('id'=>7,'pos' => 7, 'name'=>'menu','module'=>'login:form','view'=>'','class'=>'col-sm-8', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
@@ -97,10 +96,16 @@ class Theme extends XSLRender {
 
 
 		);
-		$this->model->registered = "layout"; 
+		$this->model->registered = array("layout"); 
 		$this->model->enabled = Config::$data['enabled'];
-		$this->model->layout_group = 'sec';
-/**/
+		if($this->current_group!="admin"){
+			$this->model->layout_group = 'sec1';
+		} else {
+			$this->model->layout_group = 'sec';
+		}
+		
+		$this->model->default = $layout_items;
+		
 		$i = 2;
 		foreach ($_GET as $key => $value) {
 			$this->model->layouts[0] = array('pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'', 'model'=>'');
@@ -110,9 +115,9 @@ class Theme extends XSLRender {
 
 			}
 		}
-/**/
+
 		if(!isset($this->model->layouts) || count($this->model->layouts)==1){
-			$this->model->layouts = $layout_items;
+			$this->model->layouts = $this->model->default;
 		}
 		
 		//$this->model->sections['view']=array('time','','col-md-12','');

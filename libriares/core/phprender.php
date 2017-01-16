@@ -682,8 +682,9 @@ final public function CheckError() {
 	
 		if (is_object($controller)) {
 			if(($controller instanceof XSLRender) || ($controller instanceof PHPRender)){
-				if($view!==NULL)
+				if($view!==NULL){
 					$controller->SetView($view);
+				}
 			}
 			return $controller;
 		} else {
