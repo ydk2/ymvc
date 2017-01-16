@@ -21,8 +21,8 @@ INSERT INTO sitedata (name, string) VALUES('footer_title_str', 'Footer Header');
 INSERT INTO sitedata (name, string) VALUES('page_short_title_str', 'Ymvc');
 INSERT INTO sitedata (name, string) VALUES('footer_content_str', 'Footer Contents.');
 
-DROP TABLE IF EXISTS translatedstrings;
-CREATE TABLE IF NOT EXISTS translatedstrings (
+DROP TABLE IF EXISTS strings;
+CREATE TABLE IF NOT EXISTS strings (
   id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
   name TEXT,
   string TEXT,
@@ -31,31 +31,31 @@ CREATE TABLE IF NOT EXISTS translatedstrings (
   lang varchar(11) DEFAULT 'en'
 ); 
 
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Contents.', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc <small>System</small>', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Subtitle of this page','', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Header', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Start', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('About Us', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Contact', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Table', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('New', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Old', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('File', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Footer Contents.', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc <small>System</small>', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Subtitle of this page','', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Footer Header', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Start', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('About Us', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Contact', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Table', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('New', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Old', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('File', '', 'en');
 
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Contents.', 'Zawartość Stopki.', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc <small>System</small>', 'Ymvc <small>System</small>', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc', '', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Subtitle of this page', 'Podtytuł strony', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Header', 'Nagłówek stopki', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Start', 'Start', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('About Us', 'O Nas', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Contact', 'Kontakt', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Table', 'Tabela', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('New', 'Nowy', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Old', 'Stary', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('File', 'Plik', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Footer Contents.', 'Zawartość Stopki.', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc <small>System</small>', 'Ymvc <small>System</small>', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc', '', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Subtitle of this page', 'Podtytuł strony', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Footer Header', 'Nagłówek stopki', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Start', 'Start', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('About Us', 'O Nas', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Contact', 'Kontakt', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Table', 'Tabela', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('New', 'Nowy', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Old', 'Stary', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('File', 'Plik', 'pl');
 
 
 DROP TABLE IF EXISTS menus;

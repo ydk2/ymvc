@@ -9,18 +9,9 @@ class MenuData extends DBConnect {
             $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
             $this->lang=Helper::session('locale');
             $this->lang_menu = (Helper::session('lang'))?Helper::session('lang'):'en';
-            $this->lang_strings=$this->get_site_data_lang();
+            //$this->lang_strings=$this->get_site_data_lang();
             //Intl::$strings=$this->lang_strings;
             $this -> template = 'admin';
-            $this -> links = array(
-            array('stylesheet', HOST_URL . '/templates/admin/theme/css/style.css', 'text/css'),
-            array('stylesheet', HOST_URL . '/templates/new/theme/bootstrap/themes/default/bootstrap.css', 'text/css'),
-            array('stylesheet', 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css', 'text/css'));
-            $this -> scripts = array(
-            array('text/javascript', HOST_URL . '/templates/new/theme/bootstrap/themes/start/js/jquery.js', ''),
-            array('text/javascript', HOST_URL . '/templates/new/theme/js/jquery.js', ''),
-            array('text/javascript', HOST_URL . '/templates/new/theme/js/jquery-migrate.js', ''),
-            array('text/javascript', HOST_URL . '/templates/new/theme/js/bootstrap.min.js', ''));
             
     }
     
@@ -118,7 +109,7 @@ class MenuData extends DBConnect {
     
     public function get_site_data_lang() {
         $array = array();
-        $data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."translatedstrings WHERE lang=?");
+        $data = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."strings WHERE lang=?");
         $data->execute(array($this->lang));
         $items = $data -> fetchAll(PDO::FETCH_NAMED);
         if($items):

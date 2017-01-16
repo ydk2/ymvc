@@ -37,7 +37,7 @@ public $mode;
 		if(isset($this->model->layouts)) $this->layouts = $this->model->layouts;
 		if(isset($this->model->layout_group)) $this->layout_group = $this->model->layout_group;
 		$this->mode = (isset($this->model->mode) && $this->model->mode!="")?$this->model->mode:SYS;
-
+		Config::$data['layouts']['current'] = $this->layout_group;
 		//$this->SetView(SYS.V.'index');
 			$this->Layouts($this->layouts,$this->disabled,$this->mode,$this->layout_group);
 		

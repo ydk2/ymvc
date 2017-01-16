@@ -86,7 +86,7 @@ class Theme extends XSLRender {
 			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-8', 'model'=>'', 'group'=>'layout', 'attrid'=>'', 'users'=>''),
 			
 			// sections
-			array('id'=>5,'pos' => 3, 'name'=>'section', 'module'=>'layout','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec1', 'attrid'=>'', 'users'=>''),
+			array('id'=>5,'pos' => 3, 'name'=>'section', 'module'=>'layout','view'=>'','class'=>'row', 'model'=>'', 'group'=>'sec1', 'attrid'=>'', 'users'=>''),
 			// items
 			array('id'=>2,'pos' => 2, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
 
@@ -108,7 +108,12 @@ class Theme extends XSLRender {
 		
 		$i = 2;
 		foreach ($_GET as $key => $value) {
-			$this->model->layouts[0] = array('pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'', 'model'=>'');
+		if($this->current_group!="admin"){
+			$this->model->layouts[0] = $this->model->default[1];
+		} else {
+			$this->model->layouts[0] = $this->model->default[0];
+		}
+			
 
 			if(!in_array($key,$this->model->disabled) && $this->ControllerExists(SYS.C.$key)){
 				$this->model->layouts[] = array('pos' => $i++, 'name'=>'FromGet','module'=>$key,'view'=>$value,'class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'', 'model'=>'');
@@ -116,7 +121,7 @@ class Theme extends XSLRender {
 			}
 		}
 
-		if(!isset($this->model->layouts) || count($this->model->layouts)==1){
+		if(!isset($this->model->layouts) || count($this->model->layouts)<=1){
 			$this->model->layouts = $this->model->default;
 		}
 		

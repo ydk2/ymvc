@@ -16,16 +16,18 @@ class Menu extends XSLRender {
 		$this->current_group = 'any';
 		$this->AccessMode(2);
 		$this->SetModel(SYS.M.'menudata');
+		$this->only_registered(FALSE);
 		if(Helper::Get('admin:menu') == '')
 		//$this->SetView(SYS.V . "elements:nav");
 		$this->Inc(SYS.M.'model');
-		$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
-		$this -> items = $this -> model -> get_menu($this->groups);
 	}
 	public function onRun()
 	{
 
-		$this->only_registered(FALSE);
+		//$this->groups=$this->model->groups;
+		$this->groups=Config::$data['layouts']['current'];
+		$this -> items = $this -> model -> get_menu($this->groups);
+		
 		//$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
 		//var_dump($this->menulist($this -> items));
 		if(!empty($this->items))

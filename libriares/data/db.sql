@@ -1,63 +1,5 @@
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
-
-DROP TABLE IF EXISTS sitedata;
-CREATE TABLE IF NOT EXISTS sitedata (
-  id INTEGER NOT NULL PRIMARY KEY,
-  name varchar(255) NOT NULL,
-  string TEXT DEFAULT '',
-  access int(11) DEFAULT 10,
-  groups varchar(255) NOT NULL DEFAULT 'main'
-); 
-
-INSERT INTO sitedata (name, string) VALUES('page_title_str', 'Ymvc <small>System</small>');
-INSERT INTO sitedata (name, string) VALUES('page_subtitle_str', 'Subtitle of this page');
-INSERT INTO sitedata (name, string) VALUES('footer_title_str', 'Footer Header');
-INSERT INTO sitedata (name, string) VALUES('page_short_title_str', 'Ymvc');
-INSERT INTO sitedata (name, string) VALUES('footer_content_str', 'Footer Contents.');
-
-DROP TABLE IF EXISTS translatedstrings;
-CREATE TABLE IF NOT EXISTS translatedstrings (
-  id INTEGER NOT NULL PRIMARY KEY,
-  name TEXT DEFAULT '',
-  string TEXT DEFAULT '',
-  access int(11) DEFAULT 10,
-  groups varchar(255) NOT NULL DEFAULT 'main',
-  lang varchar(11) DEFAULT 'en'
-); 
-
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Contents.', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc <small>System</small>', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Subtitle of this page','', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Header', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Start', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('About Us', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Contact', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Table', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('New', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Old', '', 'en');
-INSERT INTO translatedstrings (name, string, lang) VALUES('File', '', 'en');
-
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Contents.', 'Zawartość Stopki.', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc <small>System</small>', 'Ymvc <small>System</small>', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Ymvc', '', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Subtitle of this page', 'Podtytuł strony', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Footer Header', 'Nagłówek stopki', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Start', 'Start', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('About Us', 'O Nas', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Contact', 'Kontakt', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Table', 'Tabela', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('New', 'Nowy', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('Old', 'Stary', 'pl');
-INSERT INTO translatedstrings (name, string, lang) VALUES('File', 'Plik', 'pl');
-
-
 DROP TABLE IF EXISTS menus;
 CREATE TABLE IF NOT EXISTS menus (
   id INTEGER NOT NULL PRIMARY KEY,
@@ -73,12 +15,65 @@ CREATE TABLE IF NOT EXISTS menus (
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(1, 'Start', 'start', '',10,'en');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(2, 'About Us', 'about', '',10,'en');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(3, 'Contact', 'contact', '',10,'en');
-INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Table', 'http://localhost/ymvc/?table=table', '1',10,'en');
+INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Table', '?table=table', '1',10,'en');
 
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(1, 'Start', 'start', '',10,'pl');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(2, 'O nas', 'about', '',10,'pl');
 INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(3, 'Kontakt', 'contact', '',10,'pl');
-INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Tabela', 'http://localhost/ymvc/?table=table', '1',10,'pl');
+INSERT INTO menus (pos, title, link, parent, access, lang) VALUES(4, 'Tabela', '?table=table', '1',10,'pl');
+
+
+DROP TABLE IF EXISTS "sitedata";
+CREATE TABLE IF NOT EXISTS "sitedata" (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name varchar(255) NOT NULL,
+  string TEXT DEFAULT '',
+  access int(11) DEFAULT 10,
+  groups varchar(255) NOT NULL DEFAULT 'main'
+); 
+
+INSERT INTO sitedata (name, string) VALUES('page_title_str', 'Ymvc <small>System</small>');
+INSERT INTO sitedata (name, string) VALUES('page_subtitle_str', 'Subtitle of this page');
+INSERT INTO sitedata (name, string) VALUES('footer_title_str', 'Footer Header');
+INSERT INTO sitedata (name, string) VALUES('page_short_title_str', 'Ymvc');
+INSERT INTO sitedata (name, string) VALUES('footer_content_str', 'Footer Contents.');
+
+DROP TABLE IF EXISTS "strings";
+CREATE TABLE IF NOT EXISTS strings (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name TEXT DEFAULT '',
+  string TEXT DEFAULT '',
+  access int(11) DEFAULT 10,
+  groups varchar(255) NOT NULL DEFAULT 'main',
+  lang varchar(11) DEFAULT 'en'
+); 
+
+INSERT INTO strings (name, string, lang) VALUES('Footer Contents.', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc <small>System</small>', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Subtitle of this page','', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Footer Header', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Start', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('About Us', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Contact', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Table', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('New', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('Old', '', 'en');
+INSERT INTO strings (name, string, lang) VALUES('File', '', 'en');
+
+INSERT INTO strings (name, string, lang) VALUES('Footer Contents.', 'Zawartość Stopki.', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc <small>System</small>', 'Ymvc <small>System</small>', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Ymvc', '', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Subtitle of this page', 'Podtytuł strony', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Footer Header', 'Nagłówek stopki', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Start', 'Start', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('About Us', 'O Nas', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Contact', 'Kontakt', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Table', 'Tabela', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('New', 'Nowy', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('Old', 'Stary', 'pl');
+INSERT INTO strings (name, string, lang) VALUES('File', 'Plik', 'pl');
+
 
 DROP TABLE IF EXISTS pages;
 CREATE TABLE IF NOT EXISTS pages (
@@ -135,7 +130,7 @@ CREATE TABLE IF NOT EXISTS users (
   lang varchar(11) DEFAULT 'en'
 ); 
 
-INSERT INTO users (id, name, email, password, role, role_id) VALUES(1, 'admin', 'admin@localhost.to', '40bd001563085fc351653210ea1ff5c5ecbdbbeef', 'admin',1);
+INSERT INTO users (id, name, email, password, role, role_id) VALUES(1, 'admin', 'admin@localhost.to', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin',1);
 INSERT INTO users (id, name, email, password, role, role_id) VALUES(2, 'me', 'me@be.mu', '40bd001563085fc351653210ea1ff5c5ecbdbbeef', 'editor',3);
 INSERT INTO users (id, name, email, password, role, role_id) VALUES(3, 'kupa', 'kupa@kibel.tu', '36a32e106cbfd11fd108e8c108e38d10ad10b41f57f1a', 'user',5);
 

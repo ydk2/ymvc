@@ -21,7 +21,7 @@ class model extends DBConnect {
 			$queries = explode(";", $queries);
 		} elseif ($data['type']=='mysql') {
 			$queries = file_get_contents(ROOT.DATA.'mysql.sql');
-		} else {
+		} elseif ($data['type']=='sqlite') {
 			$queries = file_get_contents(ROOT.DATA.'db.sql');
 			$queries = explode(";", $queries);
 		}

@@ -1,6 +1,6 @@
 <?php
 /* */
-define('DBTYPE','mysql');
+define('DBTYPE','sqlite');
 
 if (DBTYPE=='sqlsrv') {
 	define('DBNAME','ymvc');
@@ -23,6 +23,8 @@ if (DBTYPE=='pgsql') {
 if (DBTYPE=='sqlite') {
 	define('DBNAME','database');
 	define('DBHOST','localhost');
+	define('DBUSER','');
+	define('DBPASS','');
 } 
 
 
