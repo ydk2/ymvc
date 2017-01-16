@@ -56,7 +56,7 @@ Config::$data['time'] = get_time();
         
         
 
-    getIntl();
+    //getIntl();
     //echo Helper::Session('locale');
     //var_dump($langs);
     //echo Intl::_('Comments are closed','main_index');

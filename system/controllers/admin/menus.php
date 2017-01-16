@@ -58,6 +58,17 @@ class Menus extends PHPRender {
 		return $tree;
 	}
 
+	function menugroups() {
+		$data = $this->model->get_menu_groups();
+		$tree = '<ul class="list-group">';		
+		foreach ($data as $item) {	
+			$tree .= '<li class="list-group-item"><a href="?admin:menus&data='.$item.'">' . $item.'</a>';
+			$tree .= '</li>' . PHP_EOL;
+		}
+		$tree .= "</ul>";
+		return $tree;
+	}
+
 	function edit_menu($data, $parent = '') {
 		$tree = '';
 		$i = 1;
@@ -226,7 +237,7 @@ class Menus extends PHPRender {
 			$input[$key]['access'] = $value['access'];
 		}
 		//usort($input, $this->model->build_sorter('pos'));
-		sksort($input,'pos');
+		$this->sksort($input,'pos');
 		//$del = $this->model->db -> base -> query("DELETE FROM menus WHERE id > 0");
 		$this -> update_menu($input);
 

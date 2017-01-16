@@ -36,6 +36,23 @@ class MenuData extends DBConnect {
         endif;	// end get pages
         return false;
     }
+    
+    
+    public function get_menu_groups() {
+        $h = $this -> db -> prepare("SELECT groups FROM ".DBPREFIX."menus WHERE lang=? ORDER BY pos ASC");
+        $h -> execute(array($this->lang_menu));
+        $groups = $h -> fetchAll(PDO::FETCH_NAMED);
+        if ($groups) :
+        //var_dump($groups);
+        $tmp = array();
+        foreach ($groups as $item) {
+            $tmp[]=$item['groups'];
+        }
+        $result = array_unique($tmp);
+        return $result;
+        endif;	// end get pages
+        return false;
+    }
 
     public function delete_menu_item($item_id) {
         $del = $this -> db -> prepare('DELETE FROM '.DBPREFIX.'menus WHERE id=? AND lang=?');
