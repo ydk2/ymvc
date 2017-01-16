@@ -779,5 +779,81 @@ public final function GetModule($controller){
 		}
 		return FALSE;
 	}
+/**
+* Insert XML into a SimpleXMLElement
+* @from http://stackoverflow.com/questions/767327/in-simplexml-how-can-i-add-an-existing-simplexmlelement-as-a-child-element
+* @param SimpleXMLElement $parent
+* @param string $xml
+* @param bool $before
+* @return bool XML string added
+*/
+function simplexml_import_xml(SimpleXMLElement $parent, $xml, $before = false) {
+	$xml = (string)$xml;
+	// 	check if there is something to add
+	if ($nodata = !strlen($xml) or $parent[0] == NULL) {
+		return $nodata;
+	}
+	// 	add the XML
+	$node = dom_import_simplexml($parent);
+	$fragment = $node->ownerDocument->createDocumentFragment();
+	$fragment->appendXML($xml);
+	if ($before) {
+		return (bool)$node->parentNode->insertBefore($fragment, $node);
+	}
+	return (bool)$node->appendChild($fragment);
+}
+/**
+* Insert SimpleXMLElement into SimpleXMLElement
+* @from http://stackoverflow.com/questions/767327/in-simplexml-how-can-i-add-an-existing-simplexmlelement-as-a-child-element
+* @param SimpleXMLElement $parent
+* @param SimpleXMLElement $child
+* @param bool $before
+* @return bool SimpleXMLElement added
+*/
+function simplexml_import_simplexml(SimpleXMLElement $parent, SimpleXMLElement $child, $before = false){
+	// 	check if there is something to add
+	if ($child[0] == NULL) {
+		return true;
+	}
+	// 	if it is a list of SimpleXMLElements default to the first one
+	$child = $child[0];
+	// 	insert attribute
+	if ($child->xpath('.') != array($child)) {
+		$parent[$child->getName()] = (string)$child;
+		return true;
+	}
+	$xml = $child->asXML();
+	// 	remove the XML declaration on document elements
+	if ($child->xpath('/*') == array($child)) {
+		$pos = strpos($xml, "\n");
+		$xml = substr($xml, $pos + 1);
+	}
+	return simplexml_import_xml($parent, $xml, $before);
+}
+
+/**
+* Sort array by key
+* @param Array $array
+* @param String $subkey
+* @param bool $sort_ascending
+*/
+function sksort(&$array, $subkey="", $sort_ascending=TRUE) {
+	if (count($array))
+	$temp_array[key($array)] = array_shift($array);
+	foreach($array as $key => $val){
+		$offset = 0;
+		$found = false;
+		foreach($temp_array as $tmp_key => $tmp_val) {
+			if(!$found and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey])) {
+				$temp_array = array_merge((array)array_slice($temp_array,0,$offset), array($key => $val), array_slice($temp_array,$offset));
+				$found = true;
+			}
+			$offset++;
+		}
+		if(!$found) $temp_array = array_merge($temp_array, array($key => $val));
+	}
+	if ($sort_ascending) $array = array_reverse($temp_array);
+	else $array = $temp_array;
+}
 }
 ?>

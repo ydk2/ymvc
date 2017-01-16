@@ -45,7 +45,7 @@ public $mode;
 
 	public function Layouts($array,$disabled,$mode=SYS,$group=''){
 		if(isset($array[0]['pos'])){
-		sksort($array,'pos');
+		$this->sksort($array,'pos');
 		$check = array('pos', 'name','module','view','class','group','attrid');
 		$yes = TRUE;
 		
@@ -74,6 +74,9 @@ public $mode;
 				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
 				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);	
 				}
+				$content = NULL;
+				$contents = NULL;
+				$col = NULL;
 			}
 
 			} elseif($value['module']=="section" && $value['group']!=""){
@@ -91,15 +94,28 @@ public $mode;
 				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
 				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);	
 				}
+				$content = NULL;
+				$contents = NULL;
+				$col = NULL;
 			}
 
 			} elseif($value['module']!="section" && $value['module']!="layout") {
 			if(in_array($mode.C.$value['module'], $this->enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
 				$this->SetView(SYS.V.'layout:views');
-				$col = $this->data->layout->addChild('views', htmlspecialchars( Loader::get_restricted_view($mode.C.$value['module'],$mode.V.$value['view'])));
+				$this->SetModule($mode.V.$value['view'],$mode.C.$value['module']);
+				$content = $this->GetModule($mode.C.$value['module']);
+				$content->model->layout_group = $value['name'];
+				$contents = ($content)? htmlspecialchars($content->View()):"";
+				if($contents!=""){
+				$col = $this->data->layout->addChild('views', $contents);
+
 				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
 				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
 				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);	
+				}
+				$content = NULL;
+				$contents = NULL;
+				$col = NULL;
 				
 			}
 			}
@@ -109,7 +125,7 @@ public $mode;
 	}
 	public function Sections($array,$disabled,$mode=SYS,$group=''){
 		if(isset($array[0]['pos'])){
-		sksort($array,'pos');
+		$this->sksort($array,'pos');
 		$check = array('pos', 'name','module','view','class','model','group','attrid','users');
 		$yes = TRUE;
 		$this->SetView(SYS.V.'layout:sections');
