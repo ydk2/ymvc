@@ -67,7 +67,7 @@ Config::$data['time'] = get_time();
     //Loader::show_module(SYS.C.'phpexample',SYS.V.'phpexample');
     //echo $loader->showsys('phpcall','phpcall');
     Config::$data['enabled'] = array(
-    SYS.C.'one',
+    SYS.C.'other:one',
     SYS.C.'other:two',
     SYS.C.'xslexample',
     SYS.C.'phpexample',

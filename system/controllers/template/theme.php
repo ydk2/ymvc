@@ -74,38 +74,44 @@ class Theme extends XSLRender {
 		);
 
 		$layout_items = array(
-			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'','attrid'=>''),
-			array('id'=>2,'pos' => 2, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12', 'model'=>'', 'group'=>'main','attrid'=>''),
+			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'', 'attrid'=>'', 'users'=>''),
+			array('id'=>2,'pos' => 2, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12', 'model'=>'', 'group'=>'main', 'attrid'=>'', 'users'=>''),
+			array('id'=>19,'pos' => 1, 'name'=>'one', 'module'=>'other:one','view'=>'other:one','class'=>'col-sm-4', 'model'=>'', 'group'=>'sections', 'attrid'=>'', 'users'=>''),
 
-			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'sections','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
+			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'sections','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec', 'attrid'=>'', 'users'=>''),
 
-			array('id'=>8,'pos' => 5, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
-			array('id'=>6,'pos' => 6, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
-			array('id'=>7,'pos' => 1, 'name'=>'menu','module'=>'login:form','view'=>'','class'=>'col-sm-8', 'model'=>'', 'group'=>'sections','attrid'=>''),
-			array('id'=>9,'pos' => 8, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'sections','attrid'=>''),
+			array('id'=>8,'pos' => 5, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections', 'attrid'=>'', 'users'=>''),
+			array('id'=>6,'pos' => 6, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections', 'attrid'=>'', 'users'=>''),
+			array('id'=>7,'pos' => 1, 'name'=>'menu','module'=>'login:form','view'=>'','class'=>'col-sm-8', 'model'=>'', 'group'=>'sections', 'attrid'=>'', 'users'=>''),
+			array('id'=>9,'pos' => 8, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'sections', 'attrid'=>'', 'users'=>''),
 
 
-			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'section','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'main','attrid'=>''),
-			array('id'=>7,'pos' => 7, 'name'=>'menu','module'=>'login:form','view'=>'','class'=>'col-sm-8', 'model'=>'', 'group'=>'section','attrid'=>''),
-			array('id'=>9,'pos' => 8, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'section','attrid'=>''),
-			array('id'=>9,'pos' => 1, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'section','attrid'=>''),
+			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'section','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'main', 'attrid'=>'', 'users'=>''),
+			array('id'=>7,'pos' => 7, 'name'=>'menu','module'=>'login:form','view'=>'','class'=>'col-sm-8', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
+			array('id'=>9,'pos' => 8, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
+			array('id'=>9,'pos' => 1, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'section', 'attrid'=>'', 'users'=>''),
 
 
 		);
+		$this->model->registered = array(
+    		'sections',
+    		'section'
+    	);
+		$this->model->enabled = Config::$data['enabled'];
 		$this->model->layout_group = 'sec';
 /**/
 		$i = 2;
 		foreach ($_GET as $key => $value) {
-			$this->model->sections[1] = array('pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12','id'=>'', 'access_group'=>'', 'group'=>'');
+			$this->model->layouts[1] = array('pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12','id'=>'', 'access_group'=>'', 'group'=>'');
 
 			if(!in_array($key,$this->model->disabled) && $this->ControllerExists(SYS.C.$key)){
-				$this->model->sections[] = array('pos' => $i++, 'name'=>'FromGet','module'=>$key,'view'=>$value,'class'=>'col-sm-12','id'=>'', 'access_group'=>'', 'group'=>'');
+				$this->model->layouts[] = array('pos' => $i++, 'name'=>'FromGet','module'=>$key,'view'=>$value,'class'=>'col-sm-12','id'=>'', 'access_group'=>'', 'group'=>'');
 
 			}
 		}
 /**/
-		if(!isset($this->model->sections) || count($this->model->sections)==1){
-			$this->model->sections = $layout_items;
+		if(!isset($this->model->layouts) || count($this->model->layouts)==1){
+			$this->model->layouts = $layout_items;
 		}
 		
 		//$this->model->sections['view']=array('time','','col-md-12','');

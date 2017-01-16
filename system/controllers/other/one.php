@@ -4,6 +4,7 @@ class One extends XSLRender {
 	public function onInit(){
 		// call in __constructor
 		$this->model = new stdclass;
+		$this->exceptions = true;
 		if(Helper::Get('inside_errors') == 11023){
 			$this->error = 11023;
 		}
@@ -65,13 +66,6 @@ class One extends XSLRender {
 
 	public function onRun($model = NULL){
 		if($this->error == 11023) {
-			$this->Exceptions($this->model,SYS.V.'errors'.DS.'info',SYS.C.'errors'.DS.'systemerror');
-			$this->exception->setParameter('','inside','yes');
-			$this->exception->setParameter('','show_link','yes');
-			$this->exception->ViewData('title', "Inside Error!!! ".$this->error);
-			$this->exception->ViewData('header', "Controller Error!!!");
-			$this->exception->ViewData('alert',"<b>Controller catch inside error:  </b>");
-			$this->exception->ViewData('error', $this->error);
 		}
 		//$this->SetView(SYS.V.'time');
 		$this->ViewData('title', 'Section One');
@@ -82,7 +76,15 @@ class One extends XSLRender {
 	}	
 
 	public function onException(){
-		return TRUE;
+			
+		$error=$this->NewControllerB(SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
+		$error->setParameter('','inside','yes');
+		$error->setParameter('','show_link','no');
+		$error->ViewData('title', Intl::_p('Error!!!'));
+		$error->ViewData('header', Intl::_p('Error!!!').' '.$this->error);
+		$error->ViewData('alert',Intl::_p($this->emessage).' - '.Intl::_p('Try get more privilages').' - ');
+		$error->ViewData('error', $this->error);
+		return $error->View();
 	}
 }
 ?>
