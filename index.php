@@ -84,7 +84,8 @@ Config::$data['time'] = get_time();
     SYS.C.'layout:layout'
     );
     Config::$data['layouts'] = array(
-    'sections'
+    'sections',
+    'section'
     );
     
     if(Helper::Get('load')=="php"){

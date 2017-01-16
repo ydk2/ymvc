@@ -101,12 +101,13 @@ class Layout extends XSLRender {
 				$content = $this->GetModule(SYS.C.'layout:layout');
 				$content->model->layout_group = $value['module'];
 				$content = ($content)? htmlspecialchars($content->View()):"";
+				if($content!=""){
 				$col = $this->data->layout->addChild('sections', $content);
 
 				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
 				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
 				if(isset($value['attrid'])) $col->addAttribute('id', $value['id']);	
-
+				}
 			}
 			}
 		}

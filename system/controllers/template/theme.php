@@ -74,14 +74,23 @@ class Theme extends XSLRender {
 		);
 
 		$layout_items = array(
-			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'main','attrid'=>''),
-			array('id'=>4,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
+			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'','attrid'=>''),
 			array('id'=>2,'pos' => 2, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12', 'model'=>'', 'group'=>'main','attrid'=>''),
-			array('id'=>3,'pos' => 3, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
-			array('id'=>5,'pos' => 1, 'name'=>'two', 'module'=>'sections','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
-			array('id'=>8,'pos' => 2, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
-			array('id'=>6,'pos' => 3, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
-			array('id'=>7,'pos' => 1, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12', 'model'=>'', 'group'=>'sections','attrid'=>''),
+
+			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'sections','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'sec','attrid'=>''),
+
+			array('id'=>8,'pos' => 5, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
+			array('id'=>6,'pos' => 6, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-6', 'model'=>'', 'group'=>'sections','attrid'=>''),
+			array('id'=>7,'pos' => 1, 'name'=>'menu','module'=>'login:form','view'=>'','class'=>'col-sm-8', 'model'=>'', 'group'=>'sections','attrid'=>''),
+			array('id'=>9,'pos' => 8, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'sections','attrid'=>''),
+
+
+			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'section','view'=>'','class'=>'col-sm-12', 'model'=>'', 'group'=>'main','attrid'=>''),
+			array('id'=>7,'pos' => 7, 'name'=>'menu','module'=>'login:form','view'=>'','class'=>'col-sm-8', 'model'=>'', 'group'=>'section','attrid'=>''),
+			array('id'=>9,'pos' => 8, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'section','attrid'=>''),
+			array('id'=>9,'pos' => 1, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-4', 'model'=>'', 'group'=>'section','attrid'=>''),
+
+
 		);
 		$this->model->layout_group = 'sec';
 /**/
@@ -95,7 +104,7 @@ class Theme extends XSLRender {
 			}
 		}
 /**/
-		if(count($this->model->sections)==1){
+		if(!isset($this->model->sections) || count($this->model->sections)==1){
 			$this->model->sections = $layout_items;
 		}
 		
