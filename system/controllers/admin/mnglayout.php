@@ -1,5 +1,5 @@
 <?php
-class ManageLayout extends XSLRender {
+class MngLayout extends XSLRender {
     
     public function onInit(){
         //call in __constructor
@@ -20,9 +20,8 @@ class ManageLayout extends XSLRender {
         
         $this->current_group = (Helper::Session('user_role')!="")?Helper::Session('user_role'):'any';
         
-        if($this->error > 0) {
-            $this->exceptions = TRUE;
-        }
+        $this->exceptions = TRUE;
+        
     }
     
     public function onEnd(){
@@ -37,7 +36,7 @@ class ManageLayout extends XSLRender {
     
     public function onException(){
         $this->Exceptions($this->model,SYS.V.'errors'.DS.'error',SYS.C.'errors'.DS.'systemerror');
-        $this->exception->setParameter('','inside','no');
+        $this->exception->setParameter('','inside','yes');
         $this->exception->setParameter('','show_link','yes');
         $this->exception->ViewData('title', Intl::_p('Error!!!'));
         $this->exception->ViewData('header', Intl::_p('Error!!!').' '.$this->error);
@@ -46,7 +45,12 @@ class ManageLayout extends XSLRender {
         return $this->exception->View();
     }
     public function onRun(){
-        return "";
+		$content = "<h1>Ups...</h1>";
+		$content .= "<h3>Module not implemented yet</h3>";
+		$content .= "<p class='lead'>Nothing to show here</p>";
+		$content .= "<p class='lead'>Sorry for this...</p>";
+		$content .= "<p><a href='".HOST_URL."' class='btn btn-primary'>Go to index</a></p>";
+        $this->ViewData('content', $content);
     }
     public function oldRun($model = NULL){
         

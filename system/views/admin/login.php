@@ -1,7 +1,7 @@
 
         <div class="row">
           <div class="col-md-8">
-            <form class="form-horizontal" method="post" action="<?=HOST_URL?>?admin:account&action=login" role="form">
+            <form class="form-horizontal" method="post" action="<?=HOST_URL?>?admin:mngaccount&action=login" role="form">
               <div class="form-group">
                 <div class="col-sm-2">
                   <label for="Email" class="control-label">Email</label>
@@ -22,7 +22,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                 <input type="hidden" name="from" value="login"/>
                 <input type="submit" class="btn btn-primary" value="Sign in"/>
-                <a class="btn btn-primary" href="<?=HOST_URL?>/?admin:account&action=register">Register</a>
+                <a class="btn btn-primary" href="<?=HOST_URL?>/?admin:mngaccount&action=register">Register</a>
                 </div>
               </div>
             </form>

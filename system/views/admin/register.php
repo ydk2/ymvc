@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">
-				<form class="form-horizontal" method="post" action="<?=HOST_URL?>?admin:account&action=register" role="form">
+				<form class="form-horizontal" method="post" action="<?=HOST_URL?>?admin:mngaccount&action=register" role="form">
 					<div class="form-group">
 						<div class="col-sm-2">
 							<label for="name" class="control-label">Name</label>
@@ -39,7 +39,7 @@
 						<div class="col-sm-offset-2 col-sm-10">
 							<input type="hidden" name="from" value="register"/>
 							<input type="submit" class="btn btn-primary" value="Register"/>
-							<a class="btn btn-primary" href="<?=HOST_URL?>?admin:account&action=login">Login</a>
+							<a class="btn btn-primary" href="<?=HOST_URL?>?admin:mngaccount&action=login">Login</a>
 						</div>
 					</div>
 				</form>

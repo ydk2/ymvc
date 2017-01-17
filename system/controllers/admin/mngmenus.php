@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-class Menus extends PHPRender {
+class MngMenus extends PHPRender {
 
 	public function onInit() {
 		/*
@@ -17,8 +17,8 @@ class Menus extends PHPRender {
 		$this->AccessMode(2);
 		$this->global_access = Helper::Session('user_access');
 		$this->SetModel(SYS.M.'menudata');
-		if(Helper::Get('admin:menus') == '')
-		$this->SetView(SYS.V . "menus/choose");
+		if(Helper::Get('admin:mngmenus') == '')
+		$this->SetView(SYS.V . "menus:choose");
 		$this->Inc(SYS.M.'model');
 		$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
 		(Helper::get('lang'))?Helper::session_set('lang',Helper::get('lang')):NULL;
@@ -62,7 +62,7 @@ class Menus extends PHPRender {
 		$data = $this->model->get_menu_groups();
 		$tree = '<ul class="list-group">';		
 		foreach ($data as $item) {	
-			$tree .= '<li class="list-group-item"><a href="?admin:menus&data='.$item.'">' . $item.'</a>';
+			$tree .= '<li class="list-group-item"><a href="?admin:mngmenus&data='.$item.'">' . $item.'</a>';
 			$tree .= '</li>' . PHP_EOL;
 		}
 		$tree .= "</ul>";
@@ -82,7 +82,7 @@ class Menus extends PHPRender {
 				$tree .= '<td><input class="form-control" type="text" id="link" name="update_menu[' . $i . '][link]" value="' . $item['link'] . '"' . "></td>";
 				$tree .= "<td>" . $this -> change_parent($data, $i, $item['title'], $item['parent']) . "</td>";
 				$tree .= '<td><input class="form-control" type="text" id="access" name="update_menu[' . $i . '][access]" value="' . $item['access'] . '"' . "></td>";
-				$tree .= '<td><a class="btn btn-danger" href="' . HOST_URL . '?admin:menus&action=delete_item&item=' . $item['id'] . '&data='.$this->groups.'">Delete entry</a></td>';
+				$tree .= '<td><a class="btn btn-danger" href="' . HOST_URL . '?admin:mngmenus&action=delete_item&item=' . $item['id'] . '&data='.$this->groups.'">Delete entry</a></td>';
 				//$tree .= call_user_func_array(array($this, 'edit_menu'), array($data, $i));
 				$tree .= "</tr>\n";
 			$i++;
@@ -145,17 +145,17 @@ class Menus extends PHPRender {
 		$this -> alert_link = "menus";
 		switch (Helper::get('action')) {
 			case 'adds' :
-				$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+				$this -> alert_link = "admin:mngmenus&action=edit&data=".$this->groups;
 				$this->SetView(SYS.V . "menus/adds");
 				$this -> adds();
 				break;
 			case 'edit' :
 				if($this -> pages){
-				$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+				$this -> alert_link = "admin:mngmenus&action=edit&data=".$this->groups;
 				$this->SetView(SYS.V . "menus/edit");
 				$this->change();
 				} else {
-				$this -> alert_link = "admin:menus&action=adds&data=".$this->groups;
+				$this -> alert_link = "admin:mngmenus&action=adds&data=".$this->groups;
 				$this->SetView(SYS.V . "menus/adds");
 				$this -> adds();	
 				}
@@ -167,11 +167,11 @@ class Menus extends PHPRender {
 				if($this->model->delete_menu_item($item)==0){
 				$this -> alert_header = "Menu item has been deleted";
 				$this -> alert_string = "Go to form";
-				$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+				$this -> alert_link = "admin:mngmenus&action=edit&data=".$this->groups;
 				} else {
 				$this -> alert_header = "Menu item will not deleted";
 				$this -> alert_string = "Go to form";
-				$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+				$this -> alert_link = "admin:mngmenus&action=edit&data=".$this->groups;
 				}
 				$this->SetView(SYS.V . "menus/message");
 				break;
@@ -190,25 +190,25 @@ class Menus extends PHPRender {
 					case 1068 :
 						$this -> alert_header = "Menu item cannot be added";
 						$this -> alert_string = "Go to form";
-						$this -> alert_link = "admin:menus&action=adds&data=".$this->groups;
+						$this -> alert_link = "admin:mngmenus&action=adds&data=".$this->groups;
 						$this->SetView(SYS.V . "menus/message");
 						break;
 					case 1067 :
 						$this -> alert_header = "General Error!!!";
 						$this -> alert_string = "Go to form";
-						$this -> alert_link = "admin:menus&action=adds&data=".$this->groups;
+						$this -> alert_link = "admin:mngmenus&action=adds&data=".$this->groups;
 						$this->SetView(SYS.V . "menus/message");
 						break;
 					case 1069 :
 						$this -> alert_header = "Menu item was added";
 						$this -> alert_string = "Reload to see changes";
-						$this -> alert_link = "admin:menus&action=adds&data=".$this->groups;
+						$this -> alert_link = "admin:mngmenus&action=adds&data=".$this->groups;
 						$this->SetView(SYS.V . "menus/message");
 						break;
 					case 0 :
 						$this -> alert_header = "Menu item was added";
 						$this -> alert_string = "Reload to see changes";
-						$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+						$this -> alert_link = "admin:mngmenus&action=edit&data=".$this->groups;
 						$this->SetView(SYS.V . "menus/message");
 						break;
 					default :
@@ -218,7 +218,7 @@ class Menus extends PHPRender {
 			} else {
 				$this -> alert_header = "ERROR!!!";
 				$this -> alert_string = "Form cannot be empty";
-				$this -> alert_link = "admin:menus&action=adds&data=".$this->groups;
+				$this -> alert_link = "admin:mngmenus&action=adds&data=".$this->groups;
 				$this->SetView(SYS.V . "menus/message");
 			}
 
@@ -243,7 +243,7 @@ class Menus extends PHPRender {
 
 		$this -> alert_header = "Menu has been updated";
 		$this -> alert_string = "Go to form to see changes";
-		$this -> alert_link = "admin:menus&action=edit&data=".$this->groups;
+		$this -> alert_link = "admin:mngmenus&action=edit&data=".$this->groups;
 		$this->SetView(SYS.V . "menus/message");
 		endif;
 	}

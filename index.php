@@ -75,13 +75,12 @@ Config::$data['time'] = get_time();
     SYS.C.'theme',
     SYS.C.'view',
     SYS.C.'phpcall',
-    //SYS.C.'admin',
+    SYS.C.'elements:menu',
     SYS.C.'test',
     SYS.C.'login:form',
-    SYS.C.'admin:menus',
-    SYS.C.'elements:menu',
-    SYS.C.'admin:account',
-    SYS.C.'layout:layout'
+    SYS.C.'admin:mngmenus',
+    SYS.C.'admin:mngaccount',
+    SYS.C.'admin:mnglayout'
     );
     Config::$data['layouts'] = array(
     'sections',
@@ -91,7 +90,7 @@ Config::$data['time'] = get_time();
     if(Helper::Get('load')=="php"){
         Loader::show_restricted_view(SYS.C.'phpexample',SYS.V.'phpexample');
     } elseif(Helper::Get('load')=="admin") {
-        Loader::show_restricted_view(SYS.C.'admin:menus',SYS.V.'admin:choose');
+        Loader::show_restricted_view(SYS.C.'admin:mngmenus',SYS.V.'admin:choose');
     } else {
         Loader::show_module(SYS.C.'template:theme',SYS.THEMES.Config::$data['template']['system'].DS.'theme');
     }

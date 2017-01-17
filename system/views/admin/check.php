@@ -10,8 +10,8 @@
                   <h4 class="media-heading"><?=Intl::_('Check Form')?> <?=$this->name?></h4>
                   <p><?=$this->email?> <?=$this->pass?> <?=$this->pass2?></p>
                   <p>
-                  	<a class="btn btn-primary" href="<?=HOST_URL?>?admin:account&action=login"><?=Intl::_('Login')?></a> 
-                  	<a class="btn btn-primary" href="<?=HOST_URL?>?admin:account&action=register"><?=Intl::_('Register')?></a>
+                  	<a class="btn btn-primary" href="<?=HOST_URL?>?admin:mngaccount&action=login"><?=Intl::_('Login')?></a> 
+                  	<a class="btn btn-primary" href="<?=HOST_URL?>?admin:mngaccount&action=register"><?=Intl::_('Register')?></a>
                   </p>
                 <p><?=$this->alert?></p>
                 </div>

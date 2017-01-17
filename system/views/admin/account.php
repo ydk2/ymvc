@@ -8,13 +8,13 @@
             </div>
             <div class="row">
             <div class="col-md-12">
-              <a href="<?=HOST_URL ?>?admin:account&&action=delete" class="btn btn-primary">Delete account</a> 
-              <a href="<?=HOST_URL ?>?admin:account&action=logout" class="btn btn-primary">logout</a>
+              <a href="<?=HOST_URL ?>?admin:mngaccount&&action=delete" class="btn btn-primary">Delete account</a> 
+              <a href="<?=HOST_URL ?>?admin:mngaccount&action=logout" class="btn btn-primary">logout</a>
             </div>
             </div>
           </div>
           <div class="col-md-6">
-            <form role="form" method="post" action="<?=HOST_URL ?>?admin:account&action=change" >
+            <form role="form" method="post" action="<?=HOST_URL ?>?admin:mngaccount&action=change" >
               <div class="form-group">
                 <label class="control-label" for="name">Your name</label>
                 <input class="form-control" id="name" placeholder="Enter Name"

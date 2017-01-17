@@ -1,6 +1,6 @@
 <?php
 
-class Account extends PHPRender {
+class MngAccount extends PHPRender {
 	//private $error;
 
 	public function onInit() {
@@ -23,7 +23,7 @@ class Account extends PHPRender {
 		$this->RegisterView(SYS.V.'admin:check');
 		$this->SetModel(SYS.M.'accountsdata');
 
-		if(Helper::Get('admin:account') == '')
+		if(Helper::Get('admin:mngaccount') == '')
 		$this->SetView(SYS.V . "admin:login");
 
 	}
@@ -144,7 +144,7 @@ class Account extends PHPRender {
 			$login = $this -> model -> login();
 			if ($login == 0) {
 				$this -> alert_header = 'Success! '.Helper::session('user_name');
-				$this -> alert_string = 'You are logged in'.Helper::session('user_access');
+				$this -> alert_string = 'You are logged in as '.Helper::session('user_role');
 				$this->SetView(SYS.V . "admin:success");
 			} elseif ($login == 101) {
 				$this -> alert_header = 'Error!';

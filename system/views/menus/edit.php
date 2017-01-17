@@ -8,7 +8,7 @@
 
   <div class="row" id="editmenu">
     <div class="col-md-12">
-      <form action="<?=HOST_URL ?>?admin:menus&action=edit&data=<?=$this->groups?>" method="post">
+      <form action="<?=HOST_URL ?>?admin:mngmenus&action=edit&data=<?=$this->groups?>" method="post">
         <table class="table">
           <thead>
             <tr>
@@ -26,9 +26,9 @@
                 <td>
                   <input class="btn btn-primary" type="submit" name="go" value="update">
                 </td>
-                <td><a class="btn btn-info" href="<?=HOST_URL ?>?admin:menus&data=<?=$this->groups?>">Go tu main</a></td>
+                <td><a class="btn btn-info" href="<?=HOST_URL ?>?admin:mngmenus&data=<?=$this->groups?>">Go tu main</a></td>
                 <td>
-                  <a type="button" href="<?=HOST_URL ?>?admin:menus&action=adds&data=<?=$this->groups?>" class="btn btn-success">add new</a>
+                  <a type="button" href="<?=HOST_URL ?>?admin:mngmenus&action=adds&data=<?=$this->groups?>" class="btn btn-success">add new</a>
                 </td>
 
               </tr>
