@@ -79,7 +79,7 @@ Config::$data['time'] = get_time();
     SYS.C.'test',
     SYS.C.'login:form',
     SYS.C.'admin:menus',
-    SYS.C.'admin:menu',
+    SYS.C.'elements:menu',
     SYS.C.'admin:account',
     SYS.C.'layout:layout'
     );

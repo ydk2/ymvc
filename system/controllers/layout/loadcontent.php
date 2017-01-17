@@ -57,11 +57,11 @@ class LoadContent extends XSLRender {
 			// layout
 			array('id'=>4,'pos' => 2, 'name'=>'admin', 'module'=>'layout','view'=>'','class'=>'row', 'model'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
 			// items
-			array('id'=>19,'pos' => 3, 'name'=>'one', 'module'=>'other:one','view'=>'other:one','class'=>'col-sm-4', 'model'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
+			array('id'=>7,'pos' => 3, 'name'=>'one', 'module'=>'other:one','view'=>'other:one','class'=>'col-sm-4', 'model'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
 			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'other:two','view'=>'other:two','class'=>'col-sm-8', 'model'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
 			
 			// sections
-			array('id'=>5,'pos' => 3, 'name'=>'any', 'module'=>'layout','view'=>'','class'=>'row', 'model'=>'', 'group'=>'any', 'attrid'=>'', 'users'=>''),
+			array('id'=>6,'pos' => 3, 'name'=>'any', 'module'=>'layout','view'=>'','class'=>'row', 'model'=>'', 'group'=>'any', 'attrid'=>'', 'users'=>''),
 			// items
 			array('id'=>3,'pos' => 2, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12', 'model'=>'', 'group'=>'any', 'attrid'=>'', 'users'=>''),
 
@@ -103,8 +103,7 @@ class LoadContent extends XSLRender {
 		$this->menus();
 	}
 
-	protected function contents()
-	{
+	protected function contents() {
 		$this->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
 		$content = $this->GetModule(SYS.C.'layout:layout');
 		$content = ($content)? htmlspecialchars($content->View()):"";

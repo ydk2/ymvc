@@ -14,7 +14,7 @@ class Menu extends XSLRender {
 		$this->SetAccess(self::ACCESS_ANY);
 		$this->access_groups = array('admin','user','any');
 		$this->current_group = 'any';
-		$this->AccessMode(2);
+		$this->AccessMode(1);
 		$this->SetModel(SYS.M.'menudata');
 		$this->only_registered(FALSE);
 		if(Helper::Get('admin:menu') == '')
@@ -33,10 +33,7 @@ class Menu extends XSLRender {
 		if(!empty($this->items))
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data>'.$this->menulist($this -> items).'</data>', null, false);
 	}
-	public function showin($view='')
-	{
-		
-	}
+	
 	function menulist($data, $parent = '') {
 		// <item id="0" name="1">
 		$tree = '';

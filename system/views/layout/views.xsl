@@ -8,9 +8,6 @@
     <xsl:template match="data/layout/views">
         <xsl:if test="node() != ''">
             <div>
-                <!--
-            <xsl:if test="@id != ''"><xsl:attribute name="id"><xsl:value-of select="@id" /></xsl:attribute></xsl:if><xsl:if test="@class != ''"><xsl:attribute name="class"><xsl:value-of select="@class" /></xsl:attribute></xsl:if><xsl:if test="@style != ''"><xsl:attribute name="style"><xsl:value-of select="@style" /></xsl:attribute></xsl:if>
-        -->
                 <xsl:for-each select="@*">
                     <xsl:attribute name="{name()}">
                         <xsl:value-of select="." />
