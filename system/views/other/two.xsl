@@ -6,7 +6,7 @@
 	<xsl:param name="langs">, Second argument from XSLT param</xsl:param>
 
 <xsl:template match="/">
-<div>
+<div class="row">
 	<!--<xsl:variable name="hyperlink"><xsl:value-of select="@href" /></xsl:variable>-->
 		<h3><xsl:value-of select="data/title"/></h3>
 		<xsl:if test="$show_link = 'yes'">
@@ -23,5 +23,13 @@
 		<xsl:value-of select="data/message"/>
 		</div>
 </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="embed-responsive embed-responsive-4by3">
+              <iframe class="embed-responsive-item" src="http://localhost/phpinfo.php"
+              allowfullscreen=""></iframe>
+            </div>
+          </div>
+        </div>
 </xsl:template>
 </xsl:stylesheet>

@@ -58,7 +58,7 @@ public $mode;
 				}
 			}
 
-			if(($value['group']==$group || $value['group']=="") && $yes){
+			if(($value['group']==$group || $value['group']=="") && $yes && $value['group']!=$value['name']){
 			if($value['module']=="layout" && $value['group']!=""){
 
 			if(!in_array($value['name'],$disabled)){
