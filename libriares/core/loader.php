@@ -181,7 +181,7 @@ class Loader {
 		sksort($array,'pos');
 		$model = new stdClass;
 		
-		$layout = self::get_module(SYS.C.'layout:layout',SYS.V.'layout:views',$model);
+		$layout = self::get_module(SYS.C.'layout'.S.'layout',SYS.V.'layout'.S.'views',$model);
 		$layout->ViewData('layout', '');
 		foreach ($array as $value) {
 			if($value['group']==$group || $value['group']==""){
@@ -193,8 +193,8 @@ class Loader {
 				if(isset($value['attrid'])) $col->addAttribute('id', $value['id']);	
 
 			} elseif(in_array($value['module'], Config::$data['layouts'])){
-				$layout->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
-				$content = $layout->GetModule(SYS.C.'layout:layout');
+				$layout->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
+				$content = $layout->GetModule(SYS.C.'layout'.S.'layout');
 				$content->model->layout_group = $value['module'];
 				$content = ($content)? htmlspecialchars($content->View()):"";
 				$col = $this->data->layout->addChild('views', $content);
@@ -218,7 +218,7 @@ class Loader {
 
 		if(isset($array[0]['pos'])){
 		
-		$layout = self::get_module(SYS.C.'layout:layout',SYS.V.'layout:views',$model);
+		$layout = self::get_module(SYS.C.'layout'.S.'layout',SYS.V.'layout'.S.'views',$model);
 		$layout->sksort($array,'pos');
 
 
@@ -238,9 +238,9 @@ class Loader {
 			if($value['module']=="layout" && $value['group']!=""){
 
 			if(!in_array($value['name'],$disabled)){
-				$layout->SetView(SYS.V.'layout:views');
-				$layout->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
-				$content = $this->GetModule(SYS.C.'layout:layout');
+				$layout->SetView(SYS.V.'layout'.S.'views');
+				$layout->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
+				$content = $this->GetModule(SYS.C.'layout'.S.'layout');
 				$content->model->layout_group = $value['name'];
 				$contents = ($content)? htmlspecialchars($content->View()):"";
 				if($contents!=""){
@@ -258,9 +258,9 @@ class Loader {
 			} elseif($value['module']=="route" && $value['group']!="route"){
 
 			if(!in_array($value['name'],$disabled)){
-				$layout->SetView(SYS.V.'layout:content');
-				$layout->SetModule(SYS.V.'layout:content',SYS.C.'layout:route');
-				$content = $layout->GetModule(SYS.C.'layout:route');
+				$layout->SetView(SYS.V.'layout'.S.'content');
+				$layout->SetModule(SYS.V.'layout'.S.'content',SYS.C.'layout'.S.'route');
+				$content = $layout->GetModule(SYS.C.'layout'.S.'route');
 				$content->model->layout_group = "route";
 				$contents = ($content)? htmlspecialchars($content->View()):"";
 				if($contents!=""){
@@ -278,9 +278,9 @@ class Loader {
 			} elseif($value['module']=="section" && $value['group']!=""){
 
 			if(!in_array($value['name'],$disabled)){
-				$layout->SetView(SYS.V.'layout:sections');
-				$layout->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
-				$content = $layout->GetModule(SYS.C.'layout:layout');
+				$layout->SetView(SYS.V.'layout'.S.'sections');
+				$layout->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
+				$content = $layout->GetModule(SYS.C.'layout'.S.'layout');
 				$content->model->layout_group = $value['name'];
 				$contents = ($content)? htmlspecialchars($content->View()):"";
 				if($contents!=""){
@@ -297,7 +297,7 @@ class Loader {
 
 			}  elseif($value['module']!="section" && $value['module']!="layout" && $value['module']!="route") {
 			if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $layout->ControllerExists($mode.C.$value['module'])){
-				$layout->SetView(SYS.V.'layout:views');
+				$layout->SetView(SYS.V.'layout'.S.'views');
 				$layout->SetModule($mode.V.$value['view'],$mode.C.$value['module']);
 				$content = $layout->GetModule($mode.C.$value['module']);
 				$content->model->layout_group = $value['name'];

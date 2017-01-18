@@ -76,9 +76,9 @@ public $mode;
 			if($value['module']=="layout" && $value['group']!=""){
 
 			if(!in_array($value['name'],$disabled)){
-				$this->SetView(SYS.V.'layout:views');
-				$this->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
-				$content = $this->GetModule(SYS.C.'layout:layout');
+				$this->SetView(SYS.V.'layout'.S.'views');
+				$this->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
+				$content = $this->GetModule(SYS.C.'layout'.S.'layout');
 				$content->model->layout_group = $value['name'];
 				$contents = ($content)? htmlspecialchars($content->View()):"";
 				if($contents!=""){
@@ -96,9 +96,9 @@ public $mode;
 			} elseif($value['module']=="route" && $value['group']!="route"){
 
 			if(!in_array($value['name'],$disabled)){
-				$this->SetView(SYS.V.'layout:content');
-				$this->SetModule(SYS.V.'layout:content',SYS.C.'layout:route');
-				$content = $this->GetModule(SYS.C.'layout:route');
+				$this->SetView(SYS.V.'layout'.S.'content');
+				$this->SetModule(SYS.V.'layout'.S.'content',SYS.C.'layout'.S.'route');
+				$content = $this->GetModule(SYS.C.'layout'.S.'route');
 				$content->model->layout_group = "route";
 				$contents = ($content)? htmlspecialchars($content->View()):"";
 				if($contents!=""){
@@ -116,9 +116,9 @@ public $mode;
 			} elseif($value['module']=="section" && $value['group']!=""){
 
 			if(!in_array($value['name'],$disabled)){
-				$this->SetView(SYS.V.'layout:sections');
-				$this->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
-				$content = $this->GetModule(SYS.C.'layout:layout');
+				$this->SetView(SYS.V.'layout'.S.'sections');
+				$this->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
+				$content = $this->GetModule(SYS.C.'layout'.S.'layout');
 				$content->model->layout_group = $value['name'];
 				$contents = ($content)? htmlspecialchars($content->View()):"";
 				if($contents!=""){
@@ -135,7 +135,7 @@ public $mode;
 
 			}  elseif($value['module']!="section" && $value['module']!="layout" && $value['module']!="route") {
 			if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
-				$this->SetView(SYS.V.'layout:views');
+				$this->SetView(SYS.V.'layout'.S.'views');
 				if ($value['mode']=='sys' || $value['mode']=="") {
 					$mode = SYS;
 				} elseif ($value['mode']=='app') {
@@ -173,7 +173,7 @@ public $mode;
 		$this->sksort($array,'pos');
 		$check = array('pos', 'name','module','view','class','model','group','attrid','users');
 		$yes = TRUE;
-		$this->SetView(SYS.V.'layout:sections');
+		$this->SetView(SYS.V.'layout'.S.'sections');
 		$this->ViewData('layout', '');
 		foreach ($array as $value) {
 			foreach ($check as $is) {
@@ -184,8 +184,8 @@ public $mode;
 			}
 			if($value['group']==$group || $value['group']=="" && $yes){
 			if($value['module']==$this->registered){
-				$this->SetModule(SYS.V.'layout:sections',SYS.C.'layout:layout');
-				$content = $this->GetModule(SYS.C.'layout:layout');
+				$this->SetModule(SYS.V.'layout'.S.'sections',SYS.C.'layout'.S.'layout');
+				$content = $this->GetModule(SYS.C.'layout'.S.'layout');
 				$content->model->layout_group = $value['name'];
 				$content = ($content)? htmlspecialchars($content->View()):"";
 				if($content!=""){
