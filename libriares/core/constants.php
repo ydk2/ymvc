@@ -49,13 +49,24 @@ define('ACCESS_ADMIN',1);
 
 
 $url=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?'https://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/':'http://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
+if(!defined('ROOT')){
 define('HOST_URL',$url);
+}
 if(!defined('ROOT')){
 define('ROOT',dirname(dirname(dirname(__FILE__))).DS);
 }
+if(!defined('S')){
+define('S',":");
+}
+if(!defined('EXT')){
 define('EXT','.php');
+}
+if(!defined('VIEW')){
 define('VIEW','.html');
+}
+if(!defined('XSL')){
 define('XSL','.xsl');
+}
 // app scheme dirs
 
 define('APP','application'.DS);

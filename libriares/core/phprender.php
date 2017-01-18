@@ -124,7 +124,7 @@ class PHPRender {
 		if($view==""){
 			$view = NULL;
 		}
-		$view = str_replace(':',DS,$view);
+		$view = str_replace(S,DS,$view);
 		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
         $this->view = $view;
 		} catch (SystemException $e){
@@ -145,7 +145,7 @@ class PHPRender {
 		if($view==""){
 			$view = NULL;
 		}
-		$view = str_replace(':',DS,$view);
+		$view = str_replace(S,DS,$view);
 		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
         $this->view = $view;
 		if (is_object($model)) {
@@ -216,7 +216,7 @@ class PHPRender {
 * @return boolean
 **/  	
 public final function CheckModel($model){
-		$model = str_replace(':',DS,$model);
+		$model = str_replace(S,DS,$model);
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
 			$end = end($stack);
@@ -255,7 +255,7 @@ final public function SetGroup($group) {
 * @param string $view
 **/ 
 final public function SetView($view) {
-	$view = str_replace(':',DS,$view);
+	$view = str_replace(S,DS,$view);
 	if(file_exists(ROOT.$view.EXT) && is_file(ROOT.$view.EXT)) {
 		$this->view = $view;
 		if ($this->error == 20404) {
@@ -270,7 +270,7 @@ final public function SetView($view) {
 * @return boolean
 **/ 
 final public function CheckView($view) {
-	$view = str_replace(':',DS,$view);
+	$view = str_replace(S,DS,$view);
 	if(file_exists(ROOT.$view.EXT) && is_file(ROOT.$view.EXT)) {
 		if ($this->error == 20404) {
 			$this->error = 0;
@@ -287,7 +287,7 @@ final public function CheckView($view) {
 * @return boolean
 **/ 
 final public function ControllerExists($controller) {
-		$controller = str_replace(':',DS,$controller);
+		$controller = str_replace(S,DS,$controller);
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -393,7 +393,7 @@ final public function CheckError() {
 * @param string $view 
 **/ 
 	final public function RegisterView($view) {
-		$view = str_replace(':',DS,$view);
+		$view = str_replace(S,DS,$view);
 		array_push($this->registered_views, $view);
 	}
 /**
@@ -403,7 +403,7 @@ final public function CheckError() {
 * @param string $view 
 **/ 	
 	final public function UnRegisterView($view) {
-		$view = str_replace(':',DS,$view);
+		$view = str_replace(S,DS,$view);
 		foreach ($this->registered_views as $key => $value) {
 			if ($value==$view) {
 				unset($this->registered_views[$key]);
@@ -498,7 +498,7 @@ final public function CheckError() {
         try {
 			self::$obj =& $this;
 			if($path!=NULL) {
-				$path = str_replace(':',DS,$path);
+				$path = str_replace(S,DS,$path);
 				$this->view=$path;
 			}
 			$this->_check();
@@ -559,8 +559,8 @@ final public function CheckError() {
 			}
 			$this->exception = $controller;
 		} else {
-			$controller = str_replace(':',DS,$controller);
-			$view = str_replace(':',DS,$view);
+			$controller = str_replace(S,DS,$controller);
+			$view = str_replace(S,DS,$view);
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -579,8 +579,8 @@ final public function CheckError() {
 **/ 	
 	public final function SetModule($view, $controller){
 
-		$controller = str_replace(':',DS,$controller);
-		$view = str_replace(':',DS,$view);
+		$controller = str_replace(S,DS,$controller);
+		$view = str_replace(S,DS,$view);
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -595,7 +595,7 @@ final public function CheckError() {
 * @return XSLRender or PHPRender object
 **/ 	
 	public final function GetModule($controller){
-		$controller = str_replace(':',DS,$controller);
+		$controller = str_replace(S,DS,$controller);
 		if(isset($this->modules[$controller])){
 			return $this->modules[$controller];
 		}
@@ -608,7 +608,7 @@ final public function CheckError() {
 * @return boolean
 **/ 	
 	public final function UnsetModule($controller){
-		$controller = str_replace(':',DS,$controller);
+		$controller = str_replace(S,DS,$controller);
 		if(isset($this->modules[$controller])){
 			unset($this->modules[$controller]);
 			return TRUE;
@@ -625,7 +625,7 @@ final public function CheckError() {
 		if (is_object($controller)) {
 			return $controller;
 		} else {
-		$controller = str_replace(':',DS,$controller);
+		$controller = str_replace(S,DS,$controller);
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -650,8 +650,8 @@ final public function CheckError() {
 			}
 			return $controller;
 		} else {
-			$controller = str_replace(':',DS,$controller);
-			$view = str_replace(':',DS,$view);
+			$controller = str_replace(S,DS,$controller);
+			$view = str_replace(S,DS,$view);
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -678,8 +678,8 @@ final public function CheckError() {
 			}
 			return $controller;
 		} else {
-			$controller = str_replace(':',DS,$controller);
-			$view = str_replace(':',DS,$view);
+			$controller = str_replace(S,DS,$controller);
+			$view = str_replace(S,DS,$view);
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
@@ -701,7 +701,7 @@ final public function CheckError() {
 				$this->error = 0;
 			}
 		} else {
-		$model = str_replace(':',DS,$model);
+		$model = str_replace(S,DS,$model);
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
 			$end = end($stack);

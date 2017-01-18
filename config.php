@@ -27,7 +27,7 @@ if (DBTYPE=='sqlite') {
 	define('DBPASS','');
 } 
 
-
+define('S',":");
 
 /* *
 

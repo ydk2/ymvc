@@ -2,7 +2,7 @@
 if(!defined('DS')){
 define('DS',DIRECTORY_SEPARATOR);
 }
-
+require_once(dirname(__FILE__).DS.'config.php');
 define('DEBUG',null);
 define('MEDIA_LEN',100);
 define('INDEX', 'start');
@@ -20,7 +20,7 @@ Helper::Inc(CORE.'systemexception');
 Helper::Inc(HELP.'functions');
 
 // db connection
-Helper::Inc('config');
+
 Config::Init();
 Config::$data['default']['database']['name'] = DBNAME;
 Config::$data['default']['database']['host'] = DBHOST;
