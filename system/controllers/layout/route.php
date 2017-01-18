@@ -62,9 +62,11 @@ class Route extends XSLRender {
 			$this->model->layouts[] = array('pos' => $i++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$value,'class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'route', 'model'=>'');
 		}
 		}
+		//$this->router();
 		$this->contents();		
 		if($this->ViewData('content')==""){
 			$this->model->layouts = $this->model->default;
+			//$this->router();
 			$this->contents();
 		}
 	}
@@ -73,6 +75,11 @@ class Route extends XSLRender {
 		$this->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
 		$content = $this->GetModule(SYS.C.'layout:layout');
 		$contents = ($content)? $content->View():"";
+		$this->ViewData('content', htmlspecialchars($contents));
+	}
+	protected function router() {
+		$content = Loader::Layouts($this->model);
+		$contents = ($content)? $content:"";
 		$this->ViewData('content', htmlspecialchars($contents));
 	}
 	protected function menus(){

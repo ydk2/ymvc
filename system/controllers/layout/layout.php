@@ -39,11 +39,16 @@ public $mode;
 		$this->mode = (isset($this->model->mode) && $this->model->mode!="")?$this->model->mode:SYS;
 		Config::$data['layouts']['current'] = $this->layout_group;
 		//$this->SetView(SYS.V.'index');
-		$this->Layouts($this->layouts,$this->disabled,$this->mode,$this->layout_group);
+		$this->Layouts();
 		
 	}
 
-	public function Layouts($array,$disabled,$mode=SYS,$group='main'){
+	public function Layouts($group='main'){
+		$array = $this->layouts;
+		$enabled = $this->enabled;
+		$disabled = $this->disabled;
+		$mode = $this->mode;
+		$group = $this->layout_group;
 		if(isset($array[0]['pos'])){
 		$this->sksort($array,'pos');
 		$check = array('pos', 'name','module','view','class','group','attrid');
@@ -85,7 +90,7 @@ public $mode;
 				$this->SetView(SYS.V.'layout:content');
 				$this->SetModule(SYS.V.'layout:content',SYS.C.'layout:route');
 				$content = $this->GetModule(SYS.C.'layout:route');
-				//$content->model->layout_group = $value['name'];
+				$content->model->layout_group = "route";
 				$contents = ($content)? htmlspecialchars($content->View()):"";
 				if($contents!=""){
 				$col = $this->data->layout->addChild('views', $contents);
@@ -120,7 +125,7 @@ public $mode;
 			}
 
 			}  elseif($value['module']!="section" && $value['module']!="layout" && $value['module']!="route") {
-			if(in_array($mode.C.$value['module'], $this->enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
+			if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
 				$this->SetView(SYS.V.'layout:views');
 				$this->SetModule($mode.V.$value['view'],$mode.C.$value['module']);
 				$content = $this->GetModule($mode.C.$value['module']);
