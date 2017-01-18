@@ -1,5 +1,6 @@
 <?php
 require_once(ROOT.CORE.'systemexception'.EXT);
+
 /**
 * PHPRender fast and simple to use PHP MVC framework
 *

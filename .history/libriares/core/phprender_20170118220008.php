@@ -1,5 +1,11 @@
 <?php
 require_once(ROOT.CORE.'systemexception'.EXT);
+/*
+ * @Author: ydk2 (me@ydk2.tk)
+ * @Date: 2017-01-18 21:59:45
+ * @Last Modified by:   ydk2 (me@ydk2.tk) 
+ * @Last Modified time: 2017-01-18 21:59:45
+ */
 /**
 * PHPRender fast and simple to use PHP MVC framework
 *

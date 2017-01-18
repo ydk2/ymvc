@@ -1,33 +1,34 @@
 <?php
 require_once(ROOT.CORE.'systemexception'.EXT);
 /**
-* PHPRender fast and simple to use PHP MVC framework
-*
-* MVC Framework for PHP 5.2 + with PHP files views part of YMVC System
-* Also available as XSLRender with work on xslt files
-*
-* PHP version 5
-*
-* LICENSE: This source file is subject to version 3.01 of the PHP license
-* that is available through the world-wide-web at the following URI:
-* http://www.php.net/license/3_01.txt.  If you did not receive a copy of
-* the PHP License and are unable to obtain it through the web, please
-* send a note to license@php.net so we can mail you a copy immediately.
-*
-* @category   Framework, MVC
-* @package    YMVC System
-* @subpackage PHPRender
-* @author     ydk2 <me@ydk2.tk>
-* @copyright  1997-2016 ydk2.tk
-* @license    http://www.php.net/license/3_01.txt  PHP License 3.01
-* @version    2.0.1
-* @link       http://ymvc.ydk2.tk
-* @see        XSLRender
-* @since      File available since Release 1.0.0
+* 
+ * XSLRender fast and simple to use PHP MVC framework
+ *
+ * MVC Framework for PHP 5.2 + with XSLT files views part of YMVC System
+ * Also available as PHPRender with work on php files
+ *
+ * PHP version 5
+ *
+ * LICENSE: This source file is subject to version 3.01 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   Framework, MVC
+ * @package    YMVC System
+ * @subpackage XSLRender
+ * @author     ydk2 <me@ydk2.tk>
+ * @copyright  1997-2016 ydk2.tk
+ * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @version    2.0.1
+ * @link       http://ymvc.ydk2.tk
+ * @see        PHPRender
+ * @since      File available since Release 1.0.0
+ 
+ */
 
-*/
-
-class PHPRender {
+class XSLRender extends XSLTProcessor {
 	const ACCESS_ANY = 10;
 	const ACCESS_USER = 5;
 	const ACCESS_EDITOR = 4;
@@ -35,65 +36,70 @@ class PHPRender {
 	const ACCESS_SYSTEM = 2;
 	const ACCESS_ADMIN = 1;
 	
-	private $registerPHPFunctions;
-	private $parameters;
-	private $action;
-	
-	protected $modules;
-	protected $only_registered_views;
-	protected $registered_views;
-	protected $global_access;
-	protected $access_mode;
-	protected $model_required;
-	protected $exceptions;
-	
-	public $name;
-	public $access;
-	public $current_group;
-	public $access_groups;
-	public $model;
-	public $data;
-	public $view;
-	public $emessage;
-	public $error;
-	
-	private static $obj;
-	
-	
-	/**
-	PHPRender Class constructor can have options $model,$view or $view
-	* $model and $view can be definied in onInit method
-	* @access public
-	* @see __construct_1
-	* @see __construct_2
-	* @see onInit
-	* @param mixed $model optional can set later, can be object or path
-	* @param string $view optional can set later
-	* @return PHPRender object or boolean
-	**/
-	   final public function __construct() {
+
+private $action;
+
+protected $modules;
+protected $only_registered_views;
+protected $registered_views;
+protected $global_access;
+protected $access_mode;
+protected $model_required;
+protected $exceptions;
+
+public $name;
+public $access;
+public $current_group;
+public $access_groups;
+public $model;
+public $data;
+public $view;
+public $emessage;
+public $error;
+
+private static $obj;
+
+/**
+*  XSLRender Class constructor can have options $model,$view or $view
+* $model and $view can be definied in onInit method
+* @access public
+* @see __construct_1
+* @see __construct_2
+* @see onInit
+* @param mixed $model optional can set later, can be object or path
+* @param string $view optional can set later
+* @return XSLRender object or boolean
+**/
+   final public function __construct() {
 		try {
-			$retval = NULL;
-			$this->registerPHPFunctions = TRUE;
-			$this->name=get_class($this);
-			$this->access_mode = 0;
-			$this->only_registered_views = FALSE;
-			$this->model_required = FALSE;
-			$this->registered_views = array();
-			$this->exceptions = FALSE;
-			$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
-		$this->parameters = array();
+		$retval = NULL;
+		if (!$this->hasExsltSupport()) {
+            throw new SystemException('EXSLT not supported',20510);
+        }
+		$this->name=get_class($this);
+		$this->access_mode = 0;
+		$this->only_registered_views = FALSE;
+		$this->model_required = FALSE;
+		$this->registered_views = array();
+		$this->exceptions = FALSE;
+		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>', null, false);
+
 		if (!isset($this -> access)):
 			$this -> access = self::ACCESS_ANY;
 		endif;
+
 		$this->global_access = $this->access;
+
 		if (is_null($this -> error)):
 			$this -> error = 0;
 		endif;
+
 		$this->action = new stdClass;
 		$this->modules = array();
+
 		$this->access_groups = array('admin','user','any');
 		$this->current_group = 'any';
+
         $argsv = func_get_args();
         $argsc = func_num_args();
         if (method_exists($this, $f = '__construct_' . $argsc)) {
@@ -113,16 +119,16 @@ class PHPRender {
             return FALSE;
         } 
     }
+
 /**
-*  PHPRender Class sub constructor it have option $view
+*  XSLRender Class sub constructor it have option $view 
+* @access public
+* @see onInit
 * @param string $view optional can set later
-* @return PHPRender object or boolean
-**/  
-    final private function __construct_1($view = NULL) {
+* @return XSLRender object or boolean
+**/   
+    final private function __construct_1($view = '') {
 		try {
-		if($view==""){
-			$view = NULL;
-		}
 		$view = str_replace(S,DS,$view);
 		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
         $this->view = $view;
@@ -132,18 +138,17 @@ class PHPRender {
             return FALSE;
         }
     }
+
 /**
-*  PHPRender Class sub constructor it have options $model & $view
+*  XSLRender Class sub constructor it have options $model & $view
 * @access public
+* @see onInit
 * @param mixed $model optional can set later, can be object or path
 * @param string $view optional can set later
-* @return PHPRender object or boolean
+* @return XSLRender object or boolean
 **/     
     final private function __construct_2($model,$view) {
         try {
-		if($view==""){
-			$view = NULL;
-		}
 		$view = str_replace(S,DS,$view);
 		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
         $this->view = $view;
@@ -159,6 +164,7 @@ class PHPRender {
             return FALSE;
         }
     }
+
 /**
 * Virtual method used in childs classes called in parent(this) class constructor 
 * Used as child constructor before render views
@@ -169,6 +175,7 @@ class PHPRender {
 	public function onInit(){
 		return TRUE;
 	}
+
 /**
 *  Virtual method used in childs classes called when view is show or return
 * Used as runtime method
@@ -179,6 +186,7 @@ class PHPRender {
 	public function onRun(){
 		return TRUE;
 	}
+
 /**
 *  Virtual method used in childs classes called when view is returned without error
 * @access public
@@ -188,6 +196,7 @@ class PHPRender {
 	public function onEnd(){
 		return TRUE;
 	}
+
 /**
 * Virtual method used in childs classes called in parent(this) class destructor 
 * Used as child destructor not required
@@ -198,6 +207,7 @@ class PHPRender {
 	public function onDestruct(){
 		return TRUE;
 	}
+
 /**
 * Virtual method used in childs classes called on exception is throwed 
 * Used as child destructor not required
@@ -208,6 +218,7 @@ class PHPRender {
 	public function onException(){
 		return TRUE;
 	}
+
 /**
 * Check Model class/object is definied 
 * @access public
@@ -215,7 +226,6 @@ class PHPRender {
 * @return boolean
 **/  	
 public final function CheckModel($model){
-		$model = str_replace(S,DS,$model);
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
 			$end = end($stack);
@@ -223,6 +233,7 @@ public final function CheckModel($model){
 			if(class_exists($end)) return TRUE;
 		}
 	}
+
 /**
 * Set Access mode buildin users role
 * @access public
@@ -232,6 +243,7 @@ public final function CheckModel($model){
 final public function AccessMode($mode=1) {
 	$this->access_mode = $mode;
 } 
+
 /**
 * Set Access for controller buildin users role
 * @access public
@@ -240,6 +252,7 @@ final public function AccessMode($mode=1) {
 final public function SetAccess($access) {
 	$this->access = $access;
 } 
+
 /**
 * Set Access group for controller buildin users role
 * @access public
@@ -248,6 +261,7 @@ final public function SetAccess($access) {
 final public function SetGroup($group) {
 	$this->current_group = $group;
 } 
+
 /**
 * Set new View file path value if exists
 * @access public
@@ -255,13 +269,14 @@ final public function SetGroup($group) {
 **/ 
 final public function SetView($view) {
 	$view = str_replace(S,DS,$view);
-	if(file_exists(ROOT.$view.EXT) && is_file(ROOT.$view.EXT)) {
+	if(file_exists(ROOT.$view.XSL) && is_file(ROOT.$view.XSL)) {
 		$this->view = $view;
 		if ($this->error == 20404) {
 			$this->error = 0;
 		}
 	}
 }	
+
 /**
 * Check View is exists and set error code 20404
 * @access public
@@ -270,7 +285,7 @@ final public function SetView($view) {
 **/ 
 final public function CheckView($view) {
 	$view = str_replace(S,DS,$view);
-	if(file_exists(ROOT.$view.EXT) && is_file(ROOT.$view.EXT)) {
+	if(file_exists(ROOT.$view.XSL) && is_file(ROOT.$view.XSL)) {
 		if ($this->error == 20404) {
 			$this->error = 0;
 		}
@@ -279,6 +294,7 @@ final public function CheckView($view) {
 	$this->error = 20404;
 	return FALSE;
 }
+
 /**
 * Check Child controller class/object is exists
 * @access public
@@ -294,6 +310,7 @@ final public function ControllerExists($controller) {
 			if(class_exists($end)) return TRUE;
 		} 
 }
+
 /**
 * Check errors
 * @access public
@@ -317,19 +334,19 @@ final public function CheckError() {
 * @param String $attrs Attributes list as attr=value ...
 * @param String $items Attributes list as attr=value ...
 **/
-	public function NewData($attrs="",$items=""){
-		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data'.$attrs.'>'.$items.'</data>', null, false);
-	}
+public function NewData($attrs="",$items=""){
+	$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data'.$attrs.'>'.$items.'</data>', null, false);
+}
 /**
 * Set data attributes
 * @access public
-* @param Array $attr Attributes list
+* @param array $attrs Attributes list
 * @return String Styled attr=value
 **/
-	public function DataAttr($attr){
+	public function DataAttr($attrs){
 		$attrs = '';
-		if(!empty($attr)){
-		foreach ($attr as $key => $value) {
+		if(!empty($attrs)){
+		foreach ($attrs as $key => $value) {
 			$attrs.= " $key=\"$value\"";
 		}
 		}
@@ -338,10 +355,10 @@ final public function CheckError() {
 /**
 * Get or Set data to views
 * @access public
-* @param string $name Name of element  
+* @param string $name Name of element
 * @param mixed $value Optional new value for given name
 * @return mixed Value for name
-**/ 
+**/
 	final public function ViewData() {
 			$argsv = func_get_args();
 			$argsc = func_num_args();
@@ -349,6 +366,7 @@ final public function CheckError() {
 				return call_user_func_array(array($this, $f), $argsv);
 			}
 		}
+
 /**
 * Get data to views
 * @access private
@@ -357,6 +375,7 @@ final public function CheckError() {
 	final private function Data_1($name = '') {
 		return (isset($this ->data->$name)) ? $this ->data->$name : '';
 	}
+
 /**
 * Set data to views
 * @access private
@@ -371,6 +390,7 @@ final public function CheckError() {
 		}
 		return (isset($this ->data->$name)) ? $this ->data->$name: '';
 	}
+
 /**
 * Convert SimpleXMLElement to array
 * @access public
@@ -380,6 +400,7 @@ final public function CheckError() {
 	public function toArray(SimpleXMLElement $xml)  {
 		return json_decode(json_encode( $xml),TRUE);
 	}
+
 /**
 * Class destructor
 * @access public
@@ -394,6 +415,7 @@ final public function CheckError() {
 		unset($this);
 		clearstatcache();
 	}
+
 /**
 * Set limited View path in controller default false
 * @access public
@@ -402,6 +424,7 @@ final public function CheckError() {
 	final public function only_registered($state = TRUE) {
 		$this->only_registered_views = $state;
 	}
+
 /**
 * Set model is required or not
 * @access public
@@ -410,6 +433,7 @@ final public function CheckError() {
 	final public function model_required($state = TRUE) {
 		$this->model_required = $state;
 	}
+	
 /**
 * Register View path in controller when work in limited mode
 * @see only_registered
@@ -420,6 +444,7 @@ final public function CheckError() {
 		$view = str_replace(S,DS,$view);
 		array_push($this->registered_views, $view);
 	}
+	
 /**
 * Unregister View path from controller when work in limited mode
 * @see only_registered
@@ -434,6 +459,7 @@ final public function CheckError() {
 			}
 		}
 	}  
+	
 /**
 * Internal helper method to check errors or reset it.
 * @access private
@@ -453,6 +479,8 @@ final public function CheckError() {
 				$this->error = 0;
 			}
 		}
+
+
 			if($this->access_mode == 1){
 				if($this->global_access > $this->access){
 					$this->emessage = "Restricted access";
@@ -476,6 +504,7 @@ final public function CheckError() {
 					$this->error = 0;
 				}
 			}
+
 			if(FALSE !== $this->model_required){
 			if($this->model==NULL){
 				 $this->emessage = "App Model not Definied";
@@ -502,6 +531,7 @@ final public function CheckError() {
 				}
 			}
 	}
+
 /**
 * Method used to get, render and show controller view 
 * @access public
@@ -511,6 +541,7 @@ final public function CheckError() {
     final public function Show($path = NULL) {
         echo $this->View($path);
     }
+
 /**
 * Method used to get, render and return controller view as string
 * @access public
@@ -541,17 +572,12 @@ final public function CheckError() {
                     throw new SystemException($this->emessage,$this->error);
                 }
             }
-			if($this->registerPHPFunctions){
-			ob_start();
-			echo "";
-			if ($this->CheckView($this -> view))
-			require_once(ROOT.$this->view.EXT);
-			$retval = ob_get_clean();
-			} else {
-				$retval = "";
-				if ($this->CheckView($this -> view))
-				$retval = file_get_contents(ROOT.$this->view.EXT);
-			}
+			$view = new DOMDocument();
+			$view->substituteEntities = TRUE;
+			$view->loadXML(file_get_contents(ROOT.$this->view. XSL));
+			$this->setParameter('', 'self', $this->name.'::Call');
+            $this->importStylesheet($view);
+			$retval = $this->transformToXML($this->data); 
 			$this->action->end = $this->onEnd();
 			self::$obj=NULL;
             return $retval;
@@ -565,6 +591,7 @@ final public function CheckError() {
             return FALSE;
         } 
     }
+
 /**
 * Method used to catch exceptions and return as new controller view 
 * @access public
@@ -594,6 +621,7 @@ final public function CheckError() {
 		} 
 		}
 	}
+
 /**
 * Method used to set new subcontroller in $this->modules Array of XSLRender or PHPRender objects
 * $controller string value is stored as name in modules array
@@ -602,7 +630,6 @@ final public function CheckError() {
 * @param string $controller 
 **/ 	
 	public final function SetModule($view, $controller){
-
 		$controller = str_replace(S,DS,$controller);
 		$view = str_replace(S,DS,$view);
 		if($this->Inc($controller)){
@@ -612,19 +639,21 @@ final public function CheckError() {
 				$this->modules[$controller] = new $end($this->model,$view);
 		}
 	}
+	
 /**
 * Method used to get subcontroller by controller path from $this->modules 
 * @access public
 * @param string $controller 
 * @return XSLRender or PHPRender object
 **/ 	
-	public final function GetModule($controller){
-		$controller = str_replace(S,DS,$controller);
-		if(isset($this->modules[$controller])){
-			return $this->modules[$controller];
-		}
-		return FALSE;
-	}	
+public final function GetModule($controller){
+	$controller = str_replace(S,DS,$controller);
+	if(isset($this->modules[$controller])){
+		return $this->modules[$controller];
+	}
+	return FALSE;
+}	
+	
 /**
 * Method used to unset subcontroller by controller path from $this->modules
 * @access public
@@ -639,6 +668,7 @@ final public function CheckError() {
 		}
 		return FALSE;
 	}
+
 /**
 * Method return a new controller view 
 * @access public
@@ -646,6 +676,7 @@ final public function CheckError() {
 * @return XSLRender or PHPRender object
 **/ 
 	public final function NewControllerA($controller){
+	
 		if (is_object($controller)) {
 			return $controller;
 		} else {
@@ -658,6 +689,7 @@ final public function CheckError() {
 		} 
 		}
 	}
+
 /**
 * Method return a new controller view 
 * @access public
@@ -666,11 +698,11 @@ final public function CheckError() {
 * @return XSLRender or PHPRender object
 **/ 
 	public final function NewControllerB($view,$controller){
+	
 		if (is_object($controller)) {
 			if(($controller instanceof XSLRender) || ($controller instanceof PHPRender)){
-				if($view!==NULL){
+				if($view!==NULL)
 					$controller->SetView($view);
-				}
 			}
 			return $controller;
 		} else {
@@ -684,6 +716,7 @@ final public function CheckError() {
 		} 
 		}
 	}
+
 /**
 * Method return a new controller view with model
 * @access public
@@ -693,6 +726,7 @@ final public function CheckError() {
 * @return XSLRender or PHPRender object
 **/ 
 	public final function NewController($model, $view, $controller){
+	
 		if (is_object($controller)) {
 			if(($controller instanceof XSLRender) || ($controller instanceof PHPRender)){
 				if($model!==NULL)
@@ -712,6 +746,8 @@ final public function CheckError() {
 		} 
 		}
 	}
+
+
 /**
 * Method set a new Model 
 * @access public
@@ -739,13 +775,13 @@ final public function CheckError() {
 			}
 		}
 	}
+
 /**
 * Method Call existing method in this class or child from XSLTProcessor
 * @access public
 * @param string $method Call existing method in this class from XSLTProcessor
 * @param mixed $arguments Multiple arguments ... 
 * @return mixed Result from called method
-* @deprecated Simple not required
 **/ 	
     final public static function Call($method){
 		$parameters = func_get_args(); 
@@ -754,6 +790,7 @@ final public function CheckError() {
 		if(self::$obj !== NULL && method_exists(self::$obj, $method))
         return call_user_func_array(array(self::$obj, $method), $parameters);
     }
+
 /**
 * Method check and preload class file 
 * @access public
@@ -765,82 +802,6 @@ final public function CheckError() {
 			return TRUE;
 		}
 		return FALSE;
-	}
-/**
-* Method set parameter like in XSLRender
-* Added to can use same controller in different modes
-* @access public
-* @param string $namespace
-* @param string $key
-* @param mixed $value
-**/ 	
-   final public function setParameter($namespace,$key,$value){
-		if($namespace != ''){
-			$this->parameters[$namespace][$key] = $value;
-			if(isset($this->parameters[$namespace][$key]) && $this->parameters[$namespace][$key]==$value){
-			return TRUE;
-			}
-			return FALSE;
-		} else {
-			$this->parameters['/'][$key] = $value;
-			if(isset($this->parameters['/'][$key]) && $this->parameters['/'][$key]==$value){
-			return TRUE;
-			}
-			return FALSE;
-		}
-	}
-/**
-* Method remove parameter like in XSLRender
-* Added to can use same controller in different modes
-* @access public
-* @param string $namespace
-* @param string $key
-**/ 	
-   final public function removeParameter($namespace,$key){
-		if($namespace != ''){
-			if(isset($this->parameters[$namespace][$key])){
-			unset($this->parameters[$namespace][$key]);
-			return TRUE;
-			}
-			return FALSE;
-		} else {
-			if(isset($this->parameters['/'][$key])){
-			unset($this->parameters['/'][$key]);
-			return TRUE;
-			}
-			return FALSE;
-		}
-	}
-/**
-* Method get parameter like in XSLRender
-* Added to can use same controller in different modes
-* @access public
-* @param string $namespace
-* @param string $key
-* @return mixed $value
-**/ 	
-   final public function getParameter($namespace,$key){
-		if($namespace != ''){
-			if(isset($this->parameters[$namespace][$key])){
-			return $this->parameters[$namespace][$key];
-			}
-			return FALSE;
-		} else {
-			if(isset($this->parameters['/'][$key])){
-			return $this->parameters['/'][$key];
-			}
-			return FALSE;
-		}
-	}
-/**
-* Method set to load and execute view as PHP not normal file
-* if you want use view as ordinary file set $this->registerPHPFunctions to FALSE
-* default TRUE
-* Added to can use same controller in different modes
-* @access public
-**/ 		
-   final public function registerPHPFunctions(){
-		$this->registerPHPFunctions = TRUE;
 	}
 /**
 * Insert XML into a SimpleXMLElement

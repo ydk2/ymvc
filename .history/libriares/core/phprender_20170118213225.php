@@ -1,5 +1,6 @@
 <?php
 require_once(ROOT.CORE.'systemexception'.EXT);
+
 /**
 * PHPRender fast and simple to use PHP MVC framework
 *
@@ -61,7 +62,7 @@ class PHPRender {
 	
 	
 	/**
-	PHPRender Class constructor can have options $model,$view or $view
+	* PHPRender Class constructor can have options $model,$view or $view
 	* $model and $view can be definied in onInit method
 	* @access public
 	* @see __construct_1
@@ -309,31 +310,6 @@ final public function CheckError() {
 		return TRUE;
 	}
 	return FALSE;
-	}
-
-/**
-* Set New $this->data items
-* @access public
-* @param String $attrs Attributes list as attr=value ...
-* @param String $items Attributes list as attr=value ...
-**/
-	public function NewData($attrs="",$items=""){
-		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data'.$attrs.'>'.$items.'</data>', null, false);
-	}
-/**
-* Set data attributes
-* @access public
-* @param Array $attr Attributes list
-* @return String Styled attr=value
-**/
-	public function DataAttr($attr){
-		$attrs = '';
-		if(!empty($attr)){
-		foreach ($attr as $key => $value) {
-			$attrs.= " $key=\"$value\"";
-		}
-		}
-		return $attrs;
 	}
 /**
 * Get or Set data to views
