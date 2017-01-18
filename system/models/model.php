@@ -4,7 +4,7 @@
  */
 class model extends DBConnect {
 	public $dump;
-	function __construct($import=NULL)
+	function __construct($import=FALSE)
 	{
 		# code...
 		$data=Config::$data['default']['database'];
@@ -12,7 +12,7 @@ class model extends DBConnect {
 		//var_dump($data);
 		$this->time = get_time();
         $this ->Connect($data['type'], $data['name'], $data['host'],$data['user'], $data['pass']);
-		if($import!== NULL){
+		if($import){
 		if ($data['type']=='sqlsrv') {
 			$queries = file_get_contents(ROOT.DATA.'sqlsrv.sql');
 			$queries = explode(";", $queries);

@@ -87,11 +87,12 @@ class Theme extends XSLRender {
             SYS.C.'elements:menu',
             SYS.C.'login:form',
             SYS.C.'admin:mngaccount',
+            SYS.C.'other:phpcall',
             );
         }
         if($this->current_group=="admin"){
             Config::$data['enabled'] = array(
-            SYS.C.'other:one',
+            APP.C.'one',
             SYS.C.'other:two',
             SYS.C.'check:gettime',
             SYS.C.'elements:menu',

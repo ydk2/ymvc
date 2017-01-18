@@ -59,7 +59,7 @@ class Route extends XSLRender {
 		$i = 2;
 		foreach ($_GET as $key => $value) {
 		if(!in_array($key,$this->model->disabled)){
-			$this->model->layouts[] = array('pos' => $i++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$value,'class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'route', 'model'=>'');
+			$this->model->layouts[] = array('pos' => $i++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$value,'class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'route', 'mode'=>'');
 		}
 		}
 		//$this->router();
@@ -69,6 +69,7 @@ class Route extends XSLRender {
 			//$this->router();
 			$this->contents();
 		}
+		
 	}
 
 	protected function contents() {

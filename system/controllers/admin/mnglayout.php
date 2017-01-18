@@ -382,7 +382,7 @@ public function tmpform($items){
                   <input class="form-control" type="text" name="add[attrid]">
                 </td>
                 <td>
-                  <input class="form-control" type="text" name="add[model]">
+                  <input class="form-control" type="text" name="add[mode]" value="sys">
                   <input value="<?=$this->_group;?>" type="hidden" name="add[group]">
                 </td>
                 <td>
@@ -411,7 +411,7 @@ public function tmpform($items){
                   <th>view or data</th>
                   <th>class</th>
                   <th>id</th>
-                  <th>model</th>
+                  <th>mode</th>
                   <th></th>
                 </tr>
               </thead>
@@ -472,7 +472,7 @@ public function tmpform($items){
                         <input value="<?=$item['attrid'];?>" class="form-control" type="text" name="item[<?=$key;?>][attrid]">
                       </td>
                       <td>
-                        <input value="<?=$item['model'];?>" class="form-control" type="text" name="item[<?=$key;?>][model]">
+                        <input value="<?=$item['mode'];?>" class="form-control" type="text" name="item[<?=$key;?>][mode]">
                         <input value="<?=$item['group'];?>" type="hidden" name="item[<?=$key;?>][group]">
                         <input value="<?=$item['id'];?>" type="hidden" name="item[<?=$key;?>][id]">
                       </td>
