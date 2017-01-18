@@ -23,7 +23,8 @@
 		<xsl:value-of select="data/message"/>
 		</div>
 </div>
-        <div class="row">
+      <!--
+			  <div class="row">
           <div class="col-md-12">
             <div class="embed-responsive embed-responsive-4by3">
               <iframe class="embed-responsive-item" src="http://localhost/phpinfo.php"
@@ -31,5 +32,7 @@
             </div>
           </div>
         </div>
+				-->
+
 </xsl:template>
 </xsl:stylesheet>

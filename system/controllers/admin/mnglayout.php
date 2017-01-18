@@ -153,7 +153,9 @@ class MngLayout extends XSLRender {
         } else {
             $this->_group = $_GET['group'];
         }
-        
+        if(isset($_POST['addgroup'])){
+            $this->_group = ($_POST['addgroup']!="")?$_POST['addgroup']:$this->_group;  
+        }
         $items = json_decode(file_get_contents(ROOT.SYS.STORE."LoadContent.json"),true);
         //$items = $layout_items;
         if (empty($items)){
@@ -213,6 +215,11 @@ class MngLayout extends XSLRender {
                 }
             }
             $msg = "<h3>Changes saved</h3>";
+        }  
+
+        if(isset($_POST['addgroup']) && $_POST['addgroup']==$this->_group){ 
+            $msg = "<h3>Successed</h3>";
+            $msg .= "<p class=\"lead\">Now add new item to ”".$this->_group."”</p>";
         }
     
     if(isset($_POST['add'])){
@@ -236,10 +243,10 @@ if(isset($_POST['item']) || isset($_GET['delete']) || isset($_POST['add'])){
     if (!empty($tosave)) {
         if(@file_put_contents(ROOT.SYS.STORE."LoadContent.json", json_encode($tosave))){
             $msg .= "<h3>successed</h3>";
-            $msg .= "<a class=\"button-success pure-button\" href=\"?admin:mnglayout=layout:manage&group=".$this->_group."\">OK</a>";
+            $msg .= "<a class=\"btn-success btn\" href=\"?admin:mnglayout=layout:manage&group=".$this->_group."\">OK</a>";
         } else {
             $msg .= "<h3>failure</h3>";
-            $msg .= "<a class=\"button-error pure-button\" href=\"?admin:mnglayout=layout:manage&group=".$this->_group."\">OK</a>";
+            $msg .= "<a class=\"button-error btn\" href=\"?admin:mnglayout=layout:manage&group=".$this->_group."\">OK</a>";
         }
     }
 }
@@ -249,30 +256,25 @@ return $msg;
 
 public function tmpform($items){
     ob_start();
-    if(isset($_POST['item']) || isset($_GET['delete']) || isset($_POST['add'])):
+    if(isset($_POST['item']) || isset($_GET['delete']) || isset($_POST['add']) || isset($_POST['addgroup'])):
     ?>
-  <div class="pure-u-1">
-    <h1>Message</h1>
-  </div>
-  <div class="pure-u-1-3"></div>
-  <div class="pure-u-1-3">
+  <div class="row">
     <?php
     echo $this->save($items);
     ?>
   </div>
-  <div class="pure-u-1-3"></div>
   <?php endif;?>
 
     <!-- /save msg -->
 
     <?php if(!isset($_POST['item']) && !isset($_GET['delete']) && !isset($_POST['add'])): ?>
       <!-- add layout & list -->
-      <div class="pure-g">
+      <div class="row">
         <!-- add layout -->
-        <div class="pure-u-3-5">
+        <div class="col-sm-6">
           <h3>Dodaj nowy layout</h3>
-          <form class="pure-form pure-u-1" action="?admin:mnglayout=layout:manage&group" method="get">
-            <table class="pure-table pure-table-bordered">
+          <form class="form" action="?admin:mnglayout=layout:manage" method="post">
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>Nazwa</th>
@@ -282,16 +284,15 @@ public function tmpform($items){
               <tbody>
                 <tr>
                   <td>
-                    <input value="layout:manage" type="hidden" name="admin:mnglayout">
-                    <input value="<?=$this->_group;?>" class="pure-input-1" type="text" name="group">
+                    <input value="<?=$this->_group;?>" class="form-control" type="text" name="addgroup">
                   </td>
                   <td>
-                    <input value="Dodaj" class="pure-button pure-button-primary" type="submit">
+                    <input value="Dodaj" class="btn btn-primary" type="submit">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <a class="pure-button pure-button-primary" href="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>">Reflesh</a>
+                    <a class="btn btn-primary" href="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>">Reflesh</a>
                   </td>
                 </tr>
               </tbody>
@@ -301,16 +302,14 @@ public function tmpform($items){
         <!-- /add layout -->
 
         <!-- group list -->
-        <div class="pure-u-2-5">
-          <h3>
-    Groups list
-    </h3>
-          <div class="pure-menu pure-menu-scrollable custom-restricted">
+        <div class="col-sm-4">
+        <h3>Groups list</h3>
+          <div class="custom-restricted">
             <?php $sections = array_unique($this->_groups); ?>
-              <ul class="pure-menu-list">
+              <ul class="list-group">
                 <?php foreach ($sections as $value) : ?>
-                  <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="?admin:mnglayout=layout:manage&group=<?=$value;?>">
+                  <li class="list-group-item">
+                    <a  href="?admin:mnglayout=layout:manage&group=<?=$value;?>">
                       <?=$value;?>
                     </a>
                   </li>
@@ -323,11 +322,11 @@ public function tmpform($items){
       <!-- /add layout & list -->
 
       <!-- add -->
-      <div class="pure-g">
+      <div class="row">
 
-        <h3 class="pure-u-5-5">Dodaj wpis do <?=$this->_group;?></h3>
-        <form class="pure-form pure-u-5-5" action="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>" method="post">
-          <table class="pure-table pure-table-bordered">
+        <h3 class="">Dodaj wpis do <?=$this->_group;?></h3>
+        <form class="form" action="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>" method="post">
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <th>#</th>
@@ -343,7 +342,7 @@ public function tmpform($items){
             <tbody>
               <tr>
                 <td>
-                  <select name="add[pos]">
+                  <select class="form-control" name="add[pos]">
                     <?php for ($i=1; $i<=count($this->tmp)+1; $i++) {
         if (isset($this->tmp[0]) && $this->tmp[0]['group']==$this->_group) {
             $sel = ($i==count($this->tmp)+1)?" selected='selected'":"";
@@ -352,10 +351,10 @@ public function tmpform($items){
                   </select>
                 </td>
                 <td>
-                  <input class="" type="text" name="add[name]">
+                  <input class="form-control" type="text" name="add[name]">
                 </td>
                 <td>
-                  <input list="add-module" class="" type="text" autocomplete="off" name="add[module]">
+                  <input list="add-module" class="form-control" type="text" autocomplete="off" name="add[module]">
                   <datalist id="add-module" class="">
                     <?php $views = array(); foreach ($modules as $name => $view): ?>
                       <?php foreach ($view as $b) { $views[]=$b; }
@@ -367,7 +366,7 @@ public function tmpform($items){
                   </datalist>
                 </td>
                 <td>
-                  <input list="add-view" class="" autocomplete="off" type="text" name="add[view]">
+                  <input list="add-view" class="form-control" autocomplete="off" type="text" name="add[view]">
                   <datalist id="add-view" class="">
                     <?php foreach ($views as $view): ?>
                       <option value="<?=trim($view);?>">
@@ -377,17 +376,17 @@ public function tmpform($items){
                   </datalist>
                 </td>
                 <td>
-                  <input class="" type="text" name="add[class]">
+                  <input class="form-control" type="text" name="add[class]">
                 </td>
                 <td>
-                  <input class="" type="text" name="add[attrid]">
+                  <input class="form-control" type="text" name="add[attrid]">
                 </td>
                 <td>
-                  <input class="" type="text" name="add[model]">
+                  <input class="form-control" type="text" name="add[model]">
                   <input value="<?=$this->_group;?>" type="hidden" name="add[group]">
                 </td>
                 <td>
-                  <input class="pure-button button-success pure-input-1" type="submit" value="Dodaj">
+                  <input class="btn btn-success" type="submit" value="Dodaj">
                 </td>
               </tr>
 
@@ -399,11 +398,11 @@ public function tmpform($items){
 
       <!-- edit -->
       <?php if (!empty($this->tmp)): ?>
-        <div class="pure-g">
+        <div class="row">
 
-          <h3 class="pure-u-5-5">Edytuj layout <?=$this->_group;?></h3>
-          <form class="pure-form pure-u-5-5" action="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>" method="post">
-            <table class="pure-table pure-table-horizontal">
+          <h3 class="">Edytuj layout <?=$this->_group;?></h3>
+          <form class="form" action="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>" method="post">
+            <table class="table table-horizontal">
               <thead>
                 <tr>
                   <th>#</th>
@@ -424,17 +423,17 @@ public function tmpform($items){
         ?>
                     <tr<?=$nth_child;?>>
                       <td>
-                        <select name="item[<?=$key;?>][pos]" class="">
+                        <select name="item[<?=$key;?>][pos]" class="form-control">
                           <?php for ($i=1; $i<=count($this->tmp); $i++) {
             if ($this->tmp[$i-1]['group']==$this->_group) { $sel = ($item['pos'] == $this->tmp[$i-1]['pos'])?" selected='selected'":"";
             echo "<option value='".trim($i)."'".$sel.">".trim($i)."</option>";}} ?>
                         </select>
                       </td>
                       <td>
-                        <input value="<?=trim($item['name']);?>" class="" type="text" name="item[<?=$key;?>][name]">
+                        <input value="<?=trim($item['name']);?>" class="form-control" type="text" name="item[<?=$key;?>][name]">
                       </td>
                       <td>
-                        <input list="item-<?=$key;?>-module" value="<?=$item['module'];?>" class="" type="text" name="item[<?=$key;?>][module]" autocomplete="off">
+                        <input list="item-<?=$key;?>-module" value="<?=$item['module'];?>" class="form-control" type="text" name="item[<?=$key;?>][module]" autocomplete="off">
                         <datalist id="item-<?=$key;?>-module" class="" name="item[<?=$key;?>][module]">
                           <?php $views = array(); foreach ($modules as $name => $view): ?>
                             <?php $used=($name==$item['module'])?" selected='selected'":"";?>
@@ -449,12 +448,12 @@ public function tmpform($items){
                       <td>
                         <?php if (in_array($item['module'],$this->layouts) && $item['module']!="route") : ?>
                           <input value="<?=$item['view'];?>" type="hidden" name="item[<?=$key;?>][view]">
-                          <a class="pure-button button-success pure-input-1" href="?admin:mnglayout=layout:manage&group=<?=$item['name'];?>">edit</a>
+                          <a class="btn btn-success" href="?admin:mnglayout=layout:manage&group=<?=$item['name'];?>">edit</a>
                           <?php elseif ($item['module']=="route") : ?>
                           <input value="<?=$item['view'];?>" type="hidden" name="item[<?=$key;?>][view]">
-                          <a class="pure-button button-success pure-input-1" href="?admin:mnglayout=layout:manage&group=route">edit</a>
+                          <a class="btn btn-success" href="?admin:mnglayout=layout:manage&group=route">edit</a>
                           <?php else: ?>
-                            <input list="item-<?=$key;?>-view" value="<?=$item['view'];?>" class="" type="text" name="item[<?=$key;?>][view]" autocomplete="off">
+                            <input list="item-<?=$key;?>-view" value="<?=$item['view'];?>" class="form-control" type="text" name="item[<?=$key;?>][view]" autocomplete="off">
                             <datalist id="item-<?=$key;?>-view" class="" name="item[<?=$key;?>][view]">
                               <?php foreach ($views as $view): ?>
                                 <?php $used=($view==$item['view'])?" selected='selected'":"";?>
@@ -467,18 +466,18 @@ public function tmpform($items){
                             <?php endif; ?>
                       </td>
                       <td>
-                        <input value="<?=$item['class'];?>" class="" type="text" name="item[<?=$key;?>][class]">
+                        <input value="<?=$item['class'];?>" class="form-control" type="text" name="item[<?=$key;?>][class]">
                       </td>
                       <td>
-                        <input value="<?=$item['attrid'];?>" class="" type="text" name="item[<?=$key;?>][attrid]">
+                        <input value="<?=$item['attrid'];?>" class="form-control" type="text" name="item[<?=$key;?>][attrid]">
                       </td>
                       <td>
-                        <input value="<?=$item['model'];?>" class="" type="text" name="item[<?=$key;?>][model]">
+                        <input value="<?=$item['model'];?>" class="form-control" type="text" name="item[<?=$key;?>][model]">
                         <input value="<?=$item['group'];?>" type="hidden" name="item[<?=$key;?>][group]">
                         <input value="<?=$item['id'];?>" type="hidden" name="item[<?=$key;?>][id]">
                       </td>
                       <td>
-                        <a class="pure-button button-error pure-input-1" href="?admin:mnglayout=layout:manage&group=<?=$item['group'];?>&delete=<?=$item['id'];?>">delete</a>
+                        <a class="btn btn-danger" href="?admin:mnglayout=layout:manage&group=<?=$item['group'];?>&delete=<?=$item['id'];?>">delete</a>
                       </td>
 
                       </tr>
@@ -487,7 +486,7 @@ public function tmpform($items){
                           <tr>
                             <td colspan="6"></td>
                             <td colspan="1">
-                              <input class="pure-button pure-button-primary pure-input-1" type="submit" value="Zapisz">
+                              <input class="btn btn-primary pure-input-1" type="submit" value="Zapisz">
                             </td>
                           </tr>
 
@@ -496,8 +495,7 @@ public function tmpform($items){
           </form>
         </div>
         <?php endif; ?>
-          <!-- /edit -->
-
+<!-- /edit -->
           <?php endif; ?>
             <?php
             $out = ob_get_clean();

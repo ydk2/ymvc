@@ -79,13 +79,20 @@ class Theme extends XSLRender {
     {
         $this->SetModule(SYS.V.'layout:content',SYS.C.'layout:loadcontent');
         $content = $this->GetModule(SYS.C.'layout:loadcontent');
-        
-        if($this->current_group!="admin"){
-            $content->model->layout_group = $content->current_group;
-        } else {Config::$data['enabled'] = array(
+        $content->model->layout_group = $content->current_group;
+        if($this->current_group!="any"){
+            
+            Config::$data['enabled'] = array(
+            SYS.C.'check:gettime',
+            SYS.C.'elements:menu',
+            SYS.C.'login:form',
+            SYS.C.'admin:mngaccount',
+            );
+        }
+        if($this->current_group=="admin"){
+            Config::$data['enabled'] = array(
             SYS.C.'other:one',
             SYS.C.'other:two',
-            SYS.C.'errors:systemerror',
             SYS.C.'check:gettime',
             SYS.C.'elements:menu',
             SYS.C.'login:form',
@@ -97,7 +104,7 @@ class Theme extends XSLRender {
         }
         $content->model->mode = $this->model->mode;
         $content = ($content)? htmlspecialchars($content->View()):"";
-        $this->ViewData('content', $content);
+        $this->ViewData('contents', $content);
     }
     
     protected function footer()

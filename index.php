@@ -66,6 +66,7 @@ Config::$data['time'] = get_time();
     //echo $loader->showsys('layout','layout');
     //Loader::show_module(SYS.C.'phpexample',SYS.V.'phpexample');
     //echo $loader->showsys('phpcall','phpcall');
+    /**
     Config::$data['enabled'] = array(
     SYS.C.'other:one',
     SYS.C.'other:two',
@@ -75,6 +76,7 @@ Config::$data['time'] = get_time();
     SYS.C.'login:form',
     SYS.C.'admin:mngaccount',
     );
+    **/
     Config::$data['layouts'] = array(
     'sections',
     'section'
