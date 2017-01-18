@@ -29,7 +29,7 @@ class Modules extends XSLRender {
 		//$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
 		//var_dump($this->menulist($this -> items));
 		if(!empty($this->items))
-		$this->NewData("",$this->menulist($this -> items));
+		$this->NewData($this->menulist("",$this -> items));
 	}
 	public function showin($view='')
 	{

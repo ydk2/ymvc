@@ -8,14 +8,14 @@ class Route extends XSLRender {
 		$this->registerPHPFunctions();
 		
 		$this->only_registered(FALSE);
-		$this->RegisterView(SYS.V."layouts".S."content");
+		$this->RegisterView(SYS.V."layouts:content");
 		$this->RegisterView(SYS.V.'errors'.DS.'error');
 		
 		$this->setaccess(self::ACCESS_ANY);
 		$this->AccessMode(1);
 		$this->global_access = Helper::Session('user_access');
 		$this->current_group = (Helper::Session('user_role')!="")?Helper::Session('user_role'):'any';
-		$this->SetView(SYS.V."layouts".S."content");
+		$this->SetView(SYS.V."layouts:content");
 
 	}
 	
@@ -73,8 +73,8 @@ class Route extends XSLRender {
 	}
 
 	protected function contents() {
-		$this->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
-		$content = $this->GetModule(SYS.C.'layout'.S.'layout');
+		$this->SetModule(SYS.V.'layout:views',SYS.C.'layout:layout');
+		$content = $this->GetModule(SYS.C.'layout:layout');
 		$contents = ($content)? $content->View():"";
 		$this->ViewData('content', htmlspecialchars($contents));
 	}
