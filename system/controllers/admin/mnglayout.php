@@ -44,13 +44,17 @@ class MngLayout extends XSLRender {
         $this->exception->ViewData('error', $this->error);
         return $this->exception->View();
     }
-    public function onRun(){
-		$content = "<h1>Ups...</h1>";
-		$content .= "<h3>Module not implemented yet</h3>";
-		$content .= "<p class='lead'>Nothing to show here</p>";
-		$content .= "<p class='lead'>Sorry for this...</p>";
-		$content .= "<p><a href='".HOST_URL."' class='btn btn-primary'>Go to index</a></p>";
+    public function onRunE(){
+        $content = "<h1>Ups...</h1>";
+        $content .= "<h3>Module not implemented yet</h3>";
+        $content .= "<p class='lead'>Nothing to show here</p>";
+        $content .= "<p class='lead'>Sorry for this...</p>";
+            $content .= "<p><a href='".HOST_URL."' class='btn btn-primary'>Go to index</a></p>";
         $this->ViewData('content', $content);
+    }
+    public function onRun(){
+        $content = $this->tmpform($this->manage());
+        $this->ViewData('content', htmlspecialchars($content));
     }
     public function oldRun($model = NULL){
         
@@ -109,8 +113,7 @@ class MngLayout extends XSLRender {
             $this->model->layouts = $this->model->default;
         }
         
-        $this->contents();
-        $this->manage();
+        //$this->contents();
     }
     
     protected function contents() {
@@ -119,30 +122,26 @@ class MngLayout extends XSLRender {
         $content = ($content)? htmlspecialchars($content->View()):"";
         $this->ViewData('content', $content);
     }
-    protected function manage($value=''){
+    protected function manage(){
         
         $modules = array(
         "admin:menu"=>array("elements:nav","admin:account","admin:login"),
         "other:two"=>array("elements:nav","admin:account","admin:login","other:two"),
         "index"=>array("index","theme"),
         "layout"=>array("sections","views"),
-        "section"=>array("sections","views")
+        "section"=>array("sections","views"),
+        "route"=>array("content","container")
         );
         
-        $layouts = array(
+        $this->layouts = array(
         "section",
-        "layout"
+        "layout",
+        "route"
         );
         
         
         $layout_items = array(
-        array('id'=>1, 'pos' => 1, 'name'=>'index','module'=>'theme','view'=>'default','class'=>'col-sm-12','attrid'=>'', 'model'=>'any', 'group'=>'main'),
-        array('id'=>2, 'pos' => 3, 'name'=>'index','module'=>'theme','view'=>'default','class'=>'col-sm-12','attrid'=>'', 'model'=>'any', 'group'=>'main'),
-        array('id'=>3, 'pos' => 2, 'name'=>'index','module'=>'theme','view'=>'default','class'=>'col-sm-12','attrid'=>'', 'model'=>'any', 'group'=>'main'),
-        array('id'=>4, 'pos' => 4, 'name'=>'index','module'=>'theme','view'=>'default','class'=>'col-sm-12','attrid'=>'', 'model'=>'any', 'group'=>'main'),
-        array('id'=>5, 'pos' => 4, 'name'=>'menu','module'=>'admin:menu','view'=>'elements:nav','class'=>'col-sm-12','attrid'=>'', 'model'=>'any', 'group'=>'sec'),
-        array('id'=>6, 'pos' => 3, 'name'=>'login','module'=>'admin:account','view'=>'admin:login','class'=>'col-sm-12','attrid'=>'', 'model'=>'any', 'group'=>'sec'),
-        array('id'=>7, 'pos' => 2, 'name'=>'two','module'=>'other:two','view'=>'other:two','class'=>'col-sm-12','attrid'=>'', 'model'=>'any', 'group'=>'sec'),
+        array('id'=>999, 'pos' => 99, 'name'=>'time','module'=>'check:gettime','view'=>'check:time','class'=>'col-sm-12','attrid'=>'', 'model'=>'', 'group'=>'sec'),
         );
         
         $default_items = array(
@@ -150,11 +149,11 @@ class MngLayout extends XSLRender {
         );
         
         if (!isset($_GET['group'])) {
-            $_group='main';
+            $this->_group='main';
         } else {
-            $_group = $_GET['group'];
+            $this->_group = $_GET['group'];
         }
-        $msg = "";
+        
         $items = json_decode(file_get_contents(ROOT.SYS.STORE."LoadContent.json"),true);
         //$items = $layout_items;
         if (empty($items)){
@@ -162,31 +161,35 @@ class MngLayout extends XSLRender {
         }
         
         if (!empty($items)){
-            sksort($items,'id');
-            $_groups = array();
-            $tmp = array();
+            $this->sksort($items,'id');
+            $this->_groups = array();
+            $this->tmp = array();
             foreach ($items as $key => $value) {
-                if ($value['group']==$_group && $value['group']!=$value['name']) {
-                    $tmp[$key]=$value;
+                if ($value['group']==$this->_group && $value['group']!=$value['name']) {
+                    $this->tmp[$key]=$value;
                 }
-                $_groups[]=$value['group'];
+                $this->_groups[]=$value['group'];
                 $modules[$value['group']]=array("sections","views");
             }
         }
         
         
-        if (!empty($tmp)){
-            sksort($tmp,'pos');
-            foreach ($tmp as $pos => $val) {
+        if (!empty($this->tmp)){
+            $this->sksort($this->tmp,'pos');
+            foreach ($this->tmp as $pos => $val) {
                 $i =$pos+1;
                 if ($i > $val['pos']) {
-                    $tmp[$pos]['pos'] = $i;
+                    $this->tmp[$pos]['pos'] = $i;
                 }
             }
         }
+        return $items;
     }
-    public function save($value='') {
+    
+    public function save($items='') {
+        $msg = "";
         $tosave = $items;
+
         $_delete = (isset($_GET['delete']))?$_GET['delete']:"";
         if ($_delete!="") {
             foreach ($tosave as $key => $value) {
@@ -197,60 +200,54 @@ class MngLayout extends XSLRender {
             }
         }
         
-        
         if(isset($_POST['item'])){
-            
-            $save = (isset($_POST['item']))?$_POST['item']:array();
-            
+            $save = (isset($_POST['item']))?$_POST['item']:array();    
             foreach ($tosave as $key => $value) {
                 $tosave[$key]['id'] = intval($tosave[$key]['id']);
                 $tosave[$key]['pos'] = intval($tosave[$key]['pos']);
                 foreach ($save as $changed) {
-                    if ($value['id']==$changed['id']) {
+                  if ($value['id']==$changed['id']) {
                         $tosave[$key]=$changed;
                         break;
+                  }
                 }
             }
-            
+            $msg = "<h3>Changes saved</h3>";
         }
-        $msg = "<h3>Changes saved</h3>";
-    }
     
     if(isset($_POST['add'])){
         
-        $t = count($tosave)+1;
-        foreach ($tosave as $pos => $val) {
-            $i =$pos+1;
-            if ($i < $val['id']) {
+      $t = count($tosave)+1;
+      foreach ($tosave as $pos => $val) {
+        $i =$pos+1;
+        if ($i < $val['id']) {
                 $t = $i;
                 break;
         }
+      }
+      $add = $_POST['add'];
+      $add['id'] = intval($t);
+      $add['pos'] = intval($add['pos']);
+      array_push($tosave, $add);
+      $msg = "<h3>New item saved</h3>";
     }
-    
-    $add = $_POST['add'];
-    $add['id'] = intval($t);
-    $add['pos'] = intval($add['pos']);
-    array_push($tosave, $add);
-    
-    
-    $msg = "<h3>New item saved</h3>";
-    if(isset($_POST['item']) || isset($_GET['delete']) || isset($_POST['add'])){
-        if (!empty($tosave)) {
-            echo $msg;
-            if(@file_put_contents(ROOT.SYS.STORE."LoadContent.json", json_encode($tosave))){
-                $msg .= "<h3>successed</h3>";
-                echo "<a class=\"button-success pure-button\" href=\"?group=$_group\">OK</a>";
-            } else {
-                $msg .= "<h3>failure</h3>";
-                $msg .= "<a class=\"button-error pure-button\" href=\"?group=$_group\">OK</a>";
-            }
+
+if(isset($_POST['item']) || isset($_GET['delete']) || isset($_POST['add'])){
+    if (!empty($tosave)) {
+        if(@file_put_contents(ROOT.SYS.STORE."LoadContent.json", json_encode($tosave))){
+            $msg .= "<h3>successed</h3>";
+            $msg .= "<a class=\"button-success pure-button\" href=\"?admin:mnglayout=layout:manage&group=".$this->_group."\">OK</a>";
+        } else {
+            $msg .= "<h3>failure</h3>";
+            $msg .= "<a class=\"button-error pure-button\" href=\"?admin:mnglayout=layout:manage&group=".$this->_group."\">OK</a>";
         }
     }
-    return $msg;
 }
+return $msg;
+
 }
 
-public function tmpform(){
+public function tmpform($items){
     ob_start();
     if(isset($_POST['item']) || isset($_GET['delete']) || isset($_POST['add'])):
     ?>
@@ -260,6 +257,7 @@ public function tmpform(){
   <div class="pure-u-1-3"></div>
   <div class="pure-u-1-3">
     <?php
+    echo $this->save($items);
     ?>
   </div>
   <div class="pure-u-1-3"></div>
@@ -273,7 +271,7 @@ public function tmpform(){
         <!-- add layout -->
         <div class="pure-u-3-5">
           <h3>Dodaj nowy layout</h3>
-          <form class="pure-form pure-u-1" action="?group" method="get">
+          <form class="pure-form pure-u-1" action="?admin:mnglayout=layout:manage&group" method="get">
             <table class="pure-table pure-table-bordered">
               <thead>
                 <tr>
@@ -284,7 +282,8 @@ public function tmpform(){
               <tbody>
                 <tr>
                   <td>
-                    <input value="<?=$_group;?>" class="pure-input-1" type="text" name="group">
+                    <input value="layout:manage" type="hidden" name="admin:mnglayout">
+                    <input value="<?=$this->_group;?>" class="pure-input-1" type="text" name="group">
                   </td>
                   <td>
                     <input value="Dodaj" class="pure-button pure-button-primary" type="submit">
@@ -292,7 +291,7 @@ public function tmpform(){
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <a class="pure-button pure-button-primary" href="?group=<?=$_group;?>">Reflesh</a>
+                    <a class="pure-button pure-button-primary" href="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>">Reflesh</a>
                   </td>
                 </tr>
               </tbody>
@@ -307,11 +306,11 @@ public function tmpform(){
     Groups list
     </h3>
           <div class="pure-menu pure-menu-scrollable custom-restricted">
-            <?php $sections = array_unique($_groups); ?>
+            <?php $sections = array_unique($this->_groups); ?>
               <ul class="pure-menu-list">
                 <?php foreach ($sections as $value) : ?>
                   <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="?group=<?=$value;?>">
+                    <a class="pure-menu-link" href="?admin:mnglayout=layout:manage&group=<?=$value;?>">
                       <?=$value;?>
                     </a>
                   </li>
@@ -326,8 +325,8 @@ public function tmpform(){
       <!-- add -->
       <div class="pure-g">
 
-        <h3 class="pure-u-5-5">Dodaj wpis do <?=$_group;?></h3>
-        <form class="pure-form pure-u-5-5" action="?group=<?=$_group;?>" method="post">
+        <h3 class="pure-u-5-5">Dodaj wpis do <?=$this->_group;?></h3>
+        <form class="pure-form pure-u-5-5" action="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>" method="post">
           <table class="pure-table pure-table-bordered">
             <thead>
               <tr>
@@ -345,9 +344,9 @@ public function tmpform(){
               <tr>
                 <td>
                   <select name="add[pos]">
-                    <?php for ($i=1; $i<=count($tmp)+1; $i++) {
-        if (isset($tmp[0]) && $tmp[0]['group']==$_group) {
-            $sel = ($i==count($tmp)+1)?" selected='selected'":"";
+                    <?php for ($i=1; $i<=count($this->tmp)+1; $i++) {
+        if (isset($this->tmp[0]) && $this->tmp[0]['group']==$this->_group) {
+            $sel = ($i==count($this->tmp)+1)?" selected='selected'":"";
             echo "<option value='".trim($i)."'".$sel.">".trim($i)."</option>";
         } else { echo "<option value='1'>1</option>"; }} ?>
                   </select>
@@ -385,7 +384,7 @@ public function tmpform(){
                 </td>
                 <td>
                   <input class="" type="text" name="add[model]">
-                  <input value="<?=$_group;?>" type="hidden" name="add[group]">
+                  <input value="<?=$this->_group;?>" type="hidden" name="add[group]">
                 </td>
                 <td>
                   <input class="pure-button button-success pure-input-1" type="submit" value="Dodaj">
@@ -399,11 +398,11 @@ public function tmpform(){
       <!-- /add -->
 
       <!-- edit -->
-      <?php if (!empty($tmp)): ?>
+      <?php if (!empty($this->tmp)): ?>
         <div class="pure-g">
 
-          <h3 class="pure-u-5-5">Edytuj layout <?=$_group;?></h3>
-          <form class="pure-form pure-u-5-5" action="?group=<?=$_group;?>" method="post">
+          <h3 class="pure-u-5-5">Edytuj layout <?=$this->_group;?></h3>
+          <form class="pure-form pure-u-5-5" action="?admin:mnglayout=layout:manage&group=<?=$this->_group;?>" method="post">
             <table class="pure-table pure-table-horizontal">
               <thead>
                 <tr>
@@ -418,16 +417,16 @@ public function tmpform(){
                 </tr>
               </thead>
               <tbody>
-                <?php $j=0;  foreach ($tmp as $key => $item): ?>
-                  <?php if ($item['group']==$_group):
+                <?php $j=0;  foreach ($this->tmp as $key => $item): ?>
+                  <?php if ($item['group']==$this->_group):
             $nth_child = (($j%2))?" class='pure-table-odd'":"";
         $j++;
         ?>
                     <tr<?=$nth_child;?>>
                       <td>
                         <select name="item[<?=$key;?>][pos]" class="">
-                          <?php for ($i=1; $i<=count($tmp); $i++) {
-            if ($tmp[$i-1]['group']==$_group) { $sel = ($item['pos'] == $tmp[$i-1]['pos'])?" selected='selected'":"";
+                          <?php for ($i=1; $i<=count($this->tmp); $i++) {
+            if ($this->tmp[$i-1]['group']==$this->_group) { $sel = ($item['pos'] == $this->tmp[$i-1]['pos'])?" selected='selected'":"";
             echo "<option value='".trim($i)."'".$sel.">".trim($i)."</option>";}} ?>
                         </select>
                       </td>
@@ -448,9 +447,12 @@ public function tmpform(){
                         </datalist>
                       </td>
                       <td>
-                        <?php if (in_array($item['module'],$layouts)) : ?>
+                        <?php if (in_array($item['module'],$this->layouts) && $item['module']!="route") : ?>
                           <input value="<?=$item['view'];?>" type="hidden" name="item[<?=$key;?>][view]">
-                          <a class="pure-button button-success pure-input-1" href="?group=<?=$item['name'];?>">edit</a>
+                          <a class="pure-button button-success pure-input-1" href="?admin:mnglayout=layout:manage&group=<?=$item['name'];?>">edit</a>
+                          <?php elseif ($item['module']=="route") : ?>
+                          <input value="<?=$item['view'];?>" type="hidden" name="item[<?=$key;?>][view]">
+                          <a class="pure-button button-success pure-input-1" href="?admin:mnglayout=layout:manage&group=route">edit</a>
                           <?php else: ?>
                             <input list="item-<?=$key;?>-view" value="<?=$item['view'];?>" class="" type="text" name="item[<?=$key;?>][view]" autocomplete="off">
                             <datalist id="item-<?=$key;?>-view" class="" name="item[<?=$key;?>][view]">
@@ -476,7 +478,7 @@ public function tmpform(){
                         <input value="<?=$item['id'];?>" type="hidden" name="item[<?=$key;?>][id]">
                       </td>
                       <td>
-                        <a class="pure-button button-error pure-input-1" href="?group=<?=$item['group'];?>&delete=<?=$item['id'];?>">delete</a>
+                        <a class="pure-button button-error pure-input-1" href="?admin:mnglayout=layout:manage&group=<?=$item['group'];?>&delete=<?=$item['id'];?>">delete</a>
                       </td>
 
                       </tr>

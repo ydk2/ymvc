@@ -81,23 +81,7 @@ class LoadContent extends XSLRender {
 		if (empty($items)){
 		    $items = $default_items;
 		}
-		$this->model->default = $items;
-		
-		$i = 2;
-		foreach ($_GET as $key => $value) {
-		if($this->current_group!="admin"){
-			$this->model->layouts[0] = $this->model->default[1];
-		} else {
-			$this->model->layouts[0] = $this->model->default[0];
-		}
-		if(!in_array($key,$this->model->disabled) && $this->ControllerExists(SYS.C.$key)){
-			$this->model->layouts[] = array('pos' => $i++, 'name'=>'FromGet','module'=>$key,'view'=>$value,'class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'', 'model'=>'');
-		}
-		}
-
-		if(!isset($this->model->layouts) || count($this->model->layouts)<=1){
-			$this->model->layouts = $this->model->default;
-		}
+		$this->model->layouts = $items;
 
 		$this->contents();
 		$this->menus();
@@ -109,8 +93,13 @@ class LoadContent extends XSLRender {
 		$content = ($content)? htmlspecialchars($content->View()):"";
 		$this->ViewData('content', $content);
 	}
-	protected function menus($value='')
-	{
+	protected function menus(){
+        return "";
+	}
+	protected function header(){
+        return "";
+	}
+	protected function footer(){
         return "";
 	}
 

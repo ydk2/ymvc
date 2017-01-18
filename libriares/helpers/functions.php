@@ -34,7 +34,7 @@
 function cpu_get_usage(){
 	$load = NULL;
 	if (stristr(PHP_OS, 'win')) {
-		
+		/**
 		$wmi = new COM("Winmgmts://");
 		$server = $wmi->execquery("SELECT LoadPercentage FROM Win32_Processor");
 		
@@ -47,7 +47,7 @@ function cpu_get_usage(){
 		}
 		
 		$load = round($load_total/$cpu_num);
-		
+		**/
 	}
 	else {
 		

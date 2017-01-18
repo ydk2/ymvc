@@ -1,5 +1,5 @@
 <?php
-class view extends XSLRender {
+class GetTime extends XSLRender {
 
 	public function onInit(){
 		// call in __constructor

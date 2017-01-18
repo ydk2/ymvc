@@ -73,7 +73,7 @@ Config::$data['time'] = get_time();
     SYS.C.'phpexample',
     SYS.C.'errors'.DS.'systemerror',
     SYS.C.'theme',
-    SYS.C.'view',
+    SYS.C.'check:gettime',
     SYS.C.'phpcall',
     SYS.C.'elements:menu',
     SYS.C.'test',
