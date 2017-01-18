@@ -62,10 +62,7 @@ class Route extends XSLRender {
 			$this->model->layouts[] = array('pos' => $i++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$value,'class'=>'col-sm-12','attrid'=>'', 'users'=>'', 'group'=>'route', 'model'=>'');
 		}
 		}
-		if(!isset($this->model->layouts)){
-			$this->model->layouts = $this->model->default;
-		}
-		$this->contents();
+		$this->contents();		
 		if($this->ViewData('content')==""){
 			$this->model->layouts = $this->model->default;
 			$this->contents();

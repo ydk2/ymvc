@@ -68,11 +68,6 @@ class LoadContent extends XSLRender {
 		);
 		$this->model->registered = array("layout"); 
 		$this->model->enabled = Config::$data['enabled'];
-		if($this->current_group!="admin"){
-			$this->model->layout_group = $this->current_group;
-		} else {
-			$this->model->layout_group = 'admin';
-		}
 		if(!file_exists(ROOT.SYS.STORE.$this->name.".json")){
 			file_put_contents(ROOT.SYS.STORE.$this->name.".json", json_encode($default_items));
 		}

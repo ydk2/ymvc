@@ -69,18 +69,11 @@ Config::$data['time'] = get_time();
     Config::$data['enabled'] = array(
     SYS.C.'other:one',
     SYS.C.'other:two',
-    SYS.C.'xslexample',
-    SYS.C.'phpexample',
-    SYS.C.'errors'.DS.'systemerror',
-    SYS.C.'theme',
+    SYS.C.'errors:systemerror',
     SYS.C.'check:gettime',
-    SYS.C.'phpcall',
     SYS.C.'elements:menu',
-    SYS.C.'test',
     SYS.C.'login:form',
-    SYS.C.'admin:mngmenus',
     SYS.C.'admin:mngaccount',
-    SYS.C.'admin:mnglayout'
     );
     Config::$data['layouts'] = array(
     'sections',
