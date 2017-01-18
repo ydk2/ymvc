@@ -4,9 +4,9 @@
               <h1><?=$this->alert_header?></h1>
               <p><?=$this->alert_string?></p>
               <p> 
-              	<a href="<?=HOST_URL?>?admin:mngmenus&action=edit&data=<?=$this->groups?>" class="btn btn-primary">Edit menu</a>
-              	<a href="<?=HOST_URL?>?admin:mngmenus&action=adds&data=<?=$this->groups?>" class="btn btn-primary">Add new menu entry</a>
-              	<a href="<?=HOST_URL?>?admin:mngmenus=menus:help" class="btn btn-info">Help</a>
+              	<a href="<?=HOST_URL?>?admin<?=S;?>mngmenus&action=edit&data=<?=$this->groups?>" class="btn btn-primary">Edit menu</a>
+              	<a href="<?=HOST_URL?>?admin<?=S;?>mngmenus&action=adds&data=<?=$this->groups?>" class="btn btn-primary">Add new menu entry</a>
+              	<a href="<?=HOST_URL?>?admin<?=S;?>mngmenus=menus:help" class="btn btn-info">Help</a>
               </p>
             </div>
           </div>
@@ -38,7 +38,7 @@
                   </span>
                   <script>
                   $('#add').click(function(){
-                    document.location.href = "?admin:mngmenus&data="+$('#nmenu').val();
+                    document.location.href = "?admin<?=S;?>mngmenus&data="+$('#nmenu').val();
                   });  
                   </script>
                 </div>

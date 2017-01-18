@@ -9,7 +9,7 @@
 
         <div class="row"  id="editmenu">
           <div class="col-md-12">
-            <form class="form-horizontal" role="form" action="<?=HOST_URL ?>?admin:mngmenus&action=adds&data=<?=$this->groups?>" method="post">
+            <form class="form-horizontal" role="form" action="<?=HOST_URL ?>?admin<?=S;?>mngmenus&action=adds&data=<?=$this->groups?>" method="post">
               <div class="form-group">
                 <div class="col-sm-2">
                   <label for="title" class="control-label">Insert Title</label>
@@ -29,8 +29,8 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <input type="submit" name="add_menu" value="add menu entry" class="btn btn-primary" >
-                  <a type="button" href="<?=HOST_URL ?>?admin:mngmenus&action=edit&data=<?=$this->groups?>" class="btn btn-warning" >Edit Menu</a>
-                  <a type="button" href="<?=HOST_URL ?>?admin:mngmenus&data=<?=$this->groups?>" class="btn btn-info" >Go to Main</a>
+                  <a type="button" href="<?=HOST_URL ?>?admin<?=S;?>mngmenus&action=edit&data=<?=$this->groups?>" class="btn btn-warning" >Edit Menu</a>
+                  <a type="button" href="<?=HOST_URL ?>?admin<?=S;?>mngmenus&data=<?=$this->groups?>" class="btn btn-info" >Go to Main</a>
                 </div>
               </div>
             </form>

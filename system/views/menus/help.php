@@ -13,7 +13,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,
               <br>sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
               <br>Ut enim ad minim veniam, quis nostrud</p>
-              <a type="button" href="<?=HOST_URL ?>?admin:mngmenus" class="btn btn-primary" >Edit Menu</a>
+              <a type="button" href="<?=HOST_URL ?>?admin<?=S;?>mngmenus" class="btn btn-primary" >Edit Menu</a>
           </div>
                <script>
       $('a').click(function(event) {
