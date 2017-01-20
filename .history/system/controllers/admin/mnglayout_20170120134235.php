@@ -273,7 +273,7 @@ public function tmpform($items){
         <!-- add layout -->
         <div class="col-sm-6">
           <h3>Dodaj nowy layout</h3>
-          <form class="form" action="?admin<?=S;?>mnglayout=layout<?=S;?>manage" method="post">
+          <form class="form" action="?admin".S."mnglayout=layout".S."manage" method="post">
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -292,7 +292,7 @@ public function tmpform($items){
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <a class="btn btn-primary" href="?admin<?=S;?>mnglayout=layout<?=S;?>manage&group=<?=$this->_group;?>">Reflesh</a>
+                    <a class="btn btn-primary" href="?admin".S."mnglayout=layout".S."manage&group=<?=$this->_group;?>">Reflesh</a>
                   </td>
                 </tr>
               </tbody>
@@ -309,7 +309,7 @@ public function tmpform($items){
               <ul class="list-group">
                 <?php foreach ($sections as $value) : ?>
                   <li class="list-group-item">
-                    <a  href="?admin<?=S;?>mnglayout=layout<?=S;?>manage&group=<?=$value;?>">
+                    <a  href="?admin".S."mnglayout=layout".S."manage&group=<?=$value;?>">
                       <?=$value;?>
                     </a>
                   </li>
@@ -325,7 +325,7 @@ public function tmpform($items){
       <div class="row">
 
         <h3 class="">Dodaj wpis do <?=$this->_group;?></h3>
-        <form class="form" action="?admin<?=S;?>mnglayout=layout<?=S;?>manage&group=<?=$this->_group;?>" method="post">
+        <form class="form" action="?admin".S."mnglayout=layout".S."manage&group=<?=$this->_group;?>" method="post">
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -401,7 +401,7 @@ public function tmpform($items){
         <div class="row">
 
           <h3 class="">Edytuj layout <?=$this->_group;?></h3>
-          <form class="form" action="?admin<?=S;?>mnglayout=layout<?=S;?>manage&group=<?=$this->_group;?>" method="post">
+          <form class="form" action="?admin".S."mnglayout=layout".S."manage&group=<?=$this->_group;?>" method="post">
             <table class="table table-horizontal">
               <thead>
                 <tr>
@@ -448,10 +448,10 @@ public function tmpform($items){
                       <td>
                         <?php if (in_array($item['module'],$this->layouts) && $item['module']!="route") : ?>
                           <input value="<?=$item['view'];?>" type="hidden" name="item[<?=$key;?>][view]">
-                          <a class="btn btn-success" href="?admin<?=S;?>mnglayout=layout<?=S;?>manage&group=<?=$item['name'];?>">edit</a>
+                          <a class="btn btn-success" href="?admin".S."mnglayout=layout".S."manage&group=<?=$item['name'];?>">edit</a>
                           <?php elseif ($item['module']=="route") : ?>
                           <input value="<?=$item['view'];?>" type="hidden" name="item[<?=$key;?>][view]">
-                          <a class="btn btn-success" href="?admin<?=S;?>mnglayout=layout<?=S;?>manage&group=route">edit</a>
+                          <a class="btn btn-success" href="?admin".S."mnglayout=layout".S."manage&group=route">edit</a>
                           <?php else: ?>
                             <input list="item-<?=$key;?>-view" value="<?=$item['view'];?>" class="form-control" type="text" name="item[<?=$key;?>][view]" autocomplete="off">
                             <datalist id="item-<?=$key;?>-view" class="" name="item[<?=$key;?>][view]">
@@ -477,7 +477,7 @@ public function tmpform($items){
                         <input value="<?=$item['id'];?>" type="hidden" name="item[<?=$key;?>][id]">
                       </td>
                       <td>
-                        <a class="btn btn-danger" href="?admin<?=S;?>mnglayout=layout<?=S;?>manage&group=<?=$item['group'];?>&delete=<?=$item['id'];?>">delete</a>
+                        <a class="btn btn-danger" href="?admin".S."mnglayout=layout".S."manage&group=<?=$item['group'];?>&delete=<?=$item['id'];?>">delete</a>
                       </td>
 
                       </tr>
@@ -501,6 +501,6 @@ public function tmpform($items){
             $out = ob_get_clean();
             return $out;
         }
-
+        
     }
     ?>

@@ -51,15 +51,14 @@ class LoadContent extends XSLRender {
 		$default_items = array(
 			// sec
 
-			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'elements'.S.'menu','view'=>'elements'.S.'nav','class'=>'row', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
-			array('id'=>2,'pos' => 1, 'name'=>'menu','module'=>'elements'.S.'menu','view'=>'elements'.S.'nav','class'=>'row', 'mode'=>'', 'group'=>'any', 'attrid'=>'', 'users'=>''),
+			array('id'=>1,'pos' => 1, 'name'=>'menu','module'=>'admin'.S.'menu','view'=>'elements'.S.'nav','class'=>'row', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
+			array('id'=>2,'pos' => 1, 'name'=>'menu','module'=>'admin'.S.'menu','view'=>'elements'.S.'nav','class'=>'row', 'mode'=>'', 'group'=>'any', 'attrid'=>'', 'users'=>''),
 			
 			// layout
-			array('id'=>4,'pos' => 2, 'name'=>'system', 'module'=>'layout','view'=>'','class'=>'row', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
+			array('id'=>4,'pos' => 2, 'name'=>'admin', 'module'=>'layout','view'=>'','class'=>'row', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
 			// items
-			array('id'=>7,'pos' => 3, 'name'=>'one', 'module'=>'one','view'=>'one','class'=>'col-sm-4', 'mode'=>'app', 'group'=>'system', 'attrid'=>'', 'users'=>''),
-			array('id'=>5,'pos' => 5, 'name'=>'two', 'module'=>'route','view'=>'','class'=>'col-sm-8', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
-			array('id'=>8,'pos' => 4, 'name'=>'two', 'module'=>'other'.S.'two','view'=>'other'.S.'two','class'=>'col-sm-8', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
+			array('id'=>7,'pos' => 3, 'name'=>'one', 'module'=>'other'.S.'one','view'=>'other'.S.'one','class'=>'col-sm-4', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
+			array('id'=>5,'pos' => 4, 'name'=>'two', 'module'=>'other'.S.'two','view'=>'other'.S.'two','class'=>'col-sm-8', 'mode'=>'', 'group'=>'admin', 'attrid'=>'', 'users'=>''),
 			
 			// sections
 			array('id'=>6,'pos' => 3, 'name'=>'any', 'module'=>'layout','view'=>'','class'=>'row', 'mode'=>'', 'group'=>'any', 'attrid'=>'', 'users'=>''),
@@ -73,7 +72,7 @@ class LoadContent extends XSLRender {
 			file_put_contents(ROOT.SYS.STORE.$this->name.".json", json_encode($default_items));
 		}
 		$items = json_decode(file_get_contents(ROOT.SYS.STORE.$this->name.".json"),true);
-		//$items = $default_items;
+		$items = $default_items;
 		if (empty($items)){
 		    $items = $default_items;
 		}

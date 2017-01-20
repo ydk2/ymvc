@@ -73,7 +73,7 @@ class LoadContent extends XSLRender {
 			file_put_contents(ROOT.SYS.STORE.$this->name.".json", json_encode($default_items));
 		}
 		$items = json_decode(file_get_contents(ROOT.SYS.STORE.$this->name.".json"),true);
-		//$items = $default_items;
+		$items = $default_items;
 		if (empty($items)){
 		    $items = $default_items;
 		}
