@@ -61,9 +61,9 @@ class Layout extends XSLRender {
         array('id'=>14,'index'=>2,'type'=>'route','name'=>'_type','group'=>'two','value'=>'route','category'=>'layout','option'=>"2",'data'=>''),
         );
         //var_dump($data);
-        $aout=$this->array_search_rotate($data,'one','_name','value','name','index','id');
+        $aout=$this->array_search_rotate($data,'','_group','two','group');
         var_dump($aout);
-        $allout=$this->array_rotate($data,'two','group','category','index','id');
+        $allout=$this->array_rotate($data);
         var_dump($allout);
         //$allupdateout=$this->array_update_rotate_all($data,$aout);
         //var_dump($allupdateout);
@@ -73,8 +73,52 @@ class Layout extends XSLRender {
         
     }
     public function array_update_rotate_all($data,$update){
-
+        
         //$updateout = array('id'=>14,'index'=>2,'type'=>'route','name'=>'_type','group'=>'two','value'=>'route','category'=>'layout','option'=>"2",'data'=>'');
+        $updateout = array();
+        $aout = array();
+        $indexed = 1;
+        foreach ($update as $entry) {
+            foreach ($data as $i=>$items) {
+                $item = $items['index'];
+                $values = array();
+                foreach ($data as $value) {
+                    if($item===$value['index']){
+                        if(!$indexed){
+                            $values[$value['name']]['value']=$value['value'];
+                            $values[$value['name']]['index']=$value['index'];
+                            $values[$value['name']]['id']=$value['id'];
+                        } else {
+                            $values[$value['name']]['data']=$value['value'];
+                            $values[$value['name']]['index']=$value['id'];
+                        }
+                    }
+                    
+                }
+                $aout[$items['index']]=$values;
+                $i=0;
+                //var_dump($values);
+                
+            }
+            
+            foreach ($entry as $key => $changed) {
+                switch ($value['id']) {
+                    case $data[$i]['id']:
+                        # code...
+                        $data[$i][$key] = $changed.' nnn';
+                        break;
+                    
+                    default:
+                        # code...
+                        break;
+            }
+            if($value['name']==$key){
+                //var_dump($changed);
+                //$data[$i][]
+                break;
+        }
+    	}
+	}
 	$updateout = $data;
 	return $updateout;
 	}

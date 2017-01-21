@@ -61,9 +61,9 @@ class Layout extends XSLRender {
         array('id'=>14,'index'=>2,'type'=>'route','name'=>'_type','group'=>'two','value'=>'route','category'=>'layout','option'=>"2",'data'=>''),
         );
         //var_dump($data);
-        $aout=$this->array_search_rotate($data,'one','_name','value','name','index','id');
+        $aout=$this->array_search_rotate($data,'','_name','value','name','index','id');
         var_dump($aout);
-        $allout=$this->array_rotate($data,'two','group','category','index','id');
+        $allout=$this->array_rotate($data,'_name','value','name','index','id');
         var_dump($allout);
         //$allupdateout=$this->array_update_rotate_all($data,$aout);
         //var_dump($allupdateout);

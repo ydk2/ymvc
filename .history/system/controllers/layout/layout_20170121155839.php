@@ -63,7 +63,7 @@ class Layout extends XSLRender {
         //var_dump($data);
         $aout=$this->array_search_rotate($data,'one','_name','value','name','index','id');
         var_dump($aout);
-        $allout=$this->array_rotate($data,'two','group','category','index','id');
+        $allout=$this->array_rotate($data,'_group','name','category','index','id');
         var_dump($allout);
         //$allupdateout=$this->array_update_rotate_all($data,$aout);
         //var_dump($allupdateout);

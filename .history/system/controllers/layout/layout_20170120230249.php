@@ -61,62 +61,110 @@ class Layout extends XSLRender {
         array('id'=>14,'index'=>2,'type'=>'route','name'=>'_type','group'=>'two','value'=>'route','category'=>'layout','option'=>"2",'data'=>''),
         );
         //var_dump($data);
-        $aout=$this->array_search_rotate($data,'one','_name','value','name','index','id');
+        $aout=$this->array_search_rotate($data,'one');
         var_dump($aout);
-        $allout=$this->array_rotate($data,'two','group','category','index','id');
-        var_dump($allout);
-        //$allupdateout=$this->array_update_rotate_all($data,$aout);
-        //var_dump($allupdateout);
+        $allout=$this->array_rotate($data);
+        //var_dump($allout);
+        $allupdateout=$this->array_update_rotate_all($data,$aout);
+        var_dump($allupdateout);
         $this->ViewData('layout', '');
         //$this->data->layout->addChild('views', $out);
         $this->Layouts();
         
     }
     public function array_update_rotate_all($data,$update){
-
+        
         //$updateout = array('id'=>14,'index'=>2,'type'=>'route','name'=>'_type','group'=>'two','value'=>'route','category'=>'layout','option'=>"2",'data'=>'');
+        $updateout = array();
+        $aout = array();
+        $indexed = 1;
+        foreach ($update as $entry) {
+            foreach ($data as $i=>$items) {
+                $item = $items['index'];
+                $values = array();
+                foreach ($data as $value) {
+                    if($item===$value['index']){
+                        if(!$indexed){
+                            $values[$value['name']]=$value['value'];
+                        } else {
+                            $values[$value['name']]['data']=$value['value'];
+                            $values[$value['name']]['index']=$value['id'];
+                        }
+                    }
+                    
+                }
+                $aout[$items['index']]=$values;
+                $i=0;
+                //var_dump($values);
+                
+            }
+            
+            foreach ($entry as $key => $changed) {
+                switch ($value['id']) {
+                    case $data[$i]['id']:
+                        # code...
+                        $data[$i][$key] = $changed.' nnn';
+                        break;
+                    
+                    default:
+                        # code...
+                        break;
+            }
+            if($value['name']==$key){
+                //var_dump($changed);
+                //$data[$i][]
+                break;
+        }
+    	}
+	}
 	$updateout = $data;
 	return $updateout;
 	}
 
-	public function array_search_rotate($data,$search_value='',$search_name='_name',$_value='value',$_name='name',$index='index',$control='id'){
+	public function array_search_rotate($data,$search_value='',$search_name='_name',$_value='value',$_name='name',$indexed=0){
     $aout = array();
     foreach ($data as $items) {
         if(isset($items[$_name]) && isset($items[$_value])){
             if($search_name==$items[$_name] && $search_value==$items[$_value]){
-                $item = $items[$index];
+                $item = $items['index'];
                 $values = array();
                 foreach ($data as $value) {
-                    if($item===$value[$index]){
-                            $values[$value[$_name]][$_value]=$value[$_value];
-                            $values[$value[$_name]][$index]=$value[$index];
-                            $values[$value[$_name]][$control]=$value[$control];
-
+                    if($item===$value['index']){
+                        if(!$indexed){
+                            $values[$value[$_name]]=$value['value'];
+                        } else {
+                            $values[$value[$_name]]['data']=$value[$_value];
+                            $values[$value[$_name]]['index']=$value['id'];
+                        }
+                        
                     }
                 }
-                $aout[]=$values;
+                $aout[$items['index']]=$values;
             }
         }
     }
     return $aout;
 	}
 
-	public function array_rotate($data,$search_name='_name',$_name='name',$_value='value',$index='index',$control='id'){
+	public function array_rotate($data,$search_name='_name',$_name='name',$_value='value',$indexed=0){
     $aout = array();
     foreach ($data as $items) {
         if(isset($items[$_name])){
             if($search_name==$items[$_name]){
-                $item = $items[$index];
+                $item = $items['index'];
                 $values = array();
                 foreach ($data as $value) {
-                    if($item===$value[$index]){
-                            $values[$value[$_name]][$_value]=$value[$_value];
-                            $values[$value[$_name]][$index]=$value[$index];
-                            $values[$value[$_name]][$control]=$value[$control];
-
+                    if($item===$value['index']){
+                        if(!$indexed){
+                            $values[$value[$_name]]=$value[$_value];
+                        } else {
+                            $values[$value[$_name]]['data']=$value[$_value];
+                            $values[$value[$_name]]['index']=$value['id'];
+                        }
+                        
                     }
                 }
-                $aout[]=$values;
+                $aout[$items['index']]=$values;
             }
         }
     }
