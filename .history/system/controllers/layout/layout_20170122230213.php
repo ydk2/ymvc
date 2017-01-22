@@ -75,15 +75,15 @@ class Layout extends XSLRender {
         array('id'=>20,'index'=>3,'name'=>'_attr','value'=>'{c}','group'=>"l"),
         array('id'=>21,'index'=>3,'name'=>'_type','value'=>'route','group'=>"l"),
         );
-        $aout=$this->searchByNameValue($data,'_name','two','l');
+        $aout=$this->searchByNameValue($data,'_view','two','l');
         var_dump($aout);
-        $aout[4][count($data)+1]['_name'] = 'four';
-        $aout[4][count($data)+2]['_view'] = 'four';
+        $aout[4][8]['_name'] = 'four';
+        $aout[4][9]['_view'] = 'four';
         unset($aout[2][10]);
-        $rout=$this->reverseItems($aout,'l')+$data;
+        $rout=$this->reverseItems($aout,'l');
         var_dump($rout);
         $aout=$this->searchByName($rout,'_name','l');
-        var_dump($aout);
+        var_dump($aout+$data);
 
 
 /*
