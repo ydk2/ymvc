@@ -77,9 +77,9 @@ class Layout extends XSLRender {
         );
         $aout=$this->searchByNameValue($data,'_name','two','l');
         var_dump($aout);
-        $aout[4][count($data)+1]['_view'] = 'four';
-        unset($aout[2][10]);
         $aout[4][$this->GetId($data)]['_name'] = 'four';
+        $aout[4][$this->GetId($data)]['_view'] = 'four';
+        unset($aout[2][10]);
         $rout=$this->reverseItems($aout,'l');
         var_dump($rout);
         $aout=$this->searchByName($rout,'_name','l');

@@ -77,9 +77,9 @@ class Layout extends XSLRender {
         );
         $aout=$this->searchByNameValue($data,'_name','two','l');
         var_dump($aout);
-        $aout[4][count($data)+1]['_view'] = 'four';
+        $aout[4][count($data)+1]['_name'] = 'four';
+        $aout[4][count($data)+2]['_view'] = 'four';
         unset($aout[2][10]);
-        $aout[4][$this->GetId($data)]['_name'] = 'four';
         $rout=$this->reverseItems($aout,'l');
         var_dump($rout);
         $aout=$this->searchByName($rout,'_name','l');
@@ -144,32 +144,18 @@ class Layout extends XSLRender {
         }
         return $rout;
     }
-    function GetId($tmp){
-        if (!empty($tmp)){
-            sksort($tmp,'id');
-            foreach ($tmp as $pos => $val) {
-                $i =$pos+1;
-                if ($i > $val['id']) {
-                    return $i;
-                }
-            }
-            return $i;
-        }
-    }
+
 
 /**
-    function GetId($tmp){
-        if (!empty($tmp)){
-            sksort($tmp,'id');
-            foreach ($tmp as $pos => $val) {
+if (!empty($this->tmp)){
+            $this->sksort($this->tmp,'pos');
+            foreach ($this->tmp as $pos => $val) {
                 $i =$pos+1;
-                if ($i > $val['id']) {
-                    return $i;
+                if ($i > $val['pos']) {
+                    $this->tmp[$pos]['pos'] = $i;
                 }
             }
-            return $i;
         }
-    }
 **/
 
 
