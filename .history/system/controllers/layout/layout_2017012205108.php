@@ -80,15 +80,15 @@ class Layout extends XSLRender {
         
         $aout[0]['_view']['value']='changed';
         $aout[0]['_view']['category']='changed';
-        $aout[0]['_pos']['value']=3;
+        $aout[0]['_pos']['value']=1;
         //unset($aout[0]);
         //var_dump($aout);
-        $rmout=$this->array_rotate_delete($data,1,'index','id');
+        //$allout=$this->array_rotate($data,'two','group','category','name','id');
 //        $allupdateout=$this->array_rotate_key_value($aout,'name','value');
-        //var_dump($rmout);
+  //
         $allupdateout=$this->array_rotate_update($data,$aout,'id');
-        //var_dump($allupdateout);
-        $allout=$this->array_rotate($rmout,'_name','value','name','index','id');
+        var_dump($allupdateout);
+        $allout=$this->array_search_rotate($allupdateout,'three','_name','value','name','index','id');
 
         $all=$this->array_rotate_key_value($allout,'name','value');
         var_dump($all);
@@ -96,23 +96,9 @@ class Layout extends XSLRender {
         $this->ViewData('layout', '');
         //$this->data->layout->addChild('views', $out);
         $this->Layouts();
-
+        
     }
-
-    public function array_rotate_delete($data,$delete,$index='index',$control='id'){
-        $updatein = array();
-        $updateout = $data;
-                foreach ($data as $i => $item) {
-                    $update=array();
-                    if(isset($item[$index])){
-                        if($item[$index]==$delete){
-                            unset($updateout[$i]);
-                        }
-                    }
-                }
-        return $updateout;
-    }
-
+    
     public function array_rotate_update($data,$updated,$control='id'){
         $updatein = array();
         $updateout = $data;
@@ -143,7 +129,7 @@ class Layout extends XSLRender {
         foreach ($data as $index) {
             foreach ($index as $keys => $value) {
                 if(isset($value[$key]) && isset($value[$val])){
-                $updateout[$i][$value[$key]] = $value[$val];
+                $updateout[$value[$key]] = $value[$val];
                 }
             }
             $i++;

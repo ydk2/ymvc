@@ -83,7 +83,7 @@ class Layout extends XSLRender {
         $aout[0]['_pos']['value']=3;
         //unset($aout[0]);
         //var_dump($aout);
-        $rmout=$this->array_rotate_delete($data,1,'index','id');
+        $rmout=$this->array_rotate_delete($data,2,'index','id');
 //        $allupdateout=$this->array_rotate_key_value($aout,'name','value');
         //var_dump($rmout);
         $allupdateout=$this->array_rotate_update($data,$aout,'id');
@@ -106,6 +106,7 @@ class Layout extends XSLRender {
                     $update=array();
                     if(isset($item[$index])){
                         if($item[$index]==$delete){
+                            //$update=$updatein[$value[$control]]+$item;
                             unset($updateout[$i]);
                         }
                     }

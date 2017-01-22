@@ -2,8 +2,8 @@
 /*
 * @Author: ydk2 (me@ydk2.tk)
 * @Date: 2017-01-21 16:22:09
- * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-01-21 22:00:35
+* @Last Modified by: ydk2 (me@ydk2.tk)
+* @Last Modified time: 2017-01-21 20:52:16
 */
 
 class Layout extends XSLRender {
@@ -67,7 +67,7 @@ class Layout extends XSLRender {
         array('id'=>13,'index'=>2,'type'=>'route','name'=>'_attr','group'=>'two','value'=>'a:1:{s:5:"style";s:0:"";}','category'=>'layout','option'=>"2",'data'=>''),
         array('id'=>14,'index'=>2,'type'=>'route','name'=>'_type','group'=>'two','value'=>'route','category'=>'layout','option'=>"2",'data'=>''),
         
-        array('id'=>15,'index'=>3,'type'=>'route','name'=>'_name','group'=>'two','value'=>'three','category'=>'none','option'=>"1",'data'=>''),
+        array('id'=>15,'index'=>3,'type'=>'route','name'=>'_name','group'=>'two','value'=>'two','category'=>'none','option'=>"1",'data'=>''),
         array('id'=>16,'index'=>3,'type'=>'route','name'=>'_controller','group'=>'two','value'=>'two','category'=>'none','option'=>"2",'data'=>''),
         array('id'=>17,'index'=>3,'type'=>'route','name'=>'_group','group'=>'two','value'=>'','category'=>'none','option'=>"2",'data'=>''),
         array('id'=>18,'index'=>3,'type'=>'route','name'=>'_view','group'=>'two','value'=>'two','category'=>'none','option'=>"2",'data'=>''),
@@ -76,60 +76,42 @@ class Layout extends XSLRender {
         array('id'=>21,'index'=>3,'type'=>'route','name'=>'_type','group'=>'two','value'=>'route','category'=>'none','option'=>"2",'data'=>''),
         );
         //var_dump($data);
-        $aout=$this->array_search_rotate($data,'three','_name','value','name','index','id');
+        $aout=$this->array_search_rotate($data,'two','_name','value','name','index','id');
         
         $aout[0]['_view']['value']='changed';
-        $aout[0]['_view']['category']='changed';
-        $aout[0]['_pos']['value']=3;
-        //unset($aout[0]);
         //var_dump($aout);
-        $rmout=$this->array_rotate_delete($data,1,'index','id');
-//        $allupdateout=$this->array_rotate_key_value($aout,'name','value');
-        //var_dump($rmout);
-        $allupdateout=$this->array_rotate_update($data,$aout,'id');
+        //$allout=$this->array_rotate($data,'two','group','category','name','id');
+        $allout=$this->array_rotate($data,'_name','value','name','index','id');
+        //var_dump($allout);
+        //$allupdateout=$this->array_rotate_key_value($aout,'name','value');
         //var_dump($allupdateout);
-        $allout=$this->array_rotate($rmout,'_name','value','name','index','id');
-
-        $all=$this->array_rotate_key_value($allout,'name','value');
-        var_dump($all);
-
+        $allupdateout=$this->array_rotate_update($data,$aout,'id');
+        var_dump($allupdateout);
         $this->ViewData('layout', '');
         //$this->data->layout->addChild('views', $out);
         $this->Layouts();
-
+        
     }
-
-    public function array_rotate_delete($data,$delete,$index='index',$control='id'){
-        $updatein = array();
-        $updateout = $data;
-                foreach ($data as $i => $item) {
-                    $update=array();
-                    if(isset($item[$index])){
-                        if($item[$index]==$delete){
-                            unset($updateout[$i]);
-                        }
-                    }
-                }
-        return $updateout;
-    }
-
+    
     public function array_rotate_update($data,$updated,$control='id'){
         $updatein = array();
         $updateout = $data;
         //$i = 0;
-        foreach ($updated as $i => $entry) {
-            foreach ($entry as $key => $value) {
+        foreach ($updated as $i => $index) {
+            foreach ($index as $key => $value) {
                 if(isset($value[$control])){
-                    $updatein[$value[$control]] = $value;
+                    $updatein[$i][$value[$control]] = $value;
                 }
+                
                 foreach ($data as $index => $item) {
                     $update=array();
                     if(isset($item[$control])){
-                        if($item[$control]===$updatein[$value[$control]][$control]){
-                            $update=$updatein[$value[$control]]+$item;
+                        if($item[$control]===$updatein[$i][$value[$control]][$control]){
+                            $update=$updatein[$i][$value[$control]]+$item;
                             $updateout[$index] = $update;
                         }
                     }
+                    
                 }
             }
             $i++;
@@ -137,14 +119,13 @@ class Layout extends XSLRender {
         return $updateout;
     }
     
-    public function array_rotate_key_value($data,$key='name',$val='value',$control='id'){
+    public function array_rotate_key_value($data,$key='name',$val='value'){
         $updateout = array();
         $i = 0;
         foreach ($data as $index) {
             foreach ($index as $keys => $value) {
-                if(isset($value[$key]) && isset($value[$val])){
+                if(isset($value[$key]) && isset($value[$val]))
                 $updateout[$i][$value[$key]] = $value[$val];
-                }
             }
             $i++;
         }

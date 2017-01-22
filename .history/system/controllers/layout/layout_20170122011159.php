@@ -99,7 +99,7 @@ class Layout extends XSLRender {
 
     }
 
-    public function array_rotate_delete($data,$delete,$index='index',$control='id'){
+    public function array_rotate_delete($data,$delete,$index='index'){
         $updatein = array();
         $updateout = $data;
                 foreach ($data as $i => $item) {

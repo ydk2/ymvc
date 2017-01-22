@@ -106,6 +106,7 @@ class Layout extends XSLRender {
                     $update=array();
                     if(isset($item[$index])){
                         if($item[$index]==$delete){
+                            //$update=$updatein[$value[$control]]+$item;
                             unset($updateout[$i]);
                         }
                     }
