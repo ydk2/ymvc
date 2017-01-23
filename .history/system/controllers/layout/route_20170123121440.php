@@ -45,7 +45,6 @@ class Route extends XSLRender {
 		$this->model->disabled = array('error','errors','data','index','item','action','load','access'); 
 
 		$this->model->registered = array("route");
-		//$this->model->enabled = Config::$data['enabled'];
 		/**
         if(!isset($this->model->layout_data) || $this->model->layout_data==''){
           $this->model->layout_data=Config::$data['layout_data'];

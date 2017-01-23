@@ -77,22 +77,22 @@ class Theme extends XSLRender {
     
     protected function contents()
     {
-        $this->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
-        $content = $this->GetModule(SYS.C.'layout'.S.'layout');
-        $content->layout_group = $this->current_group;
-        $content->mode = 'sys';
-        $content->layout_data=Config::$data['layout_data'];
-		$content->registered = array("layout");
-		$content->enabled = Config::$data['enabled'];
-		if(!file_exists(ROOT.SYS.STORE.$content->layout_data)){
+        $this->SetModule(SYS.V.'layout'.S.'content',SYS.C.'layout'.S.'loadcontent');
+        $content = $this->GetModule(SYS.C.'layout'.S.'loadcontent');
+        $content->model->layout_group = $this->current_group;
+        $content->model->mode = 'sys';
+        $content->model->layout_data=Config::$data['layout_data'];
+		$content->model->registered = array("layout");
+		$content->model->enabled = Config::$data['enabled'];
+		if(!file_exists(ROOT.SYS.STORE.$content->model->layout_data)){
 			//file_put_contents(ROOT.SYS.STORE.$content->model->layout_data, json_encode($default_items));
 		}
-		$items = json_decode(file_get_contents(ROOT.SYS.STORE.$content->layout_data),true);
+		$items = json_decode(file_get_contents(ROOT.SYS.STORE.$content->model->layout_data),true);
 		//$items = $default_items;
 		if (empty($items)){
 		    //$items = $default_items;
 		}
-        $content->layouts = $items;
+        $content->model->layouts = $items;
         if($this->current_group=="any"){
 
             Config::$data['enabled'] = array(
@@ -115,11 +115,10 @@ class Theme extends XSLRender {
             SYS.C.'admin'.S.'mngaccount',
             SYS.C.'admin'.S.'mnglayout'
             );
-            $content->layout_group = 'admin';
+            $content->model->layout_group = 'admin';
         }
-        $content->enabled = Config::$data['enabled'];
-        $content->disabled = Config::$data['disabled'];
-        $content->mode = $this->model->mode;
+        $content->model->enabled = $this->model->enabled;
+        $content->model->mode = $this->model->mode;
         $content = ($content)? htmlspecialchars($content->View()):"";
         $this->ViewData('contents', $content);
     }

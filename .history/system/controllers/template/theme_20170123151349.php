@@ -115,10 +115,9 @@ class Theme extends XSLRender {
             SYS.C.'admin'.S.'mngaccount',
             SYS.C.'admin'.S.'mnglayout'
             );
-            $content->layout_group = 'admin';
+            $content->model->layout_group = 'admin';
         }
         $content->enabled = Config::$data['enabled'];
-        $content->disabled = Config::$data['disabled'];
         $content->mode = $this->model->mode;
         $content = ($content)? htmlspecialchars($content->View()):"";
         $this->ViewData('contents', $content);

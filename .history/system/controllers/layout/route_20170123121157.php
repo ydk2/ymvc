@@ -45,20 +45,15 @@ class Route extends XSLRender {
 		$this->model->disabled = array('error','errors','data','index','item','action','load','access'); 
 
 		$this->model->registered = array("route");
-		//$this->model->enabled = Config::$data['enabled'];
-		/**
-        if(!isset($this->model->layout_data) || $this->model->layout_data==''){
-          $this->model->layout_data=Config::$data['layout_data'];
-        }
 		if(!file_exists(ROOT.SYS.STORE.$this->model->layout_data)){
-			throw new SystemException(Intl::_('Error file not exists'),90404);
+		//	throw new SystemException(Intl::_('Error file not exists'),90404);
 		}
 		$items = json_decode(file_get_contents(ROOT.SYS.STORE.$this->model->layout_data),true);
 		if (empty($items)){
-		    throw new SystemException(Intl::_("Error can't find default entries"),90201);
+		  //  throw new SystemException(Intl::_("Error can't find default entries"),90201);
 		}
 		$this->model->default = $items;
-		**/
+
 		$i = 2;
 		foreach ($_GET as $key => $value) {
 		if(!in_array($key,$this->model->disabled)){
@@ -66,14 +61,12 @@ class Route extends XSLRender {
 		}
 		}
 		//$this->router();
-		$this->contents();
-		/**
+		$this->contents();		
 		if($this->ViewData('content')==""){
 			$this->model->layouts = $this->model->default;
 			//$this->router();
 			$this->contents();
 		}
-		**/
 
 
 	}

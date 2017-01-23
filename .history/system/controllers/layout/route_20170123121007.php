@@ -44,9 +44,9 @@ class Route extends XSLRender {
 
 		$this->model->disabled = array('error','errors','data','index','item','action','load','access'); 
 
-		$this->model->registered = array("route");
-		//$this->model->enabled = Config::$data['enabled'];
-		/**
+		$this->model->registered = array("route"); 
+		$this->model->enabled = Config::$data['enabled'];
+		//$this->model->layout_group = 'route';
         if(!isset($this->model->layout_data) || $this->model->layout_data==''){
           $this->model->layout_data=Config::$data['layout_data'];
         }
@@ -58,7 +58,7 @@ class Route extends XSLRender {
 		    throw new SystemException(Intl::_("Error can't find default entries"),90201);
 		}
 		$this->model->default = $items;
-		**/
+
 		$i = 2;
 		foreach ($_GET as $key => $value) {
 		if(!in_array($key,$this->model->disabled)){
@@ -66,14 +66,12 @@ class Route extends XSLRender {
 		}
 		}
 		//$this->router();
-		$this->contents();
-		/**
+		$this->contents();		
 		if($this->ViewData('content')==""){
 			$this->model->layouts = $this->model->default;
 			//$this->router();
 			$this->contents();
 		}
-		**/
 
 
 	}

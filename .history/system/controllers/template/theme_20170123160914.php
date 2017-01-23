@@ -115,7 +115,7 @@ class Theme extends XSLRender {
             SYS.C.'admin'.S.'mngaccount',
             SYS.C.'admin'.S.'mnglayout'
             );
-            $content->layout_group = 'admin';
+            $content->layout_group = 'R4';
         }
         $content->enabled = Config::$data['enabled'];
         $content->disabled = Config::$data['disabled'];

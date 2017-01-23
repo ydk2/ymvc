@@ -1,5 +1,5 @@
 <?php
-class MngLayout extends XSLRender {
+class MngLayout extends PHPRender {
     
     public function Init(){
         //call in __constructor
