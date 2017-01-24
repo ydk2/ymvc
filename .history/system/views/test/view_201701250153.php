@@ -55,9 +55,9 @@
 		$table = 'loginusers';
 		$value = 'admin';
     	$rout=$this->model->reverseNoId($users,$gprx);
-    	var_dump($rout);
+    	//var_dump($rout);
 		$user_check = $this->model->get_entries($table,$gprx);
-		$check=$this->model->searchByNameValue($user_check,'account_login',$value,$gprx);
+		$check=$this->model->searchByNameValue($data,$name='account_login',$value,$gprx);
 		var_dump($check);
 		if($insert){
     		var_dump($this->model->createTable($table,$gprx));

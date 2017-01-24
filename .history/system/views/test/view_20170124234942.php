@@ -37,7 +37,7 @@
 		//echo $this->model->GetIdx($this->array,'_name','two','l');
 		echo "<br>";
 		//echo $this->model->GetId($this->array,3,'_name','l');
-       // var_dump($aout);
+        var_dump($aout);
 		if($delete){
 		foreach ($this->array as $items) {
 			$this->model->delete_idx($table,Helper::get('delete'),$items['gprx']);
@@ -49,16 +49,14 @@
         //$aout=$this->model->searchByName($this->array,'name',$gprx);
 		//$aout[$this->model->GetIdx($this->array,'_view','two','l')]['_view']='cccc';
 		//var_dump($aout);
-		//$users[0]=unserialize('a:5:{s:12:"account_type";s:13:"Administrator";s:13:"account_login";s:5:"admin";s:12:"account_pass";s:5:"d033e22ae348aeb5660fc2140aec35850c4da997";s:12:"account_name";s:5:"admin";s:4:"mail";s:9:"aa@ccc.jj";a:1:{i:0;s:0:"";}}');
-		$users[0]=array('account_login'=>'admin','account_name'=>'admin','account_email'=>'admin@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'admin','role_id'=>1);
+		$users[0]=unserialize('a:5:{s:12:"account_type";s:13:"Administrator";s:13:"account_login";s:5:"admin";s:12:"account_pass";s:5:"d033e22ae348aeb5660fc2140aec35850c4da997";s:12:"account_name";s:5:"admin";s:4:"mail";s:9:"aa@ccc.jj";}');
+		//$users[0]=array('account_login'=>'','name'=>'admin','email'=>'admin@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'role'=>'admin','role_id'=>1);
 		$gprx='login';
 		$table = 'loginusers';
-		$value = 'admin';
+
     	$rout=$this->model->reverseNoId($users,$gprx);
-    	var_dump($rout);
-		$user_check = $this->model->get_entries($table,$gprx);
-		$check=$this->model->searchByNameValue($user_check,'account_login',$value,$gprx);
-		var_dump($check);
+    	//var_dump($rout);
+
 		if($insert){
     		var_dump($this->model->createTable($table,$gprx));
 		foreach ($rout as $items) {
