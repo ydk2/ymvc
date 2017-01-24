@@ -477,16 +477,6 @@ class DBConnect {
         return false;
     }
 
-    public function get_idx_enteries($table,$idx,$gprx) {
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE idx=? AND gprx=? ORDER BY idx ASC");
-        $h -> execute(array($idx,$gprx));
-        $pages = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($pages) {
-            //sksort($pages,'pos');
-        return $pages;
-        }	// end get pages
-        return false;
-    }
 
     public function get_gprx_list($table) {
         $h = $this -> db -> prepare("SELECT gprx FROM ".DBPREFIX.$table." ORDER BY gprx ASC");

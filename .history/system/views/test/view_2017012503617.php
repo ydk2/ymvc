@@ -51,33 +51,17 @@
 		//var_dump($aout);
 		//$users[0]=unserialize('a:5:{s:12:"account_type";s:13:"Administrator";s:13:"account_login";s:5:"admin";s:12:"account_pass";s:5:"d033e22ae348aeb5660fc2140aec35850c4da997";s:12:"account_name";s:5:"admin";s:4:"mail";s:9:"aa@ccc.jj";a:1:{i:0;s:0:"";}}');
 		$users[0]=array('account_login'=>'admin','account_name'=>'admin','account_email'=>'admin@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'admin','role_id'=>1);
-		$users[1]=array('account_login'=>'user','account_name'=>'user','account_email'=>'user@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'user','role_id'=>5);
-
-    	$rout=$this->model->reverseNoId($users,$gprx);
-    	var_dump($rout);
-
-		// user login
 		$gprx='login';
 		$table = 'loginusers';
-		$user = 'user';
-		$pass = 'admin';
-		$pass_check = false;
-		$user_data = null;
-		$user_check = $this->model->get_key_value($table,'account_login',$user,$gprx);
+		$value = 'admin';
+    	$rout=$this->model->reverseNoId($users,$gprx);
+    	var_dump($rout);
+		$user_check = $this->model->get_idx_key($table,'account_login',$value,$gprx);
 		if($user_check){
 			$pass_check = $this->model->get_idx_key($table,'account_pass',$user_check[0]['idx'],$gprx);
-			$pass_check = $pass_check[0]['value'];
-			if($pass_check==sha1($pass)){
-				$pass_check = TRUE;
-			}
 		}
-		if($pass_check==TRUE){
-			$enteries = $this->model->get_idx_enteries($table,$user_check[0]['idx'],$gprx);
-			$user_data=$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
-		}
-		var_dump($user_data);
-		// end user login
-
+		//$check=$this->model->searchByNameValue($user_check,'account_login',$value,$gprx);
+		var_dump($pass_check);
 		if($insert){
     		var_dump($this->model->createTable($table,$gprx));
 		foreach ($rout as $items) {

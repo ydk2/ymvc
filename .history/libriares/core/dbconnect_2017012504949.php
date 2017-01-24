@@ -479,7 +479,7 @@ class DBConnect {
 
     public function get_idx_enteries($table,$idx,$gprx) {
         $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE idx=? AND gprx=? ORDER BY idx ASC");
-        $h -> execute(array($idx,$gprx));
+        $h -> execute(array($name,$idx,$gprx));
         $pages = $h -> fetchAll(PDO::FETCH_NAMED);
         if ($pages) {
             //sksort($pages,'pos');
