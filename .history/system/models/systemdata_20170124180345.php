@@ -49,9 +49,7 @@ class SystemData extends DBConnect {
 		if ($item) :
 			return $item;
 		endif;
-	}
-
-	public function get_page_title($link) {
+	}    public function get_page_title($link) {
         $page = $this -> db -> prepare("SELECT title FROM ".DBPREFIX."pages WHERE link=?");
         $page -> execute(array($link));
         $item = $page -> fetchAll(PDO::FETCH_NAMED);
@@ -62,9 +60,9 @@ class SystemData extends DBConnect {
     }
     
     
-    public function get_menu($grpx) {
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."menus WHERE lang=? AND grpx=? ORDER BY pos ASC");
-        $h -> execute(array($this->lang_menu,$grpx));
+    public function get_menu($groups) {
+        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."menus WHERE lang=? AND groups=? ORDER BY pos ASC");
+        $h -> execute(array($this->lang_menu,$groups));
         $pages = $h -> fetchAll(PDO::FETCH_NAMED);
         if ($pages) :
             //sksort($pages,'pos');
@@ -74,15 +72,15 @@ class SystemData extends DBConnect {
     }
     
     
-    public function get_grpx() {
-        $h = $this -> db -> prepare("SELECT grpx FROM ".DBPREFIX."menus WHERE lang=? ORDER BY pos ASC");
+    public function get_menu_groups() {
+        $h = $this -> db -> prepare("SELECT groups FROM ".DBPREFIX."menus WHERE lang=? ORDER BY pos ASC");
         $h -> execute(array($this->lang_menu));
-        $grpx = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($grpx) :
-        //var_dump($grpx);
+        $groups = $h -> fetchAll(PDO::FETCH_NAMED);
+        if ($groups) :
+        //var_dump($groups);
         $tmp = array();
-        foreach ($grpx as $item) {
-            $tmp[]=$item['grpx'];
+        foreach ($groups as $item) {
+            $tmp[]=$item['groups'];
         }
         $result = array_unique($tmp);
         return $result;
@@ -90,7 +88,7 @@ class SystemData extends DBConnect {
         return false;
     }
 
-    public function delete_item($item_id) {
+    public function delete_menu_item($item_id) {
         $del = $this -> db -> prepare('DELETE FROM '.DBPREFIX.'menus WHERE id=? AND lang=?');
         $del -> execute(array($item_id, $this->lang_menu));
 		$check = $del->rowCount();
@@ -101,17 +99,17 @@ class SystemData extends DBConnect {
 			}
     }
 
-    public function add_item($item_title, $item_link, $grpx) {
+    public function add_menu_item($item_title, $item_link, $groups) {
         try {
-            $a = $this -> db -> query("SELECT title, link, lang, grpx FROM ".DBPREFIX."menus WHERE link='$item_link' AND grpx='$grpx' AND lang='".$this->lang_menu."'");
+            $a = $this -> db -> query("SELECT title, link, lang, groups FROM ".DBPREFIX."menus WHERE link='$item_link' AND groups='$groups' AND lang='".$this->lang_menu."'");
             $check = $a -> fetchColumn();
             if ($check == TRUE) {
                 return 1069;
             } else {
-                $i = count($this -> get_menu($grpx)) + 1;
-                $add = $this -> db -> prepare("INSERT INTO ".DBPREFIX."menus (pos, title, parent, link, lang, grpx) VALUES (?,?,?,?,?,?)");
-                $add -> execute(array($i, $item_title, '', $item_link, $this->lang_menu,$grpx));
-                $a = $this -> db -> query("SELECT title, link, lang, grpx FROM ".DBPREFIX."menus WHERE link='$item_link' AND grpx='$grpx' AND lang='".$this->lang_menu."'");
+                $i = count($this -> get_menu($groups)) + 1;
+                $add = $this -> db -> prepare("INSERT INTO ".DBPREFIX."menus (pos, title, parent, link, lang, groups) VALUES (?,?,?,?,?,?)");
+                $add -> execute(array($i, $item_title, '', $item_link, $this->lang_menu,$groups));
+                $a = $this -> db -> query("SELECT title, link, lang, groups FROM ".DBPREFIX."menus WHERE link='$item_link' AND groups='$groups' AND lang='".$this->lang_menu."'");
                 $added = $a -> fetchColumn();
                 if ($added == TRUE) {
                     return 0;
@@ -123,22 +121,22 @@ class SystemData extends DBConnect {
         }
     }
     
-    public function update_items($table,$name,$value,$index,$grpx) {
+    public function update_menu_items($pos, $parent, $title, $link, $access, $ids, $groups) {
         try {
-            $a = $this -> db -> query("SELECT * FROM ".DBPREFIX.$table." WHERE name='$name' AND index='$index' AND grpx='$grpx' ");
+            $a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos=$pos OR link='$link' AND lang='".$this->lang_menu."' AND groups='$groups' ");
             $check = $a -> fetchColumn();
             if ($check == TRUE) {
-                $add = $this -> db -> prepare("UPDATE ".DBPREFIX.$table." SET name=?,value=?,index=?,grpx=? WHERE index=? AND grpx=?");
-                $add -> execute(array($name, $value, $index, $grpx, $index, $grpx));
-                $a = $this -> db -> query("SELECT * FROM ".DBPREFIX.$table." WHERE name='$name' AND index='$index' AND grpx='$grpx' ");
+                $add = $this -> db -> prepare("UPDATE ".DBPREFIX."menus SET pos=?,title=?,parent=?,link=?,access=?, lang=?, groups=? WHERE id=? AND lang=?");
+                $add -> execute(array($pos, $title, $parent, $link, $access,$this->lang_menu, $groups, $ids, $this->lang_menu));
+                $a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos=$pos AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups='".$groups."'");
                 $added = $a -> fetchColumn();
                 if ($added == TRUE) {
                     return 0;
                 } else return 1065;
             } else {
-                $add = $this -> db -> prepare("INSERT INTO ".DBPREFIX.$table." (name, value, index, grpx) VALUES (?,?,?,?)");
-                $add -> execute(array($name, $value, $index, $grpx));
-                $a = $this -> db -> query("SELECT * FROM ".DBPREFIX.$table." WHERE name='$name' AND index='$index' AND grpx='$grpx' ");
+                $add = $this -> db -> prepare("INSERT INTO ".DBPREFIX."menus (pos, title, parent, link, access, lang, groups) VALUES (?,?,?,?,?,?,?)");
+                $add -> execute(array($pos, $title, $parent, $link, $access, $this->lang_menu,$groups));
+                $a = $this -> db -> query("SELECT * FROM ".DBPREFIX."menus WHERE pos=$pos AND link='$link' AND title='$title' AND parent='$parent' AND lang='".$this->lang_menu."' AND groups='$groups'");
                 $added = $a -> fetchColumn();
                 if ($added == TRUE) {
                     return 0;

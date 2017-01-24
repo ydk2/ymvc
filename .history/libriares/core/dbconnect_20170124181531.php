@@ -117,49 +117,49 @@ class DBConnect {
 		unset($this->db);
 	}
 
-    public function GetId($data,$idx,$name,$grpx=''){
+    public function GetId($data,$index,$name,$groups=''){
         foreach ($data as $items) {
-            if($items['idx']==$idx && $items['name']==$name && $grpx==$items['grpx'])
+            if($items['index']==$index && $items['name']==$name && $groups==$items['groups'])
             return $items['id'];
         }
         return NULL;
     }
 
-    public function GetName($data,$idx,$value,$grpx=''){
+    public function GetName($data,$index,$value,$groups=''){
         foreach ($data as $items) {
-            if($items['idx']==$idx && $items['value']==$value && $grpx==$items['grpx'])
+            if($items['index']==$index && $items['value']==$value && $groups==$items['groups'])
             return $items['name'];
         }
         return NULL;
     }
 
-    public function GetValue($data,$idx,$name,$grpx=''){
+    public function GetValue($data,$index,$name,$groups=''){
         foreach ($data as $items) {
-            if($items['idx']==$idx && $items['name']==$name && $grpx==$items['grpx'])
+            if($items['index']==$index && $items['name']==$name && $groups==$items['groups'])
             return $items['value'];
         }
         return NULL;
     }
 
-    public function GetIdx($data,$name,$value,$grpx=''){
+    public function GetIndex($data,$name,$value,$groups=''){
         foreach ($data as $items) {
-            if($items['name']==$name && $items['value']==$value && $grpx==$items['grpx'])
-            return $items['idx'];
+            if($items['name']==$name && $items['value']==$value && $groups==$items['groups'])
+            return $items['index'];
         }
         return NULL;
     }
 
-    public function Getgrpx($data,$name,$value,$idx){
+    public function Getgroups($data,$name,$value,$index){
         foreach ($data as $items) {
-            if($items['name']==$name && $items['value']==$value && $idx==$items['idx'])
-            return $items['grpx'];
+            if($items['name']==$name && $items['value']==$value && $index==$items['index'])
+            return $items['groups'];
         }
         return NULL;
     }
 
-    public function SetName(&$data,$idx,$name,$newname,$grpx=''){
+    public function SetName(&$data,$index,$name,$newname,$groups=''){
         foreach ($data as $i => $items) {
-            if($items['idx']==$idx && $items['name']==$name && $grpx==$items['grpx']){
+            if($items['index']==$index && $items['name']==$name && $groups==$items['groups']){
                 $data[$i]['name']=$newname;
                 return $items['name'];
             }
@@ -167,9 +167,9 @@ class DBConnect {
         return NULL;
     }
 
-    public function SetValue(&$data,$idx,$name,$newvalue,$grpx=''){
+    public function SetValue(&$data,$index,$name,$newvalue,$groups=''){
         foreach ($data as $i => $items) {
-            if($items['idx']==$idx && $items['name']==$name && $grpx==$items['grpx']){
+            if($items['index']==$index && $items['name']==$name && $groups==$items['groups']){
                 $data[$i]['value']=$newvalue;
                 return $items['value'];
             }
@@ -177,35 +177,35 @@ class DBConnect {
         return NULL;
     }
 
-    public function Setgrpx(&$data,$idx,$name,$newgrpx,$grpx=''){
+    public function Setgroups(&$data,$index,$name,$newgroups,$groups=''){
         foreach ($data as $i => $items) {
-            if($items['idx']==$idx && $items['name']==$name && $grpx==$items['grpx']){
-                $data[$i]['grpx']=$newgrpx;
-                return $items['grpx'];
+            if($items['index']==$index && $items['name']==$name && $groups==$items['groups']){
+                $data[$i]['groups']=$newgroups;
+                return $items['groups'];
             }
         }
         return NULL;
     }
 
-    public function SetIdx(&$data,$idx,$name,$newidx,$grpx=''){
+    public function SetIndex(&$data,$index,$name,$newindex,$groups=''){
         foreach ($data as $i => $items) {
-            if($items['idx']==$idx && $items['name']==$name && $grpx==$items['grpx']){
-                $data[$i]['idx']=$newidx;
-                return $items['idx'];
+            if($items['index']==$index && $items['name']==$name && $groups==$items['groups']){
+                $data[$i]['index']=$newindex;
+                return $items['index'];
             }
         }
         return NULL;
     }
 
-    public function searchByName($data,$name='_name',$grpx=''){
+    public function searchByName($data,$name='_name',$groups=''){
         $aout = array();
         foreach ($data as $items) {
-            if(isset($items['name']) && isset($items['grpx'])){
-                if($name==$items['name'] && $grpx==$items['grpx']){
-                    $item = $items['idx'];
+            if(isset($items['name']) && isset($items['groups'])){
+                if($name==$items['name'] && $groups==$items['groups']){
+                    $item = $items['index'];
                     $values = array();
                     foreach ($data as $value) {
-                        if(isset($value['idx']) && $item===$value['idx']){
+                        if(isset($value['index']) && $item===$value['index']){
                             $values[$value['name']]=$value['value'];
                         }
                     }
@@ -215,15 +215,15 @@ class DBConnect {
         }
         return $aout;
     }
-    public function searchByNameValue($data,$name='_name',$value='',$grpx=''){
+    public function searchByNameValue($data,$name='_name',$value='',$groups=''){
         $aout = array();
         foreach ($data as $items) {
-            if(isset($items['name']) && isset($items['value']) && isset($items['grpx'])){
-                if($name==$items['name'] && $value==$items['value'] && $grpx==$items['grpx']){
-                    $item = $items['idx'];
+            if(isset($items['name']) && isset($items['value']) && isset($items['groups'])){
+                if($name==$items['name'] && $value==$items['value'] && $groups==$items['groups']){
+                    $item = $items['index'];
                     $outval = array();
                     foreach ($data as $values) {
-                        if(isset($values['idx']) && $item===$values['idx']){
+                        if(isset($values['index']) && $item===$values['index']){
                             $values[$value['name']]=$value['value'];
                         }
                     }
@@ -234,20 +234,20 @@ class DBConnect {
         return $aout;
     }
 
-    public function reverseItems($items,$data,$grpx=''){
+    public function reverseItems($items,$data,$groups=''){
         $rout = array();
-        foreach ($items as $idx => $item) {
+        foreach ($items as $index => $item) {
             foreach($item as $name => $value){
-            $id = $this->GetId($data,$idx,$name,$grpx);
-            $rout[] = array('id'=>$id,'idx'=>$idx,'name'=>$name,'value'=>$value,'grpx'=>$grpx);
+            $id = $this->GetId($data,$index,$name,$groups);
+            $rout[] = array('id'=>$id,'index'=>$index,'name'=>$name,'value'=>$value,'groups'=>$groups);
             }
         }
         return $rout;
     }
 
-    function GetFreeId($tmp,$add,$grpx){
+    function GetFreeId($tmp,$add,$grp){
         if (!empty($tmp)){
-            $tmp += $this->reverseItems($add,$grpx);
+            $tmp += $this->reverseItems($add,$grp);
             sksort($tmp,'id');
             foreach ($tmp as $pos => $val) {
                 $i =$pos+1;
@@ -274,12 +274,12 @@ class DBConnect {
         return $updateout;
     }
 
-    public function array_rotate_delete($data,$delete,$idx='idx'){
+    public function array_rotate_delete($data,$delete,$index='index'){
         $updatein = array();
         $updateout = $data;
                 foreach ($data as $i => $item) {
-                    if(isset($item[$idx])){
-                        if($item[$idx]==$delete){
+                    if(isset($item[$index])){
+                        if($item[$index]==$delete){
                             unset($updateout[$i]);
                         }
                     }
@@ -294,12 +294,12 @@ class DBConnect {
             foreach ($entry as $key => $value) {
                 if(isset($value[$control])){
                     $updatein[$value[$control]] = $value;
-                foreach ($data as $idx => $item) {
+                foreach ($data as $index => $item) {
                     $update=array();
                     if(isset($item[$control])){
                         if($item[$control]===$updatein[$value[$control]][$control]){
                             $update=$updatein[$value[$control]];
-                            $updateout[$idx] = $update;
+                            $updateout[$index] = $update;
                         }
                     }
                 }
@@ -311,8 +311,8 @@ class DBConnect {
 
     public function array_rotate_key_value($data,$key='name',$val='value',$control='id'){
         $updateout = array();
-        foreach ($data as $i => $idx) {
-            foreach ($idx as $keys => $value) {
+        foreach ($data as $i => $index) {
+            foreach ($index as $keys => $value) {
                 if(isset($value[$key]) && isset($value[$val])){
                 $updateout[$i][$value[$key]] = $value[$val];
                 }
@@ -321,18 +321,18 @@ class DBConnect {
         return $updateout;
     }
     
-    public function array_search_rotate($data,$search_value='',$search_name='_name',$_value='value',$_name='name',$idx='idx',$control='id'){
+    public function array_search_rotate($data,$search_value='',$search_name='_name',$_value='value',$_name='name',$index='index',$control='id'){
         $aout = array();
         foreach ($data as $i => $items) {
             if(isset($items[$_name]) && isset($items[$_value])){
                 if($search_name==$items[$_name] && $search_value==$items[$_value]){
-                    $item = $items[$idx];
+                    $item = $items[$index];
                     $values = array();
                     foreach ($data as $value) {
-                        if(isset($value[$idx]) && $item===$value[$idx]){
+                        if(isset($value[$index]) && $item===$value[$index]){
                             if(isset($value[$_name])) $values[$value[$_name]][$_name]=$value[$_name];
                             if(isset($value[$_value])) $values[$value[$_name]][$_value]=$value[$_value];
-                            if(isset($value[$idx])) $values[$value[$_name]][$idx]=$value[$idx];
+                            if(isset($value[$index])) $values[$value[$_name]][$index]=$value[$index];
                             if(isset($value[$control])) $values[$value[$_name]][$control]=$value[$control];
 
                         }
@@ -344,18 +344,18 @@ class DBConnect {
         return $aout;
     }
 
-    public function array_rotate($data,$search_name='_name',$_value='value',$_name='name',$idx='idx',$control='id'){
+    public function array_rotate($data,$search_name='_name',$_value='value',$_name='name',$index='index',$control='id'){
         $aout = array();
         foreach ($data as $i => $items) {
             if(isset($items[$_name])){
                 if($search_name==$items[$_name]){
-                    $item = $items[$idx];
+                    $item = $items[$index];
                     $values = array();
                     foreach ($data as $value) {
-                        if(isset($value[$idx]) && $item===$value[$idx]){
+                        if(isset($value[$index]) && $item===$value[$index]){
                             if(isset($value[$_name])) $values[$value[$_name]][$_name]=$value[$_name];
                             if(isset($value[$_value])) $values[$value[$_name]][$_value]=$value[$_value];
-                            if(isset($value[$idx])) $values[$value[$_name]][$idx]=$value[$idx];
+                            if(isset($value[$index])) $values[$value[$_name]][$index]=$value[$index];
                             if(isset($value[$control])) $values[$value[$_name]][$control]=$value[$control];
 
                         }
