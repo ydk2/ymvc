@@ -9,7 +9,7 @@ class MngLayout extends XSLRender {
         
         $this->only_registered(FALSE);
         $this->RegisterView(SYS.V."layout".S."manage");
-        $this->SetView(SYS.V."layout".S."manage");
+        $this->SetView(SYS.V."layout".S."content");
         $this->RegisterView(SYS.V.'errors'.DS.'error');
         
         $this->SetAccess(self::ACCESS_EDITOR);
