@@ -149,7 +149,7 @@ class DBConnect {
         return NULL;
     }
 
-    public function GetGroup($data,$name,$value,$index){
+    public function GetGroups($data,$name,$value,$index){
         foreach ($data as $items) {
             if($items['name']==$name && $items['value']==$value && $index==$items['index'])
             return $items['group'];
@@ -177,7 +177,7 @@ class DBConnect {
         return NULL;
     }
 
-    public function SetGroup(&$data,$index,$name,$newgroup,$group=''){
+    public function SetGroups(&$data,$index,$name,$newgroup,$group=''){
         foreach ($data as $i => $items) {
             if($items['index']==$index && $items['name']==$name && $group==$items['group']){
                 $data[$i]['group']=$newgroup;
@@ -366,6 +366,6 @@ class DBConnect {
         }
         return $aout;
     }
-
+	
 }
 ?>

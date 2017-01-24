@@ -1,122 +1,58 @@
 <?php
-/**
-* 
- * PHPRender fast and simple to use PHP MVC framework
- *
- * MVC Framework for PHP 5.2 + with PHP files views part of YMVC System
- * Connector for databases PoSQL, SQLite , MySQL using PDO.
- *
- * PHP version 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
- * @category   Framework, MVC, Database
- * @package    YMVC System
- * @subpackage DBConnect
- * @author     ydk2 <me@ydk2.tk>
- * @copyright  1997-2016 ydk2.tk
- * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    1.11.0
- * @link       http://ymvc.ydk2.tk
- * @see        YMVC System
- * @since      File available since Release 1.0.0
- 
- */
+/*
+* @Author: ydk2 (me@ydk2.tk)
+* @Date: 2017-01-21 16:22:09
+ * @Last Modified by: ydk2 (me@ydk2.tk)
+ * @Last Modified time: 2017-01-21 22:00:35
+*/
 
-class DBConnect {
-	public $db;
-	
-	final public function Connect($engin, $database, $host = 'localhost', $user = NULL, $pass = NULL) {
-		try {
-			if ($engin == 'posql') {
-				require_once ROOT.VENDORS.'posql.php';
-				$database_name = ROOT.DATA.'database'.DS.$database . '.db';
-				//echo $database_name;
-				if (!file_exists($database_name.'.php')) {
-					throw new SystemException('Database not exist.',420404);
-				}
-				// try connect
-				//$sql = SQL;
-				
-				$this->db = new Posql($database_name);
-				//$this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+class Test extends PHPRender {
+    
+    public $array;
+    public $disabled;
+    public $enabled;
+    public $layouts;
+    public $layout_group;
+    public $mode;
 
-				if ($this->db -> isError()) {
-					abort($this->db);
-					throw new SystemException('Can\'t connect to Database.',420502);
-				}
+    public function Init(){
+        $this->SetView(SYS.V.'test'.S.'view');
+    }
+    
+    public function Run(){
+        $types = array('module','route','layout');
+        //$attr = serialize(array('id'=>'','class'=>'row','style'=>''));
+        $this->array = array(
+        array('id'=>1,'index'=>1,'name'=>'_name','value'=>'one','group'=>"l"),
+        array('id'=>2,'index'=>1,'name'=>'_controller','value'=>'one','group'=>"l"),
+        array('id'=>3,'index'=>1,'name'=>'_group','value'=>'','group'=>"l"),
+        array('id'=>4,'index'=>1,'name'=>'_view','value'=>'one','group'=>"l"),
+        array('id'=>5,'index'=>1,'name'=>'_pos','value'=>1,'group'=>"l"),
+        array('id'=>6,'index'=>1,'name'=>'_attr','value'=>'{a}','group'=>"l"),
+        array('id'=>7,'index'=>1,'name'=>'_type','value'=>'module','group'=>"l"),
 
-			}
+        array('id'=>8,'index'=>2,'name'=>'_name','value'=>'two','group'=>"l"),
+        array('id'=>9,'index'=>2,'name'=>'_controller','value'=>'two','group'=>"l"),
+        array('id'=>10,'index'=>2,'name'=>'_group','value'=>'','group'=>"l"),
+        array('id'=>11,'index'=>2,'name'=>'_view','value'=>'two','group'=>"l"),
+        array('id'=>12,'index'=>2,'name'=>'_pos','value'=>1,'group'=>"l"),
+        array('id'=>13,'index'=>2,'name'=>'_attr','value'=>'{b}','group'=>"l"),
+        array('id'=>14,'index'=>2,'name'=>'_type','value'=>'route','group'=>"l"),
 
-			if ($engin == 'sqlite') {
-			try {
-				
-				$database_name = ROOT.DATA.'database'.DS. $database . '.db';
-				$this->db = new PDO($engin.':'. $database_name);
-				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        array('id'=>15,'index'=>3,'name'=>'_name','value'=>'three','group'=>"l"),
+        array('id'=>16,'index'=>3,'name'=>'_controller','value'=>'two','group'=>"l"),
+        array('id'=>17,'index'=>3,'name'=>'_group','value'=>'','group'=>"l"),
+        array('id'=>18,'index'=>3,'name'=>'_view','value'=>'two','group'=>"l"),
+        array('id'=>19,'index'=>3,'name'=>'_pos','value'=>1,'group'=>"l"),
+        array('id'=>20,'index'=>3,'name'=>'_attr','value'=>'{c}','group'=>"l"),
+        array('id'=>21,'index'=>3,'name'=>'_type','value'=>'route','group'=>"l"),
+        );
+/*
 
-				$err = $this->db->errorInfo();
-				if($err[0]>0){
-					throw new SystemException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-				}
+*/
+        $this->ViewData('testing', '');
 
-			} catch (PDOException $e){
-    			//handle PDO
-    			throw new SystemException( $e->getMessage( ) , (int)$e->getCode( ) );
-			}
-			}
-			if ($engin == 'sqlsrv') {
-			try {
-				if ($user === NULL || $pass === NULL) {
-					throw new SystemException('User and Password not filed.');
-				}
-				$this->db = new PDO($engin.':Server=' . $host . ';Database=' . $database.';ConnectionPooling=0', $user, $pass);
-				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-				$err = $this->db->errorInfo();
-				if($err[0]>0){
-					throw new SystemException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-				}
-
-			} catch (PDOException $e){
-    			//handle PDO
-    			throw new SystemException( $e->getMessage( ) , (int)$e->getCode( ) );
-			}
-			}
-			
-			if ( !in_array($engin,array('posql','sqlite','sqlsrv'))) {
-			try {
-				if ($user === NULL || $pass === NULL) {
-					throw new SystemException('User and Password not filed.');
-				}
-				$this->db = new PDO($engin.':host=' . $host . ';dbname=' . $database, $user, $pass);
-				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-				$err = $this->db->errorInfo();
-				if($err[0]>0){
-					throw new SystemException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-				}
-
-			} catch (PDOException $e){
-    			//handle PDO
-    			throw new SystemException( $e->getMessage( ) , (int)$e->getCode( ) );
-			}
-			}
-		} catch (SystemException $e) {
-			return FALSE;
-		}
-
-	}
-
-	public function __destruct() {
-		$this->db = NULL;
-		unset($this->db);
-	}
-
+    }
     public function GetId($data,$index,$name,$group=''){
         foreach ($data as $items) {
             if($items['index']==$index && $items['name']==$name && $group==$items['group'])
@@ -149,7 +85,7 @@ class DBConnect {
         return NULL;
     }
 
-    public function GetGroup($data,$name,$value,$index){
+    public function GetGroups($data,$name,$value,$index){
         foreach ($data as $items) {
             if($items['name']==$name && $items['value']==$value && $index==$items['index'])
             return $items['group'];
@@ -177,7 +113,7 @@ class DBConnect {
         return NULL;
     }
 
-    public function SetGroup(&$data,$index,$name,$newgroup,$group=''){
+    public function SetGroups(&$data,$index,$name,$newgroup,$group=''){
         foreach ($data as $i => $items) {
             if($items['index']==$index && $items['name']==$name && $group==$items['group']){
                 $data[$i]['group']=$newgroup;
@@ -237,10 +173,8 @@ class DBConnect {
     public function reverseItems($items,$data,$group=''){
         $rout = array();
         foreach ($items as $index => $item) {
-            foreach($item as $name => $value){
-            $id = $this->GetId($data,$index,$name,$group);
-            $rout[] = array('id'=>$id,'index'=>$index,'name'=>$name,'value'=>$value,'group'=>$group);
-            }
+            $id = $this->GetId($data,$index,key($item),$group);
+            $rout[] = array('id'=>$id,'index'=>$index,'name'=>key($item),'value'=>$item[key($item)],'group'=>$group);
         }
         return $rout;
     }
@@ -308,7 +242,7 @@ class DBConnect {
         }
         return $updateout;
     }
-
+    
     public function array_rotate_key_value($data,$key='name',$val='value',$control='id'){
         $updateout = array();
         foreach ($data as $i => $index) {
@@ -366,6 +300,7 @@ class DBConnect {
         }
         return $aout;
     }
+
 
 }
 ?>

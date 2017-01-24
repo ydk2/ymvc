@@ -17,7 +17,6 @@ class Test extends PHPRender {
 
     public function Init(){
         $this->SetView(SYS.V.'test'.S.'view');
-        $this->SetModel(SYS.M.'SystemData');
     }
     
     public function Run(){
