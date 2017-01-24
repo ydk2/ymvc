@@ -53,105 +53,61 @@ class SystemData extends DBConnect {
 
 
     public function createTable($table,$grpx) {
-		$data=Config::$data['default']['database'];
-		if ($data['type']=='sqlsrv') {
-		$sql="IF OBJECT_ID ('$table', 'U') IS NOT NULL".
-			"DROP TABLE  $table;".
-			"CREATE TABLE  $table (".
-			"id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
-			"name varchar(255),".
-			"value TEXT DEFAULT '',".
-			"idx INTEGER DEFAULT 0,".
-			"gprx varchar(255) DEFAULT '$grpx');";
-		} elseif ($data['type']=='pgsql') {
-		$sql="DROP TABLE IF EXISTS $table;".
-			"CREATE SEQUENCE ".$table."_id_seq;".
-			"CREATE TABLE IF NOT EXISTS test (".
-			"id INTEGER NOT NULL PRIMARY KEY,".
-			"name varchar(255) NOT NULL,".
-			"value TEXT DEFAULT '',".
-			"idx INTEGER NOT NULL,".
-			"gprx varchar(255)  NOT NULL DEFAULT '$grpx');".
-			"ALTER TABLE $table ALTER id SET DEFAULT NEXTVAL('".$table."_id_seq');";
-		} elseif ($data['type']=='mysql') {
-		$sql="DROP TABLE IF EXISTS $table;".
-			"CREATE TABLE IF NOT EXISTS $table (".
-			"id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
-			"name varchar(255) NOT NULL,".
-			"value TEXT,".
-			"idx int(99) DEFAULT 1,".
-			"gprx varchar(255) NOT NULL DEFAULT '$grpx');";
-		} elseif ($data['type']=='sqlite') {
-		$sql="DROP TABLE IF EXISTS ".DBPREFIX."$table;".
-			"CREATE TABLE IF NOT EXISTS $table (".
-			"id INTEGER NOT NULL PRIMARY KEY,".
-			"name varchar(255) NOT NULL,".
-			"value TEXT DEFAULT '',".
-			"idx int(99) DEFAULT 1,".
-			"gprx varchar(255) NOT NULL DEFAULT '$grpx');";
-		}
-/**
+		/**
 -- sqlite
-DROP TABLE IF EXISTS "tablea";
-CREATE TABLE IF NOT EXISTS "tablea" (
-  id INTEGER NOT NULL PRIMARY KEY,
-  name varchar(255) NOT NULL,
-  value TEXT DEFAULT '',
-  idx int(11) DEFAULT 10,
-  gprx varchar(255) NOT NULL DEFAULT 'grpx'
+DROP TABLE IF EXISTS test;
+CREATE TABLE IF NOT EXISTS test (
+  id int(115) NOT NULL,
+  title varchar(115) NOT NULL,
+  parent int(115) NOT NULL,
+  link varchar(115) NOT NULL,
+  content text NOT NULL
 );
 
 -- mysql
-"DROP TABLE IF EXISTS $table;".
-"CREATE TABLE IF NOT EXISTS $table (".
-"  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
-"  name varchar(255) NOT NULL,".
-"  value TEXT,".
-"  idx int(99) DEFAULT 10,".
-"  gprx varchar(255) NOT NULL DEFAULT '$grpx');";
+DROP TABLE IF EXISTS sitedata;
+CREATE TABLE IF NOT EXISTS sitedata (
+  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  name varchar(255) NOT NULL,
+  value TEXT,
+  idx int(99) DEFAULT 10,
+  groups varchar(255) NOT NULL DEFAULT 'main'
+);
 
 -- pgsql
-$sql="DROP TABLE IF EXISTS $table;".
-"CREATE SEQUENCE $table._id_seq;".
-"CREATE TABLE IF NOT EXISTS test (".
-"  id INTEGER NOT NULL PRIMARY KEY,".
-"  name varchar(255) NOT NULL,".
-"  value TEXT DEFAULT '',".
-"  idx INTEGER NOT NULL,".
-"  gprx varchar(255)  NOT NULL DEFAULT '$grpx');".
-"ALTER TABLE $table ALTER id SET DEFAULT NEXTVAL($table.'_id_seq');";
+DROP TABLE IF EXISTS $table;
+CREATE SEQUENCE $table._id_seq;
+CREATE TABLE IF NOT EXISTS test (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name varchar(255) NOT NULL,
+  value TEXT DEFAULT '',
+  idx INTEGER NOT NULL,
+  gprx varchar(255)  NOT NULL DEFAULT 'main'
+);
+ALTER TABLE $table ALTER id SET DEFAULT NEXTVAL($table.'_id_seq');
 
 -- sqlsrv
-$sql="IF OBJECT_ID ('$table', 'U') IS NOT NULL".
-"DROP TABLE  $table;".
-"CREATE TABLE  $table (".
-"id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
-"name varchar(255),".
-"value TEXT DEFAULT '',".
-"idx INTEGER DEFAULT 0,".
-"gprx varchar(255) DEFAULT '$grpx');";
+IF OBJECT_ID ('$table', 'U') IS NOT NULL
+DROP TABLE  $table;
+CREATE TABLE  $table (
+  id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
+  name varchar(255),
+  value TEXT DEFAULT '',
+  idx INTEGER DEFAULT 0,
+  gprx varchar(255) DEFAULT 'main'
+);
 --SET IDENTITY_INSERT sitedata ON;
 --SET IDENTITY_INSERT sitedata OFF;
 
-**/
-/**
-		$sql = explode(";", $sql);
-    	foreach ($sql as $query) {
-        	$add=$this->db->query($query);
-			$check = $add->fetchColumn();
-    	}
-**/
-	try {
-		$add = $this -> db -> exec($sql);
-		$check = $this->db->query("SELECT name FROM sqlite_master WHERE type='table';");
-		$g = $check -> fetchAll(PDO::FETCH_NAMED);
-		return $g;
-        return $add;
-        //return false;
-
-	} catch(Exception $e){
-		return FALSE;
-	}
+		**/
+        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE gprx=? ORDER BY idx ASC");
+        $h -> execute(array($grpx));
+        $pages = $h -> fetchAll(PDO::FETCH_NAMED);
+        if ($pages) {
+            //sksort($pages,'pos');
+        return $pages;
+        }	// end get pages
+        return false;
     }
 
     public function get_entries($table,$grpx) {

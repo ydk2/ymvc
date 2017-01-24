@@ -55,14 +55,7 @@ class SystemData extends DBConnect {
     public function createTable($table,$grpx) {
 		$data=Config::$data['default']['database'];
 		if ($data['type']=='sqlsrv') {
-		$sql="IF OBJECT_ID ('$table', 'U') IS NOT NULL".
-			"DROP TABLE  $table;".
-			"CREATE TABLE  $table (".
-			"id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
-			"name varchar(255),".
-			"value TEXT DEFAULT '',".
-			"idx INTEGER DEFAULT 0,".
-			"gprx varchar(255) DEFAULT '$grpx');";
+
 		} elseif ($data['type']=='pgsql') {
 		$sql="DROP TABLE IF EXISTS $table;".
 			"CREATE SEQUENCE ".$table."_id_seq;".
@@ -79,7 +72,7 @@ class SystemData extends DBConnect {
 			"id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
 			"name varchar(255) NOT NULL,".
 			"value TEXT,".
-			"idx int(99) DEFAULT 1,".
+			"idx int(99) DEFAULT 10,".
 			"gprx varchar(255) NOT NULL DEFAULT '$grpx');";
 		} elseif ($data['type']=='sqlite') {
 		$sql="DROP TABLE IF EXISTS ".DBPREFIX."$table;".
@@ -87,7 +80,7 @@ class SystemData extends DBConnect {
 			"id INTEGER NOT NULL PRIMARY KEY,".
 			"name varchar(255) NOT NULL,".
 			"value TEXT DEFAULT '',".
-			"idx int(99) DEFAULT 1,".
+			"idx int(99) DEFAULT 10,".
 			"gprx varchar(255) NOT NULL DEFAULT '$grpx');";
 		}
 /**
@@ -122,14 +115,15 @@ $sql="DROP TABLE IF EXISTS $table;".
 "ALTER TABLE $table ALTER id SET DEFAULT NEXTVAL($table.'_id_seq');";
 
 -- sqlsrv
-$sql="IF OBJECT_ID ('$table', 'U') IS NOT NULL".
-"DROP TABLE  $table;".
-"CREATE TABLE  $table (".
-"id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
-"name varchar(255),".
-"value TEXT DEFAULT '',".
-"idx INTEGER DEFAULT 0,".
-"gprx varchar(255) DEFAULT '$grpx');";
+IF OBJECT_ID ('$table', 'U') IS NOT NULL
+DROP TABLE  $table;
+CREATE TABLE  $table (
+  id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),
+  name varchar(255),
+  value TEXT DEFAULT '',
+  idx INTEGER DEFAULT 0,
+  gprx varchar(255) DEFAULT '$grpx'
+);
 --SET IDENTITY_INSERT sitedata ON;
 --SET IDENTITY_INSERT sitedata OFF;
 

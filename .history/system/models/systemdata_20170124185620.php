@@ -51,149 +51,42 @@ class SystemData extends DBConnect {
 		endif;
 	}
 
-
-    public function createTable($table,$grpx) {
-		$data=Config::$data['default']['database'];
-		if ($data['type']=='sqlsrv') {
-		$sql="IF OBJECT_ID ('$table', 'U') IS NOT NULL".
-			"DROP TABLE  $table;".
-			"CREATE TABLE  $table (".
-			"id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
-			"name varchar(255),".
-			"value TEXT DEFAULT '',".
-			"idx INTEGER DEFAULT 0,".
-			"gprx varchar(255) DEFAULT '$grpx');";
-		} elseif ($data['type']=='pgsql') {
-		$sql="DROP TABLE IF EXISTS $table;".
-			"CREATE SEQUENCE ".$table."_id_seq;".
-			"CREATE TABLE IF NOT EXISTS test (".
-			"id INTEGER NOT NULL PRIMARY KEY,".
-			"name varchar(255) NOT NULL,".
-			"value TEXT DEFAULT '',".
-			"idx INTEGER NOT NULL,".
-			"gprx varchar(255)  NOT NULL DEFAULT '$grpx');".
-			"ALTER TABLE $table ALTER id SET DEFAULT NEXTVAL('".$table."_id_seq');";
-		} elseif ($data['type']=='mysql') {
-		$sql="DROP TABLE IF EXISTS $table;".
-			"CREATE TABLE IF NOT EXISTS $table (".
-			"id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
-			"name varchar(255) NOT NULL,".
-			"value TEXT,".
-			"idx int(99) DEFAULT 1,".
-			"gprx varchar(255) NOT NULL DEFAULT '$grpx');";
-		} elseif ($data['type']=='sqlite') {
-		$sql="DROP TABLE IF EXISTS ".DBPREFIX."$table;".
-			"CREATE TABLE IF NOT EXISTS $table (".
-			"id INTEGER NOT NULL PRIMARY KEY,".
-			"name varchar(255) NOT NULL,".
-			"value TEXT DEFAULT '',".
-			"idx int(99) DEFAULT 1,".
-			"gprx varchar(255) NOT NULL DEFAULT '$grpx');";
-		}
-/**
--- sqlite
-DROP TABLE IF EXISTS "tablea";
-CREATE TABLE IF NOT EXISTS "tablea" (
-  id INTEGER NOT NULL PRIMARY KEY,
-  name varchar(255) NOT NULL,
-  value TEXT DEFAULT '',
-  idx int(11) DEFAULT 10,
-  gprx varchar(255) NOT NULL DEFAULT 'grpx'
-);
-
--- mysql
-"DROP TABLE IF EXISTS $table;".
-"CREATE TABLE IF NOT EXISTS $table (".
-"  id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
-"  name varchar(255) NOT NULL,".
-"  value TEXT,".
-"  idx int(99) DEFAULT 10,".
-"  gprx varchar(255) NOT NULL DEFAULT '$grpx');";
-
--- pgsql
-$sql="DROP TABLE IF EXISTS $table;".
-"CREATE SEQUENCE $table._id_seq;".
-"CREATE TABLE IF NOT EXISTS test (".
-"  id INTEGER NOT NULL PRIMARY KEY,".
-"  name varchar(255) NOT NULL,".
-"  value TEXT DEFAULT '',".
-"  idx INTEGER NOT NULL,".
-"  gprx varchar(255)  NOT NULL DEFAULT '$grpx');".
-"ALTER TABLE $table ALTER id SET DEFAULT NEXTVAL($table.'_id_seq');";
-
--- sqlsrv
-$sql="IF OBJECT_ID ('$table', 'U') IS NOT NULL".
-"DROP TABLE  $table;".
-"CREATE TABLE  $table (".
-"id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
-"name varchar(255),".
-"value TEXT DEFAULT '',".
-"idx INTEGER DEFAULT 0,".
-"gprx varchar(255) DEFAULT '$grpx');";
---SET IDENTITY_INSERT sitedata ON;
---SET IDENTITY_INSERT sitedata OFF;
-
-**/
-/**
-		$sql = explode(";", $sql);
-    	foreach ($sql as $query) {
-        	$add=$this->db->query($query);
-			$check = $add->fetchColumn();
-    	}
-**/
-	try {
-		$add = $this -> db -> exec($sql);
-		$check = $this->db->query("SELECT name FROM sqlite_master WHERE type='table';");
-		$g = $check -> fetchAll(PDO::FETCH_NAMED);
-		return $g;
-        return $add;
-        //return false;
-
-	} catch(Exception $e){
-		return FALSE;
-	}
+	public function get_page_title($link) {
+        $page = $this -> db -> prepare("SELECT title FROM ".DBPREFIX."pages WHERE link=?");
+        $page -> execute(array($link));
+        $item = $page -> fetchAll(PDO::FETCH_NAMED);
+        if ($item) :
+            return $item[0]['title'];
+        endif;
+        return FALSE;
     }
-
-    public function get_entries($table,$grpx) {
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE gprx=? ORDER BY idx ASC");
-        $h -> execute(array($grpx));
+    
+    
+    public function get_menu($grpx) {
+        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX."menus WHERE lang=? AND grpx=? ORDER BY pos ASC");
+        $h -> execute(array($this->lang_menu,$grpx));
         $pages = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($pages) {
+        if ($pages) :
             //sksort($pages,'pos');
         return $pages;
-        }	// end get pages
+        endif;	// end get pages
         return false;
     }
     
-
-    public function get_grpx($table,$gprx) {
-        $h = $this -> db -> prepare("SELECT gprx FROM ".DBPREFIX.$table." WHERE gprx=? ORDER BY gprx ASC");
-        $h -> execute(array($gprx));
-        $grp = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($grp) {
+    
+    public function get_grpx() {
+        $h = $this -> db -> prepare("SELECT grpx FROM ".DBPREFIX."menus WHERE lang=? ORDER BY pos ASC");
+        $h -> execute(array($this->lang_menu));
+        $grpx = $h -> fetchAll(PDO::FETCH_NAMED);
+        if ($grpx) :
         //var_dump($grpx);
         $tmp = array();
-        foreach ($grp as $item) {
+        foreach ($grpx as $item) {
             $tmp[]=$item['grpx'];
         }
         $result = array_unique($tmp);
         return $result;
-		}	// end get pages
-        return false;
-    }
-
-    public function get_idx($table,$gprx) {
-        $h = $this -> db -> prepare("SELECT idx,gprx FROM ".DBPREFIX.$table." WHERE gprx=? ORDER BY idx ASC");
-        $h -> execute(array($gprx));
-        $grp = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($grp) {
-        $tmp = array();
-        foreach ($grp as $item) {
-            $tmp[]=$item['idx'];
-        }
-        $result = array_unique($tmp);
-        return $result;
-		}	// end get pages
+        endif;	// end get pages
         return false;
     }
 
