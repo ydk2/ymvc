@@ -43,11 +43,7 @@
 		echo "<br>";
 		//echo $this->model->GetId($this->array,3,'_name','l');
         //var_dump($aout);
-		if($delete){
-		foreach ($this->array as $items) {
-			$this->model->delete_idx($table,Helper::get('delete'),$items['gprx']);
-		}
-		}
+
         //var_dump($this->array);
 
         $aout=$this->model->searchByName($this->array,'_name','l');
