@@ -24,7 +24,7 @@
 		}
 		$table='layouts';
 		$gprx = 'layout';
-		$this->array = $this->model->get_entries($table,$gprx,2,1);
+		$this->array = $this->model->get_entries($table,$gprx);
         $aout=$this->model->searchByName($this->array,'name',$gprx);
 		//$this->model->SetValue($this->array,3,'_view','NewValue','l');
 ?>

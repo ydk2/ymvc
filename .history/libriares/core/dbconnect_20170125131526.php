@@ -435,6 +435,9 @@ class DBConnect {
 		}
 	try {
 		$add = $this -> db -> exec($sql);
+		//$check = $this->db->query("SELECT name FROM sqlite_master WHERE type='table';");
+		//$g = $check -> fetchAll(PDO::FETCH_NAMED);
+		//return $g;
         return TRUE;
 	} catch(Exception $e){
 		return FALSE;
@@ -444,11 +447,11 @@ class DBConnect {
     public function get_tables_list() {
 		$data=Config::$data['default']['database'];
 		if ($data['type']=='sqlsrv') {
-		    $sql="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG='dbName';";
+		$sql="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG='dbName';";
 		} elseif ($data['type']=='pgsql') {
-		    $sql="SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';";
+		$sql="SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';";
 		} elseif ($data['type']=='mysql') {
-		    $sql="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='dbName';";
+		$sql="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='dbName';";
 		} elseif ($data['type']=='sqlite') {
 		    $sql="SELECT name FROM sqlite_master WHERE type='table';";
 		}

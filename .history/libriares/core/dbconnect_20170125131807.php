@@ -435,6 +435,9 @@ class DBConnect {
 		}
 	try {
 		$add = $this -> db -> exec($sql);
+		//$check = $this->db->query("SELECT name FROM sqlite_master WHERE type='table';");
+		//$g = $check -> fetchAll(PDO::FETCH_NAMED);
+		//return $g;
         return TRUE;
 	} catch(Exception $e){
 		return FALSE;

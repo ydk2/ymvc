@@ -435,6 +435,9 @@ class DBConnect {
 		}
 	try {
 		$add = $this -> db -> exec($sql);
+		//$check = $this->db->query("SELECT name FROM sqlite_master WHERE type='table';");
+		//$g = $check -> fetchAll(PDO::FETCH_NAMED);
+		//return $g;
         return TRUE;
 	} catch(Exception $e){
 		return FALSE;
@@ -444,11 +447,32 @@ class DBConnect {
     public function get_tables_list() {
 		$data=Config::$data['default']['database'];
 		if ($data['type']=='sqlsrv') {
-		    $sql="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG='dbName';";
+		$sql="IF OBJECT_ID ('$table', 'U') IS NOT NULL".
+			"DROP TABLE  $table;".
+			"CREATE TABLE  $table (".
+			"id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
+			"name varchar(255),".
+			"value TEXT DEFAULT '',".
+			"idx INTEGER DEFAULT 0,".
+			"gprx varchar(255) DEFAULT '$gprx');";
 		} elseif ($data['type']=='pgsql') {
-		    $sql="SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';";
+		$sql="DROP TABLE IF EXISTS $table;".
+			"CREATE SEQUENCE ".$table."_id_seq;".
+			"CREATE TABLE IF NOT EXISTS test (".
+			"id INTEGER NOT NULL PRIMARY KEY,".
+			"name varchar(255) NOT NULL,".
+			"value TEXT DEFAULT '',".
+			"idx INTEGER NOT NULL,".
+			"gprx varchar(255)  NOT NULL DEFAULT '$gprx');".
+			"ALTER TABLE $table ALTER id SET DEFAULT NEXTVAL('".$table."_id_seq');";
 		} elseif ($data['type']=='mysql') {
-		    $sql="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='dbName';";
+		$sql="DROP TABLE IF EXISTS $table;".
+			"CREATE TABLE IF NOT EXISTS $table (".
+			"id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
+			"name varchar(255) NOT NULL,".
+			"value TEXT,".
+			"idx int(99) DEFAULT 1,".
+			"gprx varchar(255) NOT NULL DEFAULT '$gprx');";
 		} elseif ($data['type']=='sqlite') {
 		    $sql="SELECT name FROM sqlite_master WHERE type='table';";
 		}
