@@ -3,7 +3,7 @@
 * @Author: ydk2 (me@ydk2.tk)
 * @Date: 2017-01-21 16:22:09
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-01-25 14:02:30
+ * @Last Modified time: 2017-01-25 14:01:52
 */
 
 class Layout extends XSLRender {
@@ -97,7 +97,7 @@ class Layout extends XSLRender {
 
                         if(isset($this->default_route_group)){
                             $content->default_route_group = $this->default_route_group;
-                            $content->default_route_count = $this->default_route_count;
+                            $content->default_route_count = $this->default_route_count
                         }
                         $count = 0;
 
@@ -107,7 +107,7 @@ class Layout extends XSLRender {
                                 $count++;
                             }
 		                }
-                        if($this->default_route_group!="" && $count<=$this->default_route_count){
+                        if($this->default_route_group!="" && $count==$this->default_route_count){
                             $content->layout_group = $this->default_route_group;
                         }
 

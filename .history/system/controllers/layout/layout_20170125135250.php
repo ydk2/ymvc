@@ -3,7 +3,7 @@
 * @Author: ydk2 (me@ydk2.tk)
 * @Date: 2017-01-21 16:22:09
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-01-25 14:02:30
+ * @Last Modified time: 2017-01-25 13:51:10
 */
 
 class Layout extends XSLRender {
@@ -23,7 +23,6 @@ class Layout extends XSLRender {
         } else {
             $this->registered = array("layout");
         }
-        $this->default_route_count=0;
     }
     
     public function Run(){
@@ -61,7 +60,6 @@ class Layout extends XSLRender {
                 } else {
                     $mode = $this->mode;
                 }
-
                 if($value['module']=="layout" && $value['group']!=""){
                     if(!in_array($value['name'],$disabled)){
                         $this->SetView(SYS.V.'layout'.S.'views');
@@ -70,9 +68,6 @@ class Layout extends XSLRender {
                         $content->enabled = $enabled;
                         $content->disabled = $disabled;
                         $content->layouts = $this->layouts;
-                        if(isset($this->default_route_group)){
-                            $content->default_route_group= $this->default_route_group;
-                        }
                         $contents = ($content)? htmlspecialchars($content->View()):"";
                         if($contents!=""){
                             $col = $this->data->layout->addChild('views', $contents);
@@ -94,21 +89,21 @@ class Layout extends XSLRender {
                         $content->disabled = $disabled;
                         $content->layouts = $this->layouts;
                         $pos = count($content->layouts);
-
-                        if(isset($this->default_route_group)){
-                            $content->default_route_group = $this->default_route_group;
-                            $content->default_route_count = $this->default_route_count;
-                        }
                         $count = 0;
 
+                        if(isset($this->default_route_group)){
+                            $content->default_route_group= $this->default_route_group;
+                            var_dump("cd");
+                        }
 		                foreach ($_GET as $key => $router) {
                             if(in_array($mode.C.$key,$enabled) && !in_array($mode.C.$key,$disabled) && $this->ControllerExists($mode.C.$key)){
 			                    $content->layouts[] = array('pos' => $pos++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$router,'class'=>$value['class'],'attrid'=>'', 'users'=>'', 'group'=>$value['name'], 'mode'=>$value['mode']);
                                 $count++;
                             }
 		                }
-                        if($this->default_route_group!="" && $count<=$this->default_route_count){
+                        if($this->default_route_group!="" && $count==0){
                             $content->layout_group = $this->default_route_group;
+                            var_dump($content->layouts);
                         }
 
                         $contents = ($content)? htmlspecialchars($content->View()):"";
@@ -124,9 +119,6 @@ class Layout extends XSLRender {
                     if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
                         $this->SetView(SYS.V.'layout'.S.'views');
                         $content = $this->NewControllerB($mode.V.$value['view'],$mode.C.$value['module']);
-                        if(isset($this->default_route_group)){
-                            $content->default_route_group= $this->default_route_group;
-                        }
                         $contents = ($content)? htmlspecialchars($content->View()):"";
                         if($contents!=""){
                             $col = $this->data->layout->addChild('views', $contents);

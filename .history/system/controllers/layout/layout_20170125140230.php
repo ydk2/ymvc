@@ -97,7 +97,7 @@ class Layout extends XSLRender {
 
                         if(isset($this->default_route_group)){
                             $content->default_route_group = $this->default_route_group;
-                            $content->default_route_count = $this->default_route_count;
+                            $content->default_route_count = $this->default_route_count
                         }
                         $count = 0;
 

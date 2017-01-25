@@ -107,7 +107,7 @@ class Theme extends XSLRender {
             SYS.C.'test'.S.'test'
             );
             $content->default_route_group='default';
-            $content->default_route_count=1;
+            $content->default_route_count=0;
             $content->layout_group = 'admin';
         }
         if($this->current_group=="any"){
