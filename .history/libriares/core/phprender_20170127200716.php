@@ -20,7 +20,7 @@ require_once(ROOT.CORE.'systemexception'.EXT);
 * @author     ydk2 <me@ydk2.tk>
 * @copyright  1997-2016 ydk2.tk
 * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
-* @version    2.0.5
+* @version    2.0.1
 * @link       http://ymvc.ydk2.tk
 * @see        XSLRender
 * @since      File available since Release 1.0.0
@@ -73,6 +73,7 @@ class PHPRender {
 	* @return PHPRender object or boolean
 	**/
 	   final public function __construct() {
+		try {
 			$retval = NULL;
 			$this->registerPHPFunctions = TRUE;
 			$this->name=get_class($this);
@@ -91,8 +92,8 @@ class PHPRender {
 			$this -> error = 0;
 		endif;
 		$this->modules = array();
-		$this->access_groups = array();
-		$this->current_group = '';
+		$this->access_groups = array('admin','user','any');
+		$this->current_group = 'any';
         $argsv = func_get_args();
         $argsc = func_num_args();
         if (method_exists($this, $f = '__construct_' . $argsc)) {
@@ -100,6 +101,11 @@ class PHPRender {
         }
 		$this->_check();
 		$this->Init();
+        } catch (SystemException $e){
+            $this->error = $e->Code();
+            $this->emessage= $e->Message();
+            return FALSE;
+        } 
     }
 /**
 *  PHPRender Class sub constructor it have option $view
@@ -107,11 +113,18 @@ class PHPRender {
 * @return PHPRender object or boolean
 **/  
     final private function __construct_1($view = NULL) {
+		try {
 		if($view==""){
 			$view = NULL;
 		}
 		$view = str_replace(S,DS,$view);
+		if (!$this->CheckView($view)) throw new SystemException("View not exists",20404);
         $this->view = $view;
+		} catch (SystemException $e){
+            $this->error = $e->Code();
+            $this->emessage= $e->Message();
+            return FALSE;
+        }
     }
 /**
 *  PHPRender Class sub constructor it have options $model & $view
@@ -121,16 +134,24 @@ class PHPRender {
 * @return PHPRender object or boolean
 **/     
     final private function __construct_2($model,$view) {
+        try {
 		if($view==""){
 			$view = NULL;
 		}
 		$view = str_replace(S,DS,$view);
+		if (!$this->CheckView($view)) $this->error=20404;
         $this->view = $view;
 		if (is_object($model)) {
 			$this->model = $model;
 		} else {
+			if($this->CheckModel($model))
 			$this->SetModel($model);
 		}
+		} catch (SystemException $e){
+            $this->error = $e->Code();
+            $this->emessage= $e->Message();
+            return FALSE;
+        }
     }
 /**
 * Virtual method used in childs classes called in parent(this) class constructor 
@@ -192,8 +213,8 @@ public final function CheckModel($model){
 		if($this->Inc($model)){
 			$stack = explode(DS,$model);
 			$end = end($stack);
+			if(!class_exists($end)) return FALSE;
 			if(class_exists($end)) return TRUE;
-			return FALSE;
 		}
 	}
 /**
@@ -263,8 +284,8 @@ final public function ControllerExists($controller) {
 		if($this->Inc($controller)){
 			$stack = explode(DS,$controller);
 			$end = end($stack);
+			if(!class_exists($end)) return FALSE;
 			if(class_exists($end)) return TRUE;
-			return FALSE;
 		} 
 }
 /**
@@ -398,7 +419,7 @@ final public function CheckError() {
 * @see only_registered
 * @access public
 * @param string $view 
-**/
+**/ 	
 	final public function UnRegisterView($view) {
 		$view = str_replace(S,DS,$view);
 		foreach ($this->registered_views as $key => $value) {
@@ -406,38 +427,74 @@ final public function CheckError() {
 				unset($this->registered_views[$key]);
 			}
 		}
-	}
+	}  
 /**
 * Internal helper method to check errors or reset it.
 * @access private
-**/
+**/ 	
 	final private function _check(){
-		$this->error = 0;
 		if($this->only_registered_views){
 			if(!in_array($this->view,$this->registered_views)){
+				 $this->emessage = "View not registered";
 				 $this->error = 20402;
+			} else {
+				if($this->error == 20402){
+					$this->error = 0;
+				}
+			}
+		} else {
+			if($this->error == 20402){
+				$this->error = 0;
 			}
 		}
-
-		if($this->access_mode == 1){
-			if($this->global_access > $this->access){
-				$this->error = 20503;
+			if($this->access_mode == 1){
+				if($this->global_access > $this->access){
+					$this->emessage = "Restricted access";
+					$this->error = 20503;
+				} else {
+					if($this->error == 20503){
+						$this->error = 0;
+					}
+				}
+			} elseif($this->access_mode == 2){
+				if(!in_array($this->current_group,$this->access_groups)){
+					$this->emessage = "Restricted access for ".$this->current_group;
+					$this->error = 20503;
+				} else {
+					if($this->error == 20503){
+						$this->error = 0;
+					}
+				}
+			} else {
+				if($this->error == 20503){
+					$this->error = 0;
+				}
 			}
-		} elseif($this->access_mode == 2){
-			if(!empty($this->access_groups) && !in_array($this->current_group,$this->access_groups)){
-				$this->error = 20503;
+			if(FALSE !== $this->model_required){
+			if($this->model==NULL){
+				 $this->emessage = "App Model not Definied";
+				 $this->error = 20304;
+			} else {
+				if($this->error == 20304){
+					$this->error = 0;
+				}
+			}}
+			if($this->view==NULL){
+				 $this->emessage = "View not Definied";
+				 $this->error = 20401;
+			} else {
+				if($this->error == 20401){
+					$this->error = 0;
+				}
 			}
-		}
-
-		if(FALSE !== $this->model_required){
-		if($this->model==NULL){
-			$this->error = 20304;
-		}
-		}
-		if($this->view==NULL){
-			$this->error = 20401;
-		}
-		$this->CheckView($this->view);
+			if (!$this->CheckView($this->view)){
+				 $this->emessage = "View not exists";
+				 $this->error = 20404;
+			} else {
+				if($this->error == 20404){
+					$this->error = 0;
+				}
+			}
 	}
 /**
 * Method used to get, render and show controller view 
@@ -455,6 +512,8 @@ final public function CheckError() {
 * @return string HTML output
 **/ 
     final public function View($path=NULL) {
+        # code...
+        try {
 			self::$obj =& $this;
 			if($path!=NULL) {
 				$path = str_replace(S,DS,$path);
@@ -463,25 +522,42 @@ final public function CheckError() {
 			$this->_check();
             if($this->error > 0) {
 				if($this->exceptions !== FALSE){
-					return $this->Exception();
+					throw new SystemException($this->emessage,$this->error);
 				}
             }
 			$this->Run();
 			$this->_check();
             if($this->error > 0) {
 				if($this->exceptions !== FALSE){
-					return $this->Exception();
+					throw new SystemException($this->emessage,$this->error);
 				}
-                return "";
+            	if($this->error == 20404){
+                    throw new SystemException($this->emessage,$this->error);
+                }
             }
+			if($this->registerPHPFunctions){
 			ob_start();
 			echo "";
 			if ($this->CheckView($this -> view))
 			require_once(ROOT.$this->view.EXT);
 			$retval = ob_get_clean();
-			$this->onEnd();
+			} else {
+				$retval = "";
+				if ($this->CheckView($this -> view))
+				$retval = file_get_contents(ROOT.$this->view.EXT);
+			}
+			$this->action->end = $this->onEnd();
 			self::$obj=NULL;
             return $retval;
+        } catch (SystemException $e){
+            $this->error = $e->Code();
+            $this->emessage= $e->Message();
+			if($this->exceptions !== FALSE){
+				return $this->Exception();
+			}
+			self::$obj=NULL;
+            return FALSE;
+        } 
     }
 /**
 * Method used to catch exceptions and return as new controller view 
@@ -520,6 +596,7 @@ final public function CheckError() {
 * @param string $controller 
 **/ 	
 	public final function SetModule($view, $controller){
+
 		$controller = str_replace(S,DS,$controller);
 		$view = str_replace(S,DS,$view);
 		if($this->Inc($controller)){

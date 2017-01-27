@@ -87,9 +87,9 @@ Config::$data['time'] = get_time();
     if(Helper::Get('load')=="php"){
         Loader::show_restricted_view(SYS.C.'phpexample',SYS.V.'phpexample');
     } elseif(Helper::Get('load')=="admin") {
-        Loader::show_module(SYS.C.'admin'.S.'mngmenus',SYS.V.'admin'.S.'choose');
+        Loader::show_module(SYS.C.'admin-mngmenus',SYS.V.'admin-choose');
     } else {
-        Loader::show_module(SYS.C.'template'.S.'theme',SYS.THEMES.Config::$data['template']['any'].DS.'theme');
+        Loader::show_module(SYS.C.'template:theme',SYS.THEMES.Config::$data['template']['any'].DS.'theme');
     }
     // Loader::get_module_show(SYS.C.'layout',SYS.THEMES.'default'.DS.'theme');
     //$test = Helper::Call(SYS.C.'layout',SYS.V.'layout');

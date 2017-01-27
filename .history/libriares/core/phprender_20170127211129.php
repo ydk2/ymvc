@@ -415,26 +415,31 @@ final public function CheckError() {
 		$this->error = 0;
 		if($this->only_registered_views){
 			if(!in_array($this->view,$this->registered_views)){
+				 $this->emessage = "View not registered";
 				 $this->error = 20402;
 			}
 		}
 
 		if($this->access_mode == 1){
 			if($this->global_access > $this->access){
+				$this->emessage = "Restricted access";
 				$this->error = 20503;
 			}
 		} elseif($this->access_mode == 2){
-			if(!empty($this->access_groups) && !in_array($this->current_group,$this->access_groups)){
+			if(!empty($this->current_group) && !in_array($this->current_group,$this->access_groups)){
+				$this->emessage = "Restricted access for ".$this->current_group;
 				$this->error = 20503;
 			}
 		}
 
 		if(FALSE !== $this->model_required){
 		if($this->model==NULL){
+			$this->emessage = "App Model not Definied";
 			$this->error = 20304;
 		}
 		}
 		if($this->view==NULL){
+			$this->emessage = "View not Definied";
 			$this->error = 20401;
 		}
 		$this->CheckView($this->view);

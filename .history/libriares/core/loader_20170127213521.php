@@ -209,117 +209,116 @@ class Loader {
 		return $layout->View();
 	}
 
-	public static function Layouts($model){
-		$array=$model->layouts;
-		$enabled=$model->enabled;
-		$disabled=$model->disabled;
-		$mode=(isset($model->mode) && $model->mode!="")?$model->mode:SYS;
-		$group=(isset($model->group) && $model->group!="")?$model->group:"main";
+    public function Layouts(){
+        $array = $this->layouts;
+        $enabled = $this->enabled;
+        $disabled = $this->disabled;
+        $mode = $this->mode;
+        $group = $this->layout_group;
 
-		if(isset($array[0]['pos'])){
+        if(isset($array[0]['pos'])){
+            $this->sksort($array,'pos');
+            $check = array('pos', 'name','module','view','class','group','attrid');
+            $yes = TRUE;
+            $this->ViewData('layout', '');
+            foreach ($array as $i => $value) {
+                foreach ($check as $is) {
+                    if(!array_key_exists($is,$value)) {
+                        $yes = FALSE;
+                        break;
+                }
+            }
+            if($value['group']==$group && $yes && $value['group']!=$value['name']){
+                if ($value['mode']=='sys') {
+                    $mode = SYS;
+                } elseif ($value['mode']=='app') {
+                    $mode = APP;
+                } elseif ($value['mode']!='') {
+                    $mode = $value['mode'];
+                } else {
+                    $mode = $this->mode;
+                }
 
-		$layout = self::get_module(SYS.C.'layout'.S.'layout',SYS.V.'layout'.S.'views',$model);
-		$layout->sksort($array,'pos');
+                if($value['module']=="layout" && $value['group']!=""){
+                    if(!in_array($value['name'],$disabled)){
+                        $this->SetView(SYS.V.'layout'.S.'views');
+                        $content = $this->NewControllerB(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
+                        $content->layout_group = $value['name'];
+                        $content->enabled = $enabled;
+                        $content->disabled = $disabled;
+                        $content->layouts = $this->layouts;
+                        if(isset($this->default_route_group)){
+                            $content->default_route_group= $this->default_route_group;
+                        }
+                        $contents = ($content)? htmlspecialchars($content->View()):"";
+                        if($contents!=""){
+                            $col = $this->data->layout->addChild('views', $contents);
+                            if(isset($value['style'])) $col->addAttribute('style', $value['style']);
+                            if(isset($value['class'])) $col->addAttribute('class', $value['class']);
+                            if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);
+                        }
+                        $content = NULL;
+                        $contents = NULL;
+                        $col = NULL;
+                    }
+                }
+                if($value['module']=="route"  && $value['group']!=""){
+                    if(!in_array($value['name'],$disabled)){
+                        $this->SetView(SYS.V.'layout'.S.'views');
+                        $content = $this->NewControllerB(SYS.V.'layout'.S.'content',SYS.C.'layout'.S.'layout');
+                        $content->layout_group = $value['name'];
+                        $content->enabled = $enabled;
+                        $content->disabled = $disabled;
+                        $content->layouts = $this->layouts;
+                        $pos = count($content->layouts);
 
+                        if(isset($this->default_route_group)){
+                            $content->default_route_group = $this->default_route_group;
+                            $content->default_route_count = $this->default_route_count;
+                        }
+                        $count = 0;
 
-		$check = array('pos', 'name','module','view','class','group','attrid');
-		$yes = TRUE;
+		                foreach ($_GET as $key => $router) {
+                            if(in_array($mode.C.$key,$enabled) && !in_array($mode.C.$key,$disabled) && $this->ControllerExists($mode.C.$key)){
+			                    $content->layouts[] = array('pos' => $pos++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$router,'class'=>$value['class'],'attrid'=>'', 'users'=>'', 'group'=>$value['name'], 'mode'=>$value['mode']);
+                                $count++;
+                            }
+		                }
+                        if($this->default_route_group!="" && $count<=$this->default_route_count){
+                            $content->layout_group = $this->default_route_group;
+                        }
 
-		$layout->ViewData('layout', '');
-		foreach ($array as $value) {
-			foreach ($check as $is) {
-				if(!array_key_exists($is,$value)) {
-					$yes = FALSE;
-					break;
-				}
-			}
-
-			if($value['group']==$group && $yes && $value['group']!=$value['name']){
-			if($value['module']=="layout" && $value['group']!=""){
-
-			if(!in_array($value['name'],$disabled)){
-				$layout->SetView(SYS.V.'layout'.S.'views');
-				$layout->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
-				$content = $this->GetModule(SYS.C.'layout'.S.'layout');
-				$content->model->layout_group = $value['name'];
-				$contents = ($content)? htmlspecialchars($content->View()):"";
-				if($contents!=""){
-				$col = $layout->data->layout->addChild('views', $contents);
-
-				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
-				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
-				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);	
-				}
-				$content = NULL;
-				$contents = NULL;
-				$col = NULL;
-			}
-
-			} elseif($value['module']=="route" && $value['group']!="route"){
-
-			if(!in_array($value['name'],$disabled)){
-				$layout->SetView(SYS.V.'layout'.S.'content');
-				$layout->SetModule(SYS.V.'layout'.S.'content',SYS.C.'layout'.S.'route');
-				$content = $layout->GetModule(SYS.C.'layout'.S.'route');
-				$content->model->layout_group = "route";
-				$contents = ($content)? htmlspecialchars($content->View()):"";
-				if($contents!=""){
-				$col = $layout->data->layout->addChild('views', $contents);
-
-				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
-				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
-				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);
-				}
-				$content = NULL;
-				$contents = NULL;
-				$col = NULL;
-			}
-
-			} elseif($value['module']=="section" && $value['group']!=""){
-
-			if(!in_array($value['name'],$disabled)){
-				$layout->SetView(SYS.V.'layout'.S.'sections');
-				$layout->SetModule(SYS.V.'layout'.S.'views',SYS.C.'layout'.S.'layout');
-				$content = $layout->GetModule(SYS.C.'layout'.S.'layout');
-				$content->model->layout_group = $value['name'];
-				$contents = ($content)? htmlspecialchars($content->View()):"";
-				if($contents!=""){
-				$col = $layout->data->layout->addChild('sections', $contents);
-
-				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
-				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
-				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);	
-				}
-				$content = NULL;
-				$contents = NULL;
-				$col = NULL;
-			}
-
-			}  elseif($value['module']!="section" && $value['module']!="layout" && $value['module']!="route") {
-			if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $layout->ControllerExists($mode.C.$value['module'])){
-				$layout->SetView(SYS.V.'layout'.S.'views');
-				$layout->SetModule($mode.V.$value['view'],$mode.C.$value['module']);
-				$content = $layout->GetModule($mode.C.$value['module']);
-				$content->model->layout_group = $value['name'];
-				$contents = ($content)? htmlspecialchars($content->View()):"";
-				if($contents!=""){
-				$col = $layout->data->layout->addChild('views', $contents);
-
-				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
-				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
-				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);
-				}
-				$content = NULL;
-				$contents = NULL;
-				$col = NULL;
-				
-			}
-			}
-			}
-		}
-		return $layout->View();
-		}
-		return "";
-	}
+                        $contents = ($content)? htmlspecialchars($content->View()):"";
+                        if($contents!=""){
+                            $col = $this->data->layout->addChild('views', $contents);
+                        }
+                        $content = NULL;
+                        $contents = NULL;
+                        $col = NULL;
+                    }
+                }
+                if($value['module']!="layout" && $value['module']!="route" && $value['module']!="") {
+                    if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
+                        $this->SetView(SYS.V.'layout'.S.'views');
+                        $content = $this->NewControllerB($mode.V.$value['view'],$mode.C.$value['module']);
+                        if(isset($this->default_route_group)){
+                            $content->default_route_group= $this->default_route_group;
+                        }
+                        $contents = ($content)? htmlspecialchars($content->View()):"";
+                        if($contents!=""){
+                            $col = $this->data->layout->addChild('views', $contents);
+                            if(isset($value['style'])) $col->addAttribute('style', $value['style']);
+                            if(isset($value['class'])) $col->addAttribute('class', $value['class']);
+                            if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);
+                        }
+                        $content = NULL;
+                        $contents = NULL;
+                        $col = NULL;
+                    }
+                }
+            }
+        }
+    }
+    }
 }
 ?>

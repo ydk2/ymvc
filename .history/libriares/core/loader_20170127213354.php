@@ -217,14 +217,14 @@ class Loader {
 		$group=(isset($model->group) && $model->group!="")?$model->group:"main";
 
 		if(isset($array[0]['pos'])){
-
+		
 		$layout = self::get_module(SYS.C.'layout'.S.'layout',SYS.V.'layout'.S.'views',$model);
 		$layout->sksort($array,'pos');
 
 
 		$check = array('pos', 'name','module','view','class','group','attrid');
 		$yes = TRUE;
-
+		
 		$layout->ViewData('layout', '');
 		foreach ($array as $value) {
 			foreach ($check as $is) {
@@ -268,7 +268,7 @@ class Loader {
 
 				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
 				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
-				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);
+				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);	
 				}
 				$content = NULL;
 				$contents = NULL;
@@ -307,7 +307,7 @@ class Loader {
 
 				if(isset($value['style'])) $col->addAttribute('style', $value['style']);
 				if(isset($value['class'])) $col->addAttribute('class', $value['class']);
-				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);
+				if(isset($value['attrid'])) $col->addAttribute('id', $value['attrid']);	
 				}
 				$content = NULL;
 				$contents = NULL;
@@ -321,5 +321,6 @@ class Loader {
 		}
 		return "";
 	}
+
 }
 ?>

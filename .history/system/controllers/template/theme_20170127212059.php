@@ -20,7 +20,7 @@ class Theme extends XSLRender {
         $this->RegisterView(SYS.V.'errors'.DS.'error');
         
         $this->setaccess(self::ACCESS_ANY);
-		$this->access_groups = array();
+		$this->access_groups = array('admin','editor','user','any','');
         $this->AccessMode(2);
         $this->global_access = Helper::Session('user_access');
         $this->setParameter('','fixie','<!--[if lt IE 9]>

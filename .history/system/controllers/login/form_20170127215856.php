@@ -126,7 +126,7 @@ class Form extends PHPRender {
 				Helper::session_set('user_email', $user_data[key($user_data)]['account_email']);
 				Helper::session_set('user_role', $user_data[key($user_data)]['account_role']);
 				Helper::session_set('user_access', $user_data[key($user_data)]['role_id']);
-				Helper::session_set('token', base64_encode(microtime()));
+				Helper::session_set('token', microtime());
 			$this->ViewData('alert','Zalogowano');
 			$this->ViewData('classes',' alert-success text-success');
 			$this->ViewData('success_link',$this->success_link);
