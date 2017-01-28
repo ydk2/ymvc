@@ -3,7 +3,6 @@
 	<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" indent="yes"/>
 	<xsl:strip-space elements="*"/>
 	<xsl:param name="content"/>
-	<xsl:param name="action"/>
 	<xsl:template match="/">
 	<div class="row">
 	<div class="col-sm-12">
@@ -19,10 +18,7 @@
 	</xsl:template>
 
 	<xsl:template match="data/layouts" name="items">
-	<!--
-	<xsl:value-of select="$action"/>
-	-->
-	<form action="{$action}" method="post">
+	<form action="{$action}">
         <xsl:apply-templates select="data/layouts/items" />
 		<div class="form-group" method="post">
         <div class="col-sm-offset-2 col-sm-8">

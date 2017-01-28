@@ -19,9 +19,9 @@
 	</xsl:template>
 
 	<xsl:template match="data/layouts" name="items">
-	<!--
+
 	<xsl:value-of select="$action"/>
-	-->
+
 	<form action="{$action}" method="post">
         <xsl:apply-templates select="data/layouts/items" />
 		<div class="form-group" method="post">

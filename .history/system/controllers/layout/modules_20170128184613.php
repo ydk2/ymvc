@@ -1,6 +1,6 @@
 <?php
 
-class Modules extends XSLRender {
+class MenageLayouts extends PHPRender {
 
 	public function Init() {
 		/*

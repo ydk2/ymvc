@@ -1,31 +1,67 @@
 <?php
-/*
-* @Author: ydk2 (me@ydk2.tk)
-* @Date: 2017-01-21 16:22:09
- * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-01-25 14:02:30
-*/
 
-class Layout extends XSLRender {
-    
-    public $registered;
-    public $disabled;
-    public $enabled;
-    public $layouts;
-    public $layout_group;
-    public $default_layout_group;
-    public $mode;
-    
-    public function Init(){
-        
-        if(isset($this->model->registered) &&  $this->model->registered != ""){
-            $this->registered = $this->model->registered;
-        } else {
-            $this->registered = array("layout");
-        }
-        $this->default_route_count=0;
-    }
-    
+class MNGLayouts extends PHPRender {
+
+	public function Init() {
+		/*
+		 $this->name_model = $model;
+		 $this->model = new $model();
+		 $this->view = $view;
+		 *
+		 */
+		
+		$this->exceptions = TRUE;
+		$this->SetAccess(self::ACCESS_ANY);
+		$this->access_groups = array(null);
+		$this->current_group = null;
+		$this->AccessMode(2);
+		$this->SetModel(SYS.M.'model');
+		if(Helper::Get('admin:menu') == '')
+		$this->SetView(SYS.V . "elements:nav");
+		$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
+		$this -> items = $this -> model -> get_menu($this->groups);
+	}
+
+	public function showin($view='')
+	{
+		
+	}
+
+	function menulist($data, $parent = '') {
+		// <item id="0" name="1">
+		$tree = '';
+		$i = 1;
+		foreach ($data as $item) {
+			if ($item['parent'] === $parent) {
+				$tree .= '<item id="'.$item['pos'].'" url="'.htmlspecialchars($item['link']).'" name="'.$item['title'].'">' . PHP_EOL;
+
+				$tree .= call_user_func_array(array($this, 'menulist'), array($data, strval($item['pos'])));
+
+				$tree .= '</item>' . PHP_EOL;
+			}
+			$i++;
+		}
+		$tree .= "";
+		return $tree;
+	}
+
+
+	public function Exception(){
+		//echo "";
+		if($this->error > 0) return $this->showwarning();
+		
+	}
+	public function showwarning()
+	{
+		$error=$this->NewControllerB(SYS.V.'errors'.DS.'warning',SYS.C.'errors'.DS.'systemerror');
+		$error->setParameter('','inside','yes');
+		$error->setParameter('','show_link','no');
+		$error->ViewData('title', Intl::_p('Warning!!!'));
+		$error->ViewData('header', Intl::_p('Warning!!!').' '.$this->error);
+		$error->ViewData('alert',Intl::_p($this->emessage).' - ');
+		$error->ViewData('error', $this->error);
+		return $error->View();
+	}
     public function Run(){
         Config::$data['layouts']['current'] = $this->layout_group;
         $this->ViewData('layout', '');
@@ -70,7 +106,6 @@ class Layout extends XSLRender {
                         $content->enabled = $enabled;
                         $content->disabled = $disabled;
                         $content->layouts = $this->layouts;
-                        $this->default_route_group = $value['view'];
                         if(isset($this->default_route_group)){
                             $content->default_route_group= $this->default_route_group;
                         }
@@ -95,7 +130,7 @@ class Layout extends XSLRender {
                         $content->disabled = $disabled;
                         $content->layouts = $this->layouts;
                         $pos = count($content->layouts);
-                        $this->default_route_group = $value['view'];
+
                         if(isset($this->default_route_group)){
                             $content->default_route_group = $this->default_route_group;
                             $content->default_route_count = $this->default_route_count;

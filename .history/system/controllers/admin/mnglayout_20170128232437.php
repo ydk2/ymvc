@@ -55,8 +55,7 @@ class MngLayout extends XSLRender {
     }
     public function Run(){
         $content = $this->tmpform($this->manage());
-        $this->ViewData('layout','' );
-        $this->data->layout->addChild('views', htmlspecialchars($content));
+        $this->ViewData('content', htmlspecialchars($content));
     }
     public function oldRun($model = NULL){
         

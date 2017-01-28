@@ -19,12 +19,9 @@
 	</xsl:template>
 
 	<xsl:template match="data/layouts" name="items">
-	<!--
-	<xsl:value-of select="$action"/>
-	-->
-	<form action="{$action}" method="post">
+	<form action="{$action}">
         <xsl:apply-templates select="data/layouts/items" />
-		<div class="form-group" method="post">
+		<div class="form-group">
         <div class="col-sm-offset-2 col-sm-8">
         <button type="submit" class="btn btn-primary btn-block">Update</button>
         </div>

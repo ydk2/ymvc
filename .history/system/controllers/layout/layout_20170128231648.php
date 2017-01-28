@@ -70,7 +70,6 @@ class Layout extends XSLRender {
                         $content->enabled = $enabled;
                         $content->disabled = $disabled;
                         $content->layouts = $this->layouts;
-                        $this->default_route_group = $value['view'];
                         if(isset($this->default_route_group)){
                             $content->default_route_group= $this->default_route_group;
                         }
@@ -95,9 +94,9 @@ class Layout extends XSLRender {
                         $content->disabled = $disabled;
                         $content->layouts = $this->layouts;
                         $pos = count($content->layouts);
-                        $this->default_route_group = $value['view'];
+
                         if(isset($this->default_route_group)){
-                            $content->default_route_group = $this->default_route_group;
+                            $content->default_route_group = $value['view'];
                             $content->default_route_count = $this->default_route_count;
                         }
                         $count = 0;

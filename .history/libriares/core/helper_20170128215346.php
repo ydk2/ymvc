@@ -80,7 +80,6 @@ class Helper {
 	static function Cookie_UnSet($key) {
 		if (isset($_COOKIE[$key])) {
 			unset($_COOKIE[$key]);
-			//setcookie($key,"",time()-1);
 		} else {
 			return false;
 		}

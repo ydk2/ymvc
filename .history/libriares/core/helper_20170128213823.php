@@ -63,26 +63,10 @@ class Helper {
 
 	static function Cookie_Set($key, $val) {
 		if (isset($_COOKIE[$key])) {
-			setcookie($key,$val);
+			$_COOKIE[$key] = $val;
 		} else {
-			return false;
-		}
-	}
-
-	static function Cookie_Register($key, $val, $int) {
-		if (isset($_COOKIE[$key])) {
-			setcookie($key,$val);
-		} else {
-			setcookie($key,$val,time()+$int);
-		}
-	}
-
-	static function Cookie_UnSet($key) {
-		if (isset($_COOKIE[$key])) {
-			unset($_COOKIE[$key]);
-			//setcookie($key,"",time()-1);
-		} else {
-			return false;
+			setcookie($key,$value,time()+1);
+			//return false;
 		}
 	}
 
