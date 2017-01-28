@@ -273,21 +273,14 @@ final public function CheckError() {
 	return FALSE;
 	}
 
-
 /**
 * Set New $this->data items
-* @access  protected
-* @param String $attrs Attributes list as attr=value ... or items name
-* @param Mixed $items Attributes list as String attr=value ... or mixed object items
-* @param Boolean $pure if TRUE return SimpleXMLElement else stdClass
+* @access public
+* @param String $attrs Attributes list as attr=value ...
+* @param String $items Attributes list as attr=value ...
 **/
-	final  protected function NewData($attrs="",$items="",$pure=FALSE){
-		if(!$pure){
-			$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data'.$attrs.'>'.$items.'</data>', null, false);
-		} else {
-			$this->data = new stdClass;
-			$this->data->$attrs = $items;
-		}
+	public function NewData($attrs="",$items=""){
+		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data'.$attrs.'>'.$items.'</data>', null, false);
 	}
 /**
 * Set data attributes
@@ -306,54 +299,32 @@ final public function CheckError() {
 	}
 /**
 * Get or Set data to views
-* @access  protected
-* @param string $name Name of element
+* @access public
+* @param string $name Name of element  
 * @param mixed $value Optional new value for given name
 * @return mixed Value for name
-**/
-	final protected function ViewData() {
-		$argsv = func_get_args();
-		$argsc = func_num_args();
-
-		if($argsc == 1){
-			$name=$argsv[0];
-			if($name==''){
-				return '';
+**/ 
+	final public function ViewData() {
+			$argsv = func_get_args();
+			$argsc = func_num_args();
+			if (method_exists($this, $f = 'Data_' . $argsc)) {
+				return call_user_func_array(array($this, $f), $argsv);
 			}
-			return (isset($this ->data->$name)) ? $this ->data->$name : '';
 		}
-		if($argsc == 2){
-			$name=$argsv[0];
-			$value=$argsv[1];
-			if($name==''){
-				return '';
-			}
-			if($this->data instanceof SimpleXMLElement){
-				unset($this->data->$name);
-				$this->data->addChild($name,$value);
-			} else {
-				$this->data->$name = $value;
-			}
-			return (isset($this->data->$name)) ? $this->data->$name: '';
-		}
-		return '';
-	}
-
 /**
 * Get data to views
-* @access  protected
+* @access private
 * @see ViewData
-**/
-	final  protected function GetViewData($name = '') {
+**/ 
+	final private function Data_1($name = '') {
 		return (isset($this ->data->$name)) ? $this ->data->$name : '';
 	}
-
 /**
 * Set data to views
-* @access  protected
+* @access private
 * @see ViewData
-**/
-	final  protected function SetViewData($name, $value = '') {
+**/ 
+	final private function Data_2($name, $value = '') {
 		if($this ->data instanceof SimpleXMLElement){
 			unset($this ->data->$name);
 			$this->data->addChild($name,$value);
@@ -362,7 +333,6 @@ final public function CheckError() {
 		}
 		return (isset($this ->data->$name)) ? $this ->data->$name: '';
 	}
-
 /**
 * Convert SimpleXMLElement to array
 * @access public

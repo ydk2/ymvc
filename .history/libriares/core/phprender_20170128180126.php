@@ -276,12 +276,12 @@ final public function CheckError() {
 
 /**
 * Set New $this->data items
-* @access  protected
+* @access public
 * @param String $attrs Attributes list as attr=value ... or items name
 * @param Mixed $items Attributes list as String attr=value ... or mixed object items
 * @param Boolean $pure if TRUE return SimpleXMLElement else stdClass
 **/
-	final  protected function NewData($attrs="",$items="",$pure=FALSE){
+	final public function NewData($attrs="",$items="",$pure=FALSE){
 		if(!$pure){
 			$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data'.$attrs.'>'.$items.'</data>', null, false);
 		} else {
@@ -306,12 +306,12 @@ final public function CheckError() {
 	}
 /**
 * Get or Set data to views
-* @access  protected
+* @access public
 * @param string $name Name of element
 * @param mixed $value Optional new value for given name
 * @return mixed Value for name
 **/
-	final protected function ViewData() {
+	final public function ViewData() {
 		$argsv = func_get_args();
 		$argsc = func_num_args();
 
@@ -341,19 +341,19 @@ final public function CheckError() {
 
 /**
 * Get data to views
-* @access  protected
+* @access private
 * @see ViewData
 **/
-	final  protected function GetViewData($name = '') {
+	final private function GetViewData($name = '') {
 		return (isset($this ->data->$name)) ? $this ->data->$name : '';
 	}
 
 /**
 * Set data to views
-* @access  protected
+* @access private
 * @see ViewData
 **/
-	final  protected function SetViewData($name, $value = '') {
+	final private function SetViewData($name, $value = '') {
 		if($this ->data instanceof SimpleXMLElement){
 			unset($this ->data->$name);
 			$this->data->addChild($name,$value);

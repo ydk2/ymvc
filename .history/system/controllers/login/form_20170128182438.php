@@ -138,8 +138,8 @@ class Form extends PHPRender {
 
 		} else {
 
-			$this->ViewData('alert','Już Zalogowano, lecz możesz się wylogować lub wrócić do systemu');
-			$this->ViewData('classes',' alert-warning text-success');
+			$this->ViewData('alert','Zalogowano');
+			$this->ViewData('classes',' alert-success text-success');
 			$this->ViewData('success_link',$this->success_link);
 			$this->ViewData('user_name',Helper::session('user_name'));
 			$this->SetView(SYS.V ."login".S."welcome");
