@@ -92,7 +92,7 @@ class MNGLayouts extends XSLRender {
                 break;
 
             default:
-                $showas = 'col-sm-6';
+                $showas = 'col-sm-4';
                 break;
         }
 

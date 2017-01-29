@@ -22,7 +22,7 @@
 	<!--
 	<xsl:value-of select="$action"/>
 	-->
-	<h2><xsl:text>Edytowany Layout: </xsl:text><xsl:value-of select="$current"/></h2>
+	<h2><xsl:text>Edytowany </xsl:text><xsl:value-of select="$current"/></h2>
 	<xsl:choose>
     <xsl:when test="data/layouts/items != ''">
 	<form action="{$action}" method="post">

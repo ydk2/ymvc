@@ -12,8 +12,8 @@ class MNGLayouts extends XSLRender {
 		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_ANY);
-		$this->access_groups = array('admin','editor');
-		$this->current_group = Helper::Session('user_role');
+		$this->access_groups = array(null);
+		$this->current_group = null;
 		$this->AccessMode(2);
 		$this->SetModel(SYS.M.'systemdata');
 		$this->SetView(SYS.V . "layout".S."manage");
@@ -44,7 +44,7 @@ class MNGLayouts extends XSLRender {
 	}
 
 	function menu($data) {
-		$tree = '<div class="list-group custom-restricted">';
+		$tree = '<div class="list-group">';
 		$i = 1;
 		foreach ($data as $item) {
 				$tree .= '<a class="list-group-item" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$item.'">'.$item.'</a>' . PHP_EOL;
@@ -92,7 +92,7 @@ class MNGLayouts extends XSLRender {
                 break;
 
             default:
-                $showas = 'col-sm-6';
+                $showas = 'col-sm-4';
                 break;
         }
 
@@ -110,7 +110,6 @@ class MNGLayouts extends XSLRender {
 
 
         $this->SetParameter('','action',HOST_URL.'?layout'.S.'mnglayouts&group='.$group);
-        $this->SetParameter('','current',$group);
         $this->ViewData('menus', '<h3>Layout groups</h3>'.$this->menu($resultgrp));
         $this->ViewData('layouts', '');
 
@@ -146,7 +145,7 @@ class MNGLayouts extends XSLRender {
                 }
 
                 if($value['module']=="layout" && $value['group']!=""){
-                 //   if(!in_array($value['name'],$disabled)){
+                    if(!in_array($value['name'],$disabled)){
                         $contents = htmlspecialchars($this->layout_values($value));
                         if($contents!=""){
                             $col = $this->data->layouts->addChild('items', $contents);
@@ -156,10 +155,10 @@ class MNGLayouts extends XSLRender {
                         }
                         $contents = NULL;
                         $col = NULL;
-                 //   }
+                    }
                 }
                 if($value['module']=="route"  && $value['group']!=""){
-                //    if(!in_array($value['name'],$disabled)){
+                    if(!in_array($value['name'],$disabled)){
                         $contents = htmlspecialchars($this->layout_values($value));
                         if($contents!=""){
                             $col = $this->data->layouts->addChild('items', $contents);
@@ -170,10 +169,10 @@ class MNGLayouts extends XSLRender {
                         $contents = NULL;
                         $col = NULL;
 
-                //    }
+                    }
                 }
                 if($value['module']!="layout" && $value['module']!="route" && $value['module']!="") {
-                  //  if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
+                    if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
 
                         $contents = htmlspecialchars($this->layout_values($value));
                         if($contents!=""){
@@ -184,7 +183,7 @@ class MNGLayouts extends XSLRender {
                         }
                         $contents = NULL;
                         $col = NULL;
-                //    }
+                    }
                 }
             }
         }
@@ -202,7 +201,7 @@ class MNGLayouts extends XSLRender {
     public function layout_values($value){
         $special = array('layout','route');
         if(in_array($value['module'],$special)){
-            $append = '<a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['name'].'" >Edytuj</a>';
+            $append = '<a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['name'].'" >Edit</a>';
         } else {
             $append = '';
         }

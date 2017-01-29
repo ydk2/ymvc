@@ -2,7 +2,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" indent="yes"/>
 	<xsl:strip-space elements="*"/>
-	<xsl:param name="current"/>
+	<xsl:param name="content"/>
 	<xsl:param name="action"/>
 	<xsl:template match="/">
 	<div class="row">
@@ -22,7 +22,6 @@
 	<!--
 	<xsl:value-of select="$action"/>
 	-->
-	<h2><xsl:text>Edytowany Layout: </xsl:text><xsl:value-of select="$current"/></h2>
 	<xsl:choose>
     <xsl:when test="data/layouts/items != ''">
 	<form action="{$action}" method="post">
@@ -35,7 +34,7 @@
 	</form>
     </xsl:when>
     <xsl:otherwise>
-		<h2>Empty group</h2>
+		<h2><xsl:text>Empty group</xsl:text></h2>
     </xsl:otherwise>
 	</xsl:choose>
     </xsl:template>

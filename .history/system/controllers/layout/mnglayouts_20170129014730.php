@@ -12,8 +12,8 @@ class MNGLayouts extends XSLRender {
 		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_ANY);
-		$this->access_groups = array('admin','editor');
-		$this->current_group = Helper::Session('user_role');
+		$this->access_groups = array(null);
+		$this->current_group = null;
 		$this->AccessMode(2);
 		$this->SetModel(SYS.M.'systemdata');
 		$this->SetView(SYS.V . "layout".S."manage");
@@ -92,7 +92,7 @@ class MNGLayouts extends XSLRender {
                 break;
 
             default:
-                $showas = 'col-sm-6';
+                $showas = 'col-sm-4';
                 break;
         }
 
@@ -110,7 +110,6 @@ class MNGLayouts extends XSLRender {
 
 
         $this->SetParameter('','action',HOST_URL.'?layout'.S.'mnglayouts&group='.$group);
-        $this->SetParameter('','current',$group);
         $this->ViewData('menus', '<h3>Layout groups</h3>'.$this->menu($resultgrp));
         $this->ViewData('layouts', '');
 

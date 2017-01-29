@@ -92,7 +92,7 @@ class MNGLayouts extends XSLRender {
                 break;
 
             default:
-                $showas = 'col-sm-6';
+                $showas = 'col-sm-4';
                 break;
         }
 
@@ -110,7 +110,6 @@ class MNGLayouts extends XSLRender {
 
 
         $this->SetParameter('','action',HOST_URL.'?layout'.S.'mnglayouts&group='.$group);
-        $this->SetParameter('','current',$group);
         $this->ViewData('menus', '<h3>Layout groups</h3>'.$this->menu($resultgrp));
         $this->ViewData('layouts', '');
 

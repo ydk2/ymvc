@@ -12,8 +12,8 @@ class MNGLayouts extends XSLRender {
 		
 		$this->exceptions = TRUE;
 		$this->SetAccess(self::ACCESS_ANY);
-		$this->access_groups = array('admin','editor');
-		$this->current_group = Helper::Session('user_role');
+		$this->access_groups = array(null);
+		$this->current_group = null;
 		$this->AccessMode(2);
 		$this->SetModel(SYS.M.'systemdata');
 		$this->SetView(SYS.V . "layout".S."manage");
@@ -44,7 +44,7 @@ class MNGLayouts extends XSLRender {
 	}
 
 	function menu($data) {
-		$tree = '<div class="list-group custom-restricted">';
+		$tree = '<div class="list-group">';
 		$i = 1;
 		foreach ($data as $item) {
 				$tree .= '<a class="list-group-item" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$item.'">'.$item.'</a>' . PHP_EOL;
@@ -92,7 +92,7 @@ class MNGLayouts extends XSLRender {
                 break;
 
             default:
-                $showas = 'col-sm-6';
+                $showas = 'col-sm-4';
                 break;
         }
 
@@ -110,7 +110,6 @@ class MNGLayouts extends XSLRender {
 
 
         $this->SetParameter('','action',HOST_URL.'?layout'.S.'mnglayouts&group='.$group);
-        $this->SetParameter('','current',$group);
         $this->ViewData('menus', '<h3>Layout groups</h3>'.$this->menu($resultgrp));
         $this->ViewData('layouts', '');
 
@@ -146,7 +145,7 @@ class MNGLayouts extends XSLRender {
                 }
 
                 if($value['module']=="layout" && $value['group']!=""){
-                 //   if(!in_array($value['name'],$disabled)){
+                    if(!in_array($value['name'],$disabled)){
                         $contents = htmlspecialchars($this->layout_values($value));
                         if($contents!=""){
                             $col = $this->data->layouts->addChild('items', $contents);
@@ -156,10 +155,10 @@ class MNGLayouts extends XSLRender {
                         }
                         $contents = NULL;
                         $col = NULL;
-                 //   }
+                    }
                 }
                 if($value['module']=="route"  && $value['group']!=""){
-                //    if(!in_array($value['name'],$disabled)){
+                    if(!in_array($value['name'],$disabled)){
                         $contents = htmlspecialchars($this->layout_values($value));
                         if($contents!=""){
                             $col = $this->data->layouts->addChild('items', $contents);
@@ -170,10 +169,10 @@ class MNGLayouts extends XSLRender {
                         $contents = NULL;
                         $col = NULL;
 
-                //    }
+                    }
                 }
                 if($value['module']!="layout" && $value['module']!="route" && $value['module']!="") {
-                  //  if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
+                    if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
 
                         $contents = htmlspecialchars($this->layout_values($value));
                         if($contents!=""){
@@ -184,40 +183,42 @@ class MNGLayouts extends XSLRender {
                         }
                         $contents = NULL;
                         $col = NULL;
-                //    }
+                    }
                 }
             }
         }
     }
     }
-    public function input($name,$value='',$type='text',$for='text1',$datalist=''){
+    public function input($item,$name,$value='',$type='text',$for='text1',$datalist=''){
         $sgroup ='<div class="input-group">';
         $egroup ='</div>';
         $input = '<input type="'.$type.'" class="form-control" name="'.$name.'" value="'.$value.'"  placeholder="'.$name.'"aria-describedby="'.$for.'">
         '.$datalist.'';
         $span = '<span class="input-group-addon" id="'.$for.'">'.ucfirst($name).'</span>';
-
-        return $sgroup.$input.$span.$egroup;
+        $btn = '<span class="input-group-btn">
+                    <a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$item.'" >Edit</a>
+                  </span>';
+        $special = array('layout','route');
+        if($name=='module' && in_array($value,$special)){
+            $append = $btn;
+        } else {
+            $append = $span;
+        }
+        return $sgroup.$input.$append.$egroup;
     }
     public function layout_values($value){
-        $special = array('layout','route');
-        if(in_array($value['module'],$special)){
-            $append = '<a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['name'].'" >Edytuj</a>';
-        } else {
-            $append = '';
-        }
         $sgroup ='<div class="input-group">';
         $egroup ='</div>';
         $id = 1;
         $contents = "<h4>".ucfirst($value['name'])."</h4>";
         $contents .= "<p>".$value['pos']."</p>";
-        $contents .= $sgroup.'<a class="btn btn-danger" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['group'].'&amp;delete='.$value['id'].'">Usuń</a>'.$append.$egroup;
-        $contents .= $this->input('name',$value['name'],'text','text'.$id++);
-        $contents .= $this->input('module',$value['module'],'text','text'.$id++);
-        $contents .= $this->input('view',$value['view'],'text','text'.$id++);
-        $contents .= $this->input('class',$value['class'],'text','text'.$id++);
-        $contents .= $this->input('attrid',$value['attrid'],'text','text'.$id++);
-        $contents .= $this->input('mode',$value['mode'],'text','text'.$id++);
+        $contents .= $sgroup.'<a class="btn btn-danger" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['group'].'&amp;delete='.$value['id'].'">Usuń</a>'.$egroup;
+        $contents .= $this->input($value['name'],'name',$value['name'],'text','text'.$id++);
+        $contents .= $this->input($value['name'],'module',$value['module'],'text','text'.$id++);
+        $contents .= $this->input($value['name'],'view',$value['view'],'text','text'.$id++);
+        $contents .= $this->input($value['name'],'class',$value['class'],'text','text'.$id++);
+        $contents .= $this->input($value['name'],'attrid',$value['attrid'],'text','text'.$id++);
+        $contents .= $this->input($value['name'],'mode',$value['mode'],'text','text'.$id++);
         return $contents;
     }
 	public function showwarning()
