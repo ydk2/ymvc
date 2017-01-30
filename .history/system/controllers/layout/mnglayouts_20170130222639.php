@@ -280,12 +280,15 @@ class MNGLayouts extends XSLRender {
     public function layout_values($value){
         $special = array('layout','route');
         $menus = array('elements-menu','menu');
-        $append = '';
         if(in_array($value['module'],$special)){
-            $append .= '<a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['name'].'" >Edytuj</a>';
+            $append = '<a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['name'].'" >Edytuj</a>';
+        } else {
+            $append = '';
         }
         if(in_array($value['module'],$menus)){
-            $append .= '<a class="btn btn-success" href="'.HOST_URL.'?admin'.S.'mngmenus&amp;data='.$value['name'].'" >Dodaj do menu</a>';
+            $append = '<a class="btn btn-success" href="'.HOST_URL.'?admin'.S.'mngmenus&amp;data='.$value['name'].'" >Dodaj do menu</a>';
+        } else {
+            $append = '';
         }
         $sbtngrp = '<span class="input-group-btn">';
         $ebtngrp = '</span>';
