@@ -9,8 +9,8 @@
               <div class="panel-body">
                 <div class="row login-form well">
                   <div class="col-md-12">
-                    <h1>Wyloguj <?=$this->ViewData('user_name');?></h1>
-                    <p class="lead">Napewno?</p>
+                    <h1 class="text-primary">Wyloguj <?=$this->ViewData('user_name');?></h1>
+                    <p class="lead text-primary">Napewno?</p>
                     <p>Teraz możesz wylogować się lub wrócić do konta</p>
                   </div>
                   <div class="col-sm-12">

@@ -9,8 +9,8 @@
               <div class="panel-body">
                 <div class="row login-form well">
                   <div class="col-md-12">
-                    <h1>Do zobaczenia</h1>
-                    <p class="lead">Teraz możesz opuścić system lub zalogować się ponownie</p>
+                    <h1 class="text-primary">Do zobaczenia</h1>
+                    <p class="lead text-primary">Teraz możesz opuścić system lub zalogować się ponownie</p>
                   </div>
                   <div class="col-sm-12">
                     <a class="btn btn-block btn-info" href="?login<?=S;?>form">Zaloguj ponownie</a>

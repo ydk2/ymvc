@@ -9,8 +9,8 @@
               <div class="panel-body">
                 <div class="row login-form well">
                   <div class="col-md-12">
-                    <h1>Witaj, <?=$this->ViewData('user_name');?></h1>
-                    <p class="lead">Zostałeś zalogowany w systemie</p>
+                    <h1 class="text-primary">Witaj, <?=$this->ViewData('user_name');?></h1>
+                    <p class="lead text-primary">Zostałeś zalogowany w systemie</p>
                     <p>Teraz możesz przejść do konta</p>
                   </div>
                   <div class="col-sm-12">
