@@ -15,10 +15,9 @@
 	<div class="row">
 	<ul class="breadcrumb">
     <li><strong>Pokaż w kolumnach</strong></li>
-		<xsl:for-each select="data/columns/list">
-			<li><a href="{@link}">
-			<xsl:value-of select="node()" />
-			</a></li>
+		<xsl:value-of select="data/columns"/>
+		<xsl:for-each select="">
+		
 		</xsl:for-each>
 	</ul>
 	</div>
@@ -42,14 +41,7 @@
 	<xsl:value-of select="data/addnewitem" disable-output-escaping="yes"/>
 	</div>
 	<div class="row">
-	<strong class="lead"><xsl:value-of select="data/menushead"/></strong>
-	<div class="list-group custom-restricted">
-		<xsl:for-each select="data/menus/list">
-			<a class="list-group-item" href="{@link}">
-			<xsl:value-of select="node()" />
-			</a>
-		</xsl:for-each>
-	</div>
+	<xsl:value-of select="data/menus" disable-output-escaping="yes"/>
 	</div>
 	</div>
 	<div class="col-sm-8">

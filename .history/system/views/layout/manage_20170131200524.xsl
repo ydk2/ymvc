@@ -42,7 +42,7 @@
 	<xsl:value-of select="data/addnewitem" disable-output-escaping="yes"/>
 	</div>
 	<div class="row">
-	<strong class="lead"><xsl:value-of select="data/menushead"/></strong>
+	<strong><xsl:value-of select="data/menushead"/></strong>
 	<div class="list-group custom-restricted">
 		<xsl:for-each select="data/menus/list">
 			<a class="list-group-item" href="{@link}">

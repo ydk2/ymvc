@@ -188,8 +188,7 @@ public function group_list(){
     $resultgrp = array_unique($group_list);
     
     
-    $this->ViewData('menushead', 'Layout groups');
-    $this->menu($resultgrp);
+    //$this->ViewData('menus', '<h3>Layout groups</h3>'.$this->menu($resultgrp));
 }
 
 public function Layouts($enabled,$disabled){

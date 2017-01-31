@@ -26,18 +26,13 @@ class MNGMenus extends XSLRender {
 
         $table='layouts';
 		$gprx = 'layout';
-
-        //$this->array = $this->model->get_entries($table,$gprx);
-        //$this->array = $this->model->search_name($table,'name',$gprx);
-        //$this->datalist=$this->model->searchByName($this->array,'name',$gprx);
-        //$datalist=$this->model->get_idx_enteries($table,2,$gprx);
 		//$this->array = $this->model->get_entries($table,$gprx);
         //$this->datalist=$this->model->searchByName($this->array,'name',$gprx);
         $this->datalist=$this->model->search_entries($table,$gprx);
 
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
-        
+
         $this->SetParameter('','current',$this->group);
         $this->SetParameter('','action',HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'');
         $this->SetParameter('','addgroup',HOST_URL.'?layout'.S.'mnglayouts');
@@ -47,26 +42,29 @@ class MNGMenus extends XSLRender {
         $this->add_layout_item();
         if(Helper::get('action')){
             $this->ViewData('message', '');
-            $this->Save();
-            $this->data->message->addChild('link', HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$this->group.'');
+             $this->Save();
+             $this->data->message->addChild('link', HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$this->group.'');
         } else {
             if(!empty($this->datalist)){
-                $this->ViewData('layouts', '');
-                $this->inColumn();
-                $this->Layouts($enabled,$disabled);
+            $this->ViewData('layouts', '');
+            $this->inColumn();
+            $this->Layouts($enabled,$disabled);
             }
         }
     }
     private function Save(){
-        if(Helper::get('action')=='add' && isset($_POST['add'])){
+        if(Helper::get('action')=='add' && isset($_POST['add_item'])){
             $frompost = Helper::post('item');
             reset($frompost);
             $key = key($frompost);
             /**/
             $chk=0;
             if($frompost[$key]['name']!='' && $frompost[$key]['module']!=''){
-                    $chk=$this->model->doAddItems($frompost,'layouts','layout');
-                if($chk){
+                $data = $this->model->reverseNoId($frompost,'layout');
+                foreach ($data as $name => $items) {
+                    $chk+=$this->model->add_item('layouts',$items['name'],$items['value'],$items['idx'],'layout');
+                }
+                if($chk == 0){
                     $this->data->message->addChild('header', 'Udane');
                     $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
                 } else {
@@ -80,32 +78,34 @@ class MNGMenus extends XSLRender {
             }
             /**/
         }
-        if(Helper::get('action')=='update' && isset($_POST['update'])){
+        if(Helper::get('action')=='update' && isset($_POST['update_items'])){
             $frompost = Helper::post('item');
+            reset($frompost);
             $chk = 0;
-            $chk=$this->model->doUpdateItems($frompost,'layouts','layout');
-            if($chk){
-                $this->data->message->addChild('header', 'Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
-            } else {
-                $this->data->message->addChild('header', 'Nie Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona błędem');
+            $data = $this->model->reverseNoId($frompost,'layout');
+
+            foreach ($data as $items) {
+                $chk+=$this->model->update_item('layouts',$items['name'],$items['value'],$items['idx'],'layout');
             }
+                if($chk == 0){
+                    $this->data->message->addChild('header', 'Udane');
+                    $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
+                } else {
+                    $this->data->message->addChild('header', 'Nie Udane');
+                    $this->data->message->addChild('text', 'Operacja zakończona błędem');
+                }
         }
         if(Helper::get('action')=='delete' && Helper::get('item')){
-            $out=$this->model->delete_idx('layouts',Helper::get('item'),'layout');
-            if($out==0){
-                $this->data->message->addChild('header', 'Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
-            } else {
-                $this->data->message->addChild('header', 'Nie Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona błędem');
-            }
+			$out=$this->model->delete_idx('layouts',Helper::get('item'),'layout');
+                if($out == 0){
+                    $this->data->message->addChild('header', 'Udane');
+                    $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
+                } else {
+                    $this->data->message->addChild('header', 'Nie Udane');
+                    $this->data->message->addChild('text', 'Operacja zakończona błędem');
+                }
         }
-        $this->data->message->addChild('header', 'Błąd!!!');
-        $this->data->message->addChild('text', 'Operacja Nie Istnieje');
     }
-
     public function doSave($item='item',$table,$group){
         if(Helper::get('action')=='add' && isset($_POST['add_'.$item])){
             $frompost = Helper::post($item);

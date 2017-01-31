@@ -18,17 +18,21 @@ class MNGLayouts extends XSLRender {
         $this->SetModel(SYS.M.'systemdata');
         $this->SetView(SYS.V . "layout".S."manage");
         //$this -> items = $this -> model -> get_menu($this->groups);
-
-        $this->group=(Helper::get('group')=='')?'main':Helper::get('group');
-        $this->ViewData('header', 'Manage Layouts');
     }
     
     public function Run(){
-
+        
+        $this->group=(Helper::get('group')=='')?'main':Helper::get('group');
         
         $table='layouts';
         $gprx = 'layout';
-        $this->datalist=$this->model->search_entries($table,$gprx);
+        //$this->array = $this->model->get_entries($table,$gprx);
+        $this->array = $this->model->search_name($table,'name',$gprx);
+        //$this->datalist=$this->model->searchByName($this->array,'name',$gprx);
+//        $datalist=$this->model->get_idx_enteries($table,2,$gprx);
+        $this->datalist=$this->model->search_entries($table,$gprx);//
+        var_dump($this->array);
+        //return;
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
         
@@ -112,6 +116,7 @@ class MNGLayouts extends XSLRender {
     }
     
     function menulist($data, $parent = '') {
+        // <item id="0" name="1">
         $tree = '';
         $i = 1;
         foreach ($data as $item) {
@@ -129,11 +134,13 @@ class MNGLayouts extends XSLRender {
     }
     
     function menu($data) {
-        $this->ViewData('menus','');
+        $tree = '<div class="list-group custom-restricted">';
+        $i = 1;
         foreach ($data as $item) {
-            $list = $this->data->menus->addChild('list',$item);
-            $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$item);
+            $tree .= '<a class="list-group-item" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$item.'">'.$item.'</a>' . PHP_EOL;
         }
+        $tree .= "</div>";
+        return $tree;
     }
     
     
@@ -153,13 +160,12 @@ class MNGLayouts extends XSLRender {
             Helper::cookie_set('showas',$show);
             $showed = $show;
         }
-        $this->ViewData('columns','');
-        $list = $this->data->columns->addChild('list','Jednej');
-        $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'&showas=one');
-        $list = $this->data->columns->addChild('list','Dwóch');
-        $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'&showas=two');
-        $list = $this->data->columns->addChild('list','Trzech');
-        $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'&showas=three');
+        $showsort = '<div class="row"><strong>Pokaż w kolumnach</strong><ul class="breadcrumb">';
+        $showsort .= '<li><a href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$this->group.'&amp;showas=one">jednej</a></li>';
+        $showsort .= '<li><a href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$this->group.'&amp;showas=two">dwóch</a></li>';
+        $showsort .= '<li><a href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$this->group.'&amp;showas=three">trzech</a></li>';
+        $showsort .= '</ul></div>';
+        $this->ViewData('header', '<h3>Manage Layouts</h3>'.$showsort);
         switch ($showed) {
             case 'three':
                 $showas = 'col-sm-4';
@@ -188,8 +194,7 @@ public function group_list(){
     $resultgrp = array_unique($group_list);
     
     
-    $this->ViewData('menushead', 'Layout groups');
-    $this->menu($resultgrp);
+    $this->ViewData('menus', '<h3>Layout groups</h3>'.$this->menu($resultgrp));
 }
 
 public function Layouts($enabled,$disabled){

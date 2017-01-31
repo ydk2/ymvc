@@ -112,6 +112,7 @@ class MNGLayouts extends XSLRender {
     }
     
     function menulist($data, $parent = '') {
+        // <item id="0" name="1">
         $tree = '';
         $i = 1;
         foreach ($data as $item) {
@@ -129,11 +130,13 @@ class MNGLayouts extends XSLRender {
     }
     
     function menu($data) {
-        $this->ViewData('menus','');
+        $tree = '<div class="list-group custom-restricted">';
+        $i = 1;
         foreach ($data as $item) {
-            $list = $this->data->menus->addChild('list',$item);
-            $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$item);
+            $tree .= '<a class="list-group-item" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$item.'">'.$item.'</a>' . PHP_EOL;
         }
+        $tree .= "</div>";
+        return $tree;
     }
     
     
@@ -188,8 +191,7 @@ public function group_list(){
     $resultgrp = array_unique($group_list);
     
     
-    $this->ViewData('menushead', 'Layout groups');
-    $this->menu($resultgrp);
+    $this->ViewData('menus', '<h3>Layout groups</h3>'.$this->menu($resultgrp));
 }
 
 public function Layouts($enabled,$disabled){
