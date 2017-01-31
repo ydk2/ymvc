@@ -27,11 +27,10 @@ class MNGLayouts extends XSLRender {
         $table='layouts';
         $gprx = 'layout';
         //$this->array = $this->model->get_entries($table,$gprx);
-        $this->array = $this->model->search_name($table,'name',$gprx);
+        $this->array = $this->model->get_name($table,'name',$gprx);
         //$this->datalist=$this->model->searchByName($this->array,'name',$gprx);
-        $datalist=$this->model->search_idx_enteries($table,2,$gprx);
-        $this->datalist=$this->model->search_entries($table,$gprx);//
-        var_dump($datalist);
+        $this->datalist=$this->model->search_enteries($table,$gprx);//
+        //var_dump($this->array);
         //return;
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
@@ -92,7 +91,7 @@ class MNGLayouts extends XSLRender {
         }
         if(Helper::get('action')=='delete' && Helper::get('item')){
             $out=$this->model->delete_idx('layouts',Helper::get('item'),'layout');
-            if($out==0){
+            if($out){
                 $this->data->message->addChild('header', 'Udane');
                 $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
             } else {

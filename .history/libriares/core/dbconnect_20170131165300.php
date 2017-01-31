@@ -519,7 +519,7 @@ class DBConnect {
         $h -> execute(array($gprx,$offset,$max));
         $rows = $h -> fetchAll(PDO::FETCH_NAMED);
         if ($rows) {
-           return $this->searchByName($rows,$rows[0]['name'],$gprx);
+           return $this->searchByNameValue($rows,$name,$value,$gprx);
         }	// end get pages
         return false;
     }
@@ -538,7 +538,7 @@ class DBConnect {
     public function search_name($table,$name,$gprx,$limit=100,$offset=0) {
         $max = $offset+$limit;
         $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
-        $h -> execute(array($name,$gprx,$offset,$max));
+        $h -> execute(array($name,$value,$gprx,$offset,$max));
         $rows = $h -> fetchAll(PDO::FETCH_NAMED);
         if ($rows) {
            return $this->searchByName($rows,$name,$gprx);
@@ -552,16 +552,6 @@ class DBConnect {
         $rows = $h -> fetchAll(PDO::FETCH_NAMED);
         if ($rows) {
            return $this->searchByName($rows,$name,$gprx);
-        }	// end get pages
-        return false;
-    }
-
-    public function search_idx_enteries($table,$idx,$gprx) {
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE idx=? AND gprx=? ORDER BY idx ASC");
-        $h -> execute(array($idx,$gprx));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-            return $this->searchByName($rows,$rows[0]['name'],$gprx);
         }	// end get pages
         return false;
     }
@@ -593,7 +583,7 @@ class DBConnect {
     public function get_name($table,$name,$gprx,$limit=100,$offset=0) {
         $max = $offset+$limit;
         $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
-        $h -> execute(array($name,$gprx,$offset,$max));
+        $h -> execute(array($name,$value,$gprx,$offset,$max));
         $rows = $h -> fetchAll(PDO::FETCH_NAMED);
         if ($rows) {
             //sksort($rows,'pos');

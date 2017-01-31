@@ -26,13 +26,9 @@ class MNGLayouts extends XSLRender {
         
         $table='layouts';
         $gprx = 'layout';
-        //$this->array = $this->model->get_entries($table,$gprx);
-        $this->array = $this->model->search_name($table,'name',$gprx);
-        //$this->datalist=$this->model->searchByName($this->array,'name',$gprx);
-        $datalist=$this->model->search_idx_enteries($table,2,$gprx);
-        $this->datalist=$this->model->search_entries($table,$gprx);//
-        var_dump($datalist);
-        //return;
+        $this->array = $this->model->get_entries($table,$gprx);
+        $this->datalist=$this->model->searchByName($this->array,'name',$gprx);
+        
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
         
@@ -64,7 +60,7 @@ class MNGLayouts extends XSLRender {
             $chk=0;
             if($frompost[$key]['name']!='' && $frompost[$key]['module']!=''){
                     $chk=$this->model->doAddItems($frompost,'layouts','layout');
-                if($chk){
+                if($chk == 0){
                     $this->data->message->addChild('header', 'Udane');
                     $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
                 } else {
@@ -82,7 +78,7 @@ class MNGLayouts extends XSLRender {
             $frompost = Helper::post('item');
             $chk = 0;
             $chk=$this->model->doUpdateItems($frompost,'layouts','layout');
-            if($chk){
+            if($chk == 0){
                 $this->data->message->addChild('header', 'Udane');
                 $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
             } else {
@@ -92,7 +88,7 @@ class MNGLayouts extends XSLRender {
         }
         if(Helper::get('action')=='delete' && Helper::get('item')){
             $out=$this->model->delete_idx('layouts',Helper::get('item'),'layout');
-            if($out==0){
+            if($out == 0){
                 $this->data->message->addChild('header', 'Udane');
                 $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
             } else {
@@ -283,7 +279,7 @@ public function layout_values($value){
         $append .= '<a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['name'].'" >Edytuj</a>';
     }
     if(in_array($value['module'],$menus)){
-        $append .= '<a class="btn btn-success" href="'.HOST_URL.'?admin'.S.'mngmenus&amp;data='.$this->group.'" >Edytuj menu</a>';
+        $append .= '<a class="btn btn-success" href="'.HOST_URL.'?admin'.S.'mngmenus&amp;data='.$value['name'].'" >Dodaj do menu</a>';
     }
     $sbtngrp = '<span class="input-group-btn">';
     $ebtngrp = '</span>';

@@ -512,60 +512,7 @@ class DBConnect {
             return FALSE;
         }
     }
-
-    public function search_entries($table,$gprx,$limit=100,$offset=0) {
-        $max = $offset+$limit;
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
-        $h -> execute(array($gprx,$offset,$max));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-           return $this->searchByName($rows,$rows[0]['name'],$gprx);
-        }	// end get pages
-        return false;
-    }
-
-    public function search_name_value($table,$name,$value,$gprx,$limit=100,$offset=0) {
-        $max = $offset+$limit;
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND value=? AND gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
-        $h -> execute(array($name,$value,$gprx,$offset,$max));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-           return $this->searchByNameValue($rows,$name,$value,$gprx);
-        }	// end get pages
-        return false;
-    }
-
-    public function search_name($table,$name,$gprx,$limit=100,$offset=0) {
-        $max = $offset+$limit;
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
-        $h -> execute(array($name,$gprx,$offset,$max));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-           return $this->searchByName($rows,$name,$gprx);
-        }	// end get pages
-        return false;
-    }
-
-    public function search_name_idx($table,$name,$idx,$gprx) {
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND idx=? AND gprx=? ORDER BY idx ASC");
-        $h -> execute(array($name,$idx,$gprx));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-           return $this->searchByName($rows,$name,$gprx);
-        }	// end get pages
-        return false;
-    }
-
-    public function search_idx_enteries($table,$idx,$gprx) {
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE idx=? AND gprx=? ORDER BY idx ASC");
-        $h -> execute(array($idx,$gprx));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-            return $this->searchByName($rows,$rows[0]['name'],$gprx);
-        }	// end get pages
-        return false;
-    }
-// get
+    
     public function get_entries($table,$gprx,$limit=100,$offset=0) {
         $max = $offset+$limit;
         $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
@@ -577,8 +524,8 @@ class DBConnect {
         }	// end get pages
         return false;
     }
-
-    public function get_name_value($table,$name,$value,$gprx,$limit=100,$offset=0) {
+    
+    public function get_key_value($table,$name,$value,$gprx,$limit=100,$offset=0) {
         $max = $offset+$limit;
         $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND value=? AND gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
         $h -> execute(array($name,$value,$gprx,$offset,$max));
@@ -589,20 +536,8 @@ class DBConnect {
         }	// end get pages
         return false;
     }
-
-    public function get_name($table,$name,$gprx,$limit=100,$offset=0) {
-        $max = $offset+$limit;
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND gprx=? AND idx>=? AND idx<? ORDER BY idx ASC");
-        $h -> execute(array($name,$gprx,$offset,$max));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-            //sksort($rows,'pos');
-            return $rows;
-        }	// end get pages
-        return false;
-    }
-
-    public function get_name_id($table,$name,$idx,$gprx) {
+    
+    public function get_key_id($table,$name,$idx,$gprx) {
         $h = $this -> db -> prepare("SELECT id FROM ".DBPREFIX.$table." WHERE name=? AND idx=? AND gprx=? ORDER BY id ASC");
         $h -> execute(array($name,$idx,$gprx));
         $rows = $h -> fetchAll(PDO::FETCH_NAMED);
@@ -612,8 +547,8 @@ class DBConnect {
         }	// end get pages
         return false;
     }
-
-    public function get_name_idx($table,$name,$idx,$gprx) {
+    
+    public function get_idx_key($table,$name,$idx,$gprx) {
         $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE name=? AND idx=? AND gprx=? ORDER BY idx ASC");
         $h -> execute(array($name,$idx,$gprx));
         $rows = $h -> fetchAll(PDO::FETCH_NAMED);
@@ -623,7 +558,7 @@ class DBConnect {
         }	// end get pages
         return false;
     }
-
+    
     public function get_idx_enteries($table,$idx,$gprx) {
         $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE idx=? AND gprx=? ORDER BY idx ASC");
         $h -> execute(array($idx,$gprx));
@@ -634,7 +569,7 @@ class DBConnect {
         }	// end get pages
         return false;
     }
-
+    
     public function get_gprx_list($table) {
         $h = $this -> db -> prepare("SELECT gprx FROM ".DBPREFIX.$table." ORDER BY gprx ASC");
         $h -> execute(array());
@@ -829,105 +764,25 @@ class DBConnect {
         }
     }
         return FALSE;
-  }
-  public function doAddItems($action,$table,$group){
-    if(isset($action) && !empty($action)){
-      reset($action);
-      $chk = 0;
-      $data = $this->reverseNoId($action,$group);
-      foreach ($data as $items) {
-        $chk+=$this->add_item($table,$items['name'],$items['value'],$items['idx'],$group);
-      }
-      if($chk == 0){
-        return TRUE;
-      } else {
-        return FALSE;
-      }
     }
-    return FALSE;
-  }
-    public function doUpdateItems($action,$table,$group){
-        if(isset($action) && !empty($action)){
-            reset($action);
-            $chk = 0;
-            $data = $this->reverseNoId($action,$group);
-            foreach ($data as $items) {
-                $chk+=$this->update_item($table,$items['name'],$items['value'],$items['idx'],$group);
-            }
-            if($chk == 0){
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        }
-        return FALSE;
+    public function doAddItems(){
+
     }
-    public function doDeleteItems($action,$table,$group){
-        if(isset($action) && !empty($action)){
-            reset($action);
-            $chk = 0;
-            $data = $this->reverseNoId($action,$group);
-            foreach ($data as $items) {
-                $chk+=$this->delete_item($table,$items['name'],$items['idx'],$group);
-            }
-            if($chk == 0){
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        }
-        return FALSE;
+    public function doUpdateItems(){
+
     }
-    public function doDeleteIdx($action,$table,$group){
-    if(isset($action) && $action!=''){
-        $chk=$this->delete_idx($table,$action,$group);
+    public function doDeleteItems(){
+
+    }
+    public function doDelete($action,$idx,$table,$group){
+    if(isset($action) && $action==$item){
+        $out=$this->delete_idx($table,$idx,$group);
         if($chk == 0){
             return TRUE;
         } else {
             return FALSE;
         }
     }
-    return FALSE;
-    }
-    public function doSave($item='item',$table,$group){
-        if(Helper::get('action')=='add' && isset($_POST['add'])){
-            $frompost = Helper::post($item);
-            reset($frompost);
-            $chk = 0;
-            $data = $this->model->reverseNoId($frompost,$group);
-
-            foreach ($data as $items) {
-                $chk+=$this->model->add_item($table,$items['name'],$items['value'],$items['idx'],$group);
-            }
-            if($chk == 0){
-            return TRUE;
-            } else {
-            return FALSE;
-            }
-        }
-        if(Helper::get('action')=='update' && isset($_POST['update'])){
-            $frompost = Helper::post($item);
-            reset($frompost);
-            $chk = 0;
-            $data = $this->model->reverseNoId($frompost,$group);
-
-            foreach ($data as $items) {
-                $chk+=$this->model->update_item($table,$items['name'],$items['value'],$items['idx'],$group);
-            }
-            if($chk == 0){
-            return TRUE;
-            } else {
-            return FALSE;
-            }
-        }
-        if(Helper::get('action')=='delete' && Helper::get($item)){
-			$chk=$this->model->delete_idx($table,Helper::get($item),$group);
-            if($chk == 0){
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        }
     }
 }
 ?>

@@ -555,16 +555,6 @@ class DBConnect {
         }	// end get pages
         return false;
     }
-
-    public function search_idx_enteries($table,$idx,$gprx) {
-        $h = $this -> db -> prepare("SELECT * FROM ".DBPREFIX.$table." WHERE idx=? AND gprx=? ORDER BY idx ASC");
-        $h -> execute(array($idx,$gprx));
-        $rows = $h -> fetchAll(PDO::FETCH_NAMED);
-        if ($rows) {
-            return $this->searchByName($rows,$rows[0]['name'],$gprx);
-        }	// end get pages
-        return false;
-    }
 // get
     public function get_entries($table,$gprx,$limit=100,$offset=0) {
         $max = $offset+$limit;
