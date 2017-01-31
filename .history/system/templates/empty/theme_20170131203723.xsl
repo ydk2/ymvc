@@ -84,7 +84,9 @@ border-right: 5px solid #c41818;
 			</head>
 			<body>
     		<div class="section">
+      		<div class="col-sm-12">
 				<xsl:value-of select='data/contents' disable-output-escaping='yes'/>
+			</div>
 			</div>
 			</body>
 		</html>

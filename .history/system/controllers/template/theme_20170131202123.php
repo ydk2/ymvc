@@ -157,7 +157,7 @@ class Theme extends XSLRender {
     <script src="libriares/libs/bootstrap-combobox/bootstrap-combobox.js"></script>
     <script src="libriares/libs/bootstrap-toggle/2.2.2/bootstrap-toggle.min.js"></script>
     <script type="text/javascript" src="libriares/libs/theme/js/script.js"></script>
-    <link href="libriares/libs/theme/css/bs-style-nice.css" rel="stylesheet" type="text/css">';
+    <link href="libriares/libs/theme/css/bs-style.css" rel="stylesheet" type="text/css">';
         $this->ViewData('header', $header);
     }
     

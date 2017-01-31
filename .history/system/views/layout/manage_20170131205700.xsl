@@ -8,6 +8,12 @@
 	<xsl:param name="addgrouphidden"/>
 	<xsl:template match="/">
 	<div class="row">
+	<div class="col-sm-12">
+	<strong class="lead">
+	<xsl:value-of select="data/header"/>
+	</strong>
+
+	</div>
 	<div class="col-sm-3">
 	<div class="row">
 	<strong class="lead">Dodaj nową grupę</strong>
@@ -53,8 +59,8 @@
 
 	<xsl:template match="data/message" name="msg">
         <div class="row">
-          <div class="col-sm-12">
-            <div class="well">
+          <div class="col-md-12">
+            <div class="jumbotron">
               <h2 class="text-primary"><xsl:value-of select="data/message/header" /></h2>
               <p class="text-primary"><xsl:value-of select="data/message/text"  disable-output-escaping="yes"/></p>
               <a href="{data/message/link}" class="btn btn-info btn-large">OK</a>
@@ -69,6 +75,7 @@
 	-->
 	<strong class="lead"><xsl:text>Edytowany Layout: </xsl:text><xsl:value-of select="$current"/></strong>
 	<div class="row">
+	<div class="col-sm-12">
 	<ul class="breadcrumb">
     <li><strong>Pokaż w kolumnach</strong></li>
 		<xsl:for-each select="data/columns/list">
@@ -77,6 +84,7 @@
 			</a></li>
 		</xsl:for-each>
 	</ul>
+	</div>
 	</div>
 	<div class="row">
 	<xsl:choose>

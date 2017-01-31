@@ -119,8 +119,8 @@ class Form extends PHPRender {
 
 		}
 		if($pass_check==TRUE){
-			//$enteries = $this->model->get_idx_enteries($table,$user_check[0]['idx'],$gprx);
-			$user_data=$this->model->search_idx_enteries($table,$user_check[0]['idx'],$gprx); //$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
+			$enteries = $this->model->get_idx_enteries($table,$user_check[0]['idx'],$gprx);
+			$user_data=$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
 				Helper::session_set('id', key($user_data)+1);
 				Helper::session_set('user_name', $user_data[key($user_data)]['account_name']);
 				Helper::session_set('user_email', $user_data[key($user_data)]['account_email']);

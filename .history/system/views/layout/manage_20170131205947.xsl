@@ -8,6 +8,12 @@
 	<xsl:param name="addgrouphidden"/>
 	<xsl:template match="/">
 	<div class="row">
+	<div class="col-sm-12">
+	<strong class="lead">
+	<xsl:value-of select="data/header"/>
+	</strong>
+
+	</div>
 	<div class="col-sm-3">
 	<div class="row">
 	<strong class="lead">Dodaj nową grupę</strong>

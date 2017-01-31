@@ -92,13 +92,13 @@ class Form extends PHPRender {
 
 		$user_check = $this->model->get_name_value($table,'account_login',$user,$gprx);
 		if($user_check){
-			$active_check = $this->model->get_name_idx($table,'active',$user_check[0]['idx'],$gprx);
+			$active_check = $this->model->get_idx_name($table,'active',$user_check[0]['idx'],$gprx);
 			$active_check = $active_check[0]['value'];
-			$can_login_check = $this->model->get_name_idx($table,'can_login',$user_check[0]['idx'],$gprx);
+			$can_login_check = $this->model->get_idx_name($table,'can_login',$user_check[0]['idx'],$gprx);
 			$can_login_check = $can_login_check[0]['value'];
 
 			if($active_check=='y' && $can_login_check=='y'){
-			$pass_get = $this->model->get_name_idx($table,'account_pass',$user_check[0]['idx'],$gprx);
+			$pass_get = $this->model->get_idx_name($table,'account_pass',$user_check[0]['idx'],$gprx);
 			$pass_get = $pass_get[0]['value'];
 			if($pass_get==sha1($pass)){
 				$pass_check = TRUE;
@@ -119,8 +119,8 @@ class Form extends PHPRender {
 
 		}
 		if($pass_check==TRUE){
-			//$enteries = $this->model->get_idx_enteries($table,$user_check[0]['idx'],$gprx);
-			$user_data=$this->model->search_idx_enteries($table,$user_check[0]['idx'],$gprx); //$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
+			$enteries = $this->model->get_idx_enteries($table,$user_check[0]['idx'],$gprx);
+			$user_data=$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
 				Helper::session_set('id', key($user_data)+1);
 				Helper::session_set('user_name', $user_data[key($user_data)]['account_name']);
 				Helper::session_set('user_email', $user_data[key($user_data)]['account_email']);

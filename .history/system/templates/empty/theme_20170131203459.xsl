@@ -86,6 +86,7 @@ border-right: 5px solid #c41818;
     		<div class="section">
 				<xsl:value-of select='data/contents' disable-output-escaping='yes'/>
 			</div>
+			</div>
 			</body>
 		</html>
 	</xsl:template>
