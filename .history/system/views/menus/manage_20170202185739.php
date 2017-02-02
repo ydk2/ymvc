@@ -2,17 +2,20 @@
 	<div class="col-sm-3">
 	<div class="row">
 	<strong class="lead">Dodaj nową grupę</strong>
-	<form role="form" method="get" action="<?=HOST_URL ?>">
+	<form role="form" method="get" action="{$addgroup}">
     <div class="form-group">
         <div class="input-group">
-        <input type="text" class="form-control" name="group" value="<?=$this->group?>" placeholder="Wpisz nazwę nowej grupy"/>
+        <input type="text" class="form-control" name="group" placeholder="Wpisz nazwę nowej grupy"/>
 
         <span class="input-group-btn">
-    	<button class="btn btn-success" name="menus<?=S;?>mngmenus" value="groups" type="submit">Dodaj</button>
+    	<button class="btn btn-success" name="{$addgrouphidden}" value="add" type="submit">Dodaj</button>
         </span>
         </div>
     </div>
     </form>
+	</div>
+	<div class="row">
+	<xsl:value-of select="data/addnewitem" disable-output-escaping="yes"/>
 	</div>
 	<div class="row">
 	<strong class="lead"><xsl:value-of select="data/menushead"/></strong>
@@ -45,9 +48,9 @@
                     <td>
                       <select name="item[<?=$this->freekey?>][pos]" type="text" class="form-control">
                       <?php foreach($this->poslist as $pos):?>
-                        <option value="<?=$pos+1?>"><?=$pos+1?></option>
+                        <option value="<?=$pos?>"><?=$pos?></option>
                       <?php endforeach;?>
-                        <option value="<?=$pos+1?>" selected="selected"><?=$pos+1?></option>
+                        <option value="<?=$pos+1?>"><?=$pos+1?></option>
                       </select>
                     </td>
                     <td>

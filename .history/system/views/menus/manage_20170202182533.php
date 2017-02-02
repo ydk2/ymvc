@@ -2,17 +2,20 @@
 	<div class="col-sm-3">
 	<div class="row">
 	<strong class="lead">Dodaj nową grupę</strong>
-	<form role="form" method="get" action="<?=HOST_URL ?>">
+	<form role="form" method="get" action="{$addgroup}">
     <div class="form-group">
         <div class="input-group">
-        <input type="text" class="form-control" name="group" value="<?=$this->group?>" placeholder="Wpisz nazwę nowej grupy"/>
+        <input type="text" class="form-control" name="group" placeholder="Wpisz nazwę nowej grupy"/>
 
         <span class="input-group-btn">
-    	<button class="btn btn-success" name="menus<?=S;?>mngmenus" value="groups" type="submit">Dodaj</button>
+    	<button class="btn btn-success" name="{$addgrouphidden}" value="add" type="submit">Dodaj</button>
         </span>
         </div>
     </div>
     </form>
+	</div>
+	<div class="row">
+	<xsl:value-of select="data/addnewitem" disable-output-escaping="yes"/>
 	</div>
 	<div class="row">
 	<strong class="lead"><xsl:value-of select="data/menushead"/></strong>
@@ -43,27 +46,24 @@
                 <tbody>
                   <tr>
                     <td>
-                      <select name="item[<?=$this->freekey?>][pos]" type="text" class="form-control">
-                      <?php foreach($this->poslist as $pos):?>
-                        <option value="<?=$pos+1?>"><?=$pos+1?></option>
-                      <?php endforeach;?>
-                        <option value="<?=$pos+1?>" selected="selected"><?=$pos+1?></option>
+                      <select name="pos" type="text" class="form-control">
+                        <option>1</option>
                       </select>
                     </td>
                     <td>
-                      <input name="item[<?=$this->freekey?>][title]" type="text" class="form-control" value="">
+                      <input name="title" type="text" class="form-control" value="">
                     </td>
                     <td>
-                      <input name="item[<?=$this->freekey?>][link]" type="text" class="form-control" value="">
+                      <input name="link" type="text" class="form-control" value="">
                     </td>
                     <td>
-                      <select name="item[<?=$this->freekey?>][parent]" class="form-control">
-                        <option value="">Brak</option>
+                      <select name="parent" class="form-control">
+                        <option>Brak</option>
                       </select>
                     </td>
                     <td>
-                      <input name="item[<?=$this->freekey?>][group]" type="hidden" value="<?=$this->group?>">
-                      <input name="item[<?=$this->freekey?>][id]" type="hidden" value="<?=$this->freekey?>">
+                      <input name="group" type="hidden" value="">
+                      <input name="id" type="hidden" value="">
                       <button name="add" type="submit" class="btn btn-block btn-success">Dodaj</button>
                     </td>
                   </tr>

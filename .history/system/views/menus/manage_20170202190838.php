@@ -45,7 +45,7 @@
                     <td>
                       <select name="item[<?=$this->freekey?>][pos]" type="text" class="form-control">
                       <?php foreach($this->poslist as $pos):?>
-                        <option value="<?=$pos+1?>"><?=$pos+1?></option>
+                        <option value="<?=$pos?>"><?=$pos?></option>
                       <?php endforeach;?>
                         <option value="<?=$pos+1?>" selected="selected"><?=$pos+1?></option>
                       </select>

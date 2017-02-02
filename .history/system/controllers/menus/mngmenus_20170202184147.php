@@ -51,7 +51,6 @@ class MNGMenus extends PHPRender {
             $this->ViewData('text', '');
             $this->ViewData('header', '');
 
-            $this->poslist();
             $this->freekey();
         if(Helper::get('action')){
             $this->Save();
@@ -73,17 +72,6 @@ class MNGMenus extends PHPRender {
                     $this->freekey =  $i;
                 }
             }
-    }
-    private function poslist(){
-        //$this->freekey = count($this->datalist)+1;
-        $this->poslist[0] = 0;
-        $i = 1;
-        foreach ($this->datalist as $val) {
-            if($val['group']===$this->group){
-                $this->poslist[]=$i;
-                $i++;
-            }
-        }
     }
     private function Save(){
         $this->data->header = 'Błąd!!!';

@@ -50,9 +50,6 @@ class MNGMenus extends PHPRender {
             $this->ViewData('header', '');
             $this->ViewData('text', '');
             $this->ViewData('header', '');
-
-            $this->poslist();
-            $this->freekey();
         if(Helper::get('action')){
             $this->Save();
             $this->data->link = HOST_URL.'?menus'.S.'mngmenus&group='.$this->group.'';
@@ -65,26 +62,6 @@ class MNGMenus extends PHPRender {
             }
         }
     }
-    private function freekey(){
-        $this->freekey = count($this->datalist)+1;
-            foreach ($this->datalist as $pos => $val) {
-                $i =$pos+1;
-                if ($i > $val['id']) {
-                    $this->freekey =  $i;
-                }
-            }
-    }
-    private function poslist(){
-        //$this->freekey = count($this->datalist)+1;
-        $this->poslist[0] = 0;
-        $i = 1;
-        foreach ($this->datalist as $val) {
-            if($val['group']===$this->group){
-                $this->poslist[]=$i;
-                $i++;
-            }
-        }
-    }
     private function Save(){
         $this->data->header = 'Błąd!!!';
         $this->data->text = 'Operacja Nie Istnieje';
@@ -94,7 +71,7 @@ class MNGMenus extends PHPRender {
             $key = key($frompost);
             /**/
             $chk=0;
-            if($frompost[$key]['title']!='' && $frompost[$key]['link']!=''){
+            if($frompost[$key]['name']!='' && $frompost[$key]['module']!=''){
 
             $freekey = count($this->datalist)+1;
             foreach ($this->datalist as $pos => $val) {
@@ -114,7 +91,7 @@ class MNGMenus extends PHPRender {
 
             } else {
                 $this->data->header = 'Uwaga!!!';
-                $this->data->text = 'Pola nie mogą być puste';
+                $this->data->text = 'Pola nazwy i modułu nie mogą być puste';
             }
             $save = file_put_contents(ROOT.STORE.'menus.data',serialize($this->datalist));
             if(!$save){
@@ -220,7 +197,7 @@ class MNGMenus extends PHPRender {
 		$i = 1;
 		foreach ($data as $item) {
 			$tree .= '<option value="' . $i . '"';
-			if ($selected == $i) {
+			if ($selected == $item['pos']) {
 				$tree .= ' selected="selected"';
 			}
 			$tree .= ">".$i."</option>\n";
@@ -264,7 +241,7 @@ class MNGMenus extends PHPRender {
 		return $tree;
 	}
 
-	function menugroup($data) {
+	function menu($data) {
 		$tree = '<div class="list-group custom-restricted">';
 		$i = 1;
 		foreach ($data as $item) {
@@ -325,7 +302,7 @@ class MNGMenus extends PHPRender {
         $resultgrp = array_unique($group_list);
 
 
-        $this->ViewData('menus', '<h3>menus groups</h3>'.$this->menugroup($resultgrp));
+        $this->ViewData('menus', '<h3>menus groups</h3>'.$this->menu($resultgrp));
     }
 
     public function menus($enabled,$disabled){

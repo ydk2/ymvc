@@ -76,7 +76,7 @@ class MNGMenus extends PHPRender {
     }
     private function poslist(){
         //$this->freekey = count($this->datalist)+1;
-        $this->poslist[0] = 0;
+        $this->poslist[0] = 1;
         $i = 1;
         foreach ($this->datalist as $val) {
             if($val['group']===$this->group){

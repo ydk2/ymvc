@@ -29,14 +29,7 @@ class MNGMenus extends PHPRender {
 
 
         $this->datalist=unserialize(file_get_contents(ROOT.STORE.'menus.data'));
-        /**
-        $this->datalist[1]=array('id'=>1,'pos'=>1,'title'=>'none1','link'=>'null','parent'=>'','group'=>'main');
-        $this->datalist[2]=array('id'=>2,'pos'=>2,'title'=>'none2','link'=>'null','parent'=>'','group'=>'main');
-        $this->datalist[3]=array('id'=>3,'pos'=>3,'title'=>'none3','link'=>'null','parent'=>'','group'=>'main');
-        $this->datalist[4]=array('id'=>4,'pos'=>4,'title'=>'none4','link'=>'null','parent'=>'','group'=>'main');
-        $this->datalist[5]=array('id'=>5,'pos'=>5,'title'=>'none5','link'=>'null','parent'=>'','group'=>'main');
-        $this->datalist[6]=array('id'=>6,'pos'=>6,'title'=>'none6','link'=>'null','parent'=>'','group'=>'main');
-        **/
+
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
         
@@ -50,51 +43,25 @@ class MNGMenus extends PHPRender {
             $this->ViewData('header', '');
             $this->ViewData('text', '');
             $this->ViewData('header', '');
-
-            $this->poslist();
-            $this->freekey();
         if(Helper::get('action')){
-            $this->Save();
+            //$this->Save();
             $this->data->link = HOST_URL.'?menus'.S.'mngmenus&group='.$this->group.'';
         } else {
             if(!empty($this->datalist)){
-                $this->sksort($this->datalist,'pos');
                // $this->ViewData('menus', '');
               //  $this->inColumn();
                 $this->editor=$this->edit_menu($this->datalist);
             }
         }
     }
-    private function freekey(){
-        $this->freekey = count($this->datalist)+1;
-            foreach ($this->datalist as $pos => $val) {
-                $i =$pos+1;
-                if ($i > $val['id']) {
-                    $this->freekey =  $i;
-                }
-            }
-    }
-    private function poslist(){
-        //$this->freekey = count($this->datalist)+1;
-        $this->poslist[0] = 0;
-        $i = 1;
-        foreach ($this->datalist as $val) {
-            if($val['group']===$this->group){
-                $this->poslist[]=$i;
-                $i++;
-            }
-        }
-    }
     private function Save(){
-        $this->data->header = 'Błąd!!!';
-        $this->data->text = 'Operacja Nie Istnieje';
         if(Helper::get('action')=='add' && isset($_POST['add'])){
             $frompost = Helper::post('item');
             reset($frompost);
             $key = key($frompost);
             /**/
             $chk=0;
-            if($frompost[$key]['title']!='' && $frompost[$key]['link']!=''){
+            if($frompost[$key]['name']!='' && $frompost[$key]['module']!=''){
 
             $freekey = count($this->datalist)+1;
             foreach ($this->datalist as $pos => $val) {
@@ -114,7 +81,7 @@ class MNGMenus extends PHPRender {
 
             } else {
                 $this->data->header = 'Uwaga!!!';
-                $this->data->text = 'Pola nie mogą być puste';
+                $this->data->text = 'Pola nazwy i modułu nie mogą być puste';
             }
             $save = file_put_contents(ROOT.STORE.'menus.data',serialize($this->datalist));
             if(!$save){
@@ -127,7 +94,6 @@ class MNGMenus extends PHPRender {
         if(Helper::get('action')=='update' && isset($_POST['update'])){
             $frompost = Helper::post('item');
             $chk = 0;
-            $this->sksort($frompost,'pos');
             foreach ($frompost as $key => $value) {
                 $this->datalist[$key] = $value;
                 if($this->datalist[$key] = $value){
@@ -165,6 +131,8 @@ class MNGMenus extends PHPRender {
                     $this->data->text= 'Operacja zakończona błędem';
                 }
         }
+        $this->data->header = 'Błąd!!!';
+        $this->data->text = 'Operacja Nie Istnieje';
     }
 
     public function dump($value){
@@ -183,7 +151,7 @@ class MNGMenus extends PHPRender {
 		$data = $this->model->get_menu_groups();
 		$tree = '<ul class="list-group">';
 		foreach ($data as $item) {
-			$tree .= '<li class="list-group-item"><a href="?menus'.S.'mngmenus&groups='.$item.'">' . $item.'</a>';
+			$tree .= '<li class="list-group-item"><a href="?menus'.S.'mngmenus&data='.$item.'">' . $item.'</a>';
 			$tree .= '</li>' . PHP_EOL;
 		}
 		$tree .= "</ul>";
@@ -194,18 +162,17 @@ class MNGMenus extends PHPRender {
 		$tree = '';
 		$i = 1;
 		if($data){
-
 		foreach ($data as $item) {
             if($item['group']===$this->group){
 				$tree .= '<tr>';
-				$tree .= "<td>" . $this -> change_pos($data, $item['id'], $item['pos']) . "</td>";
+				$tree .= "<td>" . $this -> change_pos($data, $i, $i) . "</td>";
 				//$tree .= '<label for="title">Change Title</label>';
-				$tree .= '<td><input class="form-control" type="text" id="title" name="item[' . $item['id'] . '][title]" value="' . $item['title'] . '"' . "></td>";
-				$tree .= '<input class="form-control" type="hidden" id="ids" name="item[' . $item['id']. '][id]" value="' .$item['id']. '"' . ">";
-				$tree .= '<input class="form-control" type="hidden" id="ids" name="item[' . $item['id']. '][group]" value="' . $this->group. '"' . ">";
-				$tree .= '<td><input class="form-control" type="text" id="link" name="item[' .$item['id']. '][link]" value="' . $item['link'] . '"' . "></td>";
-				$tree .= "<td>" . $this -> change_parent($data, $item['id'], $item['title'], $item['parent']) . "</td>";
-				$tree .= '<td><a class="btn btn-danger" href="' . HOST_URL . '?menus'.S.'mngmenus&action=delete&item=' . $item['id'] . '&group='.$this->group.'">Delete entry</a></td>';
+				$tree .= '<td><input class="form-control" type="text" id="title" name="item[' . $i . '][title]" value="' . $item['title'] . '"' . "></td>";
+				$tree .= '<input class="form-control" type="hidden" id="ids" name="item[' . $i . '][id]" value="' . $item['id'] . '"' . ">";
+				$tree .= '<td><input class="form-control" type="text" id="link" name="item[' . $i . '][link]" value="' . $item['link'] . '"' . "></td>";
+				$tree .= "<td>" . $this -> change_parent($data, $i, $item['title'], $item['parent']) . "</td>";
+				$tree .= '<td><input class="form-control" type="text" id="access" name="item[' . $i . '][access]" value="' . $item['access'] . '"' . "></td>";
+				$tree .= '<td><a class="btn btn-danger" href="' . HOST_URL . '?menus'.S.'mngmenus&action=delete&item=' . $item['id'] . '&data='.$this->group.'">Delete entry</a></td>';
 				//$tree .= call_user_func_array(array($this, 'edit_menu'), array($data, $i));
 				$tree .= "</tr>\n";
 			$i++;
@@ -223,7 +190,7 @@ class MNGMenus extends PHPRender {
 			if ($selected == $i) {
 				$tree .= ' selected="selected"';
 			}
-			$tree .= ">".$i."</option>\n";
+			$tree .= ">$i</option>";
 			$i++;
 		}
 		$tree .= "</select>\n";
@@ -264,7 +231,7 @@ class MNGMenus extends PHPRender {
 		return $tree;
 	}
 
-	function menugroup($data) {
+	function menu($data) {
 		$tree = '<div class="list-group custom-restricted">';
 		$i = 1;
 		foreach ($data as $item) {
@@ -325,7 +292,7 @@ class MNGMenus extends PHPRender {
         $resultgrp = array_unique($group_list);
 
 
-        $this->ViewData('menus', '<h3>menus groups</h3>'.$this->menugroup($resultgrp));
+        $this->ViewData('menus', '<h3>menus groups</h3>'.$this->menu($resultgrp));
     }
 
     public function menus($enabled,$disabled){
@@ -344,7 +311,20 @@ class MNGMenus extends PHPRender {
                 }
             }
             if($value['group']==$this->group && $yes){
+                if ($value['mode']=='sys') {
+                    $mode = SYS;
+                } elseif ($value['mode']=='app') {
+                    $mode = APP;
+                } elseif ($value['mode']!='') {
+                    $mode = $value['mode'];
+                } else {
+                    $mode = SYS;
+                }
                 $contents = $this->menus_values($value);
+                if($contents!=""){
+                    $col = $this->data->menus->items = $contents;
+                    if(isset($value['class'])) $col->addAttribute('class', $this->showas.' well');
+                }
                 $contents = NULL;
                 $col = NULL;
             }
