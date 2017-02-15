@@ -5,8 +5,8 @@
             <div>
             <select name="items[<?=$id?>][pos]">
             <?php for ($i=1; $i <= count($this->menuitems); $i++) : ?>
-            <?php $selected = ($entry['pos']==$i)?' selected="selected"':''; ?>
-              <option<?=$selected?>><?=$i?></option>
+
+              <option><?=$i?></option>
             <?php endfor;?>
             </select>
               <span><?=$entry['id']?></span>

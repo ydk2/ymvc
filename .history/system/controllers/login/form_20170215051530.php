@@ -54,7 +54,7 @@ class Form extends PHPRender {
 	public function newlogin(){
 	# code...
 		$update = false;
-		$insert =false;
+		$insert =true;
 		$delete = FALSE;
 
 		$gprx='login';

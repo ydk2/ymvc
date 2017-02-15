@@ -54,14 +54,14 @@ class Form extends PHPRender {
 	public function newlogin(){
 	# code...
 		$update = false;
-		$insert =false;
+		$insert =true;
 		$delete = FALSE;
 
 		$gprx='login';
 		$table = 'loginusers';
 
 		//$array = $this->model->get_entries($table,$gprx);
-		//var_dump($rout);
+		var_dump($rout);
 		// end user login
 		if($insert){
 

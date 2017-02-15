@@ -54,23 +54,22 @@ class Form extends PHPRender {
 	public function newlogin(){
 	# code...
 		$update = false;
-		$insert =false;
+		$insert = false;
 		$delete = FALSE;
 
 		$gprx='login';
 		$table = 'loginusers';
 
-		//$array = $this->model->get_entries($table,$gprx);
-		//var_dump($rout);
-		// end user login
-		if($insert){
-
 		$users[0]=array('account_login'=>'admin','account_name'=>'admin','account_email'=>'admin@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'admin','role_id'=>1,'can_login'=>'y','active'=>'y');
 		$users[1]=array('account_login'=>'user','account_name'=>'user','account_email'=>'user@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'user','role_id'=>5,'can_login'=>'y','active'=>'y');
 
     	$rout=$this->model->reverseNoId($users,$gprx);
+		var_dump($this->model->createTable($table,$gprx));
+		//$array = $this->model->get_entries($table,$gprx);
+		var_dump($rout);
+		// end user login
+		if($insert){
 
-		var_dump($this->model->createTableRotate($table,$gprx));
 
 		foreach ($rout as $items) {
 			$this->model->add_item($table,$items['name'],$items['value'],$items['idx'],$items['gprx']);

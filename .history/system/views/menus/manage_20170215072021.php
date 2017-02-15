@@ -3,11 +3,8 @@
       <form role="form" action="<?=$this->data->link?>" method="post">
       <?php foreach($this->menuitems as $id=>$entry):?>
             <div>
-            <select name="items[<?=$id?>][pos]">
-            <?php for ($i=1; $i <= count($this->menuitems); $i++) : ?>
-            <?php $selected = ($entry['pos']==$i)?' selected="selected"':''; ?>
-              <option<?=$selected?>><?=$i?></option>
-            <?php endfor;?>
+            <select>
+
             </select>
               <span><?=$entry['id']?></span>
               <span><?=$entry['pos']?></span>
@@ -16,7 +13,7 @@
               <span><?=$entry['parent']?></span>
               <span><?=$id?></span>
 
-      <input type="hidden" name="items[<?=$id?>][id]" value="<?=$entry['id']?>">
+      <input type="hidden" name="items[<?=$id?>][id]" value"<?=$entry['id']?>">
             </div>
       <?php endforeach;?>
       <button class="btn btn-success" type="submit">Update</button>

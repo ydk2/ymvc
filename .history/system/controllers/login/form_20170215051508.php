@@ -54,14 +54,14 @@ class Form extends PHPRender {
 	public function newlogin(){
 	# code...
 		$update = false;
-		$insert =false;
+		$insert = false;
 		$delete = FALSE;
 
 		$gprx='login';
 		$table = 'loginusers';
 
 		//$array = $this->model->get_entries($table,$gprx);
-		//var_dump($rout);
+		var_dump($rout);
 		// end user login
 		if($insert){
 
@@ -69,7 +69,7 @@ class Form extends PHPRender {
 		$users[1]=array('account_login'=>'user','account_name'=>'user','account_email'=>'user@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'user','role_id'=>5,'can_login'=>'y','active'=>'y');
 
     	$rout=$this->model->reverseNoId($users,$gprx);
-
+		
 		var_dump($this->model->createTableRotate($table,$gprx));
 
 		foreach ($rout as $items) {

@@ -49,7 +49,7 @@ define('ACCESS_ADMIN',1);
 
 
 $url=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?'https://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/':'http://'.dirname($_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
-if(!defined('ROOT')){
+if(!defined('HOST_URL')){
 define('HOST_URL',$url);
 }
 if(!defined('ROOT')){

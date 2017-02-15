@@ -57,7 +57,7 @@ class MNGMenus extends PHPRender {
             }
         }
         **/
-        if(!empty($this->datalist)&&!empty($this->menuitems)){
+        if(!empty($this->datalist)){
         reset($this->datalist);
         while (list($a, $value) = each($this->datalist)) {
             reset($this->menuitems);
