@@ -45,8 +45,6 @@ class pLayout extends PHPRender {
 
         if(!empty($array)){
 
-            //unset($array[0]);
-            //unset($array[14]);
             $this->sksort($array,'pos');
             $check = array('pos', 'name','module','view','class','group','attrid');
             $yes = TRUE;

@@ -31,7 +31,8 @@ class MNGLayouts extends XSLRender {
         $this->datalist=unserialize(file_get_contents(ROOT.STORE.'layouts.data'));
         //$this->datalist=$this->model->search_entries($table,$gprx);
 
-
+            unset($this->datalist[0]);
+            unset($this->datalist[14]);
             //var_dump($array);
         //file_put_contents(ROOT.STORE.'layouts.data',serialize($this->datalist));
         $enabled = Config::$data['enabled'];

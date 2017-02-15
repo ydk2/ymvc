@@ -1,6 +1,6 @@
 <?php
 
-class MNGLayouts extends XSLRender {
+class Layouts extends XSLRender {
     
     public function Init() {
         /*
@@ -16,7 +16,7 @@ class MNGLayouts extends XSLRender {
         $this->current_group = Helper::Session('user_role');
         $this->AccessMode(2);
         $this->SetModel(SYS.M.'systemdata');
-        $this->SetView(SYS.V . "layout".S."manage");
+        $this->SetView(SYS.V . "manage".S."layouts");
         //$this -> items = $this -> model -> get_menu($this->groups);
 
         $this->group=(Helper::get('group')=='')?'main':Helper::get('group');
@@ -28,31 +28,29 @@ class MNGLayouts extends XSLRender {
         
         $table='layouts';
         $gprx = 'layout';
-        $this->datalist=unserialize(file_get_contents(ROOT.STORE.'layouts.data'));
+        $this->datalist=unserialize(file_get_contents(Config::$data['layout_data']));
         //$this->datalist=$this->model->search_entries($table,$gprx);
 
-
-            //var_dump($array);
         //file_put_contents(ROOT.STORE.'layouts.data',serialize($this->datalist));
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
         
         $this->SetParameter('','current',$this->group);
-        $this->SetParameter('','action',HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'');
-        $this->SetParameter('','addgroup',HOST_URL.'?layout'.S.'mnglayouts');
-        $this->SetParameter('','addgrouphidden','layout'.S.'mnglayouts');
+        $this->SetParameter('','action',HOST_URL.'?manage'.S.'layouts&group='.$this->group.'');
+        $this->SetParameter('','addgroup',HOST_URL.'?manage'.S.'layouts');
+        $this->SetParameter('','addgrouphidden','manage'.S.'layouts');
         
         $this->group_list();
         $this->add_layout_item();
         if(Helper::get('action')){
             $this->ViewData('message', '');
             $this->Save();
-            $this->data->message->addChild('link', HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$this->group.'');
+            $this->data->message->addChild('link', HOST_URL.'?manage'.S.'layouts&amp;group='.$this->group.'');
         } else {
             if(!empty($this->datalist)){
                 $this->ViewData('layouts', '');
                 $this->inColumn();
-                $this->Layouts($enabled,$disabled);
+                $this->Manage($enabled,$disabled);
             }
         }
     }
@@ -85,7 +83,7 @@ class MNGLayouts extends XSLRender {
                 $this->data->message->addChild('header', 'Uwaga!!!');
                 $this->data->message->addChild('text', 'Pola nazwy i modułu nie mogą być puste');
             }
-            $save = file_put_contents(ROOT.STORE.'layouts.data',serialize($this->datalist));
+            $save = file_put_contents(Config::$data['layout_data'],serialize($this->datalist));
             if(!$save){
                     $this->data->message->header= 'Nie Udane';
                     $this->data->message->text= 'Operacja zakończona błędem';
@@ -110,7 +108,7 @@ class MNGLayouts extends XSLRender {
                 $this->data->message->addChild('header', 'Nie Udane');
                 $this->data->message->addChild('text', 'Operacja zakończona błędem');
             }
-            $save = file_put_contents(ROOT.STORE.'layouts.data',serialize($this->datalist));
+            $save = file_put_contents(Config::$data['layout_data'],serialize($this->datalist));
             if(!$save){
                     $this->data->message->header= 'Nie Udane';
                     $this->data->message->text= 'Operacja zakończona błędem';
@@ -127,7 +125,7 @@ class MNGLayouts extends XSLRender {
                 $this->data->message->addChild('header', 'Nie Udane');
                 $this->data->message->addChild('text', 'Operacja zakończona błędem');
             }
-            $save = file_put_contents(ROOT.STORE.'layouts.data',serialize($this->datalist));
+            $save = file_put_contents(Config::$data['layout_data'],serialize($this->datalist));
             if(!$save){
                     $this->data->message->header= 'Nie Udane';
                     $this->data->message->text= 'Operacja zakończona błędem';
@@ -136,61 +134,7 @@ class MNGLayouts extends XSLRender {
         $this->data->message->addChild('header', 'Błąd!!!');
         $this->data->message->addChild('text', 'Operacja Nie Istnieje');
     }
-    private function oldSave(){
-        if(Helper::get('action')=='add' && isset($_POST['add'])){
-            $frompost = Helper::post('item');
-            reset($frompost);
-            $key = key($frompost);
-            /**/
-            $chk=0;
-            if($frompost[$key]['name']!='' && $frompost[$key]['module']!=''){
-                    $this->model->Begin();
-                    $this->model->doAddItems($frompost,'layouts','layout');
-                    $chk=$this->model->Commit();
-                if($chk){
-                    $this->data->message->addChild('header', 'Udane');
-                    $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
-                } else {
-                    $this->data->message->addChild('header', 'Nie Udane');
-                    $this->data->message->addChild('text', 'Operacja zakończona błędem');
-                }
-                
-            } else {
-                $this->data->message->addChild('header', 'Uwaga!!!');
-                $this->data->message->addChild('text', 'Pola nazwy i modułu nie mogą być puste');
-            }
-            /**/
-        }
-        if(Helper::get('action')=='update' && isset($_POST['update'])){
-            $frompost = Helper::post('item');
-            $chk = 0;
-            $this->model->Begin();
-            $this->model->doUpdateItems($frompost,'layouts','layout');
-            $chk=$this->model->Commit();
-            if($chk){
-                $this->data->message->addChild('header', 'Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
-            } else {
-                $this->data->message->addChild('header', 'Nie Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona błędem');
-            }
-        }
-        if(Helper::get('action')=='delete' && Helper::get('item')){
-            $this->model->Begin();
-            $this->model->delete_idx('layouts',Helper::get('item'),'layout');
-            $chk=$this->model->Commit();
-            if($chk){
-                $this->data->message->addChild('header', 'Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona pomyślnie');
-            } else {
-                $this->data->message->addChild('header', 'Nie Udane');
-                $this->data->message->addChild('text', 'Operacja zakończona błędem');
-            }
-        }
-        $this->data->message->addChild('header', 'Błąd!!!');
-        $this->data->message->addChild('text', 'Operacja Nie Istnieje');
-    }
-    
+
     public function dump($value){
         ob_start();
         var_dump($value);
@@ -223,7 +167,7 @@ class MNGLayouts extends XSLRender {
         $this->ViewData('menus','');
         foreach ($data as $item) {
             $list = $this->data->menus->addChild('list',$item);
-            $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$item);
+            $list->addAttribute('link', HOST_URL.'?manage'.S.'layouts&group='.$item);
         }
     }
     
@@ -246,11 +190,11 @@ class MNGLayouts extends XSLRender {
         }
         $this->ViewData('columns','');
         $list = $this->data->columns->addChild('list','Jednej');
-        $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'&showas=one');
+        $list->addAttribute('link', HOST_URL.'?manage'.S.'layouts&group='.$this->group.'&showas=one');
         $list = $this->data->columns->addChild('list','Dwóch');
-        $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'&showas=two');
+        $list->addAttribute('link', HOST_URL.'?manage'.S.'layouts&group='.$this->group.'&showas=two');
         $list = $this->data->columns->addChild('list','Trzech');
-        $list->addAttribute('link', HOST_URL.'?layout'.S.'mnglayouts&group='.$this->group.'&showas=three');
+        $list->addAttribute('link', HOST_URL.'?manage'.S.'layouts&group='.$this->group.'&showas=three');
         switch ($showed) {
             case 'three':
                 $showas = 'col-sm-4';
@@ -283,7 +227,7 @@ public function group_list(){
     $this->menu($resultgrp);
 }
 
-public function Layouts($enabled,$disabled){
+public function Manage($enabled,$disabled){
     
     if(!empty($this->datalist)){
         $this->sksort($this->datalist,'pos');
@@ -366,10 +310,10 @@ public function layout_values($value){
     $menus = array('elements-menu','menu');
     $append = '';
     if(in_array($value['module'],$special)){
-        $append .= '<a class="btn btn-success" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['name'].'" >Edytuj</a>';
+        $append .= '<a class="btn btn-success" href="'.HOST_URL.'?manage'.S.'layouts&amp;group='.$value['name'].'" >Edytuj</a>';
     }
     if(in_array($value['module'],$menus)){
-        $append .= '<a class="btn btn-success" href="'.HOST_URL.'?admin'.S.'mngmenus&amp;data='.$this->group.'" >Edytuj menu</a>';
+        $append .= '<a class="btn btn-success" href="'.HOST_URL.'?manage'.S.'menus&amp;data='.$this->group.'" >Edytuj menu</a>';
     }
     $sbtngrp = '<span class="input-group-btn">';
     $ebtngrp = '</span>';
@@ -377,7 +321,7 @@ public function layout_values($value){
     $egroup ='</div>'."\n";
     $contents = "<h4>".ucfirst($value['name'])."</h4>";
     $contents .= $sgroup.$this->select($value['id'],$value['pos'],'pos',$this->datalist);
-    $contents .= $sbtngrp.$append.'<a class="btn btn-danger" href="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$value['group'].'&amp;action=delete&amp;item='.$value['id'].'">Usuń</a>'.$ebtngrp.$egroup;
+    $contents .= $sbtngrp.$append.'<a class="btn btn-danger" href="'.HOST_URL.'?manage'.S.'layouts&amp;group='.$value['group'].'&amp;action=delete&amp;item='.$value['id'].'">Usuń</a>'.$ebtngrp.$egroup;
     $contents .= $sgroup.$this->input($value['id'],'name',$value['name'],'text').$egroup;
     $datamodules=$this->datalist($value['id'],'module',$special);
     $contents .= $sgroup.$this->input($value['id'],'module',$value['module'],'text',$datamodules).$egroup;
@@ -395,7 +339,7 @@ public function add_layout_item(){
     $ebtngrp = '</span>';
     $sgroup ='<div class="input-group">';
     $egroup ='</div>'."\n";
-    $sform = '<form action="'.HOST_URL.'?layout'.S.'mnglayouts&amp;group='.$this->group.'&amp;action=add" method="post">';
+    $sform = '<form action="'.HOST_URL.'?manage'.S.'layouts&amp;group='.$this->group.'&amp;action=add" method="post">';
     $eform = '</form>';
     $ipos = 1;
     for ($i=1; $i<count($this->datalist)+1; $i++) {

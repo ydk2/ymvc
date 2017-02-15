@@ -44,9 +44,6 @@ class pLayout extends PHPRender {
         $group = $this->layout_group;
 
         if(!empty($array)){
-
-            //unset($array[0]);
-            //unset($array[14]);
             $this->sksort($array,'pos');
             $check = array('pos', 'name','module','view','class','group','attrid');
             $yes = TRUE;
@@ -57,6 +54,8 @@ class pLayout extends PHPRender {
                         break;
                 }
             }
+            unset($array[0]);
+            var_dump($array);
             if($value['group']==$group && $yes && $value['group']!=$value['name']){
                 if ($value['mode']=='sys') {
                     $mode = SYS;

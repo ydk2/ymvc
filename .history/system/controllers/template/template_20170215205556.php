@@ -95,7 +95,7 @@ class Template extends PHPRender {
             SYS.C.'manage'.S.'account',
             SYS.C.'admin'.S.'administration',
             SYS.C.'manage'.S.'layouts',
-            SYS.C.'admin'.S.'mngaccount',
+            SYS.C.'layout'.S.'mnglayouts',
             SYS.C.'test'.S.'test'
             );
             //$content->default_route_group='default';

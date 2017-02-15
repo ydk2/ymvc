@@ -1,6 +1,6 @@
 <?php
 
-class MNGMenus extends PHPRender {
+class Menus extends PHPRender {
     
     public function Init() {
         /*
@@ -16,7 +16,7 @@ class MNGMenus extends PHPRender {
         $this->current_group = Helper::Session('user_role');
         $this->AccessMode(2);
         $this->SetModel(SYS.M.'systemdata');
-        $this->SetView(SYS.V . "menus".S."manage");
+        $this->SetView(SYS.V . "manage".S."menus");
         
         $this->group=(!Helper::get('group'))?'main':Helper::get('group');
         
@@ -26,8 +26,8 @@ class MNGMenus extends PHPRender {
     
     public function Run(){
         
-        $this->data->link = HOST_URL.'?menus'.S.'mngmenus&group='.$this->group.'';
-        $this->link = HOST_URL.'?menus'.S.'mngmenus';
+        $this->data->link = HOST_URL.'?manage'.S.'menus&group='.$this->group.'';
+        $this->link = HOST_URL.'?manage'.S.'menus';
         
 
         $this->datalist=unserialize(file_get_contents(Config::$data['menu_data']));

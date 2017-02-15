@@ -1,6 +1,6 @@
 <?php
 
-class MNGLayouts extends XSLRender {
+class Layouts extends XSLRender {
     
     public function Init() {
         /*
@@ -31,8 +31,6 @@ class MNGLayouts extends XSLRender {
         $this->datalist=unserialize(file_get_contents(ROOT.STORE.'layouts.data'));
         //$this->datalist=$this->model->search_entries($table,$gprx);
 
-
-            //var_dump($array);
         //file_put_contents(ROOT.STORE.'layouts.data',serialize($this->datalist));
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];

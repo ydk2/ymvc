@@ -1,6 +1,6 @@
 <?php
 
-class MNGLayouts extends XSLRender {
+class Layouts extends XSLRender {
     
     public function Init() {
         /*
@@ -31,8 +31,6 @@ class MNGLayouts extends XSLRender {
         $this->datalist=unserialize(file_get_contents(ROOT.STORE.'layouts.data'));
         //$this->datalist=$this->model->search_entries($table,$gprx);
 
-
-            //var_dump($array);
         //file_put_contents(ROOT.STORE.'layouts.data',serialize($this->datalist));
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
@@ -52,7 +50,7 @@ class MNGLayouts extends XSLRender {
             if(!empty($this->datalist)){
                 $this->ViewData('layouts', '');
                 $this->inColumn();
-                $this->Layouts($enabled,$disabled);
+                $this->Manage($enabled,$disabled);
             }
         }
     }
@@ -283,7 +281,7 @@ public function group_list(){
     $this->menu($resultgrp);
 }
 
-public function Layouts($enabled,$disabled){
+public function Manage($enabled,$disabled){
     
     if(!empty($this->datalist)){
         $this->sksort($this->datalist,'pos');
