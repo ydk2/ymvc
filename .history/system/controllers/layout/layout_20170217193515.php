@@ -6,7 +6,7 @@
  * @Last Modified time: 2017-01-25 14:02:30
 */
 
-class pLayout extends PHPRender {
+class Layout extends PHPRender {
     
     public $registered;
     public $disabled;
@@ -48,7 +48,7 @@ class pLayout extends PHPRender {
             //unset($array[0]);
             //unset($array[14]);
             $this->sksort($array,'pos');
-            $check = array('pos', 'name','module','view','class','group','attrid');
+            $check = array('pos', 'name','module','view','class','group','attr');
             $yes = TRUE;
             foreach ($array as $i => $value) {
                 foreach ($check as $is) {
@@ -105,12 +105,12 @@ class pLayout extends PHPRender {
 
 		                foreach ($_GET as $key => $router) {
                             if(in_array($mode.C.$key,$enabled) && !in_array($mode.C.$key,$disabled) && $this->ControllerExists($mode.C.$key)){
-			                    $content->layouts[] = array('pos' => $pos++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$router,'class'=>$value['class'],'attrid'=>'', 'users'=>'', 'group'=>$value['name'], 'mode'=>$value['mode']);
+			                    $content->layouts[] = array('pos' => $pos++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$router,'class'=>$value['class'],'attr'=>'', 'users'=>'', 'group'=>$value['name'], 'mode'=>$value['mode']);
                                 $count++;
                             }
 		                }
-                        if($value['view']!='' && $value['attrid']!=""){
-                            $min = $value['attrid'];
+                        if($value['view']!='' && $value['attr']!=""){
+                            $min = $value['attr'];
                         }
                         if(isset($min) && $count<$min){
                             $content->layout_group =  $value['view'];
