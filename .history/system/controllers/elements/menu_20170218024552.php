@@ -25,7 +25,7 @@ class Menu extends XSLRender {
 		//$this->groups=$this->model->groups;
 		$this->groups=Config::$data['layouts']['current'];
         $this->datalist=$this->model->getData(Config::$data['menu_data']);
-        $this->items = $this->model->itemsData($this->datalist,$this->groups,'group');
+        $this->subitems = $this->model->itemsData($this->datalist,$this->groups,'group');
 		if(!empty($this->items))
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data>'.$this->menulist($this -> items).'</data>', null, false);
 	}

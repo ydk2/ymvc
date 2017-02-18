@@ -15,39 +15,57 @@ class Menu extends XSLRender {
 		$this->access_groups = array('admin','user','any');
 		$this->current_group = 'any';
 		$this->AccessMode(1);
-		$this->SetModel(SYS.M.'systemdata');
+		$this->SetModel(SYS.M.'menudata');
 		$this->only_registered(FALSE);
 		if(Helper::Get('admin'.S.'menu') == '')
 		//$this->SetView(SYS.V . "elements:nav");
 		$this->Inc(SYS.M.'model');
 	}
-	public function Run(){
+	public function Run()
+	{
+
 		//$this->groups=$this->model->groups;
 		$this->groups=Config::$data['layouts']['current'];
+
         $this->datalist=$this->model->getData(Config::$data['menu_data']);
+
         $this->items = $this->model->itemsData($this->datalist,$this->groups,'group');
+        //$this->mainitems = $this->model->itemsData($this->datalist,Config::$data['mainitems'],'group');
+
+		//$this -> items = $this -> model -> get_menu($this->groups);
+		
+		//$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
+		//var_dump($this->menulist($this -> items));
 		if(!empty($this->items))
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data>'.$this->menulist($this -> items).'</data>', null, false);
 	}
 	
-	function menulist($data, $parent = '') {
-		// <item id="0" name="1">
-		$tree = '';
-		$i = 1;
-		foreach ($data as $item) {
-			if ($item['parent'] === $parent) {
-				$tree .= '<item id="'.$item['id'].'" url="'.htmlspecialchars($item['link']).'" name="'.$item['title'].'">' . PHP_EOL;
 
-				$tree .= call_user_func_array(array($this, 'menulist'), array($data, strval($item['id'])));
+    public function menu($data, $parent = '') {
 
-				$tree .= '</item>' . PHP_EOL;
-			}
-			$i++;
-		}
-		$tree .= "";
-		return $tree;
-	}
+        $tree = '<ul>';
 
+        foreach ($data as $item) {
+            if ($item['parent'] === $parent) {
+                $tree .= '<li>'. PHP_EOL;
+                $tree .= '<a href="'.htmlspecialchars($item['link']).'">' .$item['title']. PHP_EOL;
+                $tree .= '</a>' . PHP_EOL;
+                $tree .= '</li>' . PHP_EOL;
+            }
+        }
+        $tree .= "</ul>";
+        return $tree;
+    }
+
+    public function items($data, $parent = '') {
+		$ul=array();
+        foreach ($data as $item) {
+            if ($item['parent'] === $parent) {
+				$ul[]=$item;
+            }
+        }
+        return $ul;
+    }
 
 	public function Exception(){
 		//echo "";

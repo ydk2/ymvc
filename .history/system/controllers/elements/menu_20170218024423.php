@@ -15,17 +15,32 @@ class Menu extends XSLRender {
 		$this->access_groups = array('admin','user','any');
 		$this->current_group = 'any';
 		$this->AccessMode(1);
-		$this->SetModel(SYS.M.'systemdata');
+		$this->SetModel(SYS.M.'menudata');
 		$this->only_registered(FALSE);
 		if(Helper::Get('admin'.S.'menu') == '')
 		//$this->SetView(SYS.V . "elements:nav");
 		$this->Inc(SYS.M.'model');
 	}
-	public function Run(){
+	public function Run()
+	{
+
 		//$this->groups=$this->model->groups;
 		$this->groups=Config::$data['layouts']['current'];
-        $this->datalist=$this->model->getData(Config::$data['menu_data']);
-        $this->items = $this->model->itemsData($this->datalist,$this->groups,'group');
+
+        $this->datalist=unserialize(file_get_contents(Config::$data['menu_data']));
+        $this->items = array();
+
+        if(!empty($this->datalist)){
+            foreach ($this->datalist as $entry) {
+                if($entry['group']==$this->groups){
+                    $this->items[]=$entry;
+                }
+            }
+        }
+		//$this -> items = $this -> model -> get_menu($this->groups);
+		
+		//$this->groups=(Helper::get('data')=='' || Helper::get('action') == 'delete_item')?'main':Helper::get('data');
+		//var_dump($this->menulist($this -> items));
 		if(!empty($this->items))
 		$this->data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data>'.$this->menulist($this -> items).'</data>', null, false);
 	}
