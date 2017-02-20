@@ -67,7 +67,7 @@
   </div>
   <?php endif;?>
 
-  <div class="col-sm-offset-2 col-sm-8 well">
+  <div class="col-sm-offset-2 col-sm-8">
       <h3>Nowy układ</h3>
        <form class="form" role="form" action="<?=$this->data->link?>&action=add" method="post">
 
@@ -84,7 +84,5 @@
        </form>
   </div>
 
-  <div class="col-sm-12 well">
-  Bieżąca grupa "<?=$this->group?>" <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'groups&group='.$this->group?>">Grupy</a>
-  </div>
+  <div class="col-sm-12 well">Bieżąca grupa "<?=$this->group?>"</div>
 	</div>

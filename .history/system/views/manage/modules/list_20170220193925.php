@@ -20,5 +20,5 @@
 <p>Pusto, Nic tu nie ma</p>
 </div>
 <?php } ?>
-<div class="list-group-item">Bieżąca grupa "<?=$this->group?>"</div>
 </div>
+<div class="list-group-item">Bieżąca grupa "<?=$this->group?>"</div>

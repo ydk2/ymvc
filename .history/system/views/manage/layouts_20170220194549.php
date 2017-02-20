@@ -67,7 +67,7 @@
   </div>
   <?php endif;?>
 
-  <div class="col-sm-offset-2 col-sm-8 well">
+  <div class="col-sm-offset-2 col-sm-8">
       <h3>Nowy układ</h3>
        <form class="form" role="form" action="<?=$this->data->link?>&action=add" method="post">
 
