@@ -15,6 +15,7 @@ class Administration extends PHPRender {
         $this->view = $view;
         *
         */
+        var_dump($this);
         $this->exceptions = TRUE;
         $this->SetAccess(self::ACCESS_ANY);
         $this->access_groups = array('admin','editor');

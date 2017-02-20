@@ -12,7 +12,7 @@
 <?php if(!empty($this->files)){ ?>
 <?php foreach($this->files as $file){
 $path = str_replace(ROOT,'',$file['path']);
-$path = str_replace(EXT,'',$path);
+$path = str_replace(EXT,'',$file['path']);
 ?>
 <div class="list-group-item">
 <?php if($file['dir']){ ?>

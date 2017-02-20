@@ -31,7 +31,7 @@ Zainstalowano w: <?=$item['path']?>
 <?php
 
 $name = basename(base64_decode(Helper::get('path')),'.php');
-$this->Inc(base64_decode(Helper::get('path')));
+$this->Inc(ROOT.base64_decode(Helper::get('path')));
 if(class_exists($name) && method_exists($name,'Config')){
 $config = $name::Config();
 ?>

@@ -31,7 +31,7 @@ Zainstalowano w: <?=$item['path']?>
 <?php
 
 $name = basename(base64_decode(Helper::get('path')),'.php');
-$this->Inc(base64_decode(Helper::get('path')));
+$this->Inc(ROOT.base64_decode(Helper::get('path')));
 if(class_exists($name) && method_exists($name,'Config')){
 $config = $name::Config();
 ?>
@@ -48,7 +48,7 @@ Tytuł "<?=$config['title'];?>" of "<?=$name?>"
 Dostęp dla: <?=implode(', ',$config['access_groups']);?>
 </div>
 <div class="list-group-item">
-Zainstalowano w "<?=base64_decode(Helper::get('path'))?>"
+Zainstalowano w: <?=base64_decode(Helper::get('path'))?>
 </div>
 <div class="list-group-item">
 <form action="<?=$this->data->link.'&action=edit&path='.helper::get('path')?>" method="post" class="form-inline">

@@ -85,26 +85,39 @@ class Template extends PHPRender {
 		$contents = '';
 
         $content->layouts = $this->model->getData(Config::$data['layout_data']);
-        $modules = $this->model->getData(Config::$data['modules_data']);
-
-        if(isset($_GET['login'.S.'form'])){
-            $this->current_group='any';
-        }
-        $moduleitems = $this->model->itemsData($modules,$this->current_group,'group');
-        $content->layout_group = $this->current_group;
-        $items = array();
-        foreach ($moduleitems as $module) {
-            $items[]= $module['path'];
-        }
-
-        Config::$data['enabled'] = $items;
-
         if($this->current_group=="admin"){
-
+            Config::$data['enabled'] = array(
+            APP.C.'one',
+            SYS.C.'other'.S.'two',
+            SYS.C.'check'.S.'gettime',
+            SYS.C.'elements'.S.'menu',
+            SYS.C.'login'.S.'form',
+            SYS.C.'manage'.S.'menus',
+            SYS.C.'manage'.S.'account',
+            SYS.C.'admin'.S.'administration',
+            SYS.C.'manage'.S.'layouts',
+            SYS.C.'manage'.S.'modules',
+            SYS.C.'manage'.S.'manage',
+            SYS.C.'test'.S.'test'
+            );
             //$content->default_route_group='default';
             $content->default_route_count=1;
+            $content->layout_group = 'admin';
         }
+        if($this->current_group=="any"){
 
+            Config::$data['enabled'] = array(
+            SYS.C.'login'.S.'form',
+            );
+            $content->layout_group = 'any';
+        }
+        if(isset($_GET['login'.S.'form'])){
+
+            Config::$data['enabled'] = array(
+            SYS.C.'login'.S.'form'
+            );
+            $content->layout_group = 'any';
+        }
         $content->enabled = Config::$data['enabled'];
         $content->disabled = Config::$data['disabled'];
         $content->mode = $this->model->mode;

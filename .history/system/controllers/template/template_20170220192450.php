@@ -96,7 +96,6 @@ class Template extends PHPRender {
         foreach ($moduleitems as $module) {
             $items[]= $module['path'];
         }
-
         Config::$data['enabled'] = $items;
 
         if($this->current_group=="admin"){

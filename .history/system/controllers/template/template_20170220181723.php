@@ -92,19 +92,19 @@ class Template extends PHPRender {
         }
         $moduleitems = $this->model->itemsData($modules,$this->current_group,'group');
         $content->layout_group = $this->current_group;
-        $items = array();
-        foreach ($moduleitems as $module) {
-            $items[]= $module['path'];
-        }
-
         Config::$data['enabled'] = $items;
+
+        foreach ($moduleitems as $module) {
+            $items[]=$module['path'];
+        }
 
         if($this->current_group=="admin"){
 
+            Config::$data['enabled'] = $items;
             //$content->default_route_group='default';
             $content->default_route_count=1;
         }
-
+        
         $content->enabled = Config::$data['enabled'];
         $content->disabled = Config::$data['disabled'];
         $content->mode = $this->model->mode;

@@ -105,8 +105,7 @@ class Layout extends PHPRender {
                         $count = 0;
 
 		                foreach ($_GET as $key => $router) {
-		                    $controller = str_replace(S,DS,$mode.C.$key);
-                            if(in_array($controller,$enabled) && !in_array($controller,$disabled) && $this->ControllerExists($controller)){
+                            if(in_array($mode.C.$key,$enabled) && !in_array($mode.C.$key,$disabled) && $this->ControllerExists($mode.C.$key)){
 			                    $content->layouts[] = array('pos' => $pos++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$router,'class'=>$value['class'],'attr'=>'', 'users'=>'', 'group'=>$value['name'], 'mode'=>$value['mode']);
                                 $count++;
                             }
@@ -133,7 +132,6 @@ class Layout extends PHPRender {
                         }
                         $content = NULL;
                         $contents = NULL;
-                        $controller = NULL;
                         $col = NULL;
                     }
                 }

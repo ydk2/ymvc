@@ -92,11 +92,24 @@ class Template extends PHPRender {
         }
         $moduleitems = $this->model->itemsData($modules,$this->current_group,'group');
         $content->layout_group = $this->current_group;
-        $items = array();
-        foreach ($moduleitems as $module) {
-            $items[]= $module['path'];
-        }
 
+        foreach ($moduleitems as $module) {
+            $items[]=$module['path'];
+        }
+$items  = array(
+            APP.C.'one',
+            SYS.C.'other'.S.'two',
+            SYS.C.'check'.S.'gettime',
+            SYS.C.'elements'.S.'menu',
+            SYS.C.'login'.S.'form',
+            SYS.C.'manage'.S.'menus',
+            SYS.C.'manage'.S.'account',
+            SYS.C.'admin'.S.'administration',
+            SYS.C.'manage'.S.'layouts',
+            SYS.C.'manage'.S.'modules',
+            SYS.C.'manage'.S.'manage',
+            SYS.C.'test'.S.'test'
+            );
         Config::$data['enabled'] = $items;
 
         if($this->current_group=="admin"){

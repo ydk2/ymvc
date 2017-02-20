@@ -94,9 +94,8 @@ class Template extends PHPRender {
         $content->layout_group = $this->current_group;
         $items = array();
         foreach ($moduleitems as $module) {
-            $items[]= $module['path'];
+            $items[]= str_replace(DS,S,$module['path']);
         }
-
         Config::$data['enabled'] = $items;
 
         if($this->current_group=="admin"){

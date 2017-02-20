@@ -287,7 +287,7 @@ class Manage extends PHPRender {
 
         $this->data->header = 'Brak elementów';
         $this->data->text = 'Dodaj nowy';
-        if(helper::get('action') || is_file(ROOT.base64_decode(helper::get('path')).EXT)){
+        if(helper::get('action') || is_file(base64_decode(helper::get('path')))){
             $this->Actionmodules();
         } else {
             $path = (helper::get('path')=="")?ROOT.$this->app.DS.C:ROOT.base64_decode(helper::get('path'));

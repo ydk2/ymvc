@@ -105,8 +105,7 @@ class Layout extends PHPRender {
                         $count = 0;
 
 		                foreach ($_GET as $key => $router) {
-		                    $controller = str_replace(S,DS,$mode.C.$key);
-                            if(in_array($controller,$enabled) && !in_array($controller,$disabled) && $this->ControllerExists($controller)){
+                            if(in_array($mode.C.$key,$enabled) && !in_array($mode.C.$key,$disabled) && $this->ControllerExists($mode.C.$key)){
 			                    $content->layouts[] = array('pos' => $pos++, 'name'=>'FromRoute_'.$key,'module'=>$key,'view'=>$router,'class'=>$value['class'],'attr'=>'', 'users'=>'', 'group'=>$value['name'], 'mode'=>$value['mode']);
                                 $count++;
                             }
@@ -133,14 +132,14 @@ class Layout extends PHPRender {
                         }
                         $content = NULL;
                         $contents = NULL;
-                        $controller = NULL;
                         $col = NULL;
                     }
                 }
                 if($value['module']!="layout" && $value['module']!="route" && $value['module']!="") {
 
-		            $controller = str_replace(S,DS,$mode.C.$value['module']);
-                    if(in_array($controller, $enabled) && !in_array($controller,$disabled) && $this->ControllerExists($controller)){
+                        var_dump($value['module']);
+                    if(in_array($mode.C.$value['module'], $enabled) && !in_array($mode.C.$value['module'],$disabled) && $this->ControllerExists($mode.C.$value['module'])){
+
                         $content = $this->NewViewExt($mode.V.$value['view'],$mode.C.$value['module']);
                         $contents = ($content)? $content->View():"";
                         if($contents!=""){
@@ -149,7 +148,6 @@ class Layout extends PHPRender {
                         }
                         $content = NULL;
                         $contents = NULL;
-                        $controller = NULL;
                         $col = NULL;
                     }
                 }

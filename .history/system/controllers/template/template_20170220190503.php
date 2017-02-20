@@ -92,9 +92,9 @@ class Template extends PHPRender {
         }
         $moduleitems = $this->model->itemsData($modules,$this->current_group,'group');
         $content->layout_group = $this->current_group;
-        $items = array();
+
         foreach ($moduleitems as $module) {
-            $items[]= $module['path'];
+            $items[]=$module['path'];
         }
 
         Config::$data['enabled'] = $items;

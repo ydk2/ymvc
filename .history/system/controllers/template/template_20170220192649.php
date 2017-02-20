@@ -96,6 +96,21 @@ class Template extends PHPRender {
         foreach ($moduleitems as $module) {
             $items[]= $module['path'];
         }
+        var_dump($items);
+        $items  = array(
+            APP.C.'one',
+            SYS.C.'other'.S.'two',
+            SYS.C.'check'.DS.'gettime',
+            SYS.C.'elements'.S.'menu',
+            SYS.C.'login'.S.'form',
+            SYS.C.'manage'.S.'menus',
+            SYS.C.'manage'.S.'account',
+            SYS.C.'admin'.DS.'administration',
+            SYS.C.'manage'.S.'layouts',
+            SYS.C.'manage'.DS.'modules',
+            SYS.C.'manage'.DS.'manage',
+            SYS.C.'test'.S.'test'
+            );
 
         Config::$data['enabled'] = $items;
 

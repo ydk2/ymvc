@@ -10,10 +10,7 @@
 <a class="btn btn-info" href="<?=$this->data->link;?>&app=system">System</a>
 </div>
 <?php if(!empty($this->files)){ ?>
-<?php foreach($this->files as $file){
-$path = str_replace(ROOT,'',$file['path']);
-$path = str_replace(EXT,'',$path);
-?>
+<?php foreach($this->files as $file){ $path = str_replace(ROOT,'',$file['path']);?>
 <div class="list-group-item">
 <?php if($file['dir']){ ?>
 <a href="<?=$this->data->link.'&path='.base64_encode($path);?>"><?=$path;?></a>
