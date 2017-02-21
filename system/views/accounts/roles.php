@@ -1,0 +1,9 @@
+<div class="row">
+<div class="col-sm-12">
+    <div class="well">
+      <h1>Oj! coś tu nie tak</h1>
+      <p>Nic nie znaleziono</p>
+      <a href="?accounts-users=accounts-list" class="btn btn-primary btn-large">Wróć</a>
+    </div>
+</div>
+</div>
