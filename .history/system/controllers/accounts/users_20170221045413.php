@@ -3,7 +3,7 @@
  * @Author: ydk2 (me@ydk2.tk)
  * @Date: 2017-01-25 12:18:38
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-02-21 04:54:35
+ * @Last Modified time: 2017-02-21 04:54:13
  */
 class Users extends PHPRender {
 	//private $error;
@@ -68,7 +68,10 @@ if(!helper::post('can_login')) {
   unset($this->post['account_pass']);
 }
 if(!helper::post('active')) $this->post['active']='n';
-
+foreach ($this->post as $key => $value) {
+  $string = (is_array($value))?implode(', ',$value):$value;
+  echo "<p>$key = ".$string."</p>";
+}
 }
 	}
 	public function ulist(){

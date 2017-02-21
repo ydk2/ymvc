@@ -3,7 +3,7 @@
  * @Author: ydk2 (me@ydk2.tk)
  * @Date: 2017-01-25 12:18:38
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-02-21 04:54:35
+ * @Last Modified time: 2017-02-21 04:26:58
  */
 class Users extends PHPRender {
 	//private $error;
@@ -60,16 +60,7 @@ class Users extends PHPRender {
 	}
 
 	public function usave(){
-	$this->post = $_POST;
-if(isset($this->post) && !empty($this->post)){
-if(!helper::post('can_login')) {
-  $this->post['can_login']='n';
-  unset($this->post['account_login']);
-  unset($this->post['account_pass']);
-}
-if(!helper::post('active')) $this->post['active']='n';
 
-}
 	}
 	public function ulist(){
 		$gprx='login';

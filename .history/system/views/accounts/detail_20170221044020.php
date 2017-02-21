@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <?php if(!empty($this->userdetails)){ ?>
       <?php foreach($this->userdetails as $ukey=>$uvalues) { ?>
-	 <!-- <p><b><?=$ukey?></b> "<?=$uvalues?>"</p> -->
+	  <p><b><?=$ukey?></b> "<?=$uvalues?>"</p>
       <?php } ?>
 
     <form class="form-horizontal text-info .form" method="POST" action="?accounts-users=accounts-save"

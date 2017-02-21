@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <?php if(!empty($this->userdetails)){ ?>
       <?php foreach($this->userdetails as $ukey=>$uvalues) { ?>
-	 <!-- <p><b><?=$ukey?></b> "<?=$uvalues?>"</p> -->
+	  <p><b><?=$ukey?></b> "<?=$uvalues?>"</p>
       <?php } ?>
 
     <form class="form-horizontal text-info .form" method="POST" action="?accounts-users=accounts-save"
@@ -72,7 +72,7 @@
               <div class="col-sm-12">
                 <h4>Dane Kontaktowe</h4>
                 <div class="input-group">
-                  <input name="account_name" value="<?=$this->userdetails['account_name']?>" type="text" class="form-control">
+                  <input name="account_login" value="<?=$this->userdetails['account_name']?>" type="text" class="form-control">
                   <span class="input-group-addon">
                     <i class="fa fa-lg fa-user"></i>&nbsp;Nazwa</span>
                 </div>
