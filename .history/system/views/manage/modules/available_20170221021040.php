@@ -2,7 +2,6 @@
 
 <div class="col-sm-12">
 <div class"list-group">
-<div class="list-group-item"><h5>Wybierz Moduły</h5></div>
 <div class="list-group-item">
 <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'groups&group='.$this->group?>">Grupy</a>
 <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'modules&group='.$this->group?>">Moduły</a>

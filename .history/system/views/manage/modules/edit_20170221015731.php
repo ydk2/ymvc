@@ -1,12 +1,10 @@
-<div class="row">
-<div class="col-sm-12">
+
 <?php if ($this->model->cache->itemExists($this->items,base64_decode(Helper::get('path')),'path')) { ?>
 <?php
 $item = $this->model->cache->GetItemBy($this->items,base64_decode(Helper::get('path')),'path');
 ?>
 
 <div class"list-group">
-<div class="list-group-item"><h5>Edytuj Moduł</h5></div>
 <div class="list-group-item">
 <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'modules&group='.$this->group?>">Moduły</a>
 <a class="btn btn-warning" href="<?=$this->data->link.'&path='.base64_encode(dirname($item['path']));?>">Wróć</a>
@@ -27,6 +25,7 @@ Zainstalowano w: <?=$item['path']?>
 <p class="btn btn-info">Zarejestrowano</p>
 <?php } ?>
 </div>
+<div class="list-group-item">Bieżąca grupa "<?=$this->group?>"</div>
 </div>
 <?php } else { ?>
 <?php
@@ -38,7 +37,7 @@ $config = $name::Config();
 ?>
 
 <div class"list-group">
-<div class="list-group-item"><h5>Dodaj Moduł</h5></div>
+<div class="list-group-item"><h5>Bieżąca grupa "<?=$this->group?>"</h5></div>
 <div class="list-group-item">
 <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'modules&group='.$this->group?>">Moduły</a>
 <a class="btn btn-warning" href="<?=$this->data->link.'&path='.base64_encode(dirname(base64_decode(helper::get('path'))));?>">Wróć</a>
@@ -68,6 +67,7 @@ Zainstalowano w "<?=base64_decode(Helper::get('path'))?>"
 } else {
 ?>
 <div class"list-group">
+<div class="list-group-item"><h3>Bieżąca grupa "<?=$this->group?>"</h3></div>
 <div class="list-group-item">
 <a class="btn btn-warning" href="<?=$this->link.'='.'manage'.S.'modules'.S.'list&group='.$this->group.'&path='.base64_encode(dirname(base64_decode(helper::get('path'))));?>">Wróć</a>
 </div>
@@ -79,8 +79,3 @@ Zainstalowano w "<?=base64_decode(Helper::get('path'))?>"
 </div>
 <?php } ?>
 <?php } ?>
-</div>
-<div class="col-sm-12 well">
-  Bieżąca grupa "<?=$this->group?>" <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'groups&group='.$this->group?>">Grupy</a>
-</div>
-</div>

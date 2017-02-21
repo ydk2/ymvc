@@ -1,8 +1,7 @@
 <div class="row">
-<div class="col-sm-12">
 <div class"list-group">
 <div class="list-group-item">
-<h5>Moduły</h5>
+<p class="lead">Moduły&#160;</p>
 </div>
 <div class="list-group-item">
 <span class="btn btn-link lead">Grupy&#160;</span>
@@ -19,6 +18,7 @@
 </div>
 <?php
 ?>
+<div class="col-sm-12">
 </div>
 
 <div class="col-sm-12 well">

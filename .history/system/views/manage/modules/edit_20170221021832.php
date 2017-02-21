@@ -27,6 +27,7 @@ Zainstalowano w: <?=$item['path']?>
 <p class="btn btn-info">Zarejestrowano</p>
 <?php } ?>
 </div>
+<div class="list-group-item">Bieżąca grupa "<?=$this->group?>"</div>
 </div>
 <?php } else { ?>
 <?php

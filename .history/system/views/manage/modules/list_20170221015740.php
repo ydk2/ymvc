@@ -1,7 +1,6 @@
-<div class="row">
-<div class="col-sm-12">
+
 <div class"list-group">
-<div class="list-group-item"><h5>Zarządzaj Modułami</h5></div>
+<div class="list-group-item"><h5>Bieżąca grupa "<?=$this->group?>"</h5></div>
 <div class="list-group-item">
 <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'groups&group='.$this->group?>">Grupy</a>
 <a class="btn btn-info" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'modules&group='.$this->group?>">Moduły</a>
@@ -22,10 +21,4 @@
 <p>Pusto, Nic tu nie ma</p>
 </div>
 <?php } ?>
-</div>
-</div>
-
-<div class="col-sm-12 well">
-  Bieżąca grupa "<?=$this->group?>" <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'groups&group='.$this->group?>">Grupy</a>
-</div>
 </div>

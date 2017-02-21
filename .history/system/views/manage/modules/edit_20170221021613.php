@@ -27,6 +27,7 @@ Zainstalowano w: <?=$item['path']?>
 <p class="btn btn-info">Zarejestrowano</p>
 <?php } ?>
 </div>
+<div class="list-group-item">Bieżąca grupa "<?=$this->group?>"</div>
 </div>
 <?php } else { ?>
 <?php
@@ -68,6 +69,7 @@ Zainstalowano w "<?=base64_decode(Helper::get('path'))?>"
 } else {
 ?>
 <div class"list-group">
+<div class="list-group-item"><h3>Bieżąca grupa "<?=$this->group?>"</h3></div>
 <div class="list-group-item">
 <a class="btn btn-warning" href="<?=$this->link.'='.'manage'.S.'modules'.S.'list&group='.$this->group.'&path='.base64_encode(dirname(base64_decode(helper::get('path'))));?>">Wróć</a>
 </div>

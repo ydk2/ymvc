@@ -1,8 +1,8 @@
-<div class="row">
-<div class="col-sm-12">
+
 <div class"list-group">
+<div class="list-group-item"><h5>Bieżąca grupa "<?=$this->group?>"</h5></div>
 <div class="list-group-item">
-<h5>Moduły</h5>
+<p class="lead">Moduły&#160;</p>
 </div>
 <div class="list-group-item">
 <span class="btn btn-link lead">Grupy&#160;</span>
@@ -19,9 +19,5 @@
 </div>
 <?php
 ?>
-</div>
-
-<div class="col-sm-12 well">
-  Bieżąca grupa "<?=$this->group?>" <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'groups&group='.$this->group?>">Grupy</a>
-</div>
+<div class="col-sm-12">
 </div>
