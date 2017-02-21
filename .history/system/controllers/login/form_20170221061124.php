@@ -3,7 +3,7 @@
  * @Author: ydk2 (me@ydk2.tk)
  * @Date: 2017-01-25 12:18:38
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-02-21 06:12:36
+ * @Last Modified time: 2017-02-21 06:11:23
  */
 class Form extends PHPRender {
 	//private $error;
@@ -142,8 +142,8 @@ class Form extends PHPRender {
 		}
 		if($pass_check==TRUE){
 			//$enteries = $this->model->get_idx_enteries($table,$user_check[0]['idx'],$gprx);
-			$user_data=$this->model->search_idx_enteries($table,$user_check[0]['idx'],$gprx);
-			$roleid=(isset($user_data[key($user_data)]['role_id']))?$user_data[key($user_data)]['role_id']:10; //$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
+			$roleid=(isset($user_data[key($user_data)]['role_id']))?$user_data[key($user_data)]['role_id']:10;
+			$user_data=$this->model->search_idx_enteries($table,$user_check[0]['idx'],$gprx); //$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
 				Helper::session_set('id', key($user_data)+1);
 				Helper::session_set('user_name', $user_data[key($user_data)]['account_name']);
 				Helper::session_set('user_email', $user_data[key($user_data)]['account_email']);

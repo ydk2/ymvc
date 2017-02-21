@@ -103,7 +103,6 @@ class Template extends PHPRender {
 
             //$content->default_route_group='default';
         }
-echo $this->current_group;
         $content->default_route_count=1;
         $content->enabled = Config::$data['enabled'];
         $content->disabled = Config::$data['disabled'];

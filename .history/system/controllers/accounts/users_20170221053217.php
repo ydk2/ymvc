@@ -3,11 +3,12 @@
  * @Author: ydk2 (me@ydk2.tk)
  * @Date: 2017-01-25 12:18:38
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-02-21 06:12:36
+ * @Last Modified time: 2017-02-21 05:32:16
  */
-class Form extends PHPRender {
+class Users extends PHPRender {
 	//private $error;
-
+	public $usersList= array();
+	public $userdetails= array();
     public static function Config() {
         return array(
         'title'=>'Login Module',
@@ -19,11 +20,11 @@ class Form extends PHPRender {
 		$this -> alert = '';
 		$this -> alert_header = '';
 		$this -> alert_string = '';
-		$this->SetAccess(self::ACCESS_ANY);
-		$this->access_groups = array(null);
-		$this->current_group = null;
-		$this->AccessMode(0);
-		$this->global_access = null;
+		$this->SetAccess(self::ACCESS_EDITOR);
+		$this->access_groups = array('admin','editor');
+        $this->current_group = Helper::Session('user_role');
+        $this->AccessMode(2);
+		$this->global_access = Helper::Session('user_access');
 
 		$this->RegisterView(SYS.V.'login'.S.'form');
 		$this->SetModel(SYS.M.'accountsdata');
@@ -31,7 +32,117 @@ class Form extends PHPRender {
 	}
 
 	public function Run() {
-		$this->success_link = Config::$data['modules']['default'];
+		Config::$data['menu']['current']="users";
+		switch ($this->view) {
+			case SYS.V.'accounts'.DS.'list':
+				$this->link = '?accounts-users=accounts-list';
+				if(helper::get('query')){
+					$this->ulist();
+				} else {
+					$this->ulist();
+				}
+				# code...
+				break;
+			case SYS.V.'accounts'.DS.'detail':
+				$this->link = '?accounts-users=accounts-detail';
+				$this->udetail();
+				# code...
+				break;
+			case SYS.V.'accounts'.DS.'save':
+				$this->link = '?accounts-users=accounts-detail&user='.helper::post('idx');
+				$this->usave();
+				# code...
+				break;
+			
+			default:
+				break;
+		}
+	}
+
+	public function usave(){
+
+		$gprx='login';
+		$table = 'loginusers';
+	$this->post = $_POST;
+if(isset($this->post) && !empty($this->post)){
+if(!helper::post('can_login')) {
+  $this->post['can_login']='n';
+  unset($this->post['account_login']);
+  unset($this->post['account_pass']);
+}
+if(!helper::post('active')) $this->post['active']='n';
+$data =array();
+$idx = $this->post['idx'];
+unset($this->post['idx']);
+
+foreach ($this->post as $key => $value) {
+  $string = (is_array($value))?implode(', ',$value):$value;
+  $data[$idx][$key] = $string;
+}
+    	$rout=$this->model->reverseNoId($data,$gprx);
+var_dump($rout);
+		if($update){
+		foreach ($rout as $items) {
+			$this->model->update_item($table,$items['name'],$items['value'],$items['idx'],$items['gprx']);
+		}
+		}
+}
+	}
+	public function ulist(){
+		$gprx='login';
+		$table = 'loginusers';
+		if(helper::get('query')!=""){
+			//var_dump(helper::get('query'));
+			$this->title = "Wyniki wyszukiwania";
+			$this->List=$this->model->query_value($table,helper::get('filter'),helper::get('query'),$gprx);
+
+			//var_dump($this->List);
+			if(!empty($this->List)) {
+			$i = 0;
+			foreach ($this->List as $key => $value) {
+			//$users=$this->model->get_idx_enteries($table,$value,$gprx);
+			//$this->usersList += $this->model->searchByName($users,'account_name',$gprx);
+				$this->usersList[$i]['account_name']=$this->model->get_name_idx($table,'account_name',$key,$gprx)[0]['value'];
+				$this->usersList[$i]['account_login']=$this->model->get_name_idx($table,'account_login',$key,$gprx)[0]['value'];
+				$this->usersList[$i]['account_role']=$this->model->get_name_idx($table,'account_role',$key,$gprx)[0]['value'];
+				$this->usersList[$i]['id']=$this->model->get_name_idx($table,'account_role',$key,$gprx)[0]['idx'];
+				$i++;
+			}
+			}
+		} else {
+			$this->List = $this->model->get_idx_list($table,$gprx);
+			$this->title = "użytkownicy";
+			if(!empty($this->List)) {
+			$i = 0;
+			foreach ($this->List as $key => $value) {
+			//$users=$this->model->get_idx_enteries($table,$value,$gprx);
+			//$this->usersList += $this->model->searchByName($users,'account_name',$gprx);
+				$this->usersList[$i]['account_name']=$this->model->get_name_idx($table,'account_name',$value[0],$gprx)[0]['value'];
+				$this->usersList[$i]['account_login']=$this->model->get_name_idx($table,'account_login',$value[0],$gprx)[0]['value'];
+				$this->usersList[$i]['account_role']=$this->model->get_name_idx($table,'account_role',$value[0],$gprx)[0]['value'];
+				$this->usersList[$i]['id']=$this->model->get_name_idx($table,'account_role',$value[0],$gprx)[0]['idx'];
+				$i++;
+			}
+			}
+		}
+		//var_dump($this->usersList);
+	}
+	public function udetail(){
+		$gprx='login';
+		$table = 'loginusers';
+		$this->List = $this->model->get_idx_list($table,$gprx);
+		$i = 0;
+			$user=$this->model->get_idx_enteries($table,helper::get('user'),$gprx);
+			$this->userdetails = $this->model->searchByName($user,'account_name',$gprx)[helper::get('user')];
+			$this->userdetails['idx'] = helper::get('user');
+			//$this->usersList += $this->model->searchByName($users,'account_name',$gprx);
+			//$this->usersdetail=$this->model->get_name_idx($table,'account_name',$value[0],$gprx)[0]['value'];
+
+		//var_dump($this->usersList);
+	}
+
+	public function oldRun() {
+		$this->success_link = '?admin-mngaccount';
 		$this->newlogin();
 	}
 	public function itemattr($attrs){
@@ -74,10 +185,16 @@ class Form extends PHPRender {
 		$users[0]=array('account_login'=>'admin','account_name'=>'admin','account_email'=>'admin@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'admin','role_id'=>1,'can_login'=>'y','active'=>'y');
 		$users[1]=array('account_login'=>'user','account_name'=>'user','account_email'=>'user@localhost.to', 'account_pass'=>'d033e22ae348aeb5660fc2140aec35850c4da997', 'account_role'=>'user','role_id'=>5,'can_login'=>'y','active'=>'y');
 
-    	$rout=$this->model->reverseNoId($users,$gprx);
+    	$rout=$this->model->reverseNoId($items,$data,$gprx);
+
+		if($update){
+		foreach ($rout as $items) {
+			$this->model->update_item($table,$items['name'],$items['value'],$items['idx'],$items['gprx']);
+		}
+		}
 
 		var_dump($this->model->createTableRotate($table,$gprx));
-
+//		$rout=$this->model->reverseItems($items,$data,$gprx='')
 		foreach ($rout as $items) {
 			$this->model->add_item($table,$items['name'],$items['value'],$items['idx'],$items['gprx']);
 		}
@@ -142,13 +259,12 @@ class Form extends PHPRender {
 		}
 		if($pass_check==TRUE){
 			//$enteries = $this->model->get_idx_enteries($table,$user_check[0]['idx'],$gprx);
-			$user_data=$this->model->search_idx_enteries($table,$user_check[0]['idx'],$gprx);
-			$roleid=(isset($user_data[key($user_data)]['role_id']))?$user_data[key($user_data)]['role_id']:10; //$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
+			$user_data=$this->model->search_idx_enteries($table,$user_check[0]['idx'],$gprx); //$this->model->searchByNameValue($enteries,'account_login',$user,$gprx);
 				Helper::session_set('id', key($user_data)+1);
 				Helper::session_set('user_name', $user_data[key($user_data)]['account_name']);
 				Helper::session_set('user_email', $user_data[key($user_data)]['account_email']);
 				Helper::session_set('user_role', $user_data[key($user_data)]['account_role']);
-				Helper::session_set('user_access', $roleid);
+				Helper::session_set('user_access', $user_data[key($user_data)]['role_id']);
 				Helper::session_set('token', base64_encode(microtime()));
 			$this->ViewData('alert','Zalogowano');
 			$this->ViewData('classes',' alert-success text-success');

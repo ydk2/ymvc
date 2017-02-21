@@ -3,7 +3,7 @@
 * @Author: ydk2 (me@ydk2.tk)
 * @Date: 2017-01-25 12:18:38
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-02-21 06:04:08
+ * @Last Modified time: 2017-02-21 05:46:24
 */
 class Users extends PHPRender {
     //private $error;
@@ -64,19 +64,13 @@ public function usave(){
     $gprx='login';
     $table = 'loginusers';
     $this->post = $_POST;
-	var_dump($this->post);
     if(isset($this->post) && !empty($this->post)){
-        if(!isset($this->post['can_login'])) {
+        if(helper::post('can_login')!="y") {
             $this->post['can_login']='n';
-            $account_get = $this->model->get_name_idx($table,'account_login',$post['idx'],$gprx);
-            $pass_get = $this->model->get_name_idx($table,'account_pass',$post['idx'],$gprx);
-            $this->post['account_login']=$account_get[0]['value'];
-            $this->post['account_pass']=$pass_get[0]['value'];;
-        } else {
-			$this->post['account_pass']=sha1($this->post['account_pass']);
-		}
-		$this->post['role_id']=5;
-        if(!isset($this->post['active'])) $this->post['active']='n';
+            unset($this->post['account_login']);
+            unset($this->post['account_pass']);
+        }
+        if(helper::post('active')!='y') $this->post['active']='n';
         $data =array();
         $idx = $this->post['idx'];
         unset($this->post['idx']);
