@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col-sm-12">
-  <h3>Administracja Modułami</h3>
+  <h3>Moduły</h3>
 <div class"list-group">
 <div class="list-group-item">
 <span class="btn btn-link lead">Grupy&#160;</span>

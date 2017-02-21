@@ -1,7 +1,7 @@
 
   <div class="row">
   <div class="col-sm-12">
-  <h3>Administracja Grupami</h3>
+  <h3>Grupy</h3>
 	<strong class="lead">Dodaj nową grupę</strong>
 	<form role="form" method="get" action="<?=HOST_URL ?>">
     <div class="form-group">

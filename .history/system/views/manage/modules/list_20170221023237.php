@@ -1,6 +1,6 @@
 <div class="row">
 <div class="col-sm-12">
-  <h3>Zarejestrowane Moduły</h3>
+  <h3>Administracja Modułami</h3>
 <div class"list-group">
 <div class="list-group-item">
 <a class="btn btn-info pull-right" href="<?=HOST_URL.'?manage'.S.'manage'.'='.'manage'.S.'groups&group='.$this->group?>">Grupy</a>
