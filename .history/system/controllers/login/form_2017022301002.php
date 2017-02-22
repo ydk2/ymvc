@@ -3,7 +3,7 @@
  * @Author: ydk2 (me@ydk2.tk)
  * @Date: 2017-01-25 12:18:38
  * @Last Modified by: ydk2 (me@ydk2.tk)
- * @Last Modified time: 2017-02-23 00:18:41
+ * @Last Modified time: 2017-02-23 00:10:02
  */
 class Form extends PHPRender {
 	//private $error;
@@ -112,13 +112,7 @@ class Form extends PHPRender {
 		} else {
 
 
-		if (filter_var($user, FILTER_VALIDATE_EMAIL)) {
-			$user_check = $this->model->get_name_value($table,'account_email',$user,$gprx);
-		} else {
-			$user_check = $this->model->get_name_value($table,'account_login',$user,$gprx);
-		}
-
-
+		$user_check = $this->model->get_name_value($table,'account_login',$user,$gprx);
 		if($user_check){
 			$active_check = $this->model->get_name_idx($table,'active',$user_check[0]['idx'],$gprx);
 			$active_check = $active_check[0]['value'];
