@@ -32,18 +32,17 @@ class Manage extends PHPRender {
         if(!$inuse){
             $inuse = array();
         }
-        $this->subview = '';
+
         if(!in_array(helper::session('token'),$inuse) && !array_key_exists($this->name,$inuse)){
         $inuse[$this->name]=helper::session('token');
         staticCache::setCache(Config::$data['inuse'],$inuse);
         } else {
             if($inuse[$this->name]!=helper::session('token')){
-            $this->data->link_yes=$this->data->link."&answer=yes";
-            $this->data->link_no=$this->data->link."&answer=no";
-            $this->data->header=intl::_("Uwaga!!!");
-            $this->data->text=intl::_("używane przez").' '.$inuse[$this->name];
-            $this->data->type = "alert-danger";
-            $this->subview = $this->subView(SYS.V."elements-alert");
+            $this->data->link_yes=$this->link."&answer=yes";
+            $this->data->link_no=$this->link."&answer=no";
+            $this->data->header=intl::_("używane");
+            $this->data->text=intl::_("używane przez").' '.$this->inuse[$this->name];
+            $this->subview = $this->subView(SYS.V."elements-answer");
             }
         }
 
@@ -190,7 +189,7 @@ class Manage extends PHPRender {
     }
 
     private function ActionMenu(){
-        //$this->setview(SYS.V.'elements'.S.'answer');
+        $this->setview(SYS.V.'elements'.S.'answer');
         $this->data->header = 'Błąd!!!';
         $this->data->text = 'Operacja Nie Istnieje';
         if(Helper::get('action')=='add' && isset($_POST['add'])){

@@ -40,9 +40,9 @@ class Manage extends PHPRender {
             if($inuse[$this->name]!=helper::session('token')){
             $this->data->link_yes=$this->data->link."&answer=yes";
             $this->data->link_no=$this->data->link."&answer=no";
-            $this->data->header=intl::_("Uwaga!!!");
+            $this->data->header=intl::_("używane");
             $this->data->text=intl::_("używane przez").' '.$inuse[$this->name];
-            $this->data->type = "alert-danger";
+            $this->data->type = "alert-warning";
             $this->subview = $this->subView(SYS.V."elements-alert");
             }
         }

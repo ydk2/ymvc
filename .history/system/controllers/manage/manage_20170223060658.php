@@ -42,7 +42,7 @@ class Manage extends PHPRender {
             $this->data->link_no=$this->data->link."&answer=no";
             $this->data->header=intl::_("Uwaga!!!");
             $this->data->text=intl::_("używane przez").' '.$inuse[$this->name];
-            $this->data->type = "alert-danger";
+            $this->data->type = "alert-warning";
             $this->subview = $this->subView(SYS.V."elements-alert");
             }
         }

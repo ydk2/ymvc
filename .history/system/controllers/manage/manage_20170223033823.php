@@ -28,25 +28,20 @@ class Manage extends PHPRender {
         $this->group=(Helper::get('group')=='')?'main':Helper::get('group');
         //$this -> items = $this -> model -> get_menu($this->groups);
 
-        $inuse = staticCache::getCache(Config::$data['inuse']);
-        if(!$inuse){
-            $inuse = array();
-        }
-        $this->subview = '';
-        if(!in_array(helper::session('token'),$inuse) && !array_key_exists($this->name,$inuse)){
-        $inuse[$this->name]=helper::session('token');
-        staticCache::setCache(Config::$data['inuse'],$inuse);
-        } else {
-            if($inuse[$this->name]!=helper::session('token')){
-            $this->data->link_yes=$this->data->link."&answer=yes";
-            $this->data->link_no=$this->data->link."&answer=no";
-            $this->data->header=intl::_("Uwaga!!!");
-            $this->data->text=intl::_("używane przez").' '.$inuse[$this->name];
-            $this->data->type = "alert-danger";
-            $this->subview = $this->subView(SYS.V."elements-alert");
-            }
-        }
+        $inuse = $this->model->getData(Config::$data['inuse']);
+        var_dump($inuse);
+        //$this->inuse=$this->$this->model->itemsData($inuse,$this->name,'inuse');
+        $this->notuse=$this->model->othersData($inuse,$this->name,'inuse');
+        $used=array('insue'=>$this->name);
 
+        array_push($this->inuse,$used);
+        $this->model->setData(Config::$data['inuse'],$this->model->joinData($this->inuse,$this->notuse));
+
+        $this->use=$this->model->itemsData($inuse,$this->name,'inuse');
+
+        var_dump($this->inuse);
+        //$this->group_list=$this->model->filter_list($this->datalist,'group');
+        
         $enabled = Config::$data['enabled'];
         $disabled = Config::$data['disabled'];
         
@@ -190,7 +185,7 @@ class Manage extends PHPRender {
     }
 
     private function ActionMenu(){
-        //$this->setview(SYS.V.'elements'.S.'answer');
+        $this->setview(SYS.V.'elements'.S.'answer');
         $this->data->header = 'Błąd!!!';
         $this->data->text = 'Operacja Nie Istnieje';
         if(Helper::get('action')=='add' && isset($_POST['add'])){

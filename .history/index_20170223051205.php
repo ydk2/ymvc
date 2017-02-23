@@ -2,10 +2,9 @@
 //error_reporting(1);
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'bootstrap.php');
 $previous_name = session_name("WebsiteID");
-//session_id(helper::session('token'));
 $previous_id = session_id();
 
-//echo "The previous session name was $previous_id<br />";
+echo "The previous session name was $previous_name<br />";
 Helper::Session_Start();
 //Helper::Inc(CORE.'router');
 //Helper::Inc(CORE.'intl');

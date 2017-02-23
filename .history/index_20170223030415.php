@@ -1,11 +1,6 @@
 <?php
 //error_reporting(1);
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'bootstrap.php');
-$previous_name = session_name("WebsiteID");
-//session_id(helper::session('token'));
-$previous_id = session_id();
-
-//echo "The previous session name was $previous_id<br />";
 Helper::Session_Start();
 //Helper::Inc(CORE.'router');
 //Helper::Inc(CORE.'intl');
@@ -87,7 +82,7 @@ Config::$data['time'] = get_time();
     'sections',
     'section'
     );
-    Config::$data['inuse'] = ROOT.CACHE."inuse.data";
+    Config::$data['inuse'] = ROOT.STORE."inuse.data";
     Config::$data['group_data'] = ROOT.STORE."groups.data";
     Config::$data['modules_data'] = ROOT.STORE."modules.data";
     Config::$data['layout_data'] = ROOT.STORE."layouts.data";
