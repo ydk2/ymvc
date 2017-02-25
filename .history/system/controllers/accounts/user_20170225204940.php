@@ -253,15 +253,14 @@ public function unew(){
         "account_pass varchar(199) not null",
         "account_role varchar(32) not null default 'user'",
         "account_born integer not null",
-        "account_can_login varchar(4) default 'yes'",
-        "account_active varchar(4) default 'yes'",
-        "account_adnotation TEXT ",
-        "account_role_id integer not null default 10",
-        "account_ctime integer not null",
-        "account_mtime integer not null"
+        "can_login varchar(4) default 'yes'",
+        "active varchar(4) default 'yes'",
+        "adnotation TEXT ",
+        "role_id integer not null default 10",
+        "ctime integer not null",
+        "mtime integer not null"
     );
-    //
-  //  $this->model->dropTable($table);
+    //$this->model->dropTable($table);
     $this->model->createTable($table,$entries);
     $this->model->createTable($mailtable,$mail);
     $this->model->createTable($teltable,$tel);
@@ -285,12 +284,12 @@ public function usavetest(){
         'account_pass'=>"",
         'account_role'=>"user",
         'account_born'=>date('d-m-Y',time()),
-        'account_can_login'=>"yes",
-        'account_active'=>"yes",
-        'account_adnotation'=>"",
-        'account_role_id'=>10,
-        'account_ctime'=>time(),
-        'account_mtime'=>time(),
+        'can_login'=>"yes",
+        'active'=>"yes",
+        'adnotation'=>"",
+        'role_id'=>10,
+        'ctime'=>time(),
+        'mtime'=>time(),
     );
     if(helper::session('account_new')!=''){
         $this->userdetails = helper::session('account_new');

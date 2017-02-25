@@ -378,9 +378,8 @@ class DBConnect {
         }
     }
     // DELETE FROM layouts WHERE idx=10 AND gprx=layout
-    public function Count($table,$sql,$values=array()) {
+    public function Count($table,$sql) {
         $count = $this -> db -> query('SELECT count(*) FROM '.$table.' WHERE '.$sql);
-        $count -> execute($values);
         $check = $count->fetchColumn();
         if ($check > 0) {
             return $check;

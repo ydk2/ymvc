@@ -261,7 +261,7 @@ public function unew(){
         "account_mtime integer not null"
     );
     //
-  //  $this->model->dropTable($table);
+    $this->model->dropTable($table);
     $this->model->createTable($table,$entries);
     $this->model->createTable($mailtable,$mail);
     $this->model->createTable($teltable,$tel);

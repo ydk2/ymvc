@@ -261,7 +261,7 @@ public function unew(){
         "account_mtime integer not null"
     );
     //
-  //  $this->model->dropTable($table);
+    $this->model->dropTable($table);
     $this->model->createTable($table,$entries);
     $this->model->createTable($mailtable,$mail);
     $this->model->createTable($teltable,$tel);
@@ -285,12 +285,12 @@ public function usavetest(){
         'account_pass'=>"",
         'account_role'=>"user",
         'account_born'=>date('d-m-Y',time()),
-        'account_can_login'=>"yes",
-        'account_active'=>"yes",
-        'account_adnotation'=>"",
-        'account_role_id'=>10,
-        'account_ctime'=>time(),
-        'account_mtime'=>time(),
+        'can_login'=>"yes",
+        'active'=>"yes",
+        'adnotation'=>"",
+        'role_id'=>10,
+        'ctime'=>time(),
+        'mtime'=>time(),
     );
     if(helper::session('account_new')!=''){
         $this->userdetails = helper::session('account_new');
