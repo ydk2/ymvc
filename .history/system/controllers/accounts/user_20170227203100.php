@@ -403,10 +403,10 @@ private function usavenew(){
         $this->msg = $this->subView(SYS.V."elements-msg");
         $this->title = intl::_('Lista Dodanych');
 
-        $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($accountdata['account_login']));
+        $this->user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($accountdata['account_login']));
         if(isset($accountdata['address'])){
             $this->usavenewaddress($table,$accountdata,unserialize($accountdata['address']));
-            var_dump($this->model->Select($table.'_address',array('id','for_account'),'where for_account=?',array($user[0]['id'])));
+            $this->user=$this->model->Select($table.'_address',array('id','for_account'),'where for_account=?',array($this->user[0]['id']));
         }
 
         $this->subview=$this->subView(SYS.V.'accounts-addon');
@@ -420,9 +420,15 @@ private function usavenew(){
         $this->data->text='Operacja zakończona błędem';
         $this->msg = $this->subView(SYS.V."elements-msg");
         $this->title = intl::_('Lista Dodanych');
-        $this->usersList=$this->model->Select($table,array('id','account_name','account_login','account_role','account_email'));
-        $this->subview=$this->subView(SYS.V.'accounts-list');
-        //var_dump($saveotherdata);
+        //$this->usersList=$this->model->Select($table,array('id','account_name','account_login','account_role','account_email'));
+        //$this->subview=$this->subView(SYS.V.'accounts-list');
+        var_dump($saveotherdata);
+        $accountdata = helper::session('account_new');
+        $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($accountdata['account_login']));
+        if(isset($saveotherdata['address'])){
+            $this->usavenewaddress($table,$accountdata,unserialize($saveotherdata['address']));
+        }
+        $this->user=$this->model->Select($table.'_address',array('id','for_account'),'where for_account=?',array($user[0]['id']));
     }
     }
 }
@@ -451,7 +457,7 @@ public function usavenewaddress($table,$user,$data){
     }
 
     }
-    return $chk;
+
 }
 
 public function uroles(){

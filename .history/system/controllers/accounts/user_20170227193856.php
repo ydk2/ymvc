@@ -394,54 +394,54 @@ private function usavenew(){
     $this->model->Commit(Helper::Session('token'));
     if($chk){
         $accountdata = helper::session('account_new');
-        $this->model->Release(Helper::Session('token'));
-
         $this->data->link=$this->link."";
         $this->data->link_no=$this->link."&answer=no";
         $this->data->header='Udane';
         $this->data->text='Operacja zakończona pomyślnie';
+        $this->model->Release(Helper::Session('token'));
         $this->msg = $this->subView(SYS.V."elements-msg");
         $this->title = intl::_('Lista Dodanych');
-
-        $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($accountdata['account_login']));
-        if(isset($accountdata['address'])){
-            $this->usavenewaddress($table,$accountdata,unserialize($accountdata['address']));
-            var_dump($this->model->Select($table.'_address',array('id','for_account'),'where for_account=?',array($user[0]['id'])));
-        }
-
-        $this->subview=$this->subView(SYS.V.'accounts-addon');
+        $this->user=array();
         helper::Session_Unset('account_new');
     } else {
-        $this->model->Rollback(Helper::Session('token'));
-
         $this->data->link=$this->link."";
         $this->data->link_no=$this->link."&answer=no";
         $this->data->header= 'Nie Udane';
         $this->data->text='Operacja zakończona błędem';
+        $this->model->Rollback(Helper::Session('token'));
         $this->msg = $this->subView(SYS.V."elements-msg");
         $this->title = intl::_('Lista Dodanych');
         $this->usersList=$this->model->Select($table,array('id','account_name','account_login','account_role','account_email'));
         $this->subview=$this->subView(SYS.V.'accounts-list');
-        //var_dump($saveotherdata);
     }
     }
 }
 public function usavenewaddress($table,$user,$data){
 
-    $chk = 0;
-    $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($user['account_login']));
+    $address = array(
+    "city varchar(99) not null",
+    "street varchar(99) not null",
+    "apartament varchar(9) not null",
+    "number varchar(9) not null",
+    "postal_code varchar(9) not null",
+    "postal_city varchar(99) not null",
+    "country varchar(99) not null",
+    "for_account integer not null",
+    "in_pos integer not null",
+    "ctime integer not null",
+    "mtime integer not null"
+    );
+
+    $this->user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($user['account_login']));
     $this->subview=$this->subView(SYS.V.'accounts-addon');
 
-    if(helper::get('answer')=='yes' && !empty($data)){
+    if(helper::get('answer')=='yess' && !empty($data)){
 
     $this->model->Begin(Helper::Session('token'));
     foreach ($data as $key => $value) {
-        $value['for_account']=$user[0]['id'];
-        $value['in_pos']=$key;
-        $value['ctime']=time();
-        $value['mtime']=time();
-        $chk=$this->model->insert($table.'_address',$value);
+
     }
+    $chk=$this->model->insert($table.'_address',$value);
 
     $this->model->Commit(Helper::Session('token'));
     if($chk){
@@ -451,7 +451,7 @@ public function usavenewaddress($table,$user,$data){
     }
 
     }
-    return $chk;
+
 }
 
 public function uroles(){

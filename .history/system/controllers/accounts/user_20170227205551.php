@@ -420,8 +420,8 @@ private function usavenew(){
         $this->data->text='Operacja zakończona błędem';
         $this->msg = $this->subView(SYS.V."elements-msg");
         $this->title = intl::_('Lista Dodanych');
-        $this->usersList=$this->model->Select($table,array('id','account_name','account_login','account_role','account_email'));
-        $this->subview=$this->subView(SYS.V.'accounts-list');
+        //$this->usersList=$this->model->Select($table,array('id','account_name','account_login','account_role','account_email'));
+        //$this->subview=$this->subView(SYS.V.'accounts-list');
         //var_dump($saveotherdata);
     }
     }
@@ -451,7 +451,7 @@ public function usavenewaddress($table,$user,$data){
     }
 
     }
-    return $chk;
+
 }
 
 public function uroles(){

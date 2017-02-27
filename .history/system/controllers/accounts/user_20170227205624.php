@@ -451,7 +451,7 @@ public function usavenewaddress($table,$user,$data){
     }
 
     }
-    return $chk;
+
 }
 
 public function uroles(){
