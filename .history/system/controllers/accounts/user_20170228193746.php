@@ -417,6 +417,11 @@ private function usavenew(){
     } else {
         $this->model->Rollback(Helper::Session('token'));
 
+        $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($savemaindata['account_login']));
+        if(isset($saveotherdata['mail'])){
+            //var_dump(explode(';',$saveotherdata['mail']));
+            $chk=$this->usaveaddon($table.'_mail',$user[0]['id'],'mail',explode(';',$saveotherdata['mail']));
+        }
 
 
 
@@ -448,6 +453,7 @@ public function usaveaddon($table,$user,$key,$data){
         $value['ctime']=time();
         $value['mtime']=time();
         $chk=$this->model->insert($table,$value);
+        var_dump($value);
     }
     $this->model->Commit(Helper::Session('token'));
     if($chk){

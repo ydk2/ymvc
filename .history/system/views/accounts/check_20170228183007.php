@@ -111,97 +111,23 @@
 
 </div> <!-- end row -->
 <?php break;?>
-<!-- mail -->
 <?php case 'mail':?>
 <div class="row thumbnail">
 <div class="col-sm-12">
     <b><?=intl::_('Adresy E-mail')?></b>
 </div>
 <div class="col-sm-offset-4 col-sm-8">
-<ul>
     <?php
-    $mail=explode(';',$value);
+    var_dump($value);
+    $mail=unserialize($value);
     if(!empty($mail)):
     foreach($mail as $pos => $address):?>
-        <li><?=$address?></li>
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <p><?=$address?></p>
+      </div>
+    </div>
     <?php endforeach; endif;?>
-</ul>
-</div> <!-- end vals -->
-
-</div> <!-- end row -->
-<?php break;?>
-<!-- tel -->
-<?php case 'tel':?>
-<div class="row thumbnail">
-<div class="col-sm-12">
-    <b><?=intl::_('Telefony')?></b>
-</div>
-<div class="col-sm-offset-4 col-sm-8">
-<ul>
-    <?php
-    $val=explode(';',$value);
-    if(!empty($val)):
-    foreach($val as $pos => $address):?>
-        <li><?=$address?></li>
-    <?php endforeach; endif;?>
-</ul>
-</div> <!-- end vals -->
-
-</div> <!-- end row -->
-<?php break;?>
-<!-- mail -->
-<?php case 'fax':?>
-<div class="row thumbnail">
-<div class="col-sm-12">
-    <b><?=intl::_('Numery Fax')?></b>
-</div>
-<div class="col-sm-offset-4 col-sm-8">
-<ul>
-    <?php
-    $mail=explode(';',$value);
-    if(!empty($mail)):
-    foreach($mail as $pos => $address):?>
-        <li><?=$address?></li>
-    <?php endforeach; endif;?>
-</ul>
-</div> <!-- end vals -->
-
-</div> <!-- end row -->
-<?php break;?>
-<!-- mail -->
-<?php case 'www':?>
-<div class="row thumbnail">
-<div class="col-sm-12">
-    <b><?=intl::_('Adresy WWW')?></b>
-</div>
-<div class="col-sm-offset-4 col-sm-8">
-<ul>
-    <?php
-    $mail=explode(';',$value);
-    if(!empty($mail)):
-    foreach($mail as $pos => $address):?>
-        <li><?=$address?></li>
-    <?php endforeach; endif;?>
-</ul>
-</div> <!-- end vals -->
-
-</div> <!-- end row -->
-<?php break;?>
-<!-- mail -->
-<?php case 'other':?>
-<div class="row thumbnail">
-<div class="col-sm-12">
-    <b><?=intl::_('Inne')?></b>
-</div>
-<div class="col-sm-offset-4 col-sm-8">
-<ul>
-    <?php
-    $mail=explode(';',$value);
-    if(!empty($mail)):
-    foreach($mail as $pos => $address):?>
-        <li><?=$address?></li>
-    <?php endforeach; endif;?>
-</ul>
 </div> <!-- end vals -->
 
 </div> <!-- end row -->

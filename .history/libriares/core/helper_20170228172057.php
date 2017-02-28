@@ -306,10 +306,8 @@ public static function validate($entry,$type='text',$min=3,$max=30,$glue='-'){
         } break;
         case 'date':
         $test = explode($glue, $entry);
-		$range = date_diff(date_create($entry),date_create(date('d-m-Y')));
-		$xage = ($range->y>=$min || $min==0)?true:false;
-		$yage = ($range->y<=$max || $max==0)?true:false;
-        if (count($test)!=3 || !checkdate($test[1], $test[0], $test[2]) || !$xage || !$yage) {
+		var_dump(($min+$test[2]));
+        if (count($test)!=3 || !checkdate($test[1], $test[0], $test[2]) || ($test[2]<($min+$test[2]) || $test[2]>($test[2]-$max))) {
             return FALSE;
         } break;
         case 'num':

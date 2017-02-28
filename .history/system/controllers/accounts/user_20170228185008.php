@@ -399,14 +399,14 @@ private function usavenew(){
 
         $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($savemaindata['account_login']));
         if(isset($saveotherdata['address'])){
-            $chk=$this->usaveaddress($table.'_address',$user[0]['id'],unserialize($saveotherdata['address']));
+            $chk=$this->usaveaddon($table.'_address',$user[0]['id'],unserialize($saveotherdata['address']));
         }
         if(isset($saveotherdata['mail'])){
-            $chk=$this->usaveaddon($table.'_mail',$user[0]['id'],'mail',explode(';',$saveotherdata['mail']));
+            //$chk=$this->usaveaddon($table.'_mail',$user[0]['id'],explode(';',$saveotherdata['mail']));
         }
 
         $this->subview=$this->subView(SYS.V.'accounts-addon');
-        //helper::Session_Unset('account_new');
+        helper::Session_Unset('account_new');
 
 
         $this->data->link=$this->link."";
@@ -417,6 +417,11 @@ private function usavenew(){
     } else {
         $this->model->Rollback(Helper::Session('token'));
 
+        if(isset($saveotherdata['mail'])){
+
+        var_dump(explode(';',$saveotherdata['mail']));
+            //$chk=$this->usaveaddon($table.'_mail',$user[0]['id'],explode(';',$saveotherdata['mail']));
+        }
 
 
 
@@ -433,33 +438,7 @@ private function usavenew(){
     }
 }
 
-public function usaveaddon($table,$user,$key,$data){
-
-    $chk = 0;
-    $this->subview=$this->subView(SYS.V.'accounts-addon');
-
-    if(helper::get('answer')=='yes' && !empty($data)){
-
-    $this->model->Begin(Helper::Session('token'));
-    foreach ($data as $pos => $entry) {
-        $value[$key]=$entry;
-        $value['for_account']=$user;
-        $value['in_pos']=$pos;
-        $value['ctime']=time();
-        $value['mtime']=time();
-        $chk=$this->model->insert($table,$value);
-    }
-    $this->model->Commit(Helper::Session('token'));
-    if($chk){
-        $this->model->Release(Helper::Session('token'));
-    } else {
-        $this->model->Rollback(Helper::Session('token'));
-    }
-
-    }
-    return $chk;
-}
-public function usaveaddress($table,$user,$data){
+public function usaveaddon($table,$user,$data){
 
     $chk = 0;
     $this->subview=$this->subView(SYS.V.'accounts-addon');

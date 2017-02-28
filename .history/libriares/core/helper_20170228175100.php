@@ -307,9 +307,9 @@ public static function validate($entry,$type='text',$min=3,$max=30,$glue='-'){
         case 'date':
         $test = explode($glue, $entry);
 		$range = date_diff(date_create($entry),date_create(date('d-m-Y')));
-		$xage = ($range->y>=$min || $min==0)?true:false;
-		$yage = ($range->y<=$max || $max==0)?true:false;
-        if (count($test)!=3 || !checkdate($test[1], $test[0], $test[2]) || !$xage || !$yage) {
+		$chk = ($range->y>=$min && $range->y<=$max)?true:false;
+		var_dump($chk);
+        if (count($test)!=3 || !checkdate($test[1], $test[0], $test[2]) || !$chk) {
             return FALSE;
         } break;
         case 'num':

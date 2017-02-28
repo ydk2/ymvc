@@ -32,7 +32,7 @@ class User extends PHPRender {
             'account_adnotation'=>array('text',0,999),
             'account_name'=>array('text',3,99),
             'account_email'=>array('email',0,0),
-            'account_born'=>array('date',13,0),
+            'account_born'=>array('date',0,0),
             'account_pass'=>array('alphanum',6,199),
             'account_login'=>array('alphanum',3,40),
             'account_role'=>array('alphanum',3,40),
@@ -393,32 +393,28 @@ private function usavenew(){
     $chk=$this->model->insert($table,$savemaindata);
     $this->model->Commit(Helper::Session('token'));
     if($chk){
+        $accountdata = helper::session('account_new');
         $this->model->Release(Helper::Session('token'));
-
-        $this->title = intl::_('Lista Dodanych');
-
-        $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($savemaindata['account_login']));
-        if(isset($saveotherdata['address'])){
-            $chk=$this->usaveaddress($table.'_address',$user[0]['id'],unserialize($saveotherdata['address']));
-        }
-        if(isset($saveotherdata['mail'])){
-            $chk=$this->usaveaddon($table.'_mail',$user[0]['id'],'mail',explode(';',$saveotherdata['mail']));
-        }
-
-        $this->subview=$this->subView(SYS.V.'accounts-addon');
-        //helper::Session_Unset('account_new');
-
 
         $this->data->link=$this->link."";
         $this->data->link_no=$this->link."&answer=no";
-        $this->data->header=((!$chk)?'':'Nie ').'Udane';
-        $this->data->text='Operacja zakończona'.((!$chk)?'':' Nie').' pomyślnie';
+        $this->data->header='Udane';
+        $this->data->text='Operacja zakończona pomyślnie';
         $this->msg = $this->subView(SYS.V."elements-msg");
+        $this->title = intl::_('Lista Dodanych');
+
+        $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($accountdata['account_login']));
+        if(isset($accountdata['address'])){
+            if($this->usaveaddon($table.'_address',$accountdata,unserialize($accountdata['address']))){
+                
+            }
+            //var_dump($this->model->Select($table.'_address',array('id','for_account'),'where for_account=?',array($user[0]['id'])));
+        }
+
+        $this->subview=$this->subView(SYS.V.'accounts-addon');
+        helper::Session_Unset('account_new');
     } else {
         $this->model->Rollback(Helper::Session('token'));
-
-
-
 
         $this->data->link=$this->link."";
         $this->data->link_no=$this->link."&answer=no";
@@ -433,47 +429,23 @@ private function usavenew(){
     }
 }
 
-public function usaveaddon($table,$user,$key,$data){
+public function usaveaddon($table,$user,$data){
 
     $chk = 0;
-    $this->subview=$this->subView(SYS.V.'accounts-addon');
-
-    if(helper::get('answer')=='yes' && !empty($data)){
-
-    $this->model->Begin(Helper::Session('token'));
-    foreach ($data as $pos => $entry) {
-        $value[$key]=$entry;
-        $value['for_account']=$user;
-        $value['in_pos']=$pos;
-        $value['ctime']=time();
-        $value['mtime']=time();
-        $chk=$this->model->insert($table,$value);
-    }
-    $this->model->Commit(Helper::Session('token'));
-    if($chk){
-        $this->model->Release(Helper::Session('token'));
-    } else {
-        $this->model->Rollback(Helper::Session('token'));
-    }
-
-    }
-    return $chk;
-}
-public function usaveaddress($table,$user,$data){
-
-    $chk = 0;
+    $user=$this->model->Select($table,array('id','account_login'),'where account_login=?',array($user['account_login']));
     $this->subview=$this->subView(SYS.V.'accounts-addon');
 
     if(helper::get('answer')=='yes' && !empty($data)){
 
     $this->model->Begin(Helper::Session('token'));
     foreach ($data as $key => $value) {
-        $value['for_account']=$user;
+        $value['for_account']=$user[0]['id'];
         $value['in_pos']=$key;
         $value['ctime']=time();
         $value['mtime']=time();
         $chk=$this->model->insert($table,$value);
     }
+
     $this->model->Commit(Helper::Session('token'));
     if($chk){
         $this->model->Release(Helper::Session('token'));

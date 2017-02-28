@@ -402,7 +402,7 @@ private function usavenew(){
             $chk=$this->usaveaddress($table.'_address',$user[0]['id'],unserialize($saveotherdata['address']));
         }
         if(isset($saveotherdata['mail'])){
-            $chk=$this->usaveaddon($table.'_mail',$user[0]['id'],'mail',explode(';',$saveotherdata['mail']));
+            //$chk=$this->usaveaddon($table.'_mail',$user[0]['id'],explode(';',$saveotherdata['mail']));
         }
 
         $this->subview=$this->subView(SYS.V.'accounts-addon');
@@ -417,6 +417,10 @@ private function usavenew(){
     } else {
         $this->model->Rollback(Helper::Session('token'));
 
+        if(isset($saveotherdata['mail'])){
+            //var_dump(explode(';',$saveotherdata['mail']));
+            $chk=$this->usaveaddon($table.'_mail',$user[0]['id'],'mail',explode(';',$saveotherdata['mail']));
+        }
 
 
 

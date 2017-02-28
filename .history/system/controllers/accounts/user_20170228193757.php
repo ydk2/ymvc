@@ -448,6 +448,7 @@ public function usaveaddon($table,$user,$key,$data){
         $value['ctime']=time();
         $value['mtime']=time();
         $chk=$this->model->insert($table,$value);
+        var_dump($value);
     }
     $this->model->Commit(Helper::Session('token'));
     if($chk){
