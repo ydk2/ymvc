@@ -1,0 +1,7 @@
+<?php $main = new \App\Controllers\JSON\Main($this->model);?>
+{
+    "error":"<?=$main->ViewData('error');?>",
+    "appid":"<?=$main->ViewData('appid');?>",
+    "token":"<?=$main->ViewData('token');?>",
+    "data":"<?=$main->ViewData('scope');?>"
+}

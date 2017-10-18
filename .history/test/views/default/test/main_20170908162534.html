@@ -1,0 +1,22 @@
+<?php //$main = new \Test\Controllers\Test\Main($this->model);?>
+<?php $main = $this->newController("/Test/Controllers/Test/Main",$this->model);?>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Heading</h2>
+                    <p>Tests</p>
+                    <?php
+                    var_dump($main);
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="well">
+                    <a href="<?=HOST?>">home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<?php $main = new \App\Controllers\JSON\Main($this->model);?>
+{
+    "url":"<?=HOST?>",
+    "error":"<?=$main->data->error?>",
+    "data":"<?=$main->data->data?>",
+    "token":"<?=$main->ViewData('token');?>"
+}

@@ -1,0 +1,83 @@
+
+    <?php if(!empty($this->userdetails)){ ?>
+
+    <form class="form-horizontal text-info d-form" method="POST" action="?accounts-users=accounts-save"
+        role="form">
+         <fieldset class="d-account">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <h4>Dane Administracyjne Konta</h4>
+                <?php if(intval($this->userdetails['id'])>intval(Helper::Session('id')) || intval(Helper::Session('id'))==1){ ?>
+                <label class="checkbox-inline">
+                  <input name="account_can_login" value="yes" id="d-login-check" type="checkbox" data-toggle="toggle" data-on="Tak"
+                  data-off="Nie" data-onstyle="success" data-offstyle="danger"<?=($this->userdetails['account_can_login']=='yes')?' checked="checked"':'';?>>
+                  <i class="fa fa-lg fa-lock"></i>
+                  <strong>&nbsp;Logowanie do konta</strong>
+                </label>
+                <label class="checkbox-inline">
+                  <input name="account_active" value="yes" type="checkbox" data-toggle="toggle" data-on="Konto Aktywne" data-off="Konto Nieaktywne"
+                  data-onstyle="success" data-offstyle="danger"<?=($this->userdetails['account_active']=='yes')?' checked="checked"':'';?>>
+                  <i class="fa fa-lg fa-sitemap"></i>
+                  <strong>&nbsp;Konto Aktywne</strong>
+                </label>
+                <?php } ?>
+              </div>
+            </div>
+            <?php if(intval($this->userdetails['id'])>intval(Helper::Session('id')) || intval(Helper::Session('id'))==1){ ?>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                <input autocomplete="off" name="account_role" list="account_role" value="<?=$this->userdetails['account_role']?>" type="text" class="form-control">
+                  <datalist id="account_role">
+                  <!--<select name="account_role">-->
+                    <option value="admin" label="Administrator">
+                    <option value="system" label="Kierownik">
+                    <option value="moderator" label="Brygadzista">
+                    <option value="editor" label="Edytor">
+                    <option value="user" label="Użytkownik">
+                  <!--</select>-->
+                  </datalist>
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-group"></i>&nbsp;Rodzaj konta</span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <!-- -->
+                  <input name="account_share" value="<?=htmlentities($this->userdetails['account_share'], ENT_QUOTES)?>" type="text" class="form-control">
+                  <!-- -->
+                  <!--
+                  <?php foreach(json_decode($this->userdetails['account_share'],TRUE) as $i=>$item){ ?>
+                    <label><input name="account_share[<?=$i?>]" value="<?=$item?>" type="checkbox" class="form-control"><?=$item?></label>
+                  <?php } ?>
+                  -->
+                  <span class="input-group-addon">
+                    <i class="fa fa-share fa-lg"></i>&nbsp;Udostępniane dane</span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+		      <fieldset class="d-action">
+            <div class="form-group">
+            <?php if(isset($this->userdetails['id'])):?>
+    				<input name="id" value="<?=$this->userdetails['id']?>" type="hidden">
+            <?php endif ?>
+              <div class="col-sm-offset-2 col-sm-8">
+                <input type="hidden" name="save" value="settings">
+                <button type="submit" class="btn btn-block btn-primary">
+                  <i class="fa fa-fw fa-lg fa-save"></i>&nbsp;Zapisz</button>
+              </div>
+            </div>
+          </fieldset>
+	  </form>
+    <?php } else { ?>
+    <div class="well">
+      <h1>Oj! coś tu nie tak</h1>
+      <p>Nic nie znaleziono</p>
+      <a href="?accounts-users=accounts-list" class="btn btn-primary btn-large">Wróć</a>
+    </div>
+    <?php } ?>

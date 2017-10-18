@@ -1,0 +1,2 @@
+<?php $e = new \App\Controllers\JSON\E($this->model);?>
+{"header":"<?=$e->ViewData('header')?>","message":"<?=$e->ViewData('message')?>","error":"<?=$e->ViewData('error')?>"}

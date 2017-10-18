@@ -1,0 +1,88 @@
+          <fieldset class="d-other">
+            <?php if(isset($this->userdetails['mail'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['mail']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="mail[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-at"></i>&nbsp;Email<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['tel'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['tel']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="tel[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-phone-square"></i>&nbsp;Telefon<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['fax'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['fax']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="fax[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-fax"></i>&nbsp;Fax<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['www'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['www']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="www[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-compass"></i>&nbsp;WWW<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['other'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['other']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="other[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-star"></i>&nbsp;Inne<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+          </fieldset>
+

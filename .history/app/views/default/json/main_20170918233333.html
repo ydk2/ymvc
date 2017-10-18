@@ -1,0 +1,24 @@
+<?php //$main = new \Test\Controllers\Test\Main($this->model);?>
+<?php $main = $this->newController("/Test/Controllers/Test/Main",$this->model);?>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Heading</h2>
+                    <p>Tests</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="well">
+                    <a href="<?=HOST?>">home</a>
+                    <a href="<?=HOST?>?path=/two">two</a>
+                    <a href="<?=HOST?>?path=/one">one</a>
+                    <a href="<?=HOST?>?path=/three">three</a>
+                    <a href="<?=HOST?>?path=/e/three">e</a>
+                    <a href="<?=HOST?>?path=/login">login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

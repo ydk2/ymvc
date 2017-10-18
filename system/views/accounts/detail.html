@@ -1,0 +1,91 @@
+<div class="row">
+<div class="col-sm-12">
+  <a href="?accounts-users=accounts-list" class="btn btn-primary btn-large">Wróć do listy</a>
+  <a href="?accounts-users=accounts-detail&section=settings&user=<?=helper::get('user')?>" class="btn btn-primary btn-large">Ustawienia</a>
+  <a href="?accounts-users=accounts-detail&section=login&user=<?=helper::get('user')?>" class="btn btn-primary btn-large">Logowanie</a>
+  <a href="?accounts-users=accounts-detail&section=account&user=<?=helper::get('user')?>" class="btn btn-primary btn-large">Konto</a>
+</div>
+  <div class="col-sm-12">
+<?php if(!empty($this->userdetails)){ ?>
+<?php
+switch (helper::get('section')) {
+  case 'settings':
+    echo $this->subView(SYS.V.'accounts-edit-settings');
+    break;
+  case 'login':
+    echo $this->subView(SYS.V.'accounts-edit-login');
+    break;
+  case 'account':
+    echo $this->subView(SYS.V.'accounts-edit-account');
+    break;
+  
+  default:
+    echo $this->subView(SYS.V.'accounts-edit-account');
+    break;
+}
+?>
+    <?php } else { ?>
+      <?php if(isset($this->post) && !empty($this->post)){ ?>
+        <hr/>
+      <?php } else { ?>
+    <div class="well">
+      <h1>Oj! coś tu nie tak</h1>
+      <p>Nic nie znaleziono</p>
+      <a href="?accounts-users=accounts-list" class="btn btn-primary btn-large">Wróć</a>
+    </div>
+      <?php } ?>
+    <?php } ?>
+  </div>
+</div>
+    <script>
+    var options =  {
+  height: 300,                
+  placeholder: 'Start typing your text...',
+  toolbar: [
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['insert',['ltr','rtl']],
+      ['insert', ['link','picture', 'video', 'hr']],
+      ['view', ['fullscreen', 'codeview']]
+  ]
+};
+    $(document).ready(function() {
+        $('.date').datepicker({
+          format: "dd-mm-yyyy",
+          language: "pl"
+        });
+        $('#summernote').summernote({
+            addclass: {
+                debug: false,
+                classTags: [{title:"clean",value:""},{title:"Button",value:"btn btn-success"},"empty","jumbotron", "lead","img-rounded","img-circle", "img-responsive","btn", "btn btn-success","btn btn-danger","text-muted", "text-primary", "text-warning", "text-danger", "text-success", "table-bordered", "table-responsive", "alert", "alert alert-success", "alert alert-info", "alert alert-warning", "alert alert-danger", "pull-left","pull-right"]
+            },
+            popover: {
+            image: [
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['custom', ['imageAttributes', 'imageShape']],
+                ['remove', ['removeMedia']]
+            ]
+            },
+            lang: 'pl-PL',
+            codemirror: { // codemirror options
+                theme: 'monokai',
+                lineNumbers: true,
+                extraKeys: {"Ctrl-Space": "autocomplete"},
+                mode: {name: "text/html", globalVars: true}
+            },
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['style', 'addclass', 'clear']],
+                ['fontstyle', ['bold', 'italic', 'ul', 'ol', 'link', 'paragraph']],
+                ['fontstyleextra', ['strikethrough', 'underline', 'hr', 'color', 'superscript', 'subscript']],
+                ['insert',['ltr','rtl']],
+                ['extra', ['link','picture','video', 'table', 'height']],
+                ['misc', ['undo', 'redo']],
+                ['view', ['codeview']]
+            ]
+        });
+    });
+  </script>

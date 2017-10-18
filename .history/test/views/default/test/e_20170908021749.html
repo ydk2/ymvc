@@ -1,0 +1,13 @@
+<?php $e = new \Test\Controllers\Test\E($this->model);?>
+<div class="section">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-dismissable alert-danger">
+              <strong><?=$e->model->header?></strong> 
+              <p><?=$e->ViewData('message')?></p>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

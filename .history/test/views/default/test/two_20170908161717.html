@@ -1,0 +1,27 @@
+<?php $two = new \Test\Controllers\Test\Two($this->model);?>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Heading</h2>
+                    <p>Tests</p>
+                    <?php
+                    var_dump($two);
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Test ViewData</h2>
+                    <?=$two->ViewData('test')?>
+                    <a href="<?=HOST?>">home</a>
+                    <a href="<?=HOST?>?path=/two">two</a>
+                    <a href="<?=HOST?>?path=/one">one</a>
+                    <a href="<?=HOST?>?path=/three">three</a>
+                    <a href="<?=HOST?>?path=/e/three">three</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

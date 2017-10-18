@@ -1,0 +1,90 @@
+          <fieldset class="d-money">
+                <h4>Dane Finansowe</h4>
+            <?php if(isset($this->userdetails['bank_account'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['bank_account']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="bank_account[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-bank"></i>&nbsp;Konto Bankowe<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['nip'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['nip']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="nip[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-institution"></i>&nbsp;NIP<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['regon'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['regon']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="regon[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-institution"></i>&nbsp;REGON<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['finanse'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['finanse']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="finanse[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-institution"></i>&nbsp;Dane Finansowe<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+            <?php if(isset($this->userdetails['bank'])) { ?>
+            <?php foreach (explode(';',$this->userdetails['bank']) as $key => $value) { ?>
+            <div class="form-group d-can-del">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input  name="bank[<?=$key?>]" value="<?=$value?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-bank"></i>&nbsp;Konto Bankowe<?=($key>0)?' '.$key:'';?></span>
+                    <span class="input-group-btn">
+                    <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+            <?php } ?>
+          </fieldset>
+
+

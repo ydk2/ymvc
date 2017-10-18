@@ -1,0 +1,25 @@
+<?php
+
+?>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Heading</h2>
+                    <p>Tests</p>
+                    <?php
+                    var_dump($this);
+                    ?>
+                </div>
+            </div>
+            <?php throw new \Exception('Error',12); ?>
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Test ViewData</h2>
+                    <?=$this->ViewData('test')?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

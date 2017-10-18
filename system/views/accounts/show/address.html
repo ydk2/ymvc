@@ -1,0 +1,128 @@
+          <?php $next = 0;?>
+            <?php if(isset($this->userdetails['address'])) { ?>
+            <?php foreach (unserialize($this->userdetails['address']) as $key => $value) { $next=$key+1;?>
+          <fieldset class="d-address d-can-del">
+              <h4>Dane Adresowe <?=($key>0)?' '.$key:'';?></h4>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <h5>Adres siedziby</h5>
+                <div class="input-group">
+                  <input name="address[<?=$key?>][city]" value="<?=$value['city']?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Miasto</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input name="address[<?=$key?>][street]" value="<?=$value['street']?>"  type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Ulica</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input name="address[<?=$key?>][apartament]" value="<?=$value['apartament']?>"  type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Numer lokalu</span>
+                  <input name="address[<?=$key?>][number]" value="<?=$value['number']?>"  type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Numer budynku</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input name="address[<?=$key?>][postal_code]" value="<?=$value['postal_code']?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Kod</span>
+                  <input name="address[<?=$key?>][postal_city]" value="<?=$value['postal_city']?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Poczta</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input name="address[<?=$key?>][country]" value="<?=$value['country']?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Kraj</span>
+                </div>
+              </div>
+            </div>
+            <a class="btn btn-danger d-delete">
+                      <i class="fa fa-lg fa-minus-circle"></i>&nbsp;Usuń</a>
+            </fieldset>
+            <?php } ?>
+            <?php } ?>
+            <fieldset class="d-address-toggle">
+              <div class="col-sm-12">
+                <label class="checkbox-inline">
+                  <input type="checkbox" data-toggle="toggle" data-on="Tak" data-off="Nie"
+                  data-onstyle="success" data-offstyle="danger" id="d-address-send">
+                  <i class="fa fa-lg fa-send"></i>
+                  <strong>&nbsp;Dodaj Nowy Adres</strong>
+                </label>
+              </div>
+            </fieldset>
+          <fieldset class="d-address-send d-can-delete">
+              <h4>Dane Adresowe  <?=($next>0)?' '.$next:'';?></h4>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <h5>Adres siedziby</h5>
+                <div class="input-group">
+                  <input disabled="disabled" name="address[<?=$next?>][city]" value="" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Miasto</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input disabled="disabled" name="address[<?=$next?>][street]" value=""  type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Ulica</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input disabled="disabled" name="address[<?=$next?>][number]" value=""  type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Numer budynku</span>
+                  <input disabled="disabled" name="address[<?=$next?>][apartament]" value=""  type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Numer lokalu</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input disabled="disabled" name="address[<?=$next?>][postal_code]" value="" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Kod</span>
+                  <input disabled="disabled" name="address[<?=$next?>][postal_city]" value="" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Poczta</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input disabled="disabled" name="address[<?=$next?>][country]" value="" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope fa-lg"></i>&nbsp;Kraj</span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+

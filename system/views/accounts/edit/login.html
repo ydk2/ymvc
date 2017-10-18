@@ -1,0 +1,50 @@
+
+    <?php if(!empty($this->userdetails)){ ?>
+
+    <form class="form-horizontal text-info d-form" method="POST" action="?accounts-users=accounts-save"
+        role="form">
+          <fieldset class="d-login-new">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <h4>Dane Logowania</h4>
+                <div class="input-group">
+                  <input name="account_login" value="<?=(isset($this->userdetails['account_login']))?$this->userdetails['account_login']:''?>" type="text" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-user"></i>&nbsp;Login</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" id="u-pass">
+              <div class="col-sm-12">
+                <div class="input-group">
+                  <input name="account_pass" value="" type="password" class="form-control">
+                  <span class="input-group-addon">
+                    <i class="fa fa-lg fa-lock"></i>&nbsp;Hasło</span>
+                  <span class="input-group-btn">
+                    <a class="btn btn-warning" type="submit" id="show-pass" data-toggle="button"><i class="fa fa-lg fa-eye icon-pass"></i>&nbsp;Pokaż</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+		      <fieldset class="d-action">
+            <div class="form-group">
+            <?php if(isset($this->userdetails['id'])):?>
+    				<input name="id" value="<?=$this->userdetails['id']?>" type="hidden">
+            <?php endif ?>
+              <div class="col-sm-offset-2 col-sm-8">
+                <button type="submit" class="btn btn-block btn-primary">
+                  <input type="hidden" name="save" value="login">
+                  <i class="fa fa-fw fa-lg fa-save"></i>&nbsp;Zapisz</button>
+              </div>
+            </div>
+          </fieldset>
+	  </form>
+    <?php } else { ?>
+    <div class="well">
+      <h1>Oj! coś tu nie tak</h1>
+      <p>Nic nie znaleziono</p>
+      <a href="?accounts-users=accounts-list" class="btn btn-primary btn-large">Wróć</a>
+    </div>
+    <?php } ?>

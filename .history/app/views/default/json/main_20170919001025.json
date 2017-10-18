@@ -1,0 +1,2 @@
+<?php $main = new \App\Controllers\JSON\Main($this->model);?>
+{"url":"<?=HOST?>"}

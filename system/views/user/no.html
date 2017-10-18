@@ -1,0 +1,26 @@
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2 class="panel-title">
+                  <i class="fa fa-fw fa-sign-in"></i>Oj coś nie tak</h2>
+              </div>
+              <div class="panel-body">
+                <div class="row login-form well">
+                  <div class="col-md-12">
+                    <h1 class="text-primary">Niestety zabrakło miejsc</h1>
+                    <p class="lead text-primary">Chwilowo nie przyjmujemy nowych gości</p>
+                    <p class="lead text-primary">Spróbuj za jakiś czas</p>
+                  </div>
+                  <div class="col-sm-12">
+                    <a class="btn btn-block btn-info" href="?accounts<?=S;?>user">Wróć</a>
+                  </div>
+                </div>
+                <div class="row login-bar">
+                  <div class="col-md-12">
+                    <div class="alert alert-dismissable <?=$this->ViewData('classes');?>">
+                      <button contenteditable="false" type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <?=$this->ViewData('alert');?></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+

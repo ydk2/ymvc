@@ -1,0 +1,24 @@
+<?php $one = $this->newController("\\Test\\Controllers\\Core\\One","default");?>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Heading</h2>
+                    <p>Tests</p>
+                    <?php
+                    var_dump($one);
+                    //var_dump($this);
+                    ?>
+                </div>
+            </div>
+            <?php //$this->throwError(120); ?>
+            <div class="col-md-12">
+                <div class="well">
+                    <h2>Test ViewData</h2>
+                    <?=$one->ViewData('test')?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

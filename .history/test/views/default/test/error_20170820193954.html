@@ -1,0 +1,11 @@
+<?php $error = new \Test\Controllers\Test\Error();?>
+<div class="section">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-dismissable alert-danger">
+              <strong><?=$error->ViewData('header')?></strong>  <?=$error->ViewData('message')?></div>
+          </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-sm-12">
+
+    <a href="<?=HOST?>" class="btn btn-block btn-danger">
+      <?=Intl::_('Index')?>
+    </a>
+    <a href="<?=HOST?>?user-start" class="btn btn-block btn-danger">
+      <?=Intl::_('Edit')?>
+    </a>
+    <?=$this->ViewData('dump')?>
+  </div>
+  <div class="col-sm-12">
+    <form class="form-horizontal text-info " method="POST" action="" role="form">
+      <fieldset class="title">
+        <div class="form-group">
+          <div class="col-sm-10">
+            <h4>Page title</h4>
+            <div class="input-group">
+              <input name="title" value="<?=$this->ViewData('title')?>" type="text" class="form-control">
+              <span class="input-group-addon">
+                    <i class="fa fa-lg fa-user"></i>&nbsp;Title</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <h4>Page link</h4>
+            <div class="input-group">
+              <input name="pagelink" value="<?=$this->ViewData('pagelink')?>" type="text" class="form-control">
+              <span class="input-group-addon">
+                    <i class="fa fa-lg fa-user"></i>&nbsp;Link</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <h4>Page lang</h4>
+            <div class="input-group">
+              <input name="lang" value="<?=$this->ViewData('lang')?>" type="text" class="form-control">
+              <span class="input-group-addon">
+                    <i class="fa fa-lg fa-user"></i>&nbsp;Lang</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <h4>Head content</h4>
+            <textarea id="summernotehd" name="head" rows="10" class="form-control"><?=$this->ViewData('head');?></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <h4>Body content</h4>
+            <textarea id="summernoteb" name="body" rows="10" class="summernote form-control col-sm-10"><?=$this->ViewData('body');?></textarea>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="action">
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button type="submit" class="btn btn-block btn-primary">
+                  <i class="fa fa-fw fa-lg fa-save"></i>&nbsp;Zapisz</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button type="submit" name="update" class="btn btn-block btn-primary">
+                  <i class="fa fa-fw fa-lg fa-save"></i>&nbsp;Update</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <script>
+    var options = {
+      height: 300,
+      placeholder: 'Start typing your text...',
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['insert', ['ltr', 'rtl']],
+        ['insert', ['link', 'picture', 'video', 'hr']],
+        ['view', ['fullscreen', 'codeview']]
+      ]
+    };
+    $(document).ready(function () {
+      $('.date').datepicker({
+        format: "dd-mm-yyyy",
+        language: "pl"
+      });
+      $('.summernote').summernote({
+        addclass: {
+          debug: false,
+          classTags: [{ title: "clean", value: "" }, { title: "Button", value: "btn btn-success" }, "empty", "jumbotron", "lead", "img-rounded", "img-circle", "img-responsive", "btn", "btn btn-success", "btn btn-danger", "text-muted", "text-primary", "text-warning", "text-danger", "text-success", "table-bordered", "table-responsive", "alert", "alert alert-success", "alert alert-info", "alert alert-warning", "alert alert-danger", "pull-left", "pull-right"]
+        },
+        popover: {
+          image: [
+            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+            ['custom', ['imageAttributes', 'imageShape']],
+            ['remove', ['removeMedia']]
+          ]
+        },
+        lang: 'pl-PL',
+        codemirror: { // codemirror options
+          theme: 'monokai',
+          lineNumbers: true,
+          extraKeys: { "Ctrl-Space": "autocomplete" },
+          mode: { name: "text/html", globalVars: true }
+        },
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['style', 'addclass', 'clear']],
+          ['fontstyle', ['bold', 'italic', 'ul', 'ol', 'link', 'paragraph']],
+          ['fontstyleextra', ['strikethrough', 'underline', 'hr', 'color', 'superscript', 'subscript']],
+          ['insert', ['ltr', 'rtl']],
+          ['extra', ['link', 'picture', 'video', 'table', 'height']],
+          ['misc', ['undo', 'redo']],
+          ['view', ['codeview']]
+        ]
+      });
+    });
+  </script>
+  <script>
+    var editor = CodeMirror.fromTextArea($('#summernotehd').get(0), {
+      lineNumbers: true
+    });
+  </script>
+</div>
