@@ -9,14 +9,14 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\SystemException as SystemException;
+use \Library\Core\SystemException as SystemException;
 
-class mysql {
+class defaultDBplugin {
     public function __construct($data)
     {
         try {
             $this->data = $data;
-            if ($this->data['user'] === NULL || $this->data['pass'] === NULL) {
+            if ($user === NULL || $pass === NULL) {
                 throw new SystemException('User and Password not filed.');
             }
             $this->db = new \PDO($this->data['type'].':host=' . $this->data['host'] . ';dbname=' . $this->data['database'], $this->data['user'], $this->data['pass']);
@@ -40,13 +40,13 @@ class mysql {
         'Lock'=>"LOCK TABLE ${args[1]} ${args[2]};",
         'UnLock' => "UNLOCK TABLES;",
         'isLock' => "SHOW OPEN TABLES  WHERE `Table` LIKE '%".$args[1]."%' AND  `Database` LIKE '%".$this->data['database']."%' AND In_use > 0 OR Name_locked > 0;",
-        'SBegin' => "SET autocommit = 0; START TRANSACTION; SAVEPOINT ${args[1]};",
+        'SBegin' => "BEGIN; SAVEPOINT ${args[1]};",
         'SCommit' => "COMMIT;",
-        'SRelease' => "RELEASE SAVEPOINT ${args[1]};",
+        'SRelease' => "RELEASE ${args[1]};",
         'SRollback' => "ROLLBACK TO ${args[1]};",
         'Begin' => "BEGIN;",
         'Commit' => "COMMIT;",
-        'Release' => "",
+        'Release' => "RELEASE;",
         'Rollback' => "ROLLBACK;",
         'createTable' => "CREATE TABLE IF NOT EXISTS ".$args[1]." (".
         $args[2].
@@ -56,7 +56,7 @@ class mysql {
         $args[2].
         ");",
         'dropTable' => "DROP TABLE IF EXISTS ".$args[1].";",
-        'listTables' => "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='".$this->data['database']."';",
+        'listTables' => "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='dbName';",
         'createTableRotate' => ""
         );
         return $sql[$args[0]];

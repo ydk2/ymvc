@@ -88,7 +88,7 @@ class DB
     final public function Connect($engin, $database, $user = NULL, $pass = NULL, $host = 'localhost')
     {
         try {
-            $this->Inc('/SystemException.php');
+            $this->Inc('/System\Exception.php');
             $this->data = array('type' => $engin, 'database' => $database, 'host' => $host, 'user' => $user, 'pass' => $pass);
 
             if ($engin !== NULL) {
@@ -101,10 +101,10 @@ class DB
                     $this->db = $this->plugin->db;
                 }
                 else {
-                    throw new SystemException("Plugin was not loaded", 203346);
+                    throw new System\Exception("Plugin was not loaded", 203346);
                 }
             }
-        } catch (SystemException $e) {
+        } catch (System\Exception $e) {
             if (defined('DBDEBUG'))
                 var_dump($e);
             return FALSE;

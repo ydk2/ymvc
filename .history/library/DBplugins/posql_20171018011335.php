@@ -9,7 +9,7 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\SystemException as SystemException;
+use \Library\Core\SystemException as SystemException;
 
 class posql {
     public function __construct($data)

@@ -9,9 +9,9 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\SystemException as SystemException;
+use \Library\Core\SystemException as SystemException;
 
-class mysql {
+class pgsql {
     public function __construct($data)
     {
         try {
@@ -39,24 +39,26 @@ class mysql {
         $sql = @array(
         'Lock'=>"LOCK TABLE ${args[1]} ${args[2]};",
         'UnLock' => "UNLOCK TABLES;",
-        'isLock' => "SHOW OPEN TABLES  WHERE `Table` LIKE '%".$args[1]."%' AND  `Database` LIKE '%".$this->data['database']."%' AND In_use > 0 OR Name_locked > 0;",
-        'SBegin' => "SET autocommit = 0; START TRANSACTION; SAVEPOINT ${args[1]};",
+        'isLock' => "PRAGMA lock_status;",
+        'SBegin' => "BEGIN; SAVEPOINT ${args[1]};",
         'SCommit' => "COMMIT;",
-        'SRelease' => "RELEASE SAVEPOINT ${args[1]};",
+        'SRelease' => "RELEASE ${args[1]};",
         'SRollback' => "ROLLBACK TO ${args[1]};",
         'Begin' => "BEGIN;",
         'Commit' => "COMMIT;",
-        'Release' => "",
+        'Release' => "RELEASE;",
         'Rollback' => "ROLLBACK;",
         'createTable' => "CREATE TABLE IF NOT EXISTS ".$args[1]." (".
         $args[2].
         ");",
-        'createTableid' => "CREATE TABLE IF NOT EXISTS ${args[1]} (".
-        "id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
+        'createTableid' => "CREATE SEQUENCE ".$args[1]."_id_seq;".
+        "CREATE TABLE IF NOT EXISTS ".$args[1]." (".
+        "id INTEGER NOT NULL PRIMARY KEY,".
         $args[2].
-        ");",
+        ");".
+        "ALTER TABLE ${args[1]} ALTER id SET DEFAULT NEXTVAL('".$args[1]."_id_seq');",
         'dropTable' => "DROP TABLE IF EXISTS ".$args[1].";",
-        'listTables' => "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='".$this->data['database']."';",
+        'listTables' => "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';",
         'createTableRotate' => ""
         );
         return $sql[$args[0]];
