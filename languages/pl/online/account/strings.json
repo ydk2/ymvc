@@ -28,5 +28,9 @@
     "fail":"nie udane",
     "please wait":"proszę czekać",
     "I have a account":"Mam już konto",
-    "New account":"Nowe konto"
+    "New account":"Nowe konto",
+    "Logout":"Wyloguj",
+    "are you sure?":"Na pewno wylogować?",
+    "yes":"Tak",
+    "no":"Nie"
 }

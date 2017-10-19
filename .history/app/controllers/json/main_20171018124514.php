@@ -179,7 +179,7 @@ class Main extends \library\Core\Controller
         ];
 
         $auth = new \Library\Core\lAuth($conf);
-        $auth->request(2*60,array($this, 'test'));
+        $auth->request(34*60,array($this, 'test'));
         header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, $auth->error);
         //$request = $check_token;
         $this->ViewData('expires', $auth->is_expires);

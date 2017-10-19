@@ -91,7 +91,7 @@ class lAuth
         }
     }
 
-    public function authorize($login, $password, $force = TRUE)
+    public function authorize($login, $password, $force = FALSE)
     {
 
         $enable = $this->db->TCount('accounts_token', 'WHERE client_id=?', [$this->appid]);
@@ -274,7 +274,7 @@ class lAuth
             $expires = strtotime($this->is_expires);
             $d = round( ($expires - time()), 0);
             if ($time > 0 && $d <= $time) {
-                $this->regenerate();
+                $this->regenerate(TRUE);
             }
         }
     }

@@ -96,7 +96,7 @@ class Login extends \library\Core\Controller
             $auth->deauthorizeapp();
         }
         
-        $auth->request();
+        $auth->request(2000);
         //if(!$auth->error)
         //$auth->regenerate();
         if ($auth->error != 200) {
@@ -110,7 +110,7 @@ class Login extends \library\Core\Controller
         $sendedid = Helper::Post('appid');
         $this->ViewData('appid', $sendedid);
         $this->ViewData('token', $auth->token);
-        if($auth->access_token) $this->ViewData('access_token', $auth->access_token);
+
         $this->ViewData('expires', $auth->is_expires);
         
         $this->ViewData('error', $auth->error);

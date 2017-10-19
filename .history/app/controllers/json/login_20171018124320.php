@@ -110,7 +110,7 @@ class Login extends \library\Core\Controller
         $sendedid = Helper::Post('appid');
         $this->ViewData('appid', $sendedid);
         $this->ViewData('token', $auth->token);
-        if($auth->access_token) $this->ViewData('access_token', $auth->access_token);
+
         $this->ViewData('expires', $auth->is_expires);
         
         $this->ViewData('error', $auth->error);

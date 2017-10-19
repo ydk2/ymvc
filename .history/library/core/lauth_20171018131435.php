@@ -91,7 +91,7 @@ class lAuth
         }
     }
 
-    public function authorize($login, $password, $force = TRUE)
+    public function authorize($login, $password, $force = FALSE)
     {
 
         $enable = $this->db->TCount('accounts_token', 'WHERE client_id=?', [$this->appid]);
@@ -272,9 +272,9 @@ class lAuth
         if ($this->error == 200) {
             $now = date("Y-m-d H:i:s", time());
             $expires = strtotime($this->is_expires);
-            $d = round( ($expires - time()), 0);
+            $d = round(($expires - time()), 0);
             if ($time > 0 && $d <= $time) {
-                $this->regenerate();
+                $this->regenerate(TRUE);
             }
         }
     }
@@ -320,18 +320,10 @@ class lAuth
             $isappid = $this->db->TSelect('accounts_token', array("*"), 'WHERE client_id=?', array($this->appid));
             if ($isappid) {
                 $set_token = $this->db->TInsertUpdate('accounts_token', $tu, " WHERE user_id='" . $this->userid . "' AND client_id='" . $this->appid . "'");
-                if ($set_token) {
-                    $this->token = $access_token;
-                    $this->access_token = $this->token;
-                    $this->is_expires = $tu['expires'];
-                    $this->error = 200;
-                }
-                else {
-                    $this->token = NULL;
-                    $this->access_token = NULL;
-                    $this->is_expires = '';
-                    $this->error = 532;
-                }
+                $this->token = $access_token;
+                $this->access_token = $access_token;
+                $this->is_expires = $tu['expires'];
+                $this->error = 200;
             }
             else {
                 $this->token = NULL;

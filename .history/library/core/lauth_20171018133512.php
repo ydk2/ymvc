@@ -91,7 +91,7 @@ class lAuth
         }
     }
 
-    public function authorize($login, $password, $force = TRUE)
+    public function authorize($login, $password, $force = FALSE)
     {
 
         $enable = $this->db->TCount('accounts_token', 'WHERE client_id=?', [$this->appid]);

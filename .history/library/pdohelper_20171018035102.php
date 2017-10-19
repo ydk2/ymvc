@@ -16,20 +16,18 @@
  * the PHP License and are unable to obtain it through the web, please
  * send a note to license@php.net so we can mail you a copy immediately.
  *
- * @category   Framework, MVC, Database
- * @package    YMVC System
- * @subpackage DBConnect
+ * @category   Framework, Database
+ * @package    DBHelper
  * @author     ydk2 <me@ydk2.tk>
  * @copyright  1997-2016 ydk2.tk
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    1.11.0
- * @link       http://ymvc.ydk2.tk
- * @see        YMVC System
- * @since      File available since Release 1.0.0
+ * @version    1.12.0
+ * @link       http://www.ydk2.tk
+ * @since      File available since Release 1.2.0
 
  */
 
-namespace Library\Core;
+namespace Library;
 
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
@@ -43,7 +41,7 @@ if (!defined('HOST')) {
     define('HOST', $url);
 }
 
-class DB
+class PDOHelper
 {
     /**
      * \PDO Object
@@ -391,7 +389,6 @@ class DB
         }
     }
 
- 
     public function Count($table, $sql = '', $values = array())
     {
         try {
@@ -442,9 +439,6 @@ class DB
             while (list($key, $value) = each($data)) {
                 $string .= "?,";
                 $keys[] = $key;
-                //$values[]=$value;
-
-
             }
 
             $add = $this->db->prepare("INSERT INTO " . $table . " (" . implode(",", $keys) . ") VALUES (" . substr($string, 0, strlen($string) - 1) . ")" . $query . ";");
