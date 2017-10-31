@@ -1,0 +1,10 @@
+{
+    "start":"początek",
+    "end":"koniec",
+    "error":"Błąd",
+    "can't connect":"nie można połączyć",
+    "loading":"wgrywam",
+    "read":"wczytaj",
+    "You are offline now":"Teraz jesteś offline",
+    "Close":"Zamknij"
+}

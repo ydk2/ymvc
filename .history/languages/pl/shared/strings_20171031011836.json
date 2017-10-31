@@ -1,0 +1,19 @@
+{
+    "start":"początek",
+    "end":"koniec",
+    "error":"Błąd",
+    "can't connect":"nie można połączyć",
+    "loading":"wgrywam",
+    "read":"wczytaj",
+    "You are offline now":"Teraz jesteś offline",
+    "close":"zamknij",
+    "Close":"Zamknij",
+    "success":"udane",
+    "fail":"nie udane",
+    "please wait":"proszę czekać",
+    "checking...":"sprawdzam...",
+    "yes":"Tak",
+    "no":"Nie",
+    "reload":"odśwież",
+    "back":"wróć"
+}
