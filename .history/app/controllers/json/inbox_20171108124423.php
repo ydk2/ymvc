@@ -84,9 +84,9 @@ class Inbox extends \library\Core\Controller
         $for_id = $this->auth->request['id'];
         $from_id = $this->auth->request['id'];
 
-        $msg = $this->db->TSelect('accounts_msg a', ['a.*'], " WHERE NOT EXISTS (SELECT b.msgid,b.for_id FROM accounts_msg b WHERE b.for_id=? AND b.from_id<>? AND b.msgid=a.msgid) AND a.for_id<>? AND a.from_id<>? AND a.status=0 ORDER BY a.mtime DESC LIMIT 10", [$for_id, $from_id, $for_id, $from_id]);
-        $readed = $this->db->TSelect('accounts_msg', ['*'], " WHERE for_id=? AND from_id<>? AND status>0 ORDER BY mtime DESC LIMIT 10", [$for_id, $from_id]);
-        /*
+        $msg = $this->db->TSelect('accounts_msg', ['*'], " WHERE for_id<>? AND from_id<>? AND status=0 ORDER BY mtime DESC", [$for_id, $from_id]);
+        $readed = $this->db->TSelect('accounts_msg', ['*'], " WHERE for_id=? AND from_id<>? ORDER BY mtime DESC", [$for_id, $from_id]);
+
         $unread = array();
         $all = array();
         //$i = 0;
@@ -106,16 +106,15 @@ class Inbox extends \library\Core\Controller
                 $unread[] = $base;
             }
         }
-        */
-        foreach ($readed as $item) {
-            $msg[] = $item;
+        foreach ($all as $item) {
+            $unread[] = $item;
         }
         $error = 0;
-        if (empty($msg)) {
+        if (empty($unread)) {
             $this->ViewData('response', 'false');
         }
         else {
-            $this->ViewData('response', json_encode($msg));
+            $this->ViewData('response', json_encode($unread));
         }
 
 

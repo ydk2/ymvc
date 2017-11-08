@@ -9,11 +9,13 @@ namespace App\controllers\JSON;
 
 use \Library\Core\Helper as Helper;
 
-class Test extends \library\Core\Controller
+class Outbox extends \library\Core\Controller
 {
     public function __construct($model)
     {
         parent::__construct($model);
+
+        $this->db = $this->model->db;
 
         $this->auth = $this->model->auth;
 
@@ -25,10 +27,8 @@ class Test extends \library\Core\Controller
 
         //$this->error = $this->auth->error;
         if (!$this->error) $this->error = 0;
-        if ($this->error>0) $this->error = 501;
-        //$this->ViewData('error', $this->error);
-        if ($this->error) {
-            //$this->Error();
+        if ($this->error>0 && $this->auth->error !== 200) $this->error = 501;
+        if ($this->error && $this->auth->error !== 200) {
             $this->throwError($this->Error());
         }
 
@@ -37,38 +37,21 @@ class Test extends \library\Core\Controller
 
     public function Run()
     {
+        $data = array(
+            'msgid'=>Helper::Post('msgid'),
+            'code'=>Helper::Post('code')
+        );
+        $error = 200;
         $scope = ['id', 'account_name', 'account_email', 'account_share', 'account_role'];
         //$this->auth->scope = $scope;
-        $this->ViewData('scope', json_encode($scope));
 
-        if ($this->auth->error == 200) {
+        $this->ViewData('scope', json_encode($this->auth->scope));
+        $this->ViewData('request', '""');
+        //$this->auth->response();
 
-            $now = date("Y-m-d H:i:s", time());
-            $expires = strtotime($this->auth->is_expires);
-
-            $d = round(($expires - time()) / 60,0);
-
-            $this->ViewData('event', 'message');
-            //$this->ViewData('expires', $d);
-            if($this->auth->access_token){
-                //$this->auth->regenerate();
-                $arr = array(
-                    "error"=>$this->auth->error,
-                    "access_token"=>$this->auth->access_token
-                );
-                $this->ViewData('data', json_encode($arr));
-            } else {
-                $error = $this->auth->error==200 ? 0 : $this->auth->error; 
-                $request = '""'; //json_encode($this->auth->request);
-                $this->ViewData('data', '{"error":'.$this->auth->error.',"time":"'.$now.'","expires":"'.$d.'","group":"'.$this->guid.'","request":'.$request.',"response":'.$this->onChange().'}');
-            }
-            
-        } else {
-            $this->ViewData('event', 'message');
-            $this->ViewData('data', '{"error":'.$this->auth->error.'}');
-            
-        }
-
+        $this->update();
+        $this->ViewData('error', $error);
+        //
         header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, $this->auth->error);
     }
 
@@ -79,17 +62,38 @@ class Test extends \library\Core\Controller
         // SELECT table_schema,table_name,update_time FROM information_schema.tables WHERE update_time > (NOW() - INTERVAL 5 MINUTE);
         // SELECT `AUTO_INCREMENT` FROM `information_schema`.`tables` WHERE `table_schema` = DATABASE() AND `table_name` = 'YOUR_TABLE';
 
-        $check = $this->model->db->TSelect('information_schema.tables',['AUTO_INCREMENT','update_time','table_name','table_schema'],"WHERE update_time > (NOW() - INTERVAL 20 MINUTE) AND table_schema=DATABASE() AND table_name='accounts_msg'");
+        $check = $this->model->db->TSelect('information_schema.tables',['AUTO_INCREMENT','update_time','table_name','table_schema'],"WHERE update_time > (NOW() - INTERVAL 5 MINUTE) AND table_schema=DATABASE() AND table_name='accounts_msg'");
         $checknew = $this->model->db->TSelect('information_schema.tables',['AUTO_INCREMENT']);
         $checknew = FALSE;
+        
         if($check || $checknew){
-            return 'true';
+            return TRUE;
         } else {
-            return 'false';
+            return FALSE;
         }
 
 
     }
+
+    private function update(){
+        $appid = Helper::Post('appid');
+        $msgid = $this->auth->request['id'].','.time();
+        $for_id = $this->auth->request['id'];
+        $from_id = $this->auth->request['id'];
+
+        $msg = $this->db->TSelect('accounts_msg',['*']," WHERE for_id=? AND from_id=? ORDER BY mtime DESC",[$for_id,$from_id]);
+
+        $error = 0;
+        if(!$msg){
+            $this->ViewData('response', 'false');
+        } else {
+            $this->ViewData('response', json_encode($msg));
+        }
+
+        
+
+    }
+
     public function Error()
     {
         header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, $this->error);
@@ -97,7 +101,7 @@ class Test extends \library\Core\Controller
         $this->model->scope = 'Error';
         $this->model->request = '{"Error"}';
         $this->model->response = 'Something wrong';
-        $this->model->error = $this->error;
+        $this->model->error =  $this->auth->error;
         $error = $this->View('/app/views/' . $this->model->theme . '/shared/e.json');
         return $error;
     }
