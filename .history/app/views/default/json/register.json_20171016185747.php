@@ -1,4 +1,4 @@
-<?php $login = $this->newController("/App/Controllers/JSON/Register",$this->model);?>
+<?php $login = $this->Controller("/App/Controllers/JSON/Register",$this->model);?>
 {
     "error": <?=$login->ViewData('error');?>,
     "appid": "<?=$login->ViewData('appid');?>",

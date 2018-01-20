@@ -1,5 +1,5 @@
 <?php 
-$time = $this->newController("/App/Controllers/JSON/Time",$this->model);
+$time = $this->Controller("/App/Controllers/JSON/Time",$this->model);
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 header("Access-Control-Allow-Origin: *");

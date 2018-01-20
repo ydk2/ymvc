@@ -1,6 +1,6 @@
 <?php 
 use \Library\Core\Helper as Helper;
-$login = $this->newController("/App/Controllers/JSON/Login",$this->model);
+$login = $this->Controller("/App/Controllers/JSON/Login",$this->model);
 ?>
 <div class="section">
     <div class="container">

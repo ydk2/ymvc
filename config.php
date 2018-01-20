@@ -22,14 +22,14 @@ if (DBTYPE=='mysql') {
         define('DBUSER','truckdri_root');
         define('DBPASS','Vp42y44qLo');
     } else {
-        define('DBNAME','e');
+        define('DBNAME','ymvc');
         define('DBHOST','localhost');
         define('DBUSER','root');
         define('DBPASS','8378');
     }
 }
 if (DBTYPE=='pgsql') {
-    define('DBNAME','e');
+    define('DBNAME','ymvc');
     define('DBHOST','localhost');
     define('DBUSER','postgres');
     define('DBPASS','8738');

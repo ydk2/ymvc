@@ -1,4 +1,4 @@
-<?php $login = $this->newController("/App/Controllers/JSON/FB",$this->model);?>
+<?php $login = $this->Controller("/App/Controllers/JSON/FB",$this->model);?>
   <!DOCTYPE html >
   <html lang="en">
 
