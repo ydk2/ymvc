@@ -9,26 +9,26 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\PDOException as PDOException;
+use \Library\PDOHelperException as PDOHelperException;
 
 class sqlite {
     public function __construct($data)
     {
         try {
             $this->data = $data;
-            $database_name = ROOT.DS.$this->data['host'].DS.'database'.DS. $this->data['database'].'.db';
+            $database_name = $this->data['host'].DS.$this->data['database'].'.db';
             
             $this->pdo = new \PDO($this->data['type'].':'. $database_name);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
             $err = $this->pdo->errorInfo();
             if($err[0]>0){
-                throw new PDOException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                throw new PDOHelperException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
             }
 
         } catch (\PDOException $e){
             //handle PDO
-            throw new PDOException( $e->getMessage( ) , (int)$e->getCode( ) );
+            throw new PDOHelperException( $e->getMessage( ) , (int)$e->getCode( ) );
         }
         
     }
@@ -51,12 +51,14 @@ class sqlite {
         $args[2].
         ");",
         'createTableid' => "CREATE TABLE IF NOT EXISTS ${args[1]} (".
-		"id INTEGER NOT NULL PRIMARY KEY,".
+		"${args[3]} ${args[4]} NOT NULL PRIMARY KEY,".
 		$args[2].
 		");",
         'dropTable' => "DROP TABLE IF EXISTS ".$args[1].";",
         'listTables' => "SELECT name FROM sqlite_master WHERE type='table';",
-        'createTableRotate' => ""
+        'createTableRotate' => "",
+        'Columns'=>"SELECT name, sql, type FROM sqlite_master WHERE type='table' AND name='${args[1]}'",
+        'Columns_data'=>"Field"
         );
         return $sql[$args[0]];
     }

@@ -1,21 +1,28 @@
 <?php
-
 /**
+ * Created on Thu Mar 01 2018
+ *
+ * YMVC framework License
+ * Copyright (c) 1996 - 2018 ydk2 All rights reserved.
  * 
- *
- * PHPRender fast and simple to use PHP MVC framework
- *
- * MVC Framework for PHP 5.2 + with PHP files views part of YMVC System
- * Connector for databases PoSQL, SQLite , MySQL using \PDO.
- *
- * PHP version 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
+ * YMVC version 3 fast and simple to use
+ * PHP MVC framework for PHP 5.4 + with PHP and XSLT files
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * Redistribution and use of this software in source and binary forms, with or without modification,
+ * are permitted provided that the following condition is met:
+ * Redistributions of source code must retain the above copyright notice, 
+ * this list of conditions and the following disclaimer.
+ *   
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+ * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  * @category   Framework, Database
  * @package    PDOHelper
  * @author     ydk2 <me@ydk2.tk>
@@ -62,15 +69,21 @@ class PDOHelper
      * @param string $pass
      * @return void
      */
-    final public function LoadPlugin($plugin)
-    {
-
+    
+    final public function dump($var){
+        ob_start();
+        var_dump($var);
+        return ob_get_clean();
     }
 
+    /**
+     * Inc
+     * @param mixed $class 
+     * @return mixed 
+     */
     function Inc($class)
     {
         $filename = strtolower(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ROOTDB . $class));
-        //echo $filename;
         if (file_exists($filename) && is_file($filename)) {
             require_once ($filename);
             return TRUE;
@@ -78,17 +91,36 @@ class PDOHelper
         return FALSE;
     }
 
+    /**
+     * Sql
+     * @param mixed ... 
+     * @return mixed 
+     */
     public function Sql()
     {
-        $args = func_get_args();
-
-        return $this->sql[$args[0]];
+        try {
+            $args = func_get_args();
+            $fn = array_shift($args);
+            $sql = $this->plugin->sql[$fn];
+            return ($sql)?call_user_func_array([$this->plugin,$fn],$args):NULL;
+        } catch(PDOHelperException $e){
+            return NULL;
+        }
     }
 
+    /**
+     * Connect
+     * @param mixed $engin 
+     * @param mixed $database 
+     * @param mixed $user 
+     * @param mixed $pass 
+     * @param mixed $host 
+     * @return mixed 
+     */
     final public function Connect($engin, $database, $user = NULL, $pass = NULL, $host = 'localhost')
     {
         try {
-            $this->Inc('/PDOException.php');
+            $this->Inc('/PDOHelperException.php');
             $this->data = array('type' => $engin, 'database' => $database, 'host' => $host, 'user' => $user, 'pass' => $pass);
 
             if ($engin !== NULL) {
@@ -101,12 +133,12 @@ class PDOHelper
                     $this->pdo = $this->plugin->pdo;
                 }
                 else {
-                    throw new PDOException("Plugin was not loaded", 203346);
+                    throw new PDOHelperException("Plugin was not loaded", 203346);
                 }
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
 
@@ -162,9 +194,9 @@ class PDOHelper
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $name, $which));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
@@ -179,12 +211,38 @@ class PDOHelper
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $name));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
+
+    public function Columns($table)
+    {
+        try {
+            $rows = $this->Query($this->plugin->Sql(__FUNCTION__, $table));
+            $data = array();
+            if ($rows) {
+                reset($rows);
+                $keyname = $this->plugin->Sql(__FUNCTION__.'_data');
+                while(list($key, $value) = each($rows)) {
+                    array_push($data,$value[$keyname]);
+                }
+            }
+            return $data;
+        } catch (\PDOException $e) {
+            if (defined('DBDEBUG'))
+                echo $this->dump($e);
+            return FALSE;
+        }
+    }
+
+    /**
+     * isLock
+     * @param mixed $name 
+     * @return mixed 
+     */
     public function isLock($name)
     {
         try {
@@ -194,104 +252,145 @@ class PDOHelper
                 return $rows;
             }
             return FALSE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * SBegin
+     * @param mixed $name 
+     * @return mixed 
+     */
     public function SBegin($name = 'T1')
     {
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $name));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
+    /**
+     * SCommit
+     * @param mixed $name 
+     * @return mixed 
+     */
     public function SCommit($name = 'T1')
     {
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $name));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
+    /**
+     * SRelease
+     * @param mixed $name 
+     * @return mixed 
+     */
     public function SRelease($name = 'T1')
     {
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $name));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
+    /**
+     * SRollback
+     * @param mixed $name 
+     * @return mixed 
+     */
     public function SRollback($name = 'T1')
     {
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $name));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Begin
+     * @return mixed 
+     */
     public function Begin()
     {
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
+    /**
+     * Commit
+     * @return mixed 
+     */
     public function Commit()
     {
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
+    /**
+     * Release
+     * @return mixed 
+     */
     public function Release()
     {
         try {
             //$add = $this -> db -> exec($this->plugin->Sql(__FUNCTION__));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Rollback
+     * @return mixed 
+     */
     public function Rollback()
     {
         try {
             $add = $this->pdo->exec($this->plugin->Sql(__FUNCTION__));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Query
+     * @param mixed $sql 
+     * @return mixed 
+     */
     public function Query($sql)
     {
         try {
@@ -301,13 +400,19 @@ class PDOHelper
                 return $rows;
             }
             return FALSE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Prepare
+     * @param mixed $sql 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function Prepare($sql, $values = array())
     {
         try {
@@ -318,26 +423,39 @@ class PDOHelper
                 return $rows;
             }	// end get pages
             return false;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Exec
+     * @param mixed $sql 
+     * @return mixed 
+     */
     public function Exec($sql)
     {
         try {
             $chk = $this->pdo->exec($sql);
             return $chk;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
-    public function createTable($table, $columns, $addid = TRUE)
+    /**
+     * createTable
+     * @param mixed $table 
+     * @param mixed $columns 
+     * @param mixed $addid 
+     * @param mixed $id=NULL 
+     * @return mixed 
+     */
+    public function createTable($table, $columns, $addid = FALSE, $id='id', $type='INTEGER')
     {
 
         if (is_array($columns)) {
@@ -348,31 +466,40 @@ class PDOHelper
         }
         try {
             if ($addid) {
-                $chk = $this->pdo->exec($this->plugin->Sql(__FUNCTION__ . 'id', $table, $string));
+                $chk = $this->pdo->exec($this->plugin->Sql(__FUNCTION__ . 'id', $table, $string, $id, $type));
             }
             else {
                 $chk = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $table, $string));
             }
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * dropTable
+     * @param mixed $table 
+     * @return mixed 
+     */
     public function dropTable($table)
     {
         try {
             $chk = $this->pdo->exec($this->plugin->Sql(__FUNCTION__, $table));
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * listTables
+     * @return mixed 
+     */
     public function listTables()
     {
         try {
@@ -382,13 +509,20 @@ class PDOHelper
                 return $rows;
             }
             return FALSE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Count
+     * @param mixed $table 
+     * @param mixed $sql 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function Count($table, $sql = '', $values = array())
     {
         try {
@@ -401,13 +535,20 @@ class PDOHelper
             else {
                 return false;
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Delete
+     * @param mixed $table 
+     * @param mixed $sql 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function Delete($table, $sql, $values = array())
     {
         try {
@@ -420,13 +561,20 @@ class PDOHelper
             else {
                 return false;
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Insert
+     * @param mixed $table 
+     * @param mixed $data 
+     * @param mixed $query 
+     * @return mixed 
+     */
     public function Insert($table, $data, $query = '')
     {
 
@@ -434,14 +582,14 @@ class PDOHelper
             $chk = 0;
             $keys = array();
             $values = array_values($data);
-            $string = '';
+            $string = [];
             reset($data);
             while (list($key, $value) = each($data)) {
-                $string .= "?,";
+                $string[] = "?";
                 $keys[] = $key;
             }
 
-            $add = $this->pdo->prepare("INSERT INTO " . $table . " (" . implode(",", $keys) . ") VALUES (" . substr($string, 0, strlen($string) - 1) . ")" . $query . ";");
+            $add = $this->pdo->prepare("INSERT INTO " . $table . " (" . implode(",", $keys) . ") VALUES (" . implode(",", $string) . ")" . $query . ";");
 
             $add->execute($values);
 
@@ -450,13 +598,21 @@ class PDOHelper
                 return $chk;
             }
             return FALSE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * InsertIF
+     * @param mixed $table 
+     * @param mixed $data 
+     * @param mixed $query 
+     * @param mixed $items 
+     * @return mixed 
+     */
     public function InsertIF($table, $data, $query = '', $items = array())
     {
         $if = $this->Count($table, $query, $items);
@@ -466,6 +622,14 @@ class PDOHelper
         return FALSE;
     }
 
+    /**
+     * InsertIfNot
+     * @param mixed $table 
+     * @param mixed $data 
+     * @param mixed $query 
+     * @param mixed $items 
+     * @return mixed 
+     */
     public function InsertIfNot($table, $data, $query = '', $items = array())
     {
         $if = $this->Count($table, $query, $items);
@@ -475,6 +639,14 @@ class PDOHelper
         return FALSE;
     }
 
+    /**
+     * InsertUpdate
+     * @param mixed $table 
+     * @param mixed $data 
+     * @param mixed $query 
+     * @param mixed $items 
+     * @return mixed 
+     */
     public function InsertUpdate($table, $data, $query = '', $items = array())
     {
         $if = $this->InsertIF($table, $data, $query, $items);
@@ -487,6 +659,14 @@ class PDOHelper
         return FALSE;
     }
 
+    /**
+     * Update
+     * @param mixed $table 
+     * @param mixed $data 
+     * @param mixed $query 
+     * @param mixed $items 
+     * @return mixed 
+     */
     public function Update($table, $data, $query = '', $items = array())
     { // ".$query[]."
         try {
@@ -509,13 +689,19 @@ class PDOHelper
                 return $chk;
             }
             return FALSE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * Select
+     * @param mixed $table 
+     * @param mixed $from 
+     * @return mixed 
+     */
     public function Select($table, $from = array('*'), $query = '', $values = array())
     {
         try {
@@ -528,13 +714,19 @@ class PDOHelper
                 return $rows;
             }
             return FALSE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             if (defined('DBDEBUG'))
-                var_dump($e);
+                echo $this->dump($e);
             return FALSE;
         }
     }
 
+    /**
+     * DeleteIFId
+     * @param mixed $table 
+     * @param mixed $id 
+     * @return mixed 
+     */
     public function DeleteIFId($table, $id)
     {
         $del = $this->pdo->prepare('DELETE FROM ' . $table . ' WHERE id=?');
@@ -548,6 +740,11 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSQuery
+     * @param mixed $query 
+     * @return mixed 
+     */
     public function TSQuery($query = '')
     {
         $savepoint = base64_encode(microtime());
@@ -566,6 +763,12 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSPrepare
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSPrepare($query = '', $values = array())
     {
         $savepoint = base64_encode(microtime());
@@ -584,6 +787,11 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSExec
+     * @param mixed $query 
+     * @return mixed 
+     */
     public function TSExec($query = '')
     {
         $savepoint = base64_encode(microtime());
@@ -602,6 +810,13 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSCount
+     * @param mixed $table 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSCount($table, $query = '', $values = array())
     {
         $savepoint = base64_encode(microtime());
@@ -620,6 +835,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSSelect
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSSelect($table, $elements = array('*'), $query = '', $values = array())
     {
         $savepoint = base64_encode(microtime());
@@ -638,6 +861,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSInsertIF
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSInsertIF($table, $elements, $query = "", $values = array())
     {
         $savepoint = base64_encode(microtime());
@@ -673,6 +904,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSInsertUpdate
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSInsertUpdate($table, $elements, $query = "", $values = array())
     {
         $savepoint = base64_encode(microtime());
@@ -691,6 +930,12 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSInsert
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @return mixed 
+     */
     public function TSInsert($table, $elements)
     {
         $savepoint = base64_encode(microtime());
@@ -709,6 +954,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSUpdate
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSUpdate($table, $elements, $query = "", $values = array())
     {
         $savepoint = base64_encode(microtime());
@@ -727,6 +980,13 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSDelete
+     * @param mixed $table 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSDelete($table, $query = "", $values = array())
     {
         $savepoint = base64_encode(microtime());
@@ -745,6 +1005,12 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSDeleteIFId
+     * @param mixed $table 
+     * @param mixed $id 
+     * @return mixed 
+     */
     public function TSDeleteIFId($table, $id)
     {
         $savepoint = base64_encode(microtime());
@@ -763,12 +1029,20 @@ class PDOHelper
         }
     }
 
-    public function TSCreateTable($table, $elements, $addid = TRUE)
+    /**
+     * TSCreateTable
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $addid 
+     * @param mixed $id=NULL 
+     * @return mixed 
+     */
+    public function TSCreateTable($table, $elements, $addid = FALSE, $id='id', $type='INTEGER')
     {
         $savepoint = base64_encode(microtime());
         $this->SBegin($savepoint);
 
-        $insert = $this->createTable($table, $elements, $addid);
+        $insert = $this->createTable($table, $elements, $addid, $id, $type);
 
         if ($insert) {
             $this->SCommit();
@@ -781,6 +1055,11 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSDropTable
+     * @param mixed $table 
+     * @return mixed 
+     */
     public function TSDropTable($table)
     {
         $savepoint = base64_encode(microtime());
@@ -799,6 +1078,11 @@ class PDOHelper
         }
     }
 
+    /**
+     * TQuery
+     * @param mixed $query 
+     * @return mixed 
+     */
     public function TQuery($query = '')
     {
         $this->Begin();
@@ -815,6 +1099,12 @@ class PDOHelper
         }
     }
 
+    /**
+     * TPrepare
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TPrepare($query = '', $values = array())
     {
         $this->Begin();
@@ -831,9 +1121,13 @@ class PDOHelper
         }
     }
 
+    /**
+     * TExec
+     * @param mixed $query 
+     * @return mixed 
+     */
     public function TExec($query = '')
     {
-        $savepoint = base64_encode(microtime());
         $this->Begin();
 
         $insert = $this->TQuery($query);
@@ -848,6 +1142,13 @@ class PDOHelper
         }
     }
 
+    /**
+     * TCount
+     * @param mixed $table 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TCount($table, $query = '', $values = array())
     {
         $this->Begin();
@@ -864,6 +1165,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TSelect
+     * @param mixed $table 
+     * @param mixed $elements
+     * @param mixed $query
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TSelect($table, $elements = array('*'), $query = '', $values = array())
     {
         $this->Begin();
@@ -880,6 +1189,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TInsertIF
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TInsertIF($table, $elements, $query = "", $values = array())
     {
         $this->Begin();
@@ -895,6 +1212,14 @@ class PDOHelper
             return FALSE;
         }
     }
+    /**
+     * TInsertIFNot
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TInsertIFNot($table, $elements, $query = "", $values = array())
     {
         $this->Begin();
@@ -911,6 +1236,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TInsertUpdate
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TInsertUpdate($table, $elements, $query = "", $values = array())
     {
         $this->Begin();
@@ -927,6 +1260,12 @@ class PDOHelper
         }
     }
 
+    /**
+     * TInsert
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @return mixed 
+     */
     public function TInsert($table, $elements)
     {
         $this->Begin();
@@ -943,6 +1282,14 @@ class PDOHelper
         }
     }
 
+    /**
+     * TUpdate
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TUpdate($table, $elements, $query = "", $values = array())
     {
         $this->Begin();
@@ -959,6 +1306,13 @@ class PDOHelper
         }
     }
 
+    /**
+     * TDelete
+     * @param mixed $table 
+     * @param mixed $query 
+     * @param mixed $values 
+     * @return mixed 
+     */
     public function TDelete($table, $query = "", $values = array())
     {
         $this->Begin();
@@ -975,6 +1329,12 @@ class PDOHelper
         }
     }
 
+    /**
+     * TDeleteIFId
+     * @param mixed $table 
+     * @param mixed $id 
+     * @return mixed 
+     */
     public function TDeleteIFId($table, $id)
     {
         $this->Begin();
@@ -991,11 +1351,19 @@ class PDOHelper
         }
     }
 
-    public function TCreateTable($table, $elements, $addid = TRUE)
+    /**
+     * TCreateTable
+     * @param mixed $table 
+     * @param mixed $elements 
+     * @param mixed $addid 
+     * @param mixed $id=NULL 
+     * @return mixed 
+     */
+    public function TCreateTable($table, $elements, $addid = FALSE, $id='id', $type='INTEGER')
     {
         $this->Begin();
 
-        $insert = $this->createTable($table, $elements, $addid);
+        $insert = $this->createTable($table, $elements, $addid, $id, $type);
 
         if ($insert) {
             $this->Commit();
@@ -1007,6 +1375,11 @@ class PDOHelper
         }
     }
 
+    /**
+     * TDropTable
+     * @param mixed $table 
+     * @return mixed 
+     */
     public function TDropTable($table)
     {
         $this->Begin();
@@ -1023,12 +1396,21 @@ class PDOHelper
         }
     }
 
+    /**
+     * __destruct
+     * @return mixed 
+     */
     public function __destruct()
     {
         $this->pdo = NULL;
         unset($this->pdo);
     }
 
+    /**
+     * GetFreeId
+     * @param mixed $tmp 
+     * @return mixed 
+     */
     function GetFreeId($tmp)
     {
         if (!empty($tmp)) {
@@ -1044,6 +1426,12 @@ class PDOHelper
     }
 
 
+    /**
+     * createTableRotate
+     * @param mixed $table 
+     * @param mixed $gprx 
+     * @return mixed 
+     */
     public function createTableRotate($table, $gprx)
     {
         $data = $this->data;
@@ -1089,7 +1477,7 @@ class PDOHelper
         try {
             $add = $this->pdo->exec($this->sql['createTableRotate']);
             return TRUE;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return FALSE;
         }
     }
@@ -1121,6 +1509,11 @@ class PDOHelper
         else $array = $temp_array;
     }
 
+    /**
+     * fromKeyQuery
+     * @param mixed $array 
+     * @return mixed 
+     */
     public function fromKeyQuery($array = array())
     {
         $retval = '';
@@ -1132,6 +1525,11 @@ class PDOHelper
         return rtrim($retval, ', ');
     }
 
+    /**
+     * fromValQuery
+     * @param mixed $array 
+     * @return mixed 
+     */
     public function fromValQuery($array = array())
     {
         $retval = '';

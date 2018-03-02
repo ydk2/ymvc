@@ -23,7 +23,7 @@
  * @author     ydk2 <me@ydk2.tk>
  * @copyright  1997-2016 ydk2.tk
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    1.5.3.0
+ * @version    1.5.4.0
  * @link       none
  * @see        not yet
  * @since      File available since Release 1.5.0.0
@@ -90,7 +90,21 @@ class Intl {
     */
     private static $msgstr;
 // }}}
-
+    
+    /**
+    * syscall
+    *
+    * @param mixed $command
+    * @return void
+    */
+    private static function syscall($command){
+        $result ='';
+        if ($proc = popen("($command)2>&1","r")){
+            while (!feof($proc)) $result .= fgets($proc, 1000);
+            pclose($proc);
+            return $result;
+        }
+    }
 /**
 * Get formated string with array values
 * @access public
@@ -157,7 +171,7 @@ class Intl {
         } else {
             if(is_string($strings)){
                 if(isset(self::$strings[strtolower($strings)][$string])){
-                $_strings = self::$strings[strtolower($strings)];
+                    $_strings = self::$strings[strtolower($strings)];
                 } else {
                    return self::_p($string,$strings,$p);
                 }
@@ -213,6 +227,30 @@ class Intl {
         }
     }
 
+    /**
+    * get_system_lang
+    * @access public
+    * @static
+    * @param string $current_lang
+    * @return string
+    */
+    public static function get_system_lang($_lang='en') {
+        
+        if (strtolower(PHP_OS) == "darwin") {
+            $_lang = substr(self::syscall("defaults read NSGlobalDomain AppleLocale"),0,2);
+        } 
+        if (strtolower(PHP_OS) == "linux") {
+            $_lang = substr(self::syscall("echo \$LANG"),0,2);
+        } 
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
+            $string=self::syscall("REG QUERY \"HKCU\Control Panel\International\" /v sLanguage | find /i \"sLanguage\"");
+            $pos = strrpos($string, ' ') + 1;;
+            $parsed = substr($string, $pos);
+            $_lang = str_replace(PHP_EOL,"",strtolower(substr($parsed,0,2)));
+        }
+        return $_lang;
+    }
+    
  /**
 * Get available locales from dir with mode Intl::PHP/PO/JSON
 * @access public
@@ -375,6 +413,38 @@ class Intl {
 		return $strings;
     }
 
+/**
+* Load lang files plural
+* @access public
+* @static
+* @param string $lang
+* @param string $name 
+* @param string $mode
+* @return array
+**/     
+    public static function getTranslations($lang,$keys='_',$mode=''){
+		if(is_file($lang)) {
+            self::$mode = pathinfo($lang, PATHINFO_EXTENSION);
+        } else {
+            self::$mode = ($mode=='')?self::$mode:$mode;
+        }
+        switch (self::$mode) {
+			case 'php':
+				return self::php_locale($lang,$keys);
+				break;
+			case 'po':
+				return self::po_locale_plural($lang,$keys);
+				break;
+			case 'json':
+				return self::json_locale($lang,$keys);
+				break;
+			
+			default:
+				return self::php_locale($lang);
+				break;
+		}
+    }
+    
 /**
 * Load simple lang files not for plural
 * @access public

@@ -9,7 +9,7 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\PDOException as PDOException;
+use \Library\PDOHelperException as PDOHelperException;
 
 class pgsql {
     public function __construct($data)
@@ -17,19 +17,19 @@ class pgsql {
         try {
             $this->data = $data;
             if ($this->data['user'] === NULL || $this->data['pass'] === NULL) {
-                throw new PDOException('User and Password not filed.');
+                throw new PDOHelperException('User and Password not filed.');
             }
             $this->pdo = new \PDO($this->data['type'].':host=' . $this->data['host'] . ';dbname=' . $this->data['database'], $this->data['user'], $this->data['pass']);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
             $err = $this->pdo->errorInfo();
             if($err[0]>0){
-                throw new PDOException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                throw new PDOHelperException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
             }
             
         } catch (\PDOException $e){
             //handle \PDO
-            throw new PDOException( $e->getMessage( ) , (int)$e->getCode( ) );
+            throw new PDOHelperException( $e->getMessage( ) , (int)$e->getCode( ) );
         }
         
     }
@@ -51,15 +51,17 @@ class pgsql {
         'createTable' => "CREATE TABLE IF NOT EXISTS ".$args[1]." (".
         $args[2].
         ");",
-        'createTableid' => "CREATE SEQUENCE ".$args[1]."_id_seq;".
+        'createTableid' => "CREATE SEQUENCE ".$args[1]."_id_seq;\n".
         "CREATE TABLE IF NOT EXISTS ".$args[1]." (".
-        "id INTEGER NOT NULL PRIMARY KEY,".
+        "${args[3]} ${args[4]} NOT NULL PRIMARY KEY,".
         $args[2].
-        ");".
-        "ALTER TABLE ${args[1]} ALTER id SET DEFAULT NEXTVAL('".$args[1]."_id_seq');",
+        ");\n".
+        "ALTER TABLE ${args[1]} ALTER ${args[3]} SET DEFAULT NEXTVAL('".$args[1]."_id_seq');",
         'dropTable' => "DROP TABLE IF EXISTS ".$args[1].";",
         'listTables' => "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';",
-        'createTableRotate' => ""
+        'createTableRotate' => "", 
+        'Columns'=>"SELECT column_name FROM information_schema.columns WHERE table_name = '${args[1]}';",
+        'Columns_data'=>"column_name"
         );
         return $sql[$args[0]];
     }

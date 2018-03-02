@@ -9,17 +9,20 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\PDOException as PDOException;
+use \Library\PDOHelperException as PDOHelperException;
 
 class posql {
     public function __construct($data)
     {
-		$this->data = $data;
-		require_once ROOT.VENDORS.'posql.php';
-		$database_name = ROOT.DATA.'database'.DS.$this->data['database']. '.db';
+        $this->data = $data;
+        if (!file_exists(ROOTDB.DS.'vendors'.DS.'posql'.DS.'posql.php')) {
+            throw new PDOHelperException('PoSQL Database engine not exist.',420500);
+        }
+		require_once ROOTDB.DS.'vendors'.DS.'posql'.DS.'posql.php';
+		$database_name = $this->data['host'].DS.$this->data['database'].'.db';
 		//echo $database_name;
 		if (!file_exists($database_name.'.php')) {
-			throw new PDOException('Database not exist.',420404);
+			throw new PDOHelperException('Database not exist.',420404);
 		}
 
 		$this->pdo = new Posql($database_name);
@@ -27,7 +30,7 @@ class posql {
 		
 		if ($this->pdo -> isError()) {
 			abort($this->pdo);
-			throw new PDOException('Can\'t connect to Database.',420502);
+			throw new PDOHelperException('Can\'t connect to Database.',420502);
 		}
         
     }
@@ -50,12 +53,14 @@ class posql {
         $args[2].
         ");",
         'createTableid' => "CREATE TABLE IF NOT EXISTS ${args[1]} (".
-        "id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
+        "${args[3]} ${args[4]} NOT NULL PRIMARY KEY AUTO_INCREMENT,".
         $args[2].
         ");",
         'dropTable' => "DROP TABLE IF EXISTS ".$args[1].";",
         'listTables' => "SELECT name FROM sqlite_master WHERE type='table';",
-        'createTableRotate' => ""
+        'createTableRotate' => "",
+        'Columns'=>"SHOW columns FROM ${args[1]}",
+        'Columns_data'=>"Field"
         );
         return $sql[$args[0]];
     }

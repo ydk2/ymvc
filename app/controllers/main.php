@@ -5,11 +5,15 @@
  * @Last Modified by: ydk2 (me@ydk2.tk)
  * @Last Modified time: 2017-01-21 22:00:35
  */
-namespace App\controllers\XSL;
+namespace App\Controllers;
 
-use \Library\Core\Helper as Helper;
+use \Library\Core\Helper;
+use \Library\Core\Render;
+use \Library\Core\Cookie;
+use \Library\Core\Session;
+use \Library\Helpers\Files;
 
-class Xsl extends \library\Core\Render
+class Main extends Render
 {
     public function __construct($model)
     {
@@ -23,38 +27,34 @@ class Xsl extends \library\Core\Render
         //$g = $this->GetAccess(2,TRUE);
         $e = $this->isEnabled(TRUE);
 
+
         //$this->error = $this->auth->error;
         if (!$this->error) $this->error = 0;
         if ($this->error>0) $this->error = 501;
-        //$this->ViewData('error', $this->error);
+        $this->ViewData('error', $this->error);
         if ($this->error) {
-            //$this->Error();
             $this->throwError($this->Error());
+        } else {
+            $this->Run();
         }
 
-        $this->Run();
+        
     }
 
     public function Run()
     {
-        $scope = ['id', 'name', 'email', 'share', 'role'];
-        
-        $now = date("Y-m-d H:i:s", time());
-        $this->ViewData('data', $now);
+        $db = $this->model->db;
+        $this->ViewData('header','Test controller');
+        $this->ViewData('host',HOST);
 
-        //$this->ViewData('m', $this->data);
-        //var_dump($this->data);
-        //header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, 200);
+        $this->ViewData('left_column','Menu');
+        $this->ViewData('main_column','Main content');
+        $this->ViewData('error',"1");
     }
-    public function test($test){
-        return $test." ffff";
-    }
-    public function decode($test){
-        return json_encode($test)."s:".$test;
-    }
+
     public function Error()
     {
-        header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, $this->error);
+        //header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, $this->error);
         $this->model->appid = '';
         $this->model->scope = 'Error';
         $this->model->request = '{"Error"}';
@@ -64,4 +64,5 @@ class Xsl extends \library\Core\Render
         return $error;
     }
 }
+
 ?>

@@ -5,11 +5,11 @@
  * @Last Modified by: ydk2 (me@ydk2.tk)
  * @Last Modified time: 2017-01-21 22:00:35
  */
-namespace App\controllers\XSL;
+namespace App\controllers;
 
 use \Library\Core\Helper as Helper;
 
-class Xsl extends \library\Core\Render
+class Login extends \library\Core\Render
 {
     public function __construct($model)
     {
@@ -42,7 +42,7 @@ class Xsl extends \library\Core\Render
         $now = date("Y-m-d H:i:s", time());
         $this->ViewData('data', $now);
 
-        //$this->ViewData('m', $this->data);
+        $this->ViewData('host', HOST);
         //var_dump($this->data);
         //header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, 200);
     }
@@ -52,6 +52,7 @@ class Xsl extends \library\Core\Render
     public function decode($test){
         return json_encode($test)."s:".$test;
     }
+
     public function Error()
     {
         header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, $this->error);

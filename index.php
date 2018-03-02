@@ -1,46 +1,71 @@
 <?php
 /**
- * Created on Sun Sep 10 2017
+ * Created on Thu Mar 01 2018
  *
- * The MIT License (MIT)
- * Copyright (c) 2017 ydk2
- *
+ * YMVC framework License
+ * Copyright (c) 1996 - 2018 ydk2 All rights reserved.
+ * 
+ * YMVC version 3 fast and simple to use 
+ * PHP MVC framework for PHP 5.4 + with PHP and XSLT files 
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
- * and associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial
- * portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
- * TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * Redistribution and use of this software in source and binary forms, with or without modification,
+ * are permitted provided that the following condition is met:
+ * Redistributions of source code must retain the above copyright notice, 
+ * this list of conditions and the following disclaimer.
+ *   
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+ * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * For more information on the YMVC project, 
+ * please see <http://ydk2.tk>. 
+ *   
  **/
 
-/*
-define('ROOT', realpath(dirname(__FILE__)));
-define('DS', DIRECTORY_SEPARATOR);
-*/
 require_once "bootstrap.php";
+require_once (ROOT . DS . 'config.php');
 
 
-?>
-<?php
-/*
-use \Theme\Controllers\Theme as theme;
-use \Test\Controllers as app;
-use \test\controllers\test as test;
+\Library\Core\Session::Start();
 
-$data = new \Library\Core\Data();
- */
+$theme = "default";
+$default = 'main';
 
-header('location: '.HOST.'app/')
+$app='/app/views/'.$theme;
 
-//var_dump($model);
+$data = new \Library\Core\Data;
+$data->theme = $theme;
+
+$model = new \App\Models\Model($data);
+$model->theme = $theme;
+
+$render = new \Library\Core\Render($model);
+$render->ext = '.php';
+
+$body = new \Library\Core\Render($model);
+$body->ext = '.php';
 
 
-//var_dump($test);
+$body->Show($app."/theme/header");
+
+$index = $render->Route($app,'view',$default);
+if($render->is($index)){
+    echo $index;
+} else {
+    $render->model->header = '404 Not found';
+    $render->model->response = 'View cannot be found';
+    $render->model->code = '404';
+    $error = $render->View($app. '/shared/e');
+    echo $error;
+}
+
+$body->Show($app."/theme/footer");
+
+
 ?>

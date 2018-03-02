@@ -1,10 +1,34 @@
 <?php
-/*
-* @Author: ydk2 (me@ydk2.tk)
-* @Date: 2017-01-21 16:22:09
-* @Last Modified by: ydk2 (me@ydk2.tk)
-* @Last Modified time: 2017-01-21 22:00:35
-*/
+/**
+ * Created on Thu Mar 01 2018
+ *
+ * YMVC framework License
+ * Copyright (c) 1996 - 2018 ydk2 All rights reserved.
+ * 
+ * YMVC version 3 fast and simple to use 
+ * PHP MVC framework for PHP 5.4 + with PHP and XSLT files 
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * Redistribution and use of this software in source and binary forms, with or without modification,
+ * are permitted provided that the following condition is met:
+ * Redistributions of source code must retain the above copyright notice, 
+ * this list of conditions and the following disclaimer.
+ *   
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+ * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * For more information on the YMVC project, 
+ * please see <http://ydk2.tk>. 
+ *   
+ **/
+
+
 namespace Library\Core;
 
 
@@ -29,9 +53,20 @@ class Render
     protected $use_errors;
     protected $view;
     protected $error;
-    
+
+	/**
+	 * $obj
+	 * @static
+	 * @var Render ref
+	 */
 	private static $obj;
 	
+    /**
+     * __construct
+     *
+     * @param mixed $model
+     * @return void
+     */
     public function __construct($model = NULL)
     {
         $theme = null;
@@ -91,8 +126,6 @@ class Render
 /**
 * Internal helper method to check access or reset it.
 * @param Integer $m
-* @param Integer OR String $acc
-* @param Integer OR Array $gacc
 * @param BOOLEAN $g Default FALSE
 * @access public
 * @return BOOLEAN
@@ -140,6 +173,12 @@ final public function GetAccess($m=NULL,$g=FALSE){
 }
 }
 
+ /**
+  * isEnabled
+  *
+  * @param mixed $g=FALSE
+  * @return void
+  */
 final public function isEnabled($g=FALSE){
     $item = strtolower(str_replace(array('\\', '/'), "/", $this->name));
     if($this->error == 20402){
@@ -157,7 +196,7 @@ final public function isEnabled($g=FALSE){
 /**
 * Method used to get, render and return controller sub view as string
 * @access public
-* @param string $path Optional normally set in constructor or Init
+* @param string $view Optional normally set in constructor or Init
 * @return string HTML output
 **/
 final public function xViews($view=NULL) {
@@ -174,7 +213,7 @@ final public function xViews($view=NULL) {
 				$xml = "<data/>";
 				$name = $this->name;
 
-				$data = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'.$xml, null, false);
+				$data = $this->simple_xml($xml);
                 //$xpath = new \DomXpath($xsl);
 				//$search = $xpath->query('//xsl:param[@name="controller"]')[0]->nodeValue;
                 $search = $xsl->getElementsByTagName("controller")->item(0);
@@ -184,13 +223,13 @@ final public function xViews($view=NULL) {
 					if($runner !== NULL){
 						$name = $runner->name;
 						self::$obj =& $runner;
-						$this->to_xml($runner->data,$data);
+						$this->to_simple($runner->data,$data);
 					} else {
-						$this->to_xml($this->data,$data);
+						$this->to_simple($this->data,$data);
 					}
 				} else {
 					self::$obj =& $this;
-					$this->to_xml($this->data,$data);
+					$this->to_simple($this->data,$data);
 				}
                 $proc = new \XSLTProcessor;
                 $proc->registerPHPFunctions();
@@ -216,12 +255,25 @@ final public function xViews($view=NULL) {
     }
 }
 
-final public function Views($view)
+ /**
+  * Views
+  *
+  * @param mixed $view
+  * @return void
+  */
+final public function pViews($view)
 {
     try {
         ob_start();
         $filename = strtolower(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ROOT . $view) . $this->ext);
         if (file_exists($filename) && is_file($filename)) {
+            
+            $viewdata = array();
+            if(isset($this->data)){
+                foreach ($object->data as $key => $value) {
+                    $viewdata[$key] = $value;
+                }
+            }
             require_once($filename);
         } else {
             $this->error = 20404;
@@ -235,20 +287,34 @@ final public function Views($view)
     }
 }
 
+ /**
+  * View
+  *
+  * @param mixed $view=NULL
+  * @return void
+  */
 final public function View($view=NULL)
 {
     if($view==NULL){
 		$view = $this->view;
-	} 
+	} else {
+        $this->view = $view;
+    }
 	$array = explode('.', $view);
 	$ext = end($array);
 	if($this->ext == ".xsl" || ($this->ext == ""|NULL && $ext == "xsl")){
 		return $this->xViews($view);
 	} else {
-		return $this->Views($view);
+		return $this->pViews($view);
 	}
 }
 
+ /**
+  * Show
+  *
+  * @param mixed $view=NULL
+  * @return void
+  */
 final public function Show($view=NULL)
 {
 	echo $this->View($view);
@@ -294,7 +360,8 @@ public final function Object($class)
     }
     else {
         $ext = '.php';
-        $path= strtolower(str_replace(array('\\', '/'), '\\',  $class));
+        $path= strtolower(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR,  $class));
+        $class = strtolower(str_replace(array('\\', '/'), '\\',  $class));
         if ($this->Inc($path.$ext)) {
             if (!class_exists($class)) return NULL;
             $a = func_get_args();
@@ -306,6 +373,29 @@ public final function Object($class)
     }
 }
 
+/**
+* Method return a new controller view data
+* @access public
+* @param mixed $path Can be XSLRender or PHPRender object or path
+* @return Render->ViewData object
+**/
+public final function Page($path)
+{
+    $object = call_user_func_array([$this,'Object'],func_get_args());
+    $data = array();
+    if($object !== NULL && isset($object->data)){
+        foreach ($object->data as $key => $value) {
+            $data[$key] = $value;
+        }
+    }
+    return $data;
+}
+ /**
+  * Inc
+  *
+  * @param mixed $class
+  * @return void
+  */
 final public function Inc($class)
 {
     $filename = strtolower(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ROOT . DIRECTORY_SEPARATOR . $class));
@@ -316,6 +406,21 @@ final public function Inc($class)
     return FALSE;
 }
 
+final static public function Loader($class, $ext = ".php")
+{
+    $filename = strtolower(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ROOT . DIRECTORY_SEPARATOR . $class) . $ext);
+    if (file_exists($filename) && is_file($filename)) {
+        require_once ($filename);
+    }
+}
+
+ /**
+  * throwError
+  *
+  * @param mixed $message
+  * @param mixed $code
+  * @return void
+  */
 final public function throwError($message = '', $code = 0)
 {
     throw new SystemException($message, $code);
@@ -367,31 +472,174 @@ final public static function Call($method){
 	return call_user_func_array(array(self::$obj, $method), $parameters);
 }
 
-private function to_xml( $data, &$xml_data ) {
+/**
+ * to_xml
+ *
+ * @param Array or Object $data
+ * @param SimpleXMLElement &$xml_data
+ * @return void
+ */
+protected function to_simple( $data, \SimpleXMLElement &$xml_data ) {
     foreach( $data as $key => $value ) {
-        
-        if( is_numeric($key) ){
-            $key = 'node('.$key.')';
-        }
         if(is_array($value) ) {
-            if($key != '@attributes') {
-                $subnode = $xml_data->addChild($key);
-                $this->to_xml($value, $subnode);
+            
+            if( is_numeric($key) ){
+                $key = 'child-'.$xml_data->getName().'';
             }
-            if($key == '@attributes') {
+            if($key !== '@attributes') {
+                $subnode = $xml_data->addChild($key);
+                call_user_func_array(array($this,__FUNCTION__),array($value,$subnode));
+            }
+            if($key === '@attributes') {
                 $this->to_attr($value,$xml_data);
             } 
             
         } else {
-            if($key != '@attributes') $xml_data->addChild($key,htmlspecialchars($value));
+            if($key !== '@attributes') {    
+                if( is_numeric($key) ){
+                    $key = 'node-'.$xml_data->getName().'';
+                }
+                $xml_data->addChild($key,htmlspecialchars($value));
+            }
         }
 	} 
 }
-private function to_attr( $data, &$xml_data ) {
+
+/**
+ * to_attr
+ *
+ * @param mixed $data
+ * @param SimpleXMLElement &$xml_data
+ * @return void
+ */
+private function to_attr( $data, \SimpleXMLElement &$xml_data ) {
     foreach( $data as $key => $value ) {
         $xml_data->addAttribute($key,htmlspecialchars($value));
 	} 
 }
 
+/**
+ * array_to_simple
+ * @param mixed $array 
+ * @param mixed $root='data' 
+ * @return SimpleXMLElement 
+ */
+public function array_to_simple($array,$root='<data/>'){
+    try {
+        $xml_data = $this->simple_xml($root);
+        $this->to_simple($xml_data,$array);
+        return $xml_data;
+    } catch(SystemException $e){
+        return NULL;
+    }
+}
+/**
+ * to_xml
+ * @param mixed $array 
+ * @param mixed $root='data' 
+ * @return String xml string 
+ */
+public function to_xml($array,$root='<data/>'){
+    try {
+        $xml_data = $this->simple_xml($root);
+        $this->to_simple($xml_data,$array);
+        return $xml_data->asXml();
+    } catch(SystemException $e){
+        return NULL;
+    }
+}
+/**
+ * simple_xml
+ * @param array $root='data' 
+ * @return SimpleXmlElement 
+ */
+public function simple_xml($root='<data/>'){
+    try {
+        $xml_data = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'.$root.'', null, false);
+        return $xml_data;
+    } catch(SystemException $e){
+        return NULL;
+    }
+}
+
+/**
+ * get
+ * @param mixed $val 
+ * @return mixed 
+ */
+public function get($val)
+{
+    if (isset($_GET[$val]) && $_GET[$val] != '') {
+        return $_GET[$val];
+    }
+    else {
+        return FALSE;
+    }
+}
+
+/**
+ * post
+ * @param mixed $val 
+ * @return mixed 
+ */
+public function post($val)
+{
+    if (isset($_POST[$val]) && $_POST[$val] != '') {
+        return $_POST[$val];
+    }
+    else {
+        return FALSE;
+    }
+}
+
+/**
+ * Request
+ * @param mixed $val 
+ * @return mixed 
+ */
+public function request($val)
+{
+    if (isset($_REQUEST[$val]) && $_REQUEST[$val] != '') {
+        return $_REQUEST[$val];
+    }
+    else {
+        return FALSE;
+    }
+}
+
+/**
+ * Route
+ * @param mixed $app not null
+ * @param mixed $action 
+ * @param mixed $default 
+ * @return string 
+ */
+public function Route($app=NULL,$action=NULL,$default=NULL){
+    try {
+        $route = $this;
+        if(!$this->is($app)) return 'Runtime Error Application not defined';
+        $app = $app.'/';
+        $default = ($this->is($default))?$app.$default:FALSE;
+        $view = ($this->get($action))?$app.$this->get($action):$default;
+        if($view && $view!=$this->view){
+            $actions = $this->View($view);
+        } else {
+            $actions = '';
+        }
+        return $actions;
+    } catch(SystemException $e){
+        return $e->Message();
+    }
+
+}
+/**
+ * value check
+ * @param mixed $value 
+ * @return boolean 
+ */
+public function is($value){
+    if(!isset($value) || $value == '' || $value==FALSE || empty($value)) return FALSE;
+    return TRUE;
+}
 }
 ?>

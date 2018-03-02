@@ -9,7 +9,7 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\PDOException as PDOException;
+use \Library\PDOHelperException as PDOHelperException;
 
 class sqlsrv {
     public function __construct($data)
@@ -17,19 +17,19 @@ class sqlsrv {
         try {
             $this->data = $data;
             if ($this->data['user'] === NULL || $this->data['pass'] === NULL) {
-                throw new PDOException('User and Password not filed.');
+                throw new PDOHelperException('User and Password not filed.');
             }
             $this->pdo = new \PDO($this->data['type'].':Server='.$this->data['host'].';Database='.$this->data['database'].';ConnectionPooling=0', $this->data['user'], $this->data['pass']);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
             $err = $this->pdo->errorInfo();
             if($err[0]>0){
-                throw new PDOException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                throw new PDOHelperException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
             }
             
         } catch (\PDOException $e){
             //handle \PDO
-            throw new PDOException( $e->getMessage( ) , (int)$e->getCode( ) );
+            throw new PDOHelperException( $e->getMessage( ) , (int)$e->getCode( ) );
         }
         
     }
@@ -48,17 +48,19 @@ class sqlsrv {
         'Commit' => "COMMIT TRAN;",
         'Release' => "",
         'Rollback' => "ROLLBACK TRAN;",
-        'createTable' => "IF OBJECT_ID ('${args[1]}', 'U') IS NULL".
+        'createTable' => "IF OBJECT_ID ('${args[1]}', 'U') IS NULL \n".
         "CREATE TABLE  ${args[1]} (${args[2]});",
-        'createTableid' => "IF OBJECT_ID ('${args[1]}', 'U') IS NULL".
+        'createTableid' => "IF OBJECT_ID ('${args[1]}', 'U') IS NULL \n".
         "CREATE TABLE  ${args[1]} (".
-        "id INTEGER NOT NULL PRIMARY KEY IDENTITY(1,1),".
+        "${args[3]} ${args[4]} NOT NULL PRIMARY KEY IDENTITY(1,1),".
         $args[2].
         ");",
         'dropTable' => "IF OBJECT_ID ('${args[1]}', 'U') IS NOT NULL".
         "DROP TABLE  ${args[1]};",
-        'listTables' => "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG='dbName';",
-        'createTableRotate' => ""
+        'listTables' => "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG='".$this->data['database']."';",
+        'createTableRotate' => "",
+        'Columns'=>"SELECT COLUMN_NAME FROM ".$this->data['database'].".INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'${args[1]}'",
+        'Columns_data'=>"COLUMN_NAME"
         );
         return $sql[$args[0]];
     }

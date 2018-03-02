@@ -9,7 +9,7 @@ return $sql[$argv[0]];
 }
 */
 
-use \Library\PDOException as PDOException;
+use \Library\PDOHelperException as PDOHelperException;
 
 class mysql {
     public function __construct($data)
@@ -17,19 +17,19 @@ class mysql {
         try {
             $this->data = $data;
             if ($this->data['user'] === NULL || $this->data['pass'] === NULL) {
-                throw new PDOException('User and Password not filed.');
+                throw new PDOHelperException('User and Password not filed.');
             }
             $this->pdo = new \PDO($this->data['type'].':host=' . $this->data['host'] . ';dbname=' . $this->data['database'], $this->data['user'], $this->data['pass']);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             
             $err = $this->pdo->errorInfo();
             if($err[0]>0){
-                throw new PDOException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                throw new PDOHelperException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
             }
             
         } catch (\PDOException $e){
             //handle \PDO
-            throw new PDOException( $e->getMessage( ) , (int)$e->getCode( ) );
+            throw new PDOHelperException( $e->getMessage( ) , (int)$e->getCode( ) );
         }
         
     }
@@ -52,12 +52,14 @@ class mysql {
         $args[2].
         ");",
         'createTableid' => "CREATE TABLE IF NOT EXISTS ${args[1]} (".
-        "id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,".
+        "${args[3]} ${args[4]} NOT NULL PRIMARY KEY AUTO_INCREMENT,".
         $args[2].
         ");",
         'dropTable' => "DROP TABLE IF EXISTS ".$args[1].";",
         'listTables' => "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='".$this->data['database']."';",
-        'createTableRotate' => ""
+        'createTableRotate' => "",
+        'Columns'=>"SHOW columns FROM ${args[1]}",
+        'Columns_data'=>"Field"
         );
         return $sql[$args[0]];
     }

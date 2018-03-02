@@ -7,11 +7,12 @@
 */
 namespace App\Controllers\Shared;
 
+use Library\Core\Render;
 
-class E extends \Library\Core\Controller
+class E extends Render
 {   
     public function __construct($model){
-        parent::__construct();
+        parent::__construct($model);
         $this->ViewData('appid',$model->appid);
         $this->ViewData('error',$model->error);
         $this->ViewData('request',$model->request);
@@ -21,9 +22,5 @@ class E extends \Library\Core\Controller
         $this->ViewData('host',HOST);
         header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime(__FILE__)).' GMT', true, $model->error);
     }
-   // public function Run(){
-        //$this->ViewData('testing', 'ddd');
-       // Inc('test/views/test/view','.html');
-    //}
 }
 ?>

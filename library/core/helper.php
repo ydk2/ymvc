@@ -1,37 +1,56 @@
 <?php
+/**
+ * Created on Thu Mar 01 2018
+ *
+ * YMVC framework License
+ * Copyright (c) 1996 - 2018 ydk2 All rights reserved.
+ * 
+ * YMVC version 3 fast and simple to use 
+ * PHP MVC framework for PHP 5.4 + with PHP and XSLT files 
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * Redistribution and use of this software in source and binary forms, with or without modification,
+ * are permitted provided that the following condition is met:
+ * Redistributions of source code must retain the above copyright notice, 
+ * this list of conditions and the following disclaimer.
+ *   
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+ * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * For more information on the YMVC project, 
+ * please see <http://ydk2.tk>. 
+ *   
+ **/
 
 /**
- * 
- * PHPRender fast and simple to use PHP MVC framework
- *
- * MVC Framework for PHP 5.2 + with PHP files views part of YMVC System
- * Helper Class to easy get set post session etc...
- *
- * PHP version 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
  * @category   Framework, MVC
  * @package    YMVC System
  * @subpackage Helper
  * @author     ydk2 <me@ydk2.tk>
  * @copyright  1997-2016 ydk2.tk
- * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    4.12.0
- * @link       http://ymvc.ydk2.tk
+ * @license    YMVC Framework License
+ * @version    4.13.0
+ * @link       https://ydk2.tk
  * @see        YMVC System
- * @since      File available since Release 1.0.0
- 
+ * @since      File available since Release 3.0.0
+ *
  */
 namespace Library\Core;
 
 class Helper
 {
 
+	/**
+	 * Get
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function Get($val)
 	{
 		if (isset($_GET[$val]) && $_GET[$val] != '') {
@@ -42,6 +61,11 @@ class Helper
 		}
 	}
 
+	/**
+	 * Post
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function Post($val)
 	{
 		if (isset($_POST[$val]) && $_POST[$val] != '') {
@@ -52,6 +76,11 @@ class Helper
 		}
 	}
 
+	/**
+	 * Request
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function Request($val)
 	{
 		if (isset($_REQUEST[$val]) && $_REQUEST[$val] != '') {
@@ -62,42 +91,11 @@ class Helper
 		}
 	}
 
-	static function CookieGet($val)
-	{
-		if (isset($_COOKIE[$val]) && $_COOKIE[$val] != '') {
-			return $_COOKIE[$val];
-		}
-		else {
-			return false;
-		}
-	}
-
-	static function CookieSet($key, $val, $int=2419200, $domain='/')
-	{
-		return self::CookieRegister($key, $val, $int=2419200, $domain);
-	}
-
-	static function CookieRegister($key, $val, $int=2419200, $domain='/')
-	{
-		if (isset($_COOKIE[$key])) {
-			setcookie($key, $val);
-		}
-		else {
-			setcookie($key, $val, time() + $int,$domain);
-		}
-	}
-
-	static function CookieDel($key)
-	{
-		if (isset($_COOKIE[$key])) {
-			setcookie($key,NULL,time()-1);
-			unset($_COOKIE[$key]);
-		}
-		else {
-			return false;
-		}
-	}
-
+	/**
+	 * GlobalsGet
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function GlobalsGet($val)
 	{
 		if (isset($GLOBALS[$val]) && $GLOBALS[$val] != '') {
@@ -113,6 +111,11 @@ class Helper
 		$GLOBALS[$key] = $val;
 	}
 
+	/**
+	 * GlobalsDel
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function GlobalsDel($val)
 	{
 		if (isset($GLOBALS[$val])) {
@@ -122,6 +125,11 @@ class Helper
 			return false;
 		}
 	}
+	/**
+	 * ServerGet
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function ServerGet($val)
 	{
 		if (isset($_SERVER[$val]) && $_SERVER[$val] != '') {
@@ -132,11 +140,22 @@ class Helper
 		}
 	}
 
+	/**
+	 * ServerSet
+	 * @param mixed $key 
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function ServerSet($key, $val)
 	{
 		$_SERVER[$key] = $val;
 	}
 
+	/**
+	 * ServerDel
+	 * @param mixed $val 
+	 * @return mixed 
+	 */
 	static function ServerDel($val)
 	{
 		if (isset($_SERVER[$val])) {
@@ -146,79 +165,12 @@ class Helper
 			return false;
 		}
 	}
-
-	static function SessionGet($val)
-	{
-		if (isset($_SESSION[$val]) && $_SESSION[$val] != '') {
-			return $_SESSION[$val];
-		}
-		else {
-			return false;
-		}
-	}
-
-	static function SessionDel($val)
-	{
-		if (isset($_SESSION[$val])) {
-			unset($_SESSION[$val]);
-		}
-		else {
-			return false;
-		}
-	}
-
-	static function SessionSet($key, $val)
-	{
-		$_SESSION[$key] = $val;
-	}
-
-	public static function SessionStart()
-	{
-		if (!isset($_SESSION))
-			session_start();
-			if(!session_id()) session_regenerate_id(true); // regenerates SESSIONID to prevent hijacking			
-
-	}
-
-	public static function SessionStop($id)
-	{
-		if ($id > 0) {
-			session_unset();
-			session_destroy();
-			return TRUE;
-		}
-		else
-			return false;
-	}
-
-	public static function Lock($view)
-	{
-		array_push(Config::$data['disabled'], $view);
-	}
-
-	public static function UnLock($view)
-	{
-		foreach (Config::$data['disabled'] as $key => $value) {
-			if ($value == $view) {
-				unset(Config::$data['disabled'][$key]);
-			}
-		}
-	}
-
-	public static function Enable($view)
-	{
-		array_push(Config::$data['enabled'], $view);
-	}
-
-	public static function Disable($view)
-	{
-		foreach (Config::$data['enabled'] as $key => $value) {
-			if ($value == $view) {
-				unset(Config::$data['enabled'][$key]);
-			}
-		}
-	}
-
+	
+	/**
+	 * Inc
+	 * @param mixed $class 
+	 * @return mixed 
+	 */
 	public static function Inc($class)
 	{
 		$filename = strtolower(str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ROOT . DIRECTORY_SEPARATOR . $class));
@@ -229,9 +181,13 @@ class Helper
 		return FALSE;
 	}
 
+	/**
+	 * IncExt
+	 * @param mixed $class 
+	 * @return mixed 
+	 */
 	public static function IncExt($class)
 	{
-		//echo APP.$class.EXT;
 		if (file_exists($class) && is_file($class)) {
 			require_once ($class);
 			return TRUE;
